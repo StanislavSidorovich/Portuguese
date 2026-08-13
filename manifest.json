@@ -1,0 +1,20 @@
+{
+  "name": "Португальская грамматика с нуля",
+  "short_name": "Português",
+  "description": "Курс европейского португальского для начинающих: чтение, ser и estar, спряжение глаголов. Правило, тексты и задания с проверкой в каждой теме. Офлайн, без рекламы, без регистрации.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "id": "/Portuguese-grammar/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F2F5F4",
+  "theme_color": "#14523F",
+  "lang": "ru",
+  "dir": "ltr",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
