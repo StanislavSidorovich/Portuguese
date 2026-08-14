@@ -56,9 +56,14 @@
     --ser-ink:#8A5416;   --ser-ink-fixed:#8A5416;
     --estar-ink:#2F5FC0; --estar-ink-fixed:#2F5FC0;
 
-    /* Род существительного — вторая сквозная пара, нужна с темы 0.5 */
+    /* Род существительного — вторая сквозная пара, нужна с темы 0.5.
+       Устроена так же, как ser/estar: базовая пара держит плашки и тинты,
+       пара -ink красит буквы (на фоне страницы --fem давал 4.33:1),
+       пара -ink-fixed стоит на светлых плашках и не переворачивается. */
     --masc:#2D6FBF; --masc-tint:#E6EEF9;
     --fem:#C2447E;  --fem-tint:#FBEAF2;
+    --masc-ink:#2A62A8; --masc-ink-fixed:#2A62A8;
+    --fem-ink:#B03A70;  --fem-ink-fixed:#B03A70;
 
     --ok:#2E9E5B; --ok-tint:#E4F5EA;
     --bad:#C4453A; --bad-tint:#FDECEC;
@@ -76,6 +81,8 @@
     --muted:#97A8A0;
     --ser-ink:#D9973F;
     --estar-ink:#5CA8E0;
+    --masc-ink:#5F97DC;
+    --fem-ink:#DE6F9F;
   }
   /* :not(.active) обязателен. Без него активная вкладка в тёмной теме теряет
      заливку: у «body.dark .subnav-btn» специфичность выше, чем у
@@ -98,12 +105,10 @@
   body.dark .trap, body.dark .tip, body.dark .contrast .label,
   body.dark .contrast p, body.dark .review-title,
   body.dark .pair-cell{ color:var(--ink-fixed); }
-  /* Метки рода стоят прямо на тёмном фоне страницы, а не на светлой плашке:
-     базовые --masc и --fem дают на нём 3.6:1 и читаются плохо. Правим только
-     эти два класса, а не сами переменные: на светлых плашках (.pair-cell)
-     переменные работают как надо, и трогать их нельзя. */
-  body.dark .m{color:#5F97DC;}
-  body.dark .f{color:#DE6F9F;}
+  /* Метки рода красятся парой --masc-ink / --fem-ink, и она переворачивается
+     здесь же, вместе с --ser-ink / --estar-ink. Отдельных правил для .m и .f
+     больше не нужно: базовые --masc и --fem остались нетронутыми и держат
+     светлые плашки .pair-cell в обеих темах. */
   /* .conjbox сюда НЕ добавлять: у неё фон var(--card), который в тёмной теме
      переворачивается вместе со всем остальным. Приколотишь цвет — формы
      глагола станут чёрным по чёрному. */
@@ -316,8 +321,8 @@
   .pt{font-family:var(--font-pt); font-weight:600;}
   .se{color:var(--ser-ink); font-weight:700;}    /* ser */
   .es{color:var(--estar-ink); font-weight:700;}  /* estar */
-  .m{color:var(--masc); font-weight:700;}    /* мужской род */
-  .f{color:var(--fem); font-weight:700;}     /* женский род */
+  .m{color:var(--masc-ink); font-weight:700;}    /* мужской род */
+  .f{color:var(--fem-ink); font-weight:700;}     /* женский род */
 
   /* Транскрипция — русская практическая. Живёт только в блоке 0: дальше
      ученик уже читает сам, а подпорка начинает мешать. */
@@ -336,8 +341,8 @@
   .pair-cell .p-title{font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px;}
   .pair-cell.ser .p-title{color:var(--ser-ink-fixed);}
   .pair-cell.estar .p-title{color:var(--estar-ink-fixed);}
-  .pair-cell.masc .p-title{color:var(--masc);}
-  .pair-cell.fem .p-title{color:var(--fem);}
+  .pair-cell.masc .p-title{color:var(--masc-ink-fixed);}
+  .pair-cell.fem .p-title{color:var(--fem-ink-fixed);}
   .pair-cell .p-big{font-family:var(--font-pt); font-size:1.3rem; font-weight:700; line-height:1.35;}
   .pair-cell .p-note{font-size:0.78rem; margin-top:4px; opacity:0.85;}
 
@@ -723,15 +728,17 @@
         <span class="row-check" data-check="pronomes" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="adjetivos">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.11</span> Adjetivos<span class="row-title-ru">прилагательное и согласование по роду и числу</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="adjetivos" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="ter">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.12</span> Ter e há<span class="row-title-ru">иметь и «есть, имеется»</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="ter" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--base)"></span>
@@ -3093,11 +3100,464 @@
       <button class="btn btn-reveal" type="button">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="adjetivos">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Adjetivos — прилагательное и согласование</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ 0.11 ADJETIVOS ============ -->
+<div class="screen topic-screen" id="screen-adjetivos" data-topic="adjetivos" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2><span class="topic-num">0.11</span> Adjetivos</h2>
+    <span class="done-badge" data-badge="adjetivos">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Прилагательное здесь стоит после существительного и подстраивается под него — по роду и по числу. Механика та же, что у артикля из 0.5.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Два отличия от русского, и оба видны в одной фразе <span class="pt">uma casa <span class="f">bonita</span></span>:</p>
+
+    <ul class="rule-list">
+      <li><b>Прилагательное идёт после существительного.</b> Не «красивый дом», а «дом красивый». Для русского уха это звучит как перечисление, но это обычный порядок слов</li>
+      <li><b>Оно согласуется по роду и числу.</b> Слово женского рода тянет за собой женское окончание, множественное — множественное. Ровно как артикль: <span class="pt"><span class="f">a</span> casa <span class="f">bonita</span></span>, <span class="pt"><span class="m">o</span> carro <span class="m">bonito</span></span></li>
+    </ul>
+
+    <p>Это согласование ты уже произносишь с первого дня: <span class="pt"><span class="m">bom</span> dia</span>, но <span class="pt"><span class="f">boa</span> tarde</span>. И <span class="pt">obrigad<span class="m">o</span></span> / <span class="pt">obrigad<span class="f">a</span></span> — та же самая механика.</p>
+
+    <p>Прилагательные делятся на две группы: <b>меняющие форму по роду</b> и <b>одинаковые для обоих родов</b>. Определяется по последней букве:</p>
+
+    <table>
+      <tr><th>Кончается на</th><th class="m">муж.</th><th class="f">жен.</th></tr>
+      <tr><td><b>-o</b> → меняется</td><td class="pt m">bonito</td><td class="pt f">bonita</td></tr>
+      <tr><td><b>-or</b> → плюс -a</td><td class="pt m">trabalhador</td><td class="pt f">trabalhadora</td></tr>
+      <tr><td><b>-ês</b> → -esa</td><td class="pt m">português</td><td class="pt f">portuguesa</td></tr>
+      <tr><td><b>-e</b> → одна форма</td><td class="pt" colspan="2">alegre, forte, inteligente</td></tr>
+      <tr><td><b>согласная</b> → одна форма</td><td class="pt" colspan="2">azul, fácil, jovem</td></tr>
+    </table>
+
+    <p>Множественное число берётся не из отдельного правила, а из темы 0.6 — прилагательное ведёт себя как существительное:</p>
+
+    <table>
+      <tr><th>Одно</th><th>Много</th></tr>
+      <tr><td class="pt">bonito, bonita</td><td class="pt">bonitos, bonitas</td></tr>
+      <tr><td class="pt">alegre, forte</td><td class="pt">alegres, fortes</td></tr>
+      <tr><td class="pt">azul</td><td class="pt">azuis</td></tr>
+      <tr><td class="pt">fácil, difícil</td><td class="pt">fáceis, difíceis</td></tr>
+      <tr><td class="pt">jovem</td><td class="pt">jovens</td></tr>
+      <tr><td class="pt">português</td><td class="pt">portugueses</td></tr>
+    </table>
+
+    <div class="contrast">
+      <div class="label">Два прилагательных, у которых своя форма</div>
+      <p><span class="pt"><span class="m">bom</span> · <span class="f">boa</span> · <span class="m">bons</span> · <span class="f">boas</span></span> — хороший. Женская форма не «boma», а <span class="pt">boa</span>.</p>
+      <p><span class="pt"><span class="m">mau</span> · <span class="f">má</span> · <span class="m">maus</span> · <span class="f">más</span></span> — плохой. Женская форма короче мужской, и это единственный такой случай в курсе.</p>
+      <p>Больше исключений среди частых прилагательных нет: всё остальное идёт по таблице выше.</p>
+    </div>
+
+    <p>Если предметов несколько и они <b>разного рода</b>, прилагательное встаёт в мужское множественное — то же правило, что у местоимения <span class="pt">eles</span> из темы 0.10:</p>
+
+    <table>
+      <tr><th>Фраза</th><th>Почему</th></tr>
+      <tr><td class="pt">O pai e a mãe são <span class="m">simpáticos</span>.</td><td>мужской + женский → мужское мн.</td></tr>
+      <tr><td class="pt">A mãe e a irmã são <span class="f">simpáticas</span>.</td><td>все женского рода → женское мн.</td></tr>
+    </table>
+
+    <p>И последнее — <b>место прилагательного меняет смысл</b>. Обычное место после существительного даёт прямое, буквальное значение; вынос вперёд делает значение оценочным:</p>
+
+    <table>
+      <tr><th>После — буквально</th><th>Перед — в переносном смысле</th></tr>
+      <tr><td class="pt">um homem grande<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">крупный мужчина</span></td><td class="pt">um grande homem<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">великий человек</span></td></tr>
+      <tr><td class="pt">um amigo velho<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">пожилой друг</span></td><td class="pt">um velho amigo<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">давний друг</span></td></tr>
+      <tr><td class="pt">um livro novo<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">новая книга, только куплена</span></td><td class="pt">um novo livro<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">ещё одна, очередная книга</span></td></tr>
+    </table>
+
+    <div class="trap"><b>Три ловушки русского.</b><br>
+      <b>1.</b> Ставить прилагательное перед словом «как в русском» опасно: <span class="pt">um grande homem</span> — это комплимент, а не описание роста.<br>
+      <b>2.</b> Цвет тоже согласуется: <span class="pt">a mesa <span class="f">castanha</span></span>, не «castanho». В русском окончание тоже меняется, но здесь его надо слышать в чужом слове, а не в своём.<br>
+      <b>3.</b> <span class="pt">azul</span>, <span class="pt">verde</span>, <span class="pt">fácil</span> по роду <b>не</b> меняются. Соблазн сказать «azula» велик — такой формы нет.</div>
+
+    <div class="tip"><b>Как проверять себя.</b> Три вопроса подряд: какого рода слово (подсказка — артикль <span class="m">o</span> или <span class="f">a</span>), одно оно или много, и кончается ли прилагательное на <b>-o</b>. Если не на <b>-o</b> — скорее всего, ничего менять не надо, кроме множественного числа.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 21 · Cores — цвета</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">branco</span> <span class="tr">бранку</span><span class="t">— белый</span></div>
+          <div><span class="w">preto</span> <span class="tr">прету</span><span class="t">— чёрный</span></div>
+          <div><span class="w">vermelho</span> <span class="tr">вермелью</span><span class="t">— красный</span></div>
+          <div><span class="w">azul</span> <span class="tr">азул</span><span class="t">— синий, голубой</span></div>
+          <div><span class="w">amarelo</span> <span class="tr">амарелу</span><span class="t">— жёлтый</span></div>
+          <div><span class="w">castanho</span> <span class="tr">каштанью</span><span class="t">— коричневый</span></div>
+          <div><span class="w">cinzento</span> <span class="tr">синзенту</span><span class="t">— серый</span></div>
+          <div><span class="w">escuro</span> <span class="tr">шкуру</span><span class="t">— тёмный</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> из восьми слов только <span class="pt">azul</span> не меняется по роду: <span class="pt">o carro azul</span> и <span class="pt">a porta azul</span>. Зато во множественном оно даёт <span class="pt">azuis</span> — то самое <b>-l → -is</b> из темы 0.6.<br><br><span class="pt">castanho</span> буквально «каштановый» — этим словом называют и коричневый цвет, и карие глаза, и каштановые волосы.<br><br><span class="pt">vermelho</span> читается «вермелью»: <b>lh</b> из темы 0.4. В <span class="pt">escuro</span> безударное <b>e</b> в начале пропадает целиком, как в <span class="pt">escola</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 22 · Como são as pessoas — какие люди</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">simpático</span> <span class="tr">симпатику</span><span class="t">— приятный, славный</span></div>
+          <div><span class="w">antipático</span> <span class="tr">антипатику</span><span class="t">— неприятный</span></div>
+          <div><span class="w">inteligente</span> <span class="tr">интелижент</span><span class="t">— умный</span></div>
+          <div><span class="w">trabalhador</span> <span class="tr">трабалядор</span><span class="t">— трудолюбивый; работник</span></div>
+          <div><span class="w">forte</span> <span class="tr">форт</span><span class="t">— сильный, крепкий</span></div>
+          <div><span class="w">magro</span> <span class="tr">магру</span><span class="t">— худой</span></div>
+          <div><span class="w">gordo</span> <span class="tr">горду</span><span class="t">— полный, толстый</span></div>
+          <div><span class="w">mau</span> <span class="tr">мау</span><span class="t">— плохой</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">simpático</span> — не «симпатичный внешне», а «приятный в общении». Про внешность говорят <span class="pt">bonito</span>. Это классический ложный друг, и ошибиться здесь легко.<br><br><span class="pt">trabalhador</span> — единственное слово набора на <b>-or</b>: женская форма <span class="pt">trabalhadora</span>. Оно же значит «работник», и тогда это существительное.<br><br><span class="pt">inteligente</span> и <span class="pt">forte</span> кончаются на <b>-e</b> и по роду не меняются вообще.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · A casa nova — новый дом</div>
+      <div class="mini-text">
+        <p class="storytext">A casa nova da Ana é pequena, mas é muito bonita. As portas são brancas e as janelas são azuis. A cozinha é amarela e a sala é verde. A mesa é castanha, as cadeiras são pretas. O quarto não é escuro. O carro do João é vermelho e velho, mas o João está contente. Os vizinhos são simpáticos: a senhora Maria é uma mulher alegre e trabalhadora, o marido é um homem forte e calmo. A rua é calma e a praia é perto. A casa é boa.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Новый дом Аны маленький, но очень красивый. Двери белые, а окна синие. Кухня жёлтая, гостиная зелёная. Стол коричневый, стулья чёрные. Комната не тёмная. Машина Жуана красная и старая, но Жуан доволен. Соседи славные: сеньора Мария — весёлая и трудолюбивая женщина, муж — сильный и спокойный мужчина. Улица тихая, и пляж рядом. Дом хороший.</p>
+        <p class="why-note"><b>Почему так:</b> посмотри, как окончание идёт за словом: <span class="pt">as portas são branc<b>as</b></span> (женское мн.), <span class="pt">as cadeiras são pret<b>as</b></span>, но <span class="pt">as janelas são <b>azuis</b></span> — <span class="pt">azul</span> рода не различает и меняется только по числу.<br><br><span class="pt">A casa nova</span> — дом, который недавно появился. <span class="pt">A nova casa</span> значило бы «очередной дом», и это была бы совсем другая история.<br><br><span class="pt">A casa é boa</span> — женская форма от <span class="pt">bom</span>. Ты её знаешь с первого дня: <span class="pt">boa tarde</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · O colega novo — новый коллега</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> João, o colega novo é simpático?</p>
+          <p class="dline"><span class="speaker">João:</span> É muito simpático e é inteligente. É alemão.</p>
+          <p class="dline"><span class="speaker">Ana:</span> E a mulher? É alemã?</p>
+          <p class="dline"><span class="speaker">João:</span> Não, ela é portuguesa. É médica, é uma senhora muito calma.</p>
+          <p class="dline"><span class="speaker">Ana:</span> E o chefe? Ainda está antipático?</p>
+          <p class="dline"><span class="speaker">João:</span> Hoje não. Hoje está alegre! É um grande homem, mas é difícil.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Жуан, новый коллега приятный?<br><b>Жуан:</b> Очень приятный и умный. Он немец.<br><b>Ана:</b> А жена? Тоже немка?<br><b>Жуан:</b> Нет, она португалка. Она врач, очень спокойная женщина.<br><b>Ана:</b> А начальник? Всё ещё неприятный?<br><b>Жуан:</b> Сегодня нет. Сегодня весёлый! Он великий человек, но трудный.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">alemão</span> в женском роде даёт <span class="pt">alemã</span> — носовое из темы 0.3 никуда не делось, просто стало коротким. Так же <span class="pt">português → portuguesa</span>.<br><br><span class="pt">Está antipático</span> и <span class="pt">é um grande homem</span> в одном разговоре: первое — настроение сегодня (<span class="es">estar</span>), второе — оценка человека вообще (<span class="se">ser</span>). Тема 0.9 продолжает работать в каждой фразе.<br><br><span class="pt">É um grande homem, mas é difícil</span> — вот зачем нужен порядок слов. <span class="pt">Um homem grande</span> здесь означало бы просто «крупный».</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="adjetivos">
+    <p class="quiz-instruction">Поставь прилагательное в нужную форму. Сначала смотри на артикль — он называет род.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="pt">A casa é</span>
+      <select class="mc" data-answer="branca">
+        <option value="">—</option>
+        <option value="branca">branca</option>
+        <option value="branco">branco</option>
+        <option value="brancas">brancas</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="pt">Os livros são</span>
+      <select class="mc" data-answer="novos">
+        <option value="">—</option>
+        <option value="novos">novos</option>
+        <option value="novas">novas</option>
+        <option value="novo">novo</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="pt">As janelas são</span>
+      <select class="mc" data-answer="azuis">
+        <option value="">—</option>
+        <option value="azuis">azuis</option>
+        <option value="azulas">azulas</option>
+        <option value="azules">azules</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="pt">A senhora é</span>
+      <select class="mc" data-answer="trabalhadora">
+        <option value="">—</option>
+        <option value="trabalhadora">trabalhadora</option>
+        <option value="trabalhador">trabalhador</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="pt">Os exames são</span>
+      <select class="mc" data-answer="fáceis">
+        <option value="">—</option>
+        <option value="fáceis">fáceis</option>
+        <option value="fácils">fácils</option>
+        <option value="fáceles">fáceles</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="pt">A sopa é</span>
+      <select class="mc" data-answer="boa">
+        <option value="">—</option>
+        <option value="boa">boa</option>
+        <option value="boma">boma</option>
+        <option value="bom">bom</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Что значит</span> <span class="pt">um grande homem</span>?
+      <select class="mc" data-answer="великий человек">
+        <option value="">—</option>
+        <option value="великий человек">великий человек</option>
+        <option value="крупный мужчина">крупный мужчина</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши форму от</span> <span class="pt">castanho</span>: <span class="pt">a mesa</span> <span class="pt">é</span> <input class="blank" data-answer="castanha" style="width:8em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Впиши форму от</span> <span class="pt">simpático</span>: <span class="pt">o pai e a mãe são</span> <input class="blank" data-answer="simpáticos|simpaticos" style="width:9em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Стулья чёрные».</span>
+      <div class="qbuild" data-answer="As cadeiras são pretas" data-words="pretas|As|são|cadeiras"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="ter">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Ter e há — «у меня есть» и «имеется»</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ 0.12 TER E HÁ ============ -->
+<div class="screen topic-screen" id="screen-ter" data-topic="ter" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2><span class="topic-num">0.12</span> Ter e há</h2>
+    <span class="done-badge" data-badge="ter">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Третий глагол курса. С ним португальский говорит и «у меня есть», и «мне холодно», и «я прав» — там, где русский обходится без глагола вообще.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Русское «у меня есть книга» обходится без глагола «иметь»: есть книга — и всё. Португальский устроен как английский: владение выражается обычным глаголом <span class="pt">ter</span>, и подлежащее в нём — <b>владелец</b>.</p>
+
+    <table>
+      <tr><th>Лицо</th><th>Ter</th><th>Пример</th></tr>
+      <tr><td>eu</td><td class="pt">tenho</td><td class="pt">Tenho um gato.</td></tr>
+      <tr><td>tu</td><td class="pt">tens</td><td class="pt">Tens tempo?</td></tr>
+      <tr><td>ele / ela / você</td><td class="pt">tem</td><td class="pt">A Ana tem uma bicicleta.</td></tr>
+      <tr><td>nós</td><td class="pt">temos</td><td class="pt">Temos uma casa nova.</td></tr>
+      <tr><td>eles / elas / vocês</td><td class="pt">têm</td><td class="pt">Os vizinhos têm um cão.</td></tr>
+    </table>
+
+    <p>Местоимение, как всегда, опускают: <span class="pt">Tenho um gato</span> — «у меня есть кот». Слово «у меня» отдельно не переводится, оно уже внутри формы <span class="pt">tenho</span>.</p>
+
+    <div class="contrast">
+      <div class="label">tem и têm — одна шляпка на всю разницу</div>
+      <p><span class="pt">ele <b>tem</b></span> — один. <span class="pt">eles <b>têm</b></span> — несколько. На письме различает только знак, в речи — лёгкая долгота и более закрытый носовой в форме множественного.</p>
+      <p>На слух португальцы различают их плохо и сами, поэтому в разговоре опираются на местоимение и на контекст. А вот на письме пропущенная шляпка — заметная ошибка.</p>
+    </div>
+
+    <p>Дальше начинается место, где русский сбивается сильнее всего. Целый ряд состояний португальский выражает через <span class="pt">ter</span> — то есть «имеет голод», «имеет сон», «имеет правоту»:</p>
+
+    <table>
+      <tr><th>Португальский</th><th>Буквально</th><th>По-русски</th></tr>
+      <tr><td class="pt">Tenho fome.</td><td>имею голод</td><td>я голоден</td></tr>
+      <tr><td class="pt">Tenho sede.</td><td>имею жажду</td><td>хочу пить</td></tr>
+      <tr><td class="pt">Tenho sono.</td><td>имею сон</td><td>хочу спать</td></tr>
+      <tr><td class="pt">Tenho frio.</td><td>имею холод</td><td>мне холодно</td></tr>
+      <tr><td class="pt">Tenho calor.</td><td>имею жару</td><td>мне жарко</td></tr>
+      <tr><td class="pt">Tenho medo.</td><td>имею страх</td><td>мне страшно</td></tr>
+      <tr><td class="pt">Tenho pressa.</td><td>имею спешку</td><td>я тороплюсь</td></tr>
+      <tr><td class="pt">Tenho razão.</td><td>имею правоту</td><td>я прав</td></tr>
+      <tr><td class="pt">Tenho sorte.</td><td>имею удачу</td><td>мне везёт</td></tr>
+    </table>
+
+    <p>Заметь: во всех этих фразах <b>нет артикля</b>. Не <span class="pt">tenho uma fome</span>, а просто <span class="pt">tenho fome</span> — это устойчивая пара «глагол + слово», и артикль в неё не входит.</p>
+
+    <div class="contrast">
+      <div class="label">Холод бывает трёх видов</div>
+      <p><span class="pt">Tenho frio.</span> — мёрзну <b>я</b>. Состояние человека.</p>
+      <p><span class="pt"><span class="es">Está</span> frio.</span> — холодно <b>на улице</b>. Состояние погоды.</p>
+      <p><span class="pt"><span class="se">Sou</span> frio.</span> — я <b>холодный человек</b>, неэмоциональный. Определение характера.</p>
+      <p>Три глагола, одно русское слово «холодно», и перепутать их — сказать не то. Русское «мне холодно» лежит в первой строке, и только в ней.</p>
+    </div>
+
+    <p>Второй глагол темы — <span class="pt">há</span>. Это форма от <span class="pt">haver</span>, и в живом языке от всего глагола осталась практически она одна. Значит «есть, имеется, находится» — там, где по-русски говорят просто «есть»:</p>
+
+    <ul class="rule-list">
+      <li><b>Форма одна на всё.</b> <span class="pt">Há um problema</span> и <span class="pt">Há problemas</span> — <span class="pt">há</span> не меняется ни по числу, ни по лицу. Множественного у неё не бывает</li>
+      <li><b>Подлежащего у неё нет.</b> Никто ничем не владеет — просто «имеется». Поэтому <span class="pt">há</span> и не с чем согласовывать</li>
+      <li><b>Отрицание обычное:</b> <span class="pt">Não há café</span> — «кофе нет»</li>
+    </ul>
+
+    <table>
+      <tr><th>Глагол</th><th>Когда</th><th>Пример</th></tr>
+      <tr><td class="pt">ter</td><td>есть владелец</td><td class="pt">A casa tem uma cozinha grande.</td></tr>
+      <tr><td class="pt">há</td><td>владельца нет, вещь просто есть</td><td class="pt">Há uma farmácia na rua.</td></tr>
+      <tr><td class="pt es">estar</td><td>вещь известна, речь о её месте</td><td class="pt">A farmácia <span class="es">está</span> perto.</td></tr>
+    </table>
+
+    <p>Разница между <span class="pt">há</span> и <span class="es">estar</span> — это разница между «где-то есть аптека» и «аптека вон там». Первое вводит вещь впервые, второе говорит о вещи уже известной. Отсюда и артикли: у <span class="pt">há</span> обычно <span class="pt">um</span> / <span class="pt">uma</span>, у <span class="es">estar</span> — <span class="pt">o</span> / <span class="pt">a</span>.</p>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> «У меня есть» — это <b>одно</b> слово <span class="pt">Tenho</span>. Не пытайся перевести «у меня» отдельно: получится набор предлогов, которого в языке нет.<br>
+      <b>2.</b> <span class="pt"><span class="es">Estou</span> frio</span> — не «мне холодно», а «я холодный на ощупь». Так говорят о предмете или о покойнике. Про себя всегда <span class="pt">Tenho frio</span>.<br>
+      <b>3.</b> <span class="pt">Há</span> не превращается во множественное. «Есть проблемы» — <span class="pt">Há problemas</span>, а не «hão problemas».<br>
+      <b>4.</b> <b>А в Бразилии</b> вместо <span class="pt">há</span> в разговоре говорят <span class="pt">tem</span>: <i>tem um problema</i>. В Португалии так не говорят — это сразу выдаёт бразильскую речь.</div>
+
+    <div class="tip"><b>Что отложено.</b> Возраст в португальском тоже считается через <span class="pt">ter</span> — «имею столько-то лет». Разберём в теме 0.16, когда появятся числа: без них фраза не собирается.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 23 · Estados com ter — состояния через ter</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">a fome</span> <span class="tr">а фом</span><span class="t">— голод</span></div>
+          <div><span class="w">a sede</span> <span class="tr">а сед</span><span class="t">— жажда</span></div>
+          <div><span class="w">o sono</span> <span class="tr">у сону</span><span class="t">— сон, сонливость</span></div>
+          <div><span class="w">o medo</span> <span class="tr">у меду</span><span class="t">— страх</span></div>
+          <div><span class="w">a pressa</span> <span class="tr">а преса</span><span class="t">— спешка</span></div>
+          <div><span class="w">a sorte</span> <span class="tr">а сорт</span><span class="t">— удача, везение</span></div>
+          <div><span class="w">a razão</span> <span class="tr">а разау</span><span class="t">— правота; причина</span></div>
+          <div><span class="w">o calor</span> <span class="tr">у калор</span><span class="t">— жара, тепло</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> все восемь слов — существительные, хотя по-русски на их месте стоят наречия и краткие прилагательные («холодно», «страшно», «прав»). Отсюда и глагол <span class="pt">ter</span>: имеют вещь, а не находятся в состоянии.<br><br><span class="pt">a razão</span> — слово на <b>-ão</b> женского рода (тема 0.5), во множественном <span class="pt">razões</span>. Значит и «правота», и «причина»: <span class="pt">tens razão</span> — «ты прав».<br><br><span class="pt">a sede</span> пишется как <i>sede</i> «штаб-квартира», но читается иначе: «сед» с закрытым первым <b>e</b> — жажда, «сэд» с открытым — контора.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 24 · O que há na rua — что есть вокруг</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">o telemóvel</span> <span class="tr">у тлемовел</span><span class="t">— мобильный телефон</span></div>
+          <div><span class="w">o dinheiro</span> <span class="tr">у диньейру</span><span class="t">— деньги</span></div>
+          <div><span class="w">a bicicleta</span> <span class="tr">а бисиклета</span><span class="t">— велосипед</span></div>
+          <div><span class="w">o gato</span> <span class="tr">у гату</span><span class="t">— кот, кошка</span></div>
+          <div><span class="w">o emprego</span> <span class="tr">у эмпрегу</span><span class="t">— работа, место работы</span></div>
+          <div><span class="w">a farmácia</span> <span class="tr">а фармасиа</span><span class="t">— аптека</span></div>
+          <div><span class="w">o supermercado</span> <span class="tr">у супермеркаду</span><span class="t">— супермаркет</span></div>
+          <div><span class="w">a paragem</span> <span class="tr">а паражень</span><span class="t">— остановка</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">o telemóvel</span> и <span class="pt">a paragem</span> — чисто португальские слова. В Бразилии это <i>celular</i> и <i>ponto de ônibus</i>. <span class="pt">telemóvel</span> кончается на <b>-el</b>, значит во множественном <span class="pt">telemóveis</span> (тема 0.6), а <span class="pt">paragem</span> на <b>-m</b> → <span class="pt">paragens</span>.<br><br><span class="pt">o dinheiro</span> в единственном числе, хотя по-русски «деньги» всегда во множественном.<br><br><span class="pt">o emprego</span> — это место работы, должность; <span class="pt">o trabalho</span> — сам труд. <span class="pt">Tenho um emprego novo</span> значит «я устроился на новую работу».</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · A rua da Ana — улица Аны</div>
+      <div class="mini-text">
+        <p class="storytext">Na rua da Ana há um supermercado, uma farmácia e um café pequeno. Há uma paragem de autocarro perto da casa. A Ana tem uma bicicleta velha e um gato preto. O gato tem muita fome. Hoje a Ana tem pressa: tem uma consulta e o médico não tem muito tempo. O João tem um emprego novo e tem sorte: o trabalho é perto de casa. Ele tem um telemóvel novo, mas não tem dinheiro. Não há problema — hoje o jantar é em casa da Ana.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">На улице Аны есть супермаркет, аптека и маленькое кафе. Рядом с домом есть автобусная остановка. У Аны старый велосипед и чёрный кот. Кот очень голодный. Сегодня Ана торопится: у неё приём у врача, а у врача мало времени. У Жуана новая работа, и ему везёт: работа рядом с домом. У него новый телефон, но нет денег. Не беда — ужин сегодня дома у Аны.</p>
+        <p class="why-note"><b>Почему так:</b> первая фраза начинается с <span class="pt">há</span>, потому что супермаркет и аптека появляются впервые — их вводят в разговор. Скажи <span class="pt">o supermercado <span class="es">está</span> na rua</span>, и это будет ответ на вопрос «где тот самый супермаркет».<br><br><span class="pt">A Ana tem uma bicicleta</span> — здесь есть владелец, поэтому <span class="pt">ter</span>, а не <span class="pt">há</span>.<br><br><span class="pt">O gato tem muita fome</span> — не «кот имеет голод», а «кот голодный». И <span class="pt">tem sorte</span> — «ему везёт». Обе фразы по-русски собираются совсем иначе.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Tens fome? — есть хочешь?</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> João, tens fome?</p>
+          <p class="dline"><span class="speaker">João:</span> Tenho muita fome! E tenho sede.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Há uma pastelaria aqui perto. Há pão, há sopa, há tudo.</p>
+          <p class="dline"><span class="speaker">João:</span> Mas não tenho dinheiro...</p>
+          <p class="dline"><span class="speaker">Ana:</span> Não há problema, o café é meu. Tens sorte hoje!</p>
+          <p class="dline"><span class="speaker">João:</span> Tens razão, tenho muita sorte. E tu, tens pressa?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Não tenho. A aula é mais tarde.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Жуан, есть хочешь?<br><b>Жуан:</b> Очень! И пить хочу.<br><b>Ана:</b> Тут рядом есть кондитерская. Есть хлеб, есть суп, есть всё.<br><b>Жуан:</b> Но у меня нет денег…<br><b>Ана:</b> Не беда, кофе за мой счёт. Тебе сегодня везёт!<br><b>Жуан:</b> Твоя правда, мне очень везёт. А ты, торопишься?<br><b>Ана:</b> Нет. Пара позже.</p>
+        <p class="why-note"><b>Почему так:</b> в диалоге все три конструкции подряд. <span class="pt">Tens fome?</span> — состояние человека, <span class="pt">ter</span>. <span class="pt">Há pão</span> — хлеб просто имеется, владельца нет. <span class="pt">Não tenho dinheiro</span> — отрицание ставится перед глаголом, разбор в следующей теме.<br><br><span class="pt">Tens razão</span> — «ты прав». Самый частый способ согласиться в разговоре; звучит естественнее, чем <span class="pt">sim</span>.<br><br><span class="pt">Não tenho</span> в ответ на вопрос — снова ответ повтором глагола вместо «нет». Португальский предпочитает глагол короткому слову.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="ter">
+    <p class="quiz-instruction">Выбери форму. Помни: состояние человека — через <span class="pt">ter</span>, погода — через <span class="es">estar</span>.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="pt">Eu</span>
+      <select class="mc" data-answer="tenho">
+        <option value="">—</option>
+        <option value="tenho">tenho</option>
+        <option value="tens">tens</option>
+        <option value="tem">tem</option>
+      </select> <span class="pt">um gato.</span>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="pt">Nós</span>
+      <select class="mc" data-answer="temos">
+        <option value="">—</option>
+        <option value="temos">temos</option>
+        <option value="têm">têm</option>
+        <option value="tenho">tenho</option>
+      </select> <span class="pt">tempo.</span>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="pt">Os vizinhos</span>
+      <select class="mc" data-answer="têm">
+        <option value="">—</option>
+        <option value="têm">têm</option>
+        <option value="tem">tem</option>
+        <option value="temos">temos</option>
+      </select> <span class="pt">um cão.</span>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">«Мне холодно»:</span>
+      <select class="mc" data-answer="Tenho frio">
+        <option value="">—</option>
+        <option value="Tenho frio">Tenho frio</option>
+        <option value="Estou frio">Estou frio</option>
+        <option value="Sou frio">Sou frio</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">«На улице холодно»:</span>
+      <select class="mc" data-answer="Está frio">
+        <option value="">—</option>
+        <option value="Está frio">Está frio</option>
+        <option value="Tenho frio">Tenho frio</option>
+        <option value="É frio">É frio</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="pt">Na rua</span>
+      <select class="mc" data-answer="há">
+        <option value="">—</option>
+        <option value="há">há</option>
+        <option value="hão">hão</option>
+        <option value="tem">tem</option>
+      </select> <span class="pt">um supermercado.</span>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">«Ты прав»:</span>
+      <select class="mc" data-answer="Tens razão">
+        <option value="">—</option>
+        <option value="Tens razão">Tens razão</option>
+        <option value="És razão">És razão</option>
+        <option value="Estás razão">Estás razão</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши форму</span> <span class="pt">ter</span>: <span class="pt">A Ana</span> <input class="blank" data-answer="tem" style="width:5em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">uma bicicleta.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Впиши: «Есть проблемы»</span> — <input class="blank" data-answer="há|ha" style="width:5em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">problemas.</span></div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Кот очень голодный».</span>
+      <div class="qbuild" data-answer="O gato tem muita fome" data-words="fome|tem|O|muita|gato"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
     <button type="button" class="next-card" data-open="vocab">
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label">Seguinte · дальше</span>
-        <span class="next-title">Dicionário — повторить слова, пока тема 0.11 не готова</span>
+        <span class="next-title">Dicionário — повторить слова, пока тема 0.13 не готова</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -3129,7 +3589,7 @@
 
   // Порядок = порядок прохождения. Темы без контента сюда не попадают,
   // иначе прогресс считался бы от несуществующих экранов.
-  var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes"];
+  var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes","adjetivos","ter"];
   var PRESENTE_TOPICS = [];
   var PASSADO_TOPICS  = [];
   var EXPANSAO_TOPICS = [];
@@ -3144,7 +3604,7 @@
 
   var TOPIC_MINUTES = {
     "alfabeto":20, "acento":22, "nasais":18, "digrafos":16, "genero":20, "plural":22,
-    "ser":24, "estar":24, "servsestar":26, "pronomes":22
+    "ser":24, "estar":24, "servsestar":26, "pronomes":22, "adjetivos":22, "ter":24
   };
 
   var STORAGE_KEY   = "ptProgressV1";
@@ -3522,7 +3982,13 @@
     // 0.9–0.10
     "minha":"моя","teu":"твой","hospital":"больница","ainda":"ещё","então":"тогда, итак",
     "já":"уже","maria":"Мария (женское имя)","paulo":"Паулу (мужское имя)",
-    "nós":"мы","eles":"они","elas":"они (женщины)","ele":"он","ela":"она","como":"как"
+    "nós":"мы","eles":"они","elas":"они (женщины)","ele":"он","ela":"она","como":"как",
+    "tua":"твоя",
+    // 0.12: формы ter и há. К словарной статье сводится только «temos»,
+    // остальные — целиком (см. «технический долг» в ROADMAP).
+    "ter":"иметь","tenho":"я имею (от ter)","tens":"ты имеешь (от ter)",
+    "tem":"имеет (от ter)","temos":"мы имеем (от ter)","têm":"имеют (от ter)",
+    "haver":"иметься","há":"есть, имеется (от haver)"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
@@ -3540,6 +4006,7 @@
     ["es",""], ["s",""],
     // род прилагательных и существительных
     ["a","o"], ["as","os"], ["ora","or"], ["oras","or"],
+    ["esa","ês"], ["esas","ês"], ["ã","ão"], ["ãs","ão"],
     // настоящее время
     ["amos","ar"], ["am","ar"], ["as","ar"], ["a","ar"], ["o","ar"],
     ["emos","er"], ["em","er"], ["es","er"], ["e","er"], ["o","er"],
