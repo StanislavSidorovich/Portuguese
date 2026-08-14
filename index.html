@@ -752,15 +752,17 @@
         <span class="row-check" data-check="preposicoes" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="demonstrativos">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.15</span> Este, esse, aquele<span class="row-title-ru">три расстояния вместо двух</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="demonstrativos" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="numeros">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.16</span> Números, horas, dinheiro<span class="row-title-ru">числа, время, деньги</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="numeros" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
     </div>
   </div>
@@ -3999,11 +4001,490 @@
       <button class="btn btn-reveal" type="button">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="demonstrativos">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Este, esse, aquele — три расстояния</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ 0.15 ESTE, ESSE, AQUELE ============ -->
+<div class="screen topic-screen" id="screen-demonstrativos" data-topic="demonstrativos" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2><span class="topic-num">0.15</span> Este, esse, aquele</h2>
+    <span class="done-badge" data-badge="demonstrativos">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">В русском два указательных слова, «этот» и «тот». В португальском их три — и третье появляется не от богатства языка, а потому что расстояние считают от <b>двух</b> людей сразу.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Русское «этот / тот» делит мир надвое: близко ко мне — далеко от меня. Португальский делит натрое, и вторая ступень привязана <b>к собеседнику</b>:</p>
+
+    <table>
+      <tr><th>Где вещь</th><th>Слово</th><th>Место</th></tr>
+      <tr><td>у меня, в руках</td><td class="pt">este</td><td class="pt">aqui, cá</td></tr>
+      <tr><td>у тебя, рядом с тобой</td><td class="pt">esse</td><td class="pt">aí</td></tr>
+      <tr><td>далеко от обоих</td><td class="pt">aquele</td><td class="pt">ali, lá</td></tr>
+    </table>
+
+    <p>Три указательных слова и три слова места идут парами: <span class="pt">este… aqui</span>, <span class="pt">esse… aí</span>, <span class="pt">aquele… ali</span>. Услышал <span class="pt">aí</span> — значит речь о том, что рядом с собеседником, а не с говорящим.</p>
+
+    <p>Каждое из трёх согласуется по роду и числу — как прилагательное из темы 0.11:</p>
+
+    <table>
+      <tr><th>Слово</th><th class="m">ед. м · <span class="f">ж</span></th><th class="m">мн. м · <span class="f">ж</span></th></tr>
+      <tr><td>этот (у меня)</td><td class="pt"><span class="m">este</span> · <span class="f">esta</span></td><td class="pt"><span class="m">estes</span> · <span class="f">estas</span></td></tr>
+      <tr><td>этот (у тебя)</td><td class="pt"><span class="m">esse</span> · <span class="f">essa</span></td><td class="pt"><span class="m">esses</span> · <span class="f">essas</span></td></tr>
+      <tr><td>тот (далеко)</td><td class="pt"><span class="m">aquele</span> · <span class="f">aquela</span></td><td class="pt"><span class="m">aqueles</span> · <span class="f">aquelas</span></td></tr>
+    </table>
+
+    <div class="contrast">
+      <div class="label">Isto, isso, aquilo — когда род неизвестен</div>
+      <p>У каждой тройки есть <b>средняя</b> форма, которая не меняется вообще: <span class="pt">isto</span>, <span class="pt">isso</span>, <span class="pt">aquilo</span>.</p>
+      <p>Она нужна там, где слова ещё нет: предмет незнакомый, названия ты не знаешь, а значит, не знаешь и рода. <span class="pt">O que é <b>isto</b>?</span> — «что это такое?». Ответишь <span class="pt">Isto é uma mochila</span>, и дальше уже можно говорить <span class="pt">esta mochila</span>.</p>
+      <p>Ими же указывают на всю ситуацию целиком: <span class="pt">Isso não é bom.</span> — «вот это нехорошо».</p>
+    </div>
+
+    <p>И, как всегда в португальском, указательные <b>слипаются с предлогами</b> — теми же <span class="pt">de</span> и <span class="pt">em</span> из темы 0.14. Слияние обязательно:</p>
+
+    <table>
+      <tr><th>Слово</th><th>de +</th><th>em +</th></tr>
+      <tr><td class="pt">este · esta</td><td class="pt">deste · desta</td><td class="pt">neste · nesta</td></tr>
+      <tr><td class="pt">esse · essa</td><td class="pt">desse · dessa</td><td class="pt">nesse · nessa</td></tr>
+      <tr><td class="pt">aquele · aquela</td><td class="pt">daquele · daquela</td><td class="pt">naquele · naquela</td></tr>
+      <tr><td class="pt">isto · isso · aquilo</td><td class="pt">disto · disso · daquilo</td><td class="pt">nisto · nisso · naquilo</td></tr>
+    </table>
+
+    <p>Предлог <span class="pt">a</span> сливается только с дальней тройкой, и знак слияния там тот же, что в <span class="pt">à</span>: <span class="pt">a + aquele = <b>àquele</b></span>, <span class="pt">a + aquilo = <b>àquilo</b></span>. С <span class="pt">este</span> и <span class="pt">esse</span> он не сливается никак.</p>
+
+    <p>Те же три ступени работают и во времени:</p>
+
+    <table>
+      <tr><th>Фраза</th><th>О чём</th></tr>
+      <tr><td class="pt">esta semana</td><td>текущая, та, в которой мы сейчас</td></tr>
+      <tr><td class="pt">essa semana</td><td>та, о которой ты только что сказал</td></tr>
+      <tr><td class="pt">naquele tempo</td><td>в те далёкие времена</td></tr>
+    </table>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> Русское «тот» ложится то на <span class="pt">esse</span>, то на <span class="pt">aquele</span> — смотря где вещь. Если она у собеседника, «тот» это <span class="pt">esse</span>, и <span class="pt">aquele</span> прозвучит странно.<br>
+      <b>2.</b> <span class="pt">isto</span> / <span class="pt">isso</span> / <span class="pt">aquilo</span> рода не имеют. Спросить <span class="pt">O que é este?</span> нельзя: пока предмет не назван, у него нет и рода.<br>
+      <b>3.</b> Слияние обязательно: <span class="pt">nesta casa</span>, а не «em esta casa». Раздельно это просто не пишут.<br>
+      <b>4.</b> <b>А в Бразилии</b> разница между <span class="pt">este</span> и <span class="pt">esse</span> в живой речи стёрлась: <i>esse</i> говорят и про то, что в руках. В Португалии тройка держится, и <span class="pt">esse</span> вместо <span class="pt">este</span> звучит как чужой акцент.</div>
+
+    <div class="tip"><b>Как не путаться.</b> Привязывай не к расстоянию, а к человеку: <b>este — моё, esse — твоё, aquele — ничьё</b>. Работает и с вещами, и со временем, и с тем, что было сказано: <span class="pt">esse</span> — то, что произнёс собеседник, <span class="pt">este</span> — то, что говорю я.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 29 · Aqui, aí, ali — где именно</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">aí</span> <span class="tr">аи</span><span class="t">— там, у тебя</span></div>
+          <div><span class="w">ali</span> <span class="tr">али</span><span class="t">— вон там</span></div>
+          <div><span class="w">lá</span> <span class="tr">ла</span><span class="t">— там (далеко)</span></div>
+          <div><span class="w">cá</span> <span class="tr">ка</span><span class="t">— тут, сюда</span></div>
+          <div><span class="w">dentro</span> <span class="tr">дентру</span><span class="t">— внутри</span></div>
+          <div><span class="w">fora</span> <span class="tr">фора</span><span class="t">— снаружи, вне</span></div>
+          <div><span class="w">em cima</span> <span class="tr">ень сима</span><span class="t">— сверху, наверху</span></div>
+          <div><span class="w">ao pé</span> <span class="tr">ау пе</span><span class="t">— рядом, возле</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">aqui</span> и <span class="pt">cá</span> значат одно и то же, но <span class="pt">cá</span> теплее и разговорнее: <span class="pt">cá em casa</span> — «у нас дома». Так же <span class="pt">ali</span> и <span class="pt">lá</span>: <span class="pt">lá</span> дальше и неопределённее.<br><br><span class="pt">ao pé de</span> — «у ноги», буквально. Это самый португальский способ сказать «рядом»: <span class="pt">ao pé da porta</span>. В Бразилии на его месте <i>perto de</i>.<br><br><span class="pt">dentro</span> и <span class="pt">fora</span> тянут за собой <span class="pt">de</span>: <span class="pt">dentro da mochila</span>, <span class="pt">fora de casa</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 30 · Coisas à mão — вещи под рукой</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">a caneta</span> <span class="tr">а канета</span><span class="t">— ручка</span></div>
+          <div><span class="w">o casaco</span> <span class="tr">у казаку</span><span class="t">— куртка, пиджак</span></div>
+          <div><span class="w">o chapéu</span> <span class="tr">у шапеу</span><span class="t">— шляпа</span></div>
+          <div><span class="w">os óculos</span> <span class="tr">уж окулуш</span><span class="t">— очки</span></div>
+          <div><span class="w">a mochila</span> <span class="tr">а мошила</span><span class="t">— рюкзак</span></div>
+          <div><span class="w">o relógio</span> <span class="tr">у реложиу</span><span class="t">— часы</span></div>
+          <div><span class="w">a carteira</span> <span class="tr">а картейра</span><span class="t">— кошелёк, бумажник</span></div>
+          <div><span class="w">o saco</span> <span class="tr">у саку</span><span class="t">— пакет, сумка</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">os óculos</span> существуют только во множественном, как русские «очки». Значит и указательное при них множественное: <span class="pt">estes óculos</span>, а не «este óculo».<br><br><span class="pt">o relógio</span> — и наручные часы, и настенные, и башенные. Отдельного слова для «часов на руке» нет.<br><br><span class="pt">o casaco</span> — верхняя одежда вообще: и куртка, и пальто, и пиджак. <span class="pt">o chapéu</span> читается «шапеу»: <b>ch</b> из темы 0.4 даёт «ш».</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · Três casas — три дома</div>
+      <div class="mini-text">
+        <p class="storytext">Esta casa é nova: é a casa da Ana. Essa casa, aí ao lado, é velha, e aquela casa, ali perto do rio, é dos avós. Aqui, em cima da mesa, estão a caneta e o relógio da Ana. Aquele chapéu ali é do Paulo, e este casaco é do João. Dentro da mochila há um livro, uma carteira e os óculos. Nesta casa está tudo bem. Cá dentro está calor, mas lá fora está frio e não está ninguém na rua.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Этот дом новый — это дом Аны. Тот дом, вон рядом с тобой, старый, а вон тот дом, у реки, — дом дедушки с бабушкой. Здесь, на столе, ручка и часы Аны. Та шляпа вон там — Паулу, а эта куртка — Жуана. Внутри рюкзака книга, кошелёк и очки. В этом доме всё хорошо. Тут внутри тепло, а там снаружи холодно, и на улице никого.</p>
+        <p class="why-note"><b>Почему так:</b> три дома идут тремя ступенями сразу: <span class="pt">esta casa</span> (та, в которой мы), <span class="pt">essa casa aí</span> (та, что рядом с собеседником), <span class="pt">aquela casa ali</span> (та, что далеко от обоих). По-русски вторая и третья обе «тот».<br><br><span class="pt">Nesta casa</span> — слияние <span class="pt">em + esta</span>, обязательное.<br><br><span class="pt">está calor</span> и <span class="pt">está frio</span> — погода и воздух вокруг, поэтому <span class="es">estar</span>. Скажи <span class="pt">tenho frio</span>, и это будет уже про человека (тема 0.12).</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Na loja — в магазине</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> Este chapéu é bonito. E aquele ali, o preto?</p>
+          <p class="dline"><span class="speaker">Empregada:</span> Aquele também é bonito, mas este é novo.</p>
+          <p class="dline"><span class="speaker">Ana:</span> E essa mochila aí, ao pé da caneta? É boa?</p>
+          <p class="dline"><span class="speaker">Empregada:</span> Esta? É muito boa. Dentro há um saco.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Desculpe, o que é isto?</p>
+          <p class="dline"><span class="speaker">Empregada:</span> Isto é uma carteira. Está em cima da mesa.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Claro! Hoje não tenho os óculos comigo.</p>
+          <p class="dline"><span class="speaker">Empregada:</span> Pois é! Sem óculos nada é fácil.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Эта шляпа красивая. А вон та, чёрная?<br><b>Продавщица:</b> Та тоже красивая, но эта новая.<br><b>Ана:</b> А тот рюкзак у вас, рядом с ручкой? Хороший?<br><b>Продавщица:</b> Этот? Очень хороший. Внутри есть пакет.<br><b>Ана:</b> Извините, а это что такое?<br><b>Продавщица:</b> Это кошелёк. Он на столе.<br><b>Ана:</b> Ах да! У меня сегодня нет с собой очков.<br><b>Продавщица:</b> Вот-вот! Без очков ничего не даётся легко.</p>
+        <p class="why-note"><b>Почему так:</b> обрати внимание на переход: Ана говорит <span class="pt">essa mochila aí</span> — рюкзак у продавщицы. А продавщица берёт его в руки и отвечает <span class="pt">Esta?</span> — теперь он у неё. Слово меняется вместе с тем, у кого вещь.<br><br><span class="pt">O que é isto?</span> — единственно возможная форма вопроса о незнакомой вещи: рода у неё пока нет.<br><br><span class="pt">Sem óculos nada é fácil</span> — отрицательное слово стоит перед глаголом, поэтому <span class="pt">não</span> не нужно (тема 0.13).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="demonstrativos">
+    <p class="quiz-instruction">Выбери ступень: моё — твоё — ничьё. И не забудь про слияния с предлогом.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">Книга у меня в руках:</span>
+      <select class="mc" data-answer="este livro">
+        <option value="">—</option>
+        <option value="este livro">este livro</option>
+        <option value="esse livro">esse livro</option>
+        <option value="aquele livro">aquele livro</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">Шляпа рядом с собеседником:</span>
+      <select class="mc" data-answer="esse chapéu">
+        <option value="">—</option>
+        <option value="esse chapéu">esse chapéu</option>
+        <option value="este chapéu">este chapéu</option>
+        <option value="aquele chapéu">aquele chapéu</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">Дом далеко от обоих:</span>
+      <select class="mc" data-answer="aquela casa">
+        <option value="">—</option>
+        <option value="aquela casa">aquela casa</option>
+        <option value="essa casa">essa casa</option>
+        <option value="esta casa">esta casa</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">«Что это такое?» о незнакомой вещи:</span>
+      <select class="mc" data-answer="O que é isto?">
+        <option value="">—</option>
+        <option value="O que é isto?">O que é isto?</option>
+        <option value="O que é este?">O que é este?</option>
+        <option value="O que é esta?">O que é esta?</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="pt">de + este</span> =
+      <select class="mc" data-answer="deste">
+        <option value="">—</option>
+        <option value="deste">deste</option>
+        <option value="do este">do este</option>
+        <option value="deeste">deeste</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="pt">em + aquela</span> =
+      <select class="mc" data-answer="naquela">
+        <option value="">—</option>
+        <option value="naquela">naquela</option>
+        <option value="em aquela">em aquela</option>
+        <option value="naaquela">naaquela</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="pt">a + aquele</span> =
+      <select class="mc" data-answer="àquele">
+        <option value="">—</option>
+        <option value="àquele">àquele</option>
+        <option value="aaquele">aaquele</option>
+        <option value="ao aquele">ao aquele</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши</span> <span class="pt">em + esta</span>: <span class="pt">Está tudo bem</span> <input class="blank" data-answer="nesta" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">casa.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Какому слову соответствует</span> <span class="pt">aí</span>?
+      <select class="mc" data-answer="esse">
+        <option value="">—</option>
+        <option value="esse">esse</option>
+        <option value="este">este</option>
+        <option value="aquele">aquele</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Та шляпа — Паулу».</span>
+      <div class="qbuild" data-answer="Aquele chapéu é do Paulo" data-words="do|Aquele|é|Paulo|chapéu"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="numeros">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Números, horas, dinheiro — числа, время, деньги</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ 0.16 NÚMEROS, HORAS, DINHEIRO ============ -->
+<div class="screen topic-screen" id="screen-numeros" data-topic="numeros" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2><span class="topic-num">0.16</span> Números, horas, dinheiro</h2>
+    <span class="done-badge" data-badge="numeros">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Последняя тема блока и самая бытовая: числа, часы, цены и возраст. Здесь же закрывается обещание из темы 0.12 — сколько тебе лет.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Первый десяток и второй придётся выучить целиком, дальше числа собираются сами.</p>
+
+    <table>
+      <tr><td class="pt">0 zero</td><td class="pt">1 um · uma</td><td class="pt">2 dois · duas</td></tr>
+      <tr><td class="pt">3 três</td><td class="pt">4 quatro</td><td class="pt">5 cinco</td></tr>
+      <tr><td class="pt">6 seis</td><td class="pt">7 sete</td><td class="pt">8 oito</td></tr>
+      <tr><td class="pt">9 nove</td><td class="pt">10 dez</td><td class="pt">11 onze</td></tr>
+      <tr><td class="pt">12 doze</td><td class="pt">13 treze</td><td class="pt">14 catorze</td></tr>
+      <tr><td class="pt">15 quinze</td><td class="pt">16 dezasseis</td><td class="pt">17 dezassete</td></tr>
+      <tr><td class="pt">18 dezoito</td><td class="pt">19 dezanove</td><td class="pt">20 vinte</td></tr>
+    </table>
+
+    <div class="contrast">
+      <div class="label">Шестнадцать, семнадцать, девятнадцать — по-португальски</div>
+      <p>Числа 16, 17 и 19 в Португалии пишут через <b>-a-</b>: <span class="pt">dezasseis</span>, <span class="pt">dezassete</span>, <span class="pt">dezanove</span>.</p>
+      <p>В Бразилии те же числа пишут через <b>-e-</b>: <i>dezesseis</i>, <i>dezessete</i>, <i>dezenove</i>. Ошибкой ни то ни другое не считается, но в Португалии школа учит первый вариант, и в ценниках, расписаниях и чеках стоит именно он.</p>
+      <p>Число 14 здесь <span class="pt">catorze</span>, а не <i>quatorze</i>.</p>
+    </div>
+
+    <p>Десятки и сотни:</p>
+
+    <table>
+      <tr><td class="pt">30 trinta</td><td class="pt">40 quarenta</td><td class="pt">50 cinquenta</td></tr>
+      <tr><td class="pt">60 sessenta</td><td class="pt">70 setenta</td><td class="pt">80 oitenta</td></tr>
+      <tr><td class="pt">90 noventa</td><td class="pt">100 cem</td><td class="pt">1000 mil</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b>Между частями числа ставят <span class="pt">e</span>:</b> <span class="pt">vinte <b>e</b> um</span> (21), <span class="pt">cento <b>e</b> vinte <b>e</b> três</span> (123). В русском союз тут не нужен, в португальском обязателен</li>
+      <li><b>Ровно сто — <span class="pt">cem</span>, сто с довеском — <span class="pt">cento</span>:</b> <span class="pt">cem euros</span>, но <span class="pt">cento e cinco euros</span></li>
+      <li><b>Сотни согласуются по роду:</b> <span class="pt">duzentos livros</span>, но <span class="pt">duzentas casas</span></li>
+    </ul>
+
+    <p>И главное про числа: <span class="pt">um</span> и <span class="pt">dois</span> — <b>единственные</b>, у которых есть женская форма. Все остальные не меняются:</p>
+
+    <table>
+      <tr><th class="m">муж.</th><th class="f">жен.</th></tr>
+      <tr><td class="pt m">um livro</td><td class="pt f">uma casa</td></tr>
+      <tr><td class="pt m">dois livros</td><td class="pt f">duas casas</td></tr>
+      <tr><td class="pt m">três livros</td><td class="pt f">três casas</td></tr>
+    </table>
+
+    <p>Отсюда и <span class="pt">duas horas</span>: слово <span class="pt">hora</span> женского рода, значит «два часа» — <span class="pt">duas</span>, а не <span class="pt">dois</span>. Это самая частая ошибка в теме.</p>
+
+    <p>Теперь часы. Вопрос звучит <span class="pt">Que horas são?</span> — буквально «которые часы суть», и глагол в нём во множественном:</p>
+
+    <table>
+      <tr><th>Время</th><th>Как говорят</th></tr>
+      <tr><td>1:00</td><td class="pt">É uma hora.</td></tr>
+      <tr><td>3:00</td><td class="pt">São três horas.</td></tr>
+      <tr><td>3:15</td><td class="pt">São três e um quarto.</td></tr>
+      <tr><td>3:30</td><td class="pt">São três e meia.</td></tr>
+      <tr><td>3:45</td><td class="pt">São quatro menos um quarto.</td></tr>
+      <tr><td>12:00</td><td class="pt">É meio-dia.</td></tr>
+      <tr><td>00:00</td><td class="pt">É meia-noite.</td></tr>
+    </table>
+
+    <p>Час, полдень и полночь — единственные, у которых глагол в единственном: <span class="pt">É uma hora</span>, <span class="pt">É meio-dia</span>. Всё остальное — <span class="pt">São</span>.</p>
+
+    <ul class="rule-list">
+      <li><b>«В котором часу» — через <span class="pt">a</span>, а значит через слияние:</b> <span class="pt"><b>às</b> dez horas</span>, <span class="pt"><b>à</b> uma hora</span>, <span class="pt">ao meio-dia</span>. Ровно та таблица из темы 0.14</li>
+      <li><b>Половина — <span class="pt">meia</span>, женская форма:</b> подразумевается <span class="pt">meia hora</span>. Четверть — <span class="pt">um quarto</span>, то же слово, что «комната»</li>
+      <li><b>Время суток — через <span class="pt">de</span>:</b> <span class="pt">oito <b>da</b> manhã</span>, <span class="pt">três <b>da</b> tarde</span>, <span class="pt">dez <b>da</b> noite</span>. Слияние снова обязательно</li>
+    </ul>
+
+    <p>Деньги. Цену спрашивают так же, как в самой первой теме курса: <span class="pt">Quanto é?</span> Есть и вариант <span class="pt">Quanto custa?</span> — «сколько стоит»; глагол <span class="pt">custar</span> разберём в блоке 1, пока запомни фразу целиком.</p>
+
+    <table>
+      <tr><th>На ценнике</th><th>Вслух</th></tr>
+      <tr><td>1,20 €</td><td class="pt">um euro e vinte</td></tr>
+      <tr><td>2,50 €</td><td class="pt">dois e cinquenta</td></tr>
+      <tr><td>0,70 €</td><td class="pt">setenta cêntimos</td></tr>
+    </table>
+
+    <p>В цене слово <span class="pt">cêntimos</span> обычно проглатывают: <span class="pt">dois e cinquenta</span> — и всем понятно. Запятая в португальском отделяет копейки, а точка — тысячи: <span class="pt">1.500,00</span> это полторы тысячи.</p>
+
+    <div class="contrast">
+      <div class="label">Возраст — обещание из темы 0.12</div>
+      <p>Возраст в португальском не «есть», а <b>имеется</b>: человек имеет столько-то лет.</p>
+      <p><span class="pt">Quantos anos tens?</span> или вежливее <span class="pt">Que idade tem?</span> — «сколько тебе лет».</p>
+      <p><span class="pt">Tenho vinte e cinco anos.</span> — «мне двадцать пять». Слово <span class="pt">anos</span> не опускают: сказать просто <span class="pt">Tenho vinte e cinco</span> нельзя.</p>
+    </div>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> <span class="pt">duas horas</span>, не «dois horas». Число согласуется с существительным, а <span class="pt">hora</span> женского рода.<br>
+      <b>2.</b> <span class="pt">É uma hora</span>, но <span class="pt">São duas horas</span>. Глагол считает часы, а не время вообще.<br>
+      <b>3.</b> Союз <span class="pt">e</span> внутри числа обязателен: <span class="pt">vinte e um</span>, а не «vinte um».<br>
+      <b>4.</b> Возраст — только через <span class="pt">ter</span>. <span class="pt">Sou vinte e cinco</span> звучит как «я — двадцать пять», то есть никак.</div>
+
+    <div class="tip"><b>Что теперь умеешь.</b> На этом блок 0 закончен: чтение, род, число, <span class="se">ser</span> с <span class="es">estar</span>, местоимения, прилагательное, <span class="pt">ter</span> и <span class="pt">há</span>, отрицание, вопрос, предлоги, указательные и числа. Этого хватает, чтобы описать, что вокруг, и договориться о встрече. Чего не хватает — глаголов: их-то и разбирает блок 1.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 31 · Números — числа</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">três</span> <span class="tr">трэш</span><span class="t">— три</span></div>
+          <div><span class="w">quatro</span> <span class="tr">куатру</span><span class="t">— четыре</span></div>
+          <div><span class="w">cinco</span> <span class="tr">синку</span><span class="t">— пять</span></div>
+          <div><span class="w">seis</span> <span class="tr">сейш</span><span class="t">— шесть</span></div>
+          <div><span class="w">sete</span> <span class="tr">сет</span><span class="t">— семь</span></div>
+          <div><span class="w">oito</span> <span class="tr">ойту</span><span class="t">— восемь</span></div>
+          <div><span class="w">nove</span> <span class="tr">нов</span><span class="t">— девять</span></div>
+          <div><span class="w">dez</span> <span class="tr">дэш</span><span class="t">— десять</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">seis</span> и <span class="pt">dez</span> кончаются на <b>s</b> и <b>z</b>, а они на конце слова дают «ш»: «сейш», «дэш». То же самое в <span class="pt">três</span> — «трэш».<br><br><span class="pt">um</span> и <span class="pt">dois</span> ты знаешь с первой темы; у них, единственных, есть женская форма — <span class="pt">uma</span> и <span class="pt">duas</span>.<br><br>В телефонных номерах <span class="pt">seis</span> часто заменяют на <span class="pt">meia</span> («половина дюжины»), чтобы не путать с <span class="pt">três</span>: «мейа» вместо «сейш».</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 32 · Horas e dinheiro — время и деньги</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">o minuto</span> <span class="tr">у минуту</span><span class="t">— минута</span></div>
+          <div><span class="w">o ano</span> <span class="tr">у ану</span><span class="t">— год</span></div>
+          <div><span class="w">a idade</span> <span class="tr">а идад</span><span class="t">— возраст</span></div>
+          <div><span class="w">a manhã</span> <span class="tr">а маньан</span><span class="t">— утро</span></div>
+          <div><span class="w">o meio-dia</span> <span class="tr">у майу-диа</span><span class="t">— полдень</span></div>
+          <div><span class="w">o euro</span> <span class="tr">у эуру</span><span class="t">— евро</span></div>
+          <div><span class="w">o preço</span> <span class="tr">у пресу</span><span class="t">— цена</span></div>
+          <div><span class="w">o troco</span> <span class="tr">у троку</span><span class="t">— сдача</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">a manhã</span> — носовое из темы 0.3, и <span class="pt">nh</span> из темы 0.4 в одном коротком слове: «маньан», ударение на последний слог.<br><br><span class="pt">a idade</span> кончается на <b>-dade</b>, а такие слова всегда женского рода: <span class="pt">a verdade</span>, <span class="pt">a cidade</span>, <span class="pt">a idade</span> (тема 0.5).<br><br><span class="pt">o troco</span> — сдача; не путать с <span class="pt">o preço</span> — ценой. <span class="pt">Fica com o troco</span> значит «сдачи не надо», но это уже глагол из блока 1.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · Um dia da Ana — день Аны</div>
+      <div class="mini-text">
+        <p class="storytext">São oito horas da manhã. A Ana tem uma aula às dez e meia, na universidade. O autocarro é às nove e um quarto, e a viagem é de vinte minutos. Ao meio-dia há almoço no café da universidade: o café e um pão são dois euros e cinquenta. A Ana tem três euros, e o troco é cinquenta cêntimos. O preço não é mau. Às quatro da tarde há uma consulta. O João tem vinte e dois anos e a Ana tem vinte e cinco. À noite, às nove, é o jantar em casa dos avós.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Восемь часов утра. У Аны пара в половине одиннадцатого, в университете. Автобус в четверть десятого, дорога занимает двадцать минут. В полдень обед в университетском кафе: кофе и хлеб — два пятьдесят. У Аны три евро, сдача — пятьдесят центов. Цена неплохая. В четыре дня приём у врача. Жуану двадцать два года, а Ане двадцать пять. Вечером, в девять, ужин в доме бабушки с дедушкой.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">São oito horas</span> — глагол во множественном, потому что часов восемь. А <span class="pt">É meio-dia</span> было бы в единственном.<br><br><span class="pt">às dez</span>, <span class="pt">às nove</span>, <span class="pt">às quatro</span>, <span class="pt">ao meio-dia</span> — всё это слияния предлога <span class="pt">a</span> с артиклем из темы 0.14. Время без них не собирается.<br><br><span class="pt">tem vinte e dois anos</span> — возраст через <span class="pt">ter</span>, и слово <span class="pt">anos</span> обязательно. Обещание из темы 0.12 закрыто.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Que horas são? — который час</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">João:</span> Ana, que horas são?</p>
+          <p class="dline"><span class="speaker">Ana:</span> São nove e meia. Já?</p>
+          <p class="dline"><span class="speaker">João:</span> A aula é às dez, não é? Temos vinte minutos.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Temos, sim. Quanto é o café aqui?</p>
+          <p class="dline"><span class="speaker">João:</span> Um euro e vinte. Tenho dois euros, o troco é oitenta cêntimos.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Que idade tem o teu irmão? Tem dezassete anos?</p>
+          <p class="dline"><span class="speaker">João:</span> Tem dezasseis. Faz anos hoje!</p>
+          <p class="dline"><span class="speaker">Ana:</span> Que bom! Então, até às dez!</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Жуан:</b> Ана, который час?<br><b>Ана:</b> Половина десятого. Уже?<br><b>Жуан:</b> Пара в десять, да? У нас двадцать минут.<br><b>Ана:</b> Да. Сколько тут стоит кофе?<br><b>Жуан:</b> Евро двадцать. У меня два евро, сдача восемьдесят центов.<br><b>Ана:</b> Сколько лет твоему брату? Семнадцать?<br><b>Жуан:</b> Шестнадцать. У него сегодня день рождения!<br><b>Ана:</b> Как хорошо! Тогда до десяти!</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">São nove e meia</span> — «половина десятого» по-русски, но «девять с половиной» по-португальски. Португальский считает от прошедшего часа, русский — к следующему, и на этом сбиваются все.<br><br><span class="pt">Que idade tem…?</span> — вежливый способ спросить возраст. <span class="pt">Quantos anos tens?</span> — то же самое на «ты».<br><br><span class="pt">Faz anos</span> — «у него день рождения», буквально «делает годы». Глагол <span class="pt">fazer</span> ждёт в теме 1.3; пока это готовая фраза, как <span class="pt">faz favor</span> из первой темы.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="numeros">
+    <p class="quiz-instruction">Числа, часы и цены. Следи за родом: у <span class="pt">um</span> и <span class="pt">dois</span> он есть.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">15 по-португальски:</span>
+      <select class="mc" data-answer="quinze">
+        <option value="">—</option>
+        <option value="quinze">quinze</option>
+        <option value="cinze">cinze</option>
+        <option value="dezacinco">dezacinco</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">16 в Португалии:</span>
+      <select class="mc" data-answer="dezasseis">
+        <option value="">—</option>
+        <option value="dezasseis">dezasseis</option>
+        <option value="dezesseis">dezesseis</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">«два часа»:</span>
+      <select class="mc" data-answer="duas horas">
+        <option value="">—</option>
+        <option value="duas horas">duas horas</option>
+        <option value="dois horas">dois horas</option>
+        <option value="duas hora">duas hora</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">13:00 — как сказать:</span>
+      <select class="mc" data-answer="É uma hora">
+        <option value="">—</option>
+        <option value="É uma hora">É uma hora</option>
+        <option value="São uma hora">São uma hora</option>
+        <option value="É um hora">É um hora</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">«Который час?»</span>
+      <select class="mc" data-answer="Que horas são?">
+        <option value="">—</option>
+        <option value="Que horas são?">Que horas são?</option>
+        <option value="Que hora é?">Que hora é?</option>
+        <option value="Quanto é a hora?">Quanto é a hora?</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">«в десять часов»:</span>
+      <select class="mc" data-answer="às dez horas">
+        <option value="">—</option>
+        <option value="às dez horas">às dez horas</option>
+        <option value="a dez horas">a dez horas</option>
+        <option value="nas dez horas">nas dez horas</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">21 по-португальски:</span>
+      <select class="mc" data-answer="vinte e um">
+        <option value="">—</option>
+        <option value="vinte e um">vinte e um</option>
+        <option value="vinte um">vinte um</option>
+        <option value="vintaum">vintaum</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши: «мне двадцать пять лет»</span> — <span class="pt">Tenho vinte e cinco</span> <input class="blank" data-answer="anos" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Впиши: 9:30 —</span> <span class="pt">São nove e</span> <input class="blank" data-answer="meia" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Пара в десять часов».</span>
+      <div class="qbuild" data-answer="A aula é às dez horas" data-words="dez|é|A|horas|às|aula"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
     <button type="button" class="next-card" data-open="vocab">
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label">Seguinte · дальше</span>
-        <span class="next-title">Dicionário — повторить слова, пока тема 0.15 не готова</span>
+        <span class="next-title">Dicionário — блок 0 пройден, повторить все 272 слова</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -4035,7 +4516,7 @@
 
   // Порядок = порядок прохождения. Темы без контента сюда не попадают,
   // иначе прогресс считался бы от несуществующих экранов.
-  var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes","adjetivos","ter","negacao","preposicoes"];
+  var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes","adjetivos","ter","negacao","preposicoes","demonstrativos","numeros"];
   var PRESENTE_TOPICS = [];
   var PASSADO_TOPICS  = [];
   var EXPANSAO_TOPICS = [];
@@ -4051,7 +4532,7 @@
   var TOPIC_MINUTES = {
     "alfabeto":20, "acento":22, "nasais":18, "digrafos":16, "genero":20, "plural":22,
     "ser":24, "estar":24, "servsestar":26, "pronomes":22, "adjetivos":22, "ter":24,
-    "negacao":20, "preposicoes":24
+    "negacao":20, "preposicoes":24, "demonstrativos":22, "numeros":26
   };
 
   var STORAGE_KEY   = "ptProgressV1";
@@ -4447,7 +4928,29 @@
     "pelos":"через, по (por + os)","pelas":"через, по (por + as)",
     "num":"в одном (em + um)","numa":"в одной (em + uma)",
     "dum":"из одного (de + um)","duma":"из одной (de + uma)",
-    "comigo":"со мной","contigo":"с тобой","connosco":"с нами"
+    "comigo":"со мной","contigo":"с тобой","connosco":"с нами",
+    // 0.15: указательные и их слияния. Закрытая таблица, к словарной статье
+    // не сводится — лежит целиком.
+    "este":"этот (у меня)","esta":"эта (у меня)","estes":"эти (у меня)","estas":"эти (у меня)",
+    "esse":"тот (у тебя)","essa":"та (у тебя)","esses":"те (у тебя)","essas":"те (у тебя)",
+    "aquele":"тот (далеко)","aquela":"та (далеко)","aqueles":"те (далеко)","aquelas":"те (далеко)",
+    "isso":"это (у тебя)","aquilo":"то (далеко)","pé":"нога, ступня","cima":"верх",
+    "deste":"этого (de + este)","desta":"этой (de + esta)","desse":"того (de + esse)",
+    "dessa":"той (de + essa)","daquele":"того (de + aquele)","daquela":"той (de + aquela)",
+    "neste":"в этом (em + este)","nesta":"в этой (em + esta)","nesse":"в том (em + esse)",
+    "nessa":"в той (em + essa)","naquele":"в том (em + aquele)","naquela":"в той (em + aquela)",
+    "àquele":"тому (a + aquele)","àquela":"той (a + aquela)",
+    "disto":"этого (de + isto)","disso":"этого (de + isso)","nisto":"в этом (em + isto)",
+    "nisso":"в этом (em + isso)",
+    // 0.16: числа, которых нет в наборах, и куски времени
+    "zero":"ноль","onze":"одиннадцать","doze":"двенадцать","treze":"тринадцать",
+    "catorze":"четырнадцать","quinze":"пятнадцать","dezasseis":"шестнадцать",
+    "dezassete":"семнадцать","dezoito":"восемнадцать","dezanove":"девятнадцать",
+    "vinte":"двадцать","trinta":"тридцать","quarenta":"сорок","cinquenta":"пятьдесят",
+    "sessenta":"шестьдесят","oitenta":"восемьдесят","noventa":"девяносто",
+    "cem":"сто","cento":"сто (с довеском)","mil":"тысяча",
+    "duas":"две (жен.)","duzentos":"двести","duzentas":"двести (жен.)",
+    "meia":"половина; полчаса","meio":"половина; средний","menos":"меньше, без"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
