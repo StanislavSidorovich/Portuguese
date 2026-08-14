@@ -661,15 +661,17 @@
         <span class="row-check" data-check="acento" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="nasais">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.3</span> Nasais<span class="row-title-ru">носовые: ão, ãe, õe, m и n на конце слога</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="nasais" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="digrafos">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.4</span> nh, lh, ch, ç, x, rr<span class="row-title-ru">буквосочетания, которых нет в русском</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="digrafos" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--base)"></span>
@@ -1424,11 +1426,420 @@
       <button class="btn btn-reveal" type="button">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="nasais">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Nasais — носовые гласные</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ 0.3 NASAIS ============ -->
+<div class="screen topic-screen" id="screen-nasais" data-topic="nasais" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2><span class="topic-num">0.3</span> Nasais</h2>
+    <span class="done-badge" data-badge="nasais">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Звук идёт через нос, а согласной на конце нет: <span class="pt">sim</span> — это «си» в нос, не «сим».</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>В русском носовых гласных нет вообще: у нас «н» и «м» — это отдельные согласные, которые слышны и произносятся языком и губами. В португальском такая же на вид буква часто <b>не звук, а знак</b>: она означает, что предыдущую гласную надо пустить через нос, а сама не произносится.</p>
+
+    <p>Носовой получается двумя способами.</p>
+
+    <div class="pair-grid">
+      <div class="pair-cell ser">
+        <div class="p-title">Тильда над гласной</div>
+        <div class="p-big">ir-MÃ<br>MÃE</div>
+        <div class="p-note">знак <b>~</b> и значит «в нос»: <span class="pt">irmã</span>, <span class="pt">mão</span>, <span class="pt">lição</span></div>
+      </div>
+      <div class="pair-cell estar">
+        <div class="p-title">m или n закрывает слог</div>
+        <div class="p-big">sim<br>bom</div>
+        <div class="p-note">буква не читается, она только «оносовляет» гласную перед собой</div>
+      </div>
+    </div>
+
+    <p>Второй способ — тот, на котором и спотыкается русское ухо. Буква <b>m</b> на конце слова или перед <b>p, b</b>, буква <b>n</b> перед другой согласной — не произносятся. Губы для «м» <b>не смыкаются</b>: <span class="pt">bom</span> — это «бо» в нос, а не «бом».</p>
+
+    <div class="sound-list">
+      <div class="sound-row"><span class="sound-key">ã · an · am</span><span class="sound-say">а в нос</span><span class="sound-ex"><b>irmã</b> · сестра, <b>banco</b> · банк</span><span class="sound-when">самый узнаваемый носовой; перед p и b пишется m: <b>campo</b></span></div>
+      <div class="sound-row"><span class="sound-key">ão</span><span class="sound-say">ау в нос, один слог</span><span class="sound-ex"><b>não</b> · нет, <b>pão</b> · хлеб, <b>irmão</b> · брат</span><span class="sound-when">никакого «н» на конце. Ударение всегда сюда (правило 0.2)</span></div>
+      <div class="sound-row"><span class="sound-key">ãe</span><span class="sound-say">аи в нос</span><span class="sound-ex"><b>mãe</b> · мать</span><span class="sound-when">редкое сочетание: в единственном числе почти только <b>mãe</b>, остальное — множественное (тема 0.6)</span></div>
+      <div class="sound-row"><span class="sound-key">õe</span><span class="sound-say">ои в нос</span><span class="sound-ex"><b>lições</b> · уроки</span><span class="sound-when">встречается во множественном числе слов на -ão (тема 0.6) и в формах глаголов</span></div>
+      <div class="sound-row"><span class="sound-key">em · en</span><span class="sound-say">айн в конце слова</span><span class="sound-ex"><b>bem</b> · хорошо, <b>homem</b> · мужчина</span><span class="sound-when">внутри слова перед согласной — просто «е» в нос: <b>tempo</b> · время</span></div>
+      <div class="sound-row"><span class="sound-key">im · in</span><span class="sound-say">и в нос</span><span class="sound-ex"><b>sim</b> · да, <b>jardim</b> · сад</span><span class="sound-when">похоже на английское <i>-ing</i>, но без «г» на конце</span></div>
+      <div class="sound-row"><span class="sound-key">om · on</span><span class="sound-say">о в нос</span><span class="sound-ex"><b>bom</b> · хороший, <b>com</b> · с</span><span class="sound-when">губы не смыкаются, иначе получается русское «бом»</span></div>
+      <div class="sound-row"><span class="sound-key">um · un</span><span class="sound-say">у в нос</span><span class="sound-ex"><b>um</b> · один, <b>comum</b> · общий</span><span class="sound-when">артикль <span class="pt">um</span> носовой, а <span class="pt">uma</span> — уже нет: гласная после m открывает слог</span></div>
+    </div>
+
+    <div class="contrast">
+      <div class="label">Почему это важнее, чем кажется</div>
+      <p>Носовое окончание <b>-ão</b> — не экзотика, а одно из самых частых окончаний языка. Им кончаются сотни существительных (<span class="pt">lição</span>, <span class="pt">estação</span>, <span class="pt">coração</span>) и целый ряд глагольных форм, которые пойдут в блоке 1.</p>
+      <p>Пока достаточно знать: где на письме <b>-ão</b>, там ударение и носовой «ау» в один слог. <span class="pt">João</span> — «жуáу», два слога, а не три.</p>
+      <p>А вот безударное <b>-am</b> в конце слова звучит <b>точно так же</b>, как <b>-ão</b>, только без ударения. Это станет важно в блоке 1, где на <b>-am</b> кончается форма «они делают».</p>
+    </div>
+
+    <ul class="examples">
+      <li>bom dia <span class="ru">«бон диа» — в записи русскими буквами приходится писать «н», но на самом деле там нет никакой «н»: просто «о» через нос</span></li>
+      <li>não <span class="ru">«нау» в один слог, в нос</span></li>
+      <li>irmão <span class="ru">«ирмáу» — ударение на последний слог, потому что -ão</span></li>
+      <li>homem <span class="ru">«óмай» — h молчит, ударение предпоследнее (правило 0.2), конечное -em даёт «айн»</span></li>
+      <li>estação <span class="ru">«штасáу» — начальное e съедено, s перед t даёт «ш», ç даёт «с»</span></li>
+    </ul>
+
+    <div class="trap"><b>Слова, которые различаются только носовым.</b> Носовой — не оттенок произношения, а различитель смысла:<br>
+      <span class="pt">mão</span> (рука) — <span class="pt">mau</span> (плохой);<br>
+      <span class="pt">lã</span> (шерсть) — <span class="pt">lá</span> (там);<br>
+      <span class="pt">sim</span> (да) — <span class="pt">si</span> (себя);<br>
+      <span class="pt">vem</span> (приходит) — <span class="pt">ver</span> (видеть).<br>
+      И отдельно: <span class="pt">muito</span> читается «мýйнту» — носовой есть, хотя на письме его ничто не обещает. Это слово-исключение, и оно из самых частых.</div>
+
+    <div class="tip"><b>Как проверить себя.</b> Зажми нос пальцами и произнеси <span class="pt">sim</span>. Если звук изменился или «застрял» — ты произнёс его правильно, воздух шёл через нос. Если ничего не изменилось — ты сказал русское «си» и добавил «м» языком. Второй приём: тяни гласную и следи за губами — на <span class="pt">bom</span> они <b>не должны</b> сомкнуться до конца слова.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 5 · Família e gente — семья и люди</div>
+      <div class="mini-text">
+        <p style="font-size:0.85rem; color:var(--muted); margin:0 0 10px;">В транскрипции носовой приходится записывать через «н» или «и» — русскими буквами точнее не получается. Помни: согласной там нет.</p>
+        <div class="wordset">
+          <div><span class="w">mãe</span> <span class="tr">маи</span><span class="t">— мать</span></div>
+          <div><span class="w">irmão</span> <span class="tr">ирмау</span><span class="t">— брат</span></div>
+          <div><span class="w">irmã</span> <span class="tr">ирма</span><span class="t">— сестра</span></div>
+          <div><span class="w">homem</span> <span class="tr">омай</span><span class="t">— мужчина; человек</span></div>
+          <div><span class="w">jovem</span> <span class="tr">жовай</span><span class="t">— молодой человек; молодой</span></div>
+          <div><span class="w">avô</span> <span class="tr">аво</span><span class="t">— дедушка</span></div>
+          <div><span class="w">avó</span> <span class="tr">аво</span><span class="t">— бабушка</span></div>
+          <div><span class="w">amigo</span> <span class="tr">амигу</span><span class="t">— друг</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">mãe</span> и <span class="pt">irmã</span> — женские слова, <span class="pt">irmão</span> — мужское. Пока это просто разные слова; откуда берётся связь <b>-ão</b> / <b>-ã</b>, разберём в теме 0.5.<br><br><span class="pt">avô</span> и <span class="pt">avó</span> в транскрипции выглядят одинаково, но звучат по-разному: у дедушки <b>ô</b> закрытое, «ближе к у», у бабушки <b>ó</b> открытое, широкое. Это та самая пара из темы 0.2.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 6 · Na cidade — в городе</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">estação</span> <span class="tr">штасау</span><span class="t">— станция, вокзал; время года</span></div>
+          <div><span class="w">jardim</span> <span class="tr">жардин</span><span class="t">— сад, сквер</span></div>
+          <div><span class="w">banco</span> <span class="tr">банку</span><span class="t">— банк; скамейка</span></div>
+          <div><span class="w">centro</span> <span class="tr">сентру</span><span class="t">— центр</span></div>
+          <div><span class="w">tempo</span> <span class="tr">темпу</span><span class="t">— время; погода</span></div>
+          <div><span class="w">mão</span> <span class="tr">мау</span><span class="t">— рука, кисть</span></div>
+          <div><span class="w">cão</span> <span class="tr">кау</span><span class="t">— собака</span></div>
+          <div><span class="w">lição</span> <span class="tr">лисау</span><span class="t">— урок</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> у <span class="pt">banco</span>, <span class="pt">centro</span> и <span class="pt">tempo</span> носовая гласная стоит внутри слова: <b>n</b> перед согласной и <b>m</b> перед <b>p</b> не звучат сами, а только пускают гласную в нос. Ударение у всех троих предпоследнее — слова кончаются на <b>-o</b>.<br><br><span class="pt">tempo</span> значит и «время», и «погода»: <span class="pt">bom tempo</span> — хорошая погода. Слов с двумя такими далёкими значениями в португальском много, и словарь курса всегда даёт оба.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · A família de Ana — семья Аны</div>
+      <div class="mini-text">
+        <p class="storytext">A mãe de Ana é professora na universidade. O irmão é jovem: é aluno na escola. A irmã é aluna na universidade. A casa é na rua do jardim, com a estação de comboio aqui. O cão é bom.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Мама Аны — преподаватель в университете. Брат молодой: он ученик в школе. Сестра — студентка в университете. Дом — на улице сада, со станцией поезда здесь. Пёс хороший.</p>
+        <p class="why-note"><b>Почему так:</b> в тексте пять носовых: <span class="pt">irmão</span>, <span class="pt">irmã</span>, <span class="pt">jovem</span>, <span class="pt">com</span>, <span class="pt">bom</span>, <span class="pt">estação</span>. Прочитай вслух и следи, чтобы губы на <span class="pt">com</span> и <span class="pt">bom</span> не смыкались.<br><br><span class="pt">professora</span> и <span class="pt">aluna</span> — женские формы от <span class="pt">professor</span> и <span class="pt">aluno</span>. Как это устроено, разберём в теме 0.5; пока просто запомни обе формы.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Na rua — на улице</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> Desculpe! A estação é aqui?</p>
+          <p class="dline"><span class="speaker">Homem:</span> Bom dia. Não, a estação é na praça do mercado.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Ah! E o autocarro?</p>
+          <p class="dline"><span class="speaker">Homem:</span> O autocarro é aqui, com o jardim.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Muito obrigada!</p>
+          <p class="dline"><span class="speaker">Homem:</span> De nada. Até logo!</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Извините! Вокзал здесь?<br><b>Мужчина:</b> Доброе утро. Нет, вокзал на рыночной площади.<br><b>Ана:</b> А! А автобус?<br><b>Мужчина:</b> Автобус здесь, у сада.<br><b>Ана:</b> Большое спасибо!<br><b>Мужчина:</b> Не за что. До скорого!</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">De nada</span> — обычный ответ на «спасибо», звучит «днáда»: предлог прилипает к слову и теряет гласную (тема 0.2).<br><br><span class="pt">Muito obrigada</span> — «большое спасибо», и <span class="pt">muito</span> здесь читается «мýйнту», с носовым, которого не видно в написании.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="nasais">
+    <p class="quiz-instruction">Носовой — это гласная через нос. Буквы m и n в конце слога сами не звучат.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">Сколько согласных слышно в конце слова</span> <span class="pt">sim</span>?
+      <select class="mc" data-answer="ни одной">
+        <option value="">—</option>
+        <option value="ни одной">ни одной</option>
+        <option value="одна «м»">одна «м»</option>
+        <option value="одна «н»">одна «н»</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">Сколько слогов в слове</span> <span class="pt">mão</span>?
+      <select class="mc" data-answer="1">
+        <option value="">—</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">Сочетание</span> ão <span class="ru-hint">звучит как:</span>
+      <select class="mc" data-answer="ау в нос">
+        <option value="">—</option>
+        <option value="ау в нос">ау в нос</option>
+        <option value="ан">ан</option>
+        <option value="ао">ао</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">Что значит</span> <span class="pt">mãe</span>?
+      <select class="mc" data-answer="мать">
+        <option value="">—</option>
+        <option value="мать">мать</option>
+        <option value="сестра">сестра</option>
+        <option value="рука">рука</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">Что значит</span> <span class="pt">irmão</span>?
+      <select class="mc" data-answer="брат">
+        <option value="">—</option>
+        <option value="брат">брат</option>
+        <option value="сестра">сестра</option>
+        <option value="друг">друг</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">Впиши слово «урок»:</span><input class="blank" data-answer="lição" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">В каком слове конечный носовой звучит «айн»?</span>
+      <select class="mc" data-answer="bem">
+        <option value="">—</option>
+        <option value="bem">bem</option>
+        <option value="bom">bom</option>
+        <option value="sim">sim</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Буква</span> m <span class="ru-hint">в слове</span> <span class="pt">bom</span>:
+      <select class="mc" data-answer="не звучит, только оносовляет гласную">
+        <option value="">—</option>
+        <option value="не звучит, только оносовляет гласную">не звучит, только оносовляет гласную</option>
+        <option value="звучит губами, как русское «м»">звучит губами, как русское «м»</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Есть ли носовой звук в слове</span> <span class="pt">muito</span>?
+      <select class="mc" data-answer="есть">
+        <option value="">—</option>
+        <option value="есть">есть</option>
+        <option value="нет">нет</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Вокзал на площади».</span>
+      <div class="qbuild" data-answer="A estação é na praça" data-words="praça|é|A|na|estação"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="digrafos">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">nh, lh, ch, ç, x, rr — сочетания, которых нет в русском</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ 0.4 NH, LH, CH, Ç, X, RR ============ -->
+<div class="screen topic-screen" id="screen-digrafos" data-topic="digrafos" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2><span class="topic-num">0.4</span> nh, lh, ch, ç, x, rr</h2>
+    <span class="done-badge" data-badge="digrafos">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Шесть сочетаний, где две буквы дают один звук — и одна буква, которая даёт пять разных.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>В теме 0.1 эти сочетания были в общей таблице. Теперь разберём их отдельно: они дают самые «нерусские» звуки языка, и именно на них слышен акцент. Пять из шести устроены просто — их можно выучить за один заход. Шестая, буква <b>x</b>, читается пятью способами, и её придётся брать словами.</p>
+
+    <div class="sound-list">
+      <div class="sound-row"><span class="sound-key">nh</span><span class="sound-say">нь — одним звуком</span><span class="sound-ex"><b>vinho</b> · вино, <b>cozinha</b> · кухня</span><span class="sound-when">не «нь-о» и не «ньйо»: язык прижат к нёбу один раз</span></div>
+      <div class="sound-row"><span class="sound-key">lh</span><span class="sound-say">ль — одним звуком</span><span class="sound-ex"><b>filho</b> · сын, <b>trabalho</b> · работа</span><span class="sound-when">как «ль» в «лью», но слитно с гласной: «фи-лю», а не «фил-хо»</span></div>
+      <div class="sound-row"><span class="sound-key">ch</span><span class="sound-say">ш</span><span class="sound-ex"><b>chave</b> · ключ, <b>chá</b> · чай</span><span class="sound-when">всегда «ш». Никогда не «ч» (это не итальянский) и не «к» (это не греческий)</span></div>
+      <div class="sound-row"><span class="sound-key">ç</span><span class="sound-say">с</span><span class="sound-ex"><b>almoço</b> · обед, <b>praça</b> · площадь</span><span class="sound-when">только перед a, o, u — там, где обычная c читалась бы «к». Перед e и i хвостик не нужен</span></div>
+      <div class="sound-row"><span class="sound-key">rr</span><span class="sound-say">картавое р</span><span class="sound-ex"><b>carro</b> · машина, <b>correio</b> · почта</span><span class="sound-when">горлом, как французское. Так же читается одиночная r в начале слова: <b>rua</b>, <b>roupa</b></span></div>
+      <div class="sound-row"><span class="sound-key">r</span><span class="sound-say">короткое р</span><span class="sound-ex"><b>caro</b> · дорогой, <b>hora</b> · час</span><span class="sound-when">между гласными — обычное русское «р» одним ударом языка</span></div>
+      <div class="sound-row"><span class="sound-key">x</span><span class="sound-say">ш · з · кс · с</span><span class="sound-ex"><b>baixo</b> · внизу, <b>exame</b> · экзамен</span><span class="sound-when">четыре чтения, разбор ниже</span></div>
+    </div>
+
+    <div class="contrast">
+      <div class="label">Одна r или две — это разные слова</div>
+      <p><span class="pt">caro</span> («кару», дорогой) и <span class="pt">carro</span> («кáрру», машина) различаются только звуком «р». Удвоение согласной в португальском никогда не «просто орфография»: <b>rr</b> — это другой звук, <b>ss</b> — это «с» вместо «з» (<span class="pt">passar</span> против <span class="pt">casa</span>).</p>
+      <p>Картавое «р» — единственный звук курса, который русскому языку придётся ставить заново. Хорошая новость: португальцы принимают и раскатистое русское «р» — поймут точно. Плохая — на слух вы себя выдадите первым же словом <span class="pt">rua</span>.</p>
+    </div>
+
+    <p>Теперь <b>x</b>. Правило одно: <b>по умолчанию это «ш»</b>. Остальные чтения — списком, слов немного.</p>
+
+    <table>
+      <tr><th>Как звучит</th><th>Где</th><th>Примеры</th></tr>
+      <tr><td><b>ш</b></td><td>по умолчанию: в начале слова, после гласной, после <b>n</b></td><td class="pt">baixo, caixa, peixe, xarope</td></tr>
+      <tr><td><b>з</b></td><td>в приставке <b>ex-</b> перед гласной</td><td class="pt">exame, exercício, exato</td></tr>
+      <tr><td><b>кс</b></td><td>в книжных и заимствованных словах</td><td class="pt">táxi, fixo, sexo</td></tr>
+      <tr><td><b>с</b></td><td>в нескольких словах, их надо просто знать</td><td class="pt">próximo, máximo, trouxe</td></tr>
+    </table>
+
+    <ul class="examples">
+      <li>cozinha <span class="ru">«кузинья» — o без ударения дало «у», nh — один мягкий звук</span></li>
+      <li>filho <span class="ru">«филью» — lh слитно, конечное o звучит «у»</span></li>
+      <li>almoço <span class="ru">«алмосу» — ç даёт «с» перед o</span></li>
+      <li>correio <span class="ru">«куррейу» — rr картавое, безударное o дало «у»</span></li>
+      <li>caixa <span class="ru">«кайша» — x после гласной даёт «ш»</span></li>
+      <li>exame <span class="ru">«изáм» — ex- перед гласной даёт «из», конечное e не слышно</span></li>
+    </ul>
+
+    <div class="trap"><b>Ловушка привычки.</b> Английское и испанское чтение здесь только мешают:<br>
+      <span class="pt">chave</span> — «шав», а не «чейв» и не «чаве»;<br>
+      <span class="pt">táxi</span> — «такси», но <span class="pt">baixo</span> — «байшу», хотя буква та же;<br>
+      <span class="pt">filho</span> — «филью» в два слога, а не «фил-хо» в три;<br>
+      <span class="pt">carro</span> — картавое, а не итальянское раскатистое.<br>
+      И помни про <span class="pt">h</span>: сама по себе она молчит всегда, но в паре с <b>n</b>, <b>l</b>, <b>c</b> меняет соседнюю букву целиком.</div>
+
+    <div class="tip"><b>Как тренировать.</b> Возьми три пары и произнеси их подряд десять раз: <span class="pt">caro — carro</span>, <span class="pt">vinho — vino</span> (второго слова в языке нет, но разница слышна), <span class="pt">baixo — táxi</span>. Разницу надо не понять, а услышать; после десятка повторов сочетания перестают требовать раздумья.</div>
+
+    <button type="button" class="tool-row" data-open="cheat-sounds" style="margin-top:4px;">
+      <span class="tool-icon">📋</span>
+      <span class="row-title">Шпаргалка · все буквы и звуки на одном экране</span>
+      <span class="row-arrow" aria-hidden="true">›</span>
+    </button>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 7 · Em casa — дома</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">filho</span> <span class="tr">филью</span><span class="t">— сын</span></div>
+          <div><span class="w">filha</span> <span class="tr">филья</span><span class="t">— дочь</span></div>
+          <div><span class="w">mulher</span> <span class="tr">мульер</span><span class="t">— женщина; жена</span></div>
+          <div><span class="w">cozinha</span> <span class="tr">кузинья</span><span class="t">— кухня</span></div>
+          <div><span class="w">casa de banho</span> <span class="tr">каза д банью</span><span class="t">— ванная, туалет</span></div>
+          <div><span class="w">chave</span> <span class="tr">шав</span><span class="t">— ключ</span></div>
+          <div><span class="w">chá</span> <span class="tr">ша</span><span class="t">— чай</span></div>
+          <div><span class="w">almoço</span> <span class="tr">алмосу</span><span class="t">— обед</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">casa de banho</span> — то, что в Бразилии называют <i>banheiro</i>. Спрашивая в кафе, говорят целиком: <span class="pt">A casa de banho, por favor?</span><br><br><span class="pt">mulher</span> значит и «женщина», и «жена» — как и <span class="pt">homem</span> значит и «мужчина», и «человек». Это не небрежность языка, а его устройство: слов «супруга» и «супруг» в быту не употребляют.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 8 · Na rua — на улице</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">carro</span> <span class="tr">карру</span><span class="t">— машина</span></div>
+          <div><span class="w">correio</span> <span class="tr">куррейу</span><span class="t">— почта</span></div>
+          <div><span class="w">caixa</span> <span class="tr">кайша</span><span class="t">— коробка; касса</span></div>
+          <div><span class="w">baixo</span> <span class="tr">байшу</span><span class="t">— низкий; внизу</span></div>
+          <div><span class="w">táxi</span> <span class="tr">такси</span><span class="t">— такси</span></div>
+          <div><span class="w">terra</span> <span class="tr">терра</span><span class="t">— земля</span></div>
+          <div><span class="w">roupa</span> <span class="tr">ропа</span><span class="t">— одежда</span></div>
+          <div><span class="w">cerveja</span> <span class="tr">сырвежа</span><span class="t">— пиво</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> в <span class="pt">roupa</span> начальная <b>r</b> звучит так же, как <b>rr</b> в <span class="pt">carro</span>, — картаво. Правило простое: в начале слова и удвоенная — картавое, между гласными — короткое.<br><br><span class="pt">cerveja</span> показывает сразу два правила темы 0.1: <b>c</b> перед <b>e</b> даёт «с» (поэтому хвостик <b>ç</b> здесь не нужен), а <b>j</b> — всегда «ж».</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Em casa — дома</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> Olá! A chave da casa?</p>
+          <p class="dline"><span class="speaker">João:</span> A chave está na cozinha, na mesa.</p>
+          <p class="dline"><span class="speaker">Ana:</span> E a roupa da filha?</p>
+          <p class="dline"><span class="speaker">João:</span> Está na caixa, com a roupa do filho.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Ah, bem. E o almoço?</p>
+          <p class="dline"><span class="speaker">João:</span> O almoço é na praça, com a mãe.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Muito bem! Um chá, por favor.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Привет! Ключ от дома?<br><b>Жуан:</b> Ключ на кухне, на столе.<br><b>Ана:</b> А одежда дочери?<br><b>Жуан:</b> В коробке, вместе с одеждой сына.<br><b>Ана:</b> А, хорошо. А обед?<br><b>Жуан:</b> Обед на площади, с мамой.<br><b>Ана:</b> Отлично! Чаю, пожалуйста.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">da</span> и <span class="pt">do</span> — это предлог <span class="pt">de</span>, слитый с артиклем: <span class="pt">de + a = da</span>, <span class="pt">de + o = do</span>. Отсюда «ключ от дома» и «одежда сына». Полная таблица слияний — тема 0.14, пока просто узнавай их в тексте.<br><br>Прочитай диалог вслух и найди все шесть сочетаний темы: <span class="pt">chave</span>, <span class="pt">cozinha</span>, <span class="pt">filha</span>, <span class="pt">filho</span>, <span class="pt">roupa</span>, <span class="pt">caixa</span>, <span class="pt">almoço</span>, <span class="pt">chá</span>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="digrafos">
+    <p class="quiz-instruction">Впиши русскую запись звука или выбери вариант. Пиши одну-две буквы, без кавычек.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">Как звучит</span> ch <span class="ru-hint">в слове</span> <b>ch</b>ave?<input class="blank" data-answer="ш" style="width:4em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">Как звучит</span> nh <span class="ru-hint">в слове</span> cozi<b>nh</b>a?<input class="blank" data-answer="нь" style="width:4em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">Как звучит</span> lh <span class="ru-hint">в слове</span> fi<b>lh</b>o?<input class="blank" data-answer="ль" style="width:4em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">Буква</span> x <span class="ru-hint">в слове</span> <span class="pt">exame</span>:
+      <select class="mc" data-answer="з">
+        <option value="">—</option>
+        <option value="ш">ш</option>
+        <option value="з">з</option>
+        <option value="кс">кс</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">Буква</span> x <span class="ru-hint">в слове</span> <span class="pt">baixo</span>:
+      <select class="mc" data-answer="ш">
+        <option value="">—</option>
+        <option value="ш">ш</option>
+        <option value="з">з</option>
+        <option value="кс">кс</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">Буква</span> x <span class="ru-hint">в слове</span> <span class="pt">táxi</span>:
+      <select class="mc" data-answer="кс">
+        <option value="">—</option>
+        <option value="ш">ш</option>
+        <option value="з">з</option>
+        <option value="кс">кс</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">В каком слове «р» картавое?</span>
+      <select class="mc" data-answer="carro">
+        <option value="">—</option>
+        <option value="caro">caro</option>
+        <option value="carro">carro</option>
+        <option value="hora">hora</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши слово «ключ»:</span><input class="blank" data-answer="chave" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Хвостик</span> ç <span class="ru-hint">ставится перед буквами:</span>
+      <select class="mc" data-answer="a, o, u">
+        <option value="">—</option>
+        <option value="a, o, u">a, o, u</option>
+        <option value="e, i">e, i</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Ключ на кухне».</span>
+      <div class="qbuild" data-answer="A chave está na cozinha" data-words="cozinha|na|A|está|chave"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
     <button type="button" class="next-card" data-open="cheat-sounds">
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label">Seguinte · дальше</span>
-        <span class="next-title">Шпаргалка по чтению — пока тема 0.3 не готова</span>
+        <span class="next-title">Шпаргалка по чтению — пока тема 0.5 не готова</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -1460,7 +1871,7 @@
 
   // Порядок = порядок прохождения. Темы без контента сюда не попадают,
   // иначе прогресс считался бы от несуществующих экранов.
-  var BASE_TOPICS     = ["alfabeto","acento"];
+  var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos"];
   var PRESENTE_TOPICS = [];
   var PASSADO_TOPICS  = [];
   var EXPANSAO_TOPICS = [];
@@ -1474,7 +1885,7 @@
   };
 
   var TOPIC_MINUTES = {
-    "alfabeto":20, "acento":22
+    "alfabeto":20, "acento":22, "nasais":18, "digrafos":16
   };
 
   var STORAGE_KEY   = "ptProgressV1";
@@ -1836,7 +2247,9 @@
     "o":"артикль мужского рода; тот","os":"артикль мн. числа (муж.)","as":"артикль мн. числа (жен.)",
     "uma":"одна; артикль женского рода","de":"из, от, чей","do":"из, от (de + o)","da":"из, от (de + a)",
     "em":"в, на","no":"в (em + o)","não":"нет; не","sim":"да","eu":"я","muito":"очень, много",
-    "estados":"штаты","unidos":"соединённые","salsa":"петрушка","sopa":"суп"
+    "estados":"штаты","unidos":"соединённые","salsa":"петрушка","sopa":"суп",
+    // 0.3 диалог на улице
+    "nada":"ничего","de nada":"не за что","homem":"мужчина; человек"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
@@ -1852,7 +2265,7 @@
     ["óis","ol"], ["uis","ul"], ["is","l"], ["ns","m"], ["res","r"], ["zes","z"], ["ses","s"],
     ["es",""], ["s",""],
     // род прилагательных и существительных
-    ["a","o"], ["as","os"],
+    ["a","o"], ["as","os"], ["ora","or"], ["oras","or"],
     // настоящее время
     ["amos","ar"], ["am","ar"], ["as","ar"], ["a","ar"], ["o","ar"],
     ["emos","er"], ["em","er"], ["es","er"], ["e","er"], ["o","er"],
