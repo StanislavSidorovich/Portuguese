@@ -711,15 +711,17 @@
         <span class="row-check" data-check="estar" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="servsestar">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.9</span> Ser vs estar<span class="row-title-ru">главное разделение всего курса</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="servsestar" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="pronomes">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.10</span> Pronomes pessoais<span class="row-title-ru">eu, tu, você, o senhor — и когда что</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="pronomes" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--base)"></span>
@@ -2655,11 +2657,447 @@
       <button class="btn btn-reveal" type="button">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="servsestar">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Ser vs estar — где какой глагол</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ 0.9 SER VS ESTAR ============ -->
+<div class="screen topic-screen" id="screen-servsestar" data-topic="servsestar" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2><span class="topic-num">0.9</span> Ser vs estar</h2>
+    <span class="done-badge" data-badge="servsestar">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Главное разделение курса. Одно русское «быть» — и два португальских, между которыми выбирать придётся в каждой фразе.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Обычно это объясняют так: <span class="se">ser</span> — постоянное, <span class="es">estar</span> — временное. Запомни это объяснение и сразу забудь: оно ломается на первом же живом примере. «Он мёртв» — навсегда, но говорят <span class="pt"><span class="es">está</span> morto</span>. «Праздник сегодня» — один вечер, но <span class="pt">A festa <span class="se">é</span> hoje</span>.</p>
+
+    <p>Работает другое различение:</p>
+
+    <div class="pair-grid">
+      <div class="pair-cell ser">
+        <div class="p-title">Ser — что это такое</div>
+        <div class="p-big">é</div>
+        <div class="p-note">определение предмета. Убери это свойство — и предмет перестанет быть собой</div>
+      </div>
+      <div class="pair-cell estar">
+        <div class="p-title">Estar — как оно сейчас</div>
+        <div class="p-big">está</div>
+        <div class="p-note">состояние, в котором предмет застали. Убери его — предмет останется прежним</div>
+      </div>
+    </div>
+
+    <p>Ана — русская: отними это, и она уже не она. <span class="se">Ser</span>. Ана устала: отдохнёт — и останется собой. <span class="es">Estar</span>. Мёртвый человек находится в состоянии, которое с ним случилось, — <span class="es">estar</span>, хотя оно и необратимо. Праздник не «находится» нигде, он <b>есть</b> определённого числа — <span class="se">ser</span>.</p>
+
+    <table>
+      <tr><th>О чём речь</th><th>Глагол</th><th>Пример</th></tr>
+      <tr><td>кто это, профессия</td><td class="se">ser</td><td class="pt">A Ana <span class="se">é</span> médica.</td></tr>
+      <tr><td>национальность, откуда</td><td class="se">ser</td><td class="pt"><span class="se">Sou</span> russa.</td></tr>
+      <tr><td>свойство по природе</td><td class="se">ser</td><td class="pt">A casa <span class="se">é</span> grande.</td></tr>
+      <tr><td>чьё это</td><td class="se">ser</td><td class="pt">O livro <span class="se">é</span> do João.</td></tr>
+      <tr><td>время, дата, день</td><td class="se">ser</td><td class="pt">A festa <span class="se">é</span> hoje.</td></tr>
+      <tr><td>где происходит событие</td><td class="se">ser</td><td class="pt">O concerto <span class="se">é</span> na praça.</td></tr>
+      <tr><td>где находится предмет</td><td class="es">estar</td><td class="pt">O livro <span class="es">está</span> na mesa.</td></tr>
+      <tr><td>самочувствие, настроение</td><td class="es">estar</td><td class="pt"><span class="es">Estou</span> cansada.</td></tr>
+      <tr><td>состояние вещи сейчас</td><td class="es">estar</td><td class="pt">A loja <span class="es">está</span> fechada.</td></tr>
+      <tr><td>погода сейчас</td><td class="es">estar</td><td class="pt"><span class="es">Está</span> frio.</td></tr>
+    </table>
+
+    <div class="contrast">
+      <div class="label">Событие или предмет — вот где ломаются все</div>
+      <p>Две фразы выглядят одинаково, а глаголы разные:</p>
+      <p><span class="pt">O livro <span class="es">está</span> na sala dois.</span> — книга <b>лежит</b> в аудитории два. Предмет находится в месте.</p>
+      <p><span class="pt">A aula <span class="se">é</span> na sala dois.</span> — занятие <b>проходит</b> в аудитории два. Событие случается в месте.</p>
+      <p>Проверка простая: если подлежащее можно потрогать — <span class="es">estar</span>. Если оно происходит (урок, праздник, матч, встреча, свадьба) — <span class="se">ser</span>. Именно так говорила Ана ещё в теме 0.2: <span class="pt">A aula é na sala dois</span>, и теперь понятно почему.</p>
+    </div>
+
+    <p>А теперь самое интересное. Одно и то же прилагательное с двумя глаголами даёт <b>два разных смысла</b>, и оба верны:</p>
+
+    <table>
+      <tr><th>Со <span class="se">ser</span></th><th>С <span class="es">estar</span></th></tr>
+      <tr><td class="pt"><span class="se">é</span> bonita<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">красивая — такая она и есть</span></td><td class="pt"><span class="es">está</span> bonita<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">сегодня хорошо выглядит</span></td></tr>
+      <tr><td class="pt"><span class="se">é</span> doente<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">болезненный, хронически болен</span></td><td class="pt"><span class="es">está</span> doente<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">заболел, сейчас болеет</span></td></tr>
+      <tr><td class="pt"><span class="se">é</span> velho<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">старый по возрасту</span></td><td class="pt"><span class="es">está</span> velho<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">сдал, выглядит постаревшим</span></td></tr>
+      <tr><td class="pt"><span class="se">é</span> verde<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">зелёный по цвету</span></td><td class="pt"><span class="es">está</span> verde<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">неспелый</span></td></tr>
+      <tr><td class="pt"><span class="se">é</span> aberto<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">открытый человек по характеру</span></td><td class="pt"><span class="es">está</span> aberto<br><span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">открыт сейчас, работает</span></td></tr>
+    </table>
+
+    <p>Это не тонкость для продвинутых, а обычная речь. Сказать женщине <span class="pt"><span class="es">Estás</span> bonita</span> — комплимент дню; <span class="pt"><span class="se">És</span> bonita</span> — комплимент ей самой. Перепутать глаголы здесь значит сказать не то, что хотел.</p>
+
+    <div class="trap"><b>Три ловушки русского.</b><br>
+      <b>1.</b> «Я хорошо» — это <span class="pt"><span class="es">Estou</span> bem</span> (я в порядке). <span class="pt"><span class="se">Sou</span> bom</span> значит «я хороший человек» — совсем другое заявление.<br>
+      <b>2.</b> «Где праздник?» — <span class="pt">Onde <span class="se">é</span> a festa?</span> Вопрос <span class="pt">Onde <span class="es">está</span> a festa?</span> звучит так, будто праздник потеряли и его ищут.<br>
+      <b>3.</b> Не переводи по слову «сейчас». Русское «сейчас» в португальском часто не нужно: <span class="pt"><span class="es">está</span></span> само по себе уже значит «в данный момент».</div>
+
+    <div class="tip"><b>Как выбирать, пока не стало автоматом.</b> Задай себе один вопрос: <b>я говорю, что это за предмет, — или в каком он состоянии?</b> Определение → <span class="se">ser</span>. Состояние → <span class="es">estar</span>. Если сомневаешься, попробуй подставить «находится» или «выглядит»: подходит — значит <span class="es">estar</span>.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 17 · Como é? — какой</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">bonito</span> <span class="tr">бониту</span><span class="t">— красивый</span></div>
+          <div><span class="w">feio</span> <span class="tr">файу</span><span class="t">— некрасивый</span></div>
+          <div><span class="w">rico</span> <span class="tr">рику</span><span class="t">— богатый</span></div>
+          <div><span class="w">alegre</span> <span class="tr">алегр</span><span class="t">— весёлый</span></div>
+          <div><span class="w">calmo</span> <span class="tr">калму</span><span class="t">— спокойный</span></div>
+          <div><span class="w">verde</span> <span class="tr">верд</span><span class="t">— зелёный</span></div>
+          <div><span class="w">fácil</span> <span class="tr">фасил</span><span class="t">— лёгкий, простой</span></div>
+          <div><span class="w">difícil</span> <span class="tr">дифисил</span><span class="t">— трудный</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">fácil</span> и <span class="pt">difícil</span> — те самые слова на безударное <b>-il</b> из темы 0.6: во множественном они дают <span class="pt">fáceis</span> и <span class="pt">difíceis</span>.<br><br><span class="pt">alegre</span> и <span class="pt">verde</span> кончаются на <b>-e</b> и по роду не меняются. Остальные шесть меняют <b>-o</b> на <b>-a</b>: <span class="pt">bonita</span>, <span class="pt">rica</span>, <span class="pt">calma</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 18 · Eventos — события</div>
+      <div class="mini-text">
+        <p style="font-size:0.85rem; color:var(--muted); margin:0 0 10px;">Всё в этом наборе <b>происходит</b>, а не лежит. Значит, о месте этих слов говорят через <span class="se">ser</span>.</p>
+        <div class="wordset">
+          <div><span class="w">a festa</span> <span class="tr">а фешта</span><span class="t">— праздник, вечеринка</span></div>
+          <div><span class="w">o jogo</span> <span class="tr">у жогу</span><span class="t">— игра, матч</span></div>
+          <div><span class="w">a reunião</span> <span class="tr">а реуниау</span><span class="t">— встреча, собрание</span></div>
+          <div><span class="w">a consulta</span> <span class="tr">а консулта</span><span class="t">— приём у врача</span></div>
+          <div><span class="w">o concerto</span> <span class="tr">у консерту</span><span class="t">— концерт</span></div>
+          <div><span class="w">o casamento</span> <span class="tr">у казаменту</span><span class="t">— свадьба</span></div>
+          <div><span class="w">o jantar</span> <span class="tr">у жантар</span><span class="t">— ужин</span></div>
+          <div><span class="w">o filme</span> <span class="tr">у филм</span><span class="t">— фильм</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">a reunião</span> — слово на <b>-ão</b>, значит во множественном <span class="pt">reuniões</span> (тема 0.6). И оно женского рода, хотя кончается как <span class="pt">o irmão</span>: у слов на <b>-ção</b> и <b>-são</b> род всегда женский (тема 0.5).<br><br><span class="pt">o jantar</span> выглядит как инфинитив глагола — так и есть: «ужинать» и «ужин» это одно слово. Португальский часто превращает глагол в существительное просто артиклем.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · Sábado — суббота</div>
+      <div class="mini-text">
+        <p class="storytext">A festa é hoje, é na casa do João. A casa é grande e é perto da praia. O João está contente, mas está muito ocupado: o jantar não está pronto. A Ana está na cozinha. É difícil, mas está tudo bem. O concerto é na praça, é aqui perto, e o filme é na universidade. A cidade está alegre hoje.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Праздник сегодня, он в доме Жуана. Дом большой и рядом с пляжем. Жуан доволен, но очень занят: ужин не готов. Ана на кухне. Трудно, но всё хорошо. Концерт на площади, тут рядом, а фильм — в университете. Город сегодня весёлый.</p>
+        <p class="why-note"><b>Почему так:</b> посмотри на два «в доме»: <span class="pt">a festa <span class="se">é</span> na casa</span> (праздник происходит) и <span class="pt">a Ana <span class="es">está</span> na cozinha</span> (человек находится). Одинаковая на вид конструкция, разные глаголы.<br><br><span class="pt">A casa <span class="se">é</span> grande</span> — размер это определение дома. <span class="pt">O João <span class="es">está</span> contente</span> — настроение сегодняшнее.<br><br><span class="pt">A cidade <span class="es">está</span> alegre hoje</span> — с <span class="se">ser</span> вышло бы «город весёлый по характеру», тоже верная фраза, но о другом.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Onde é a festa? — где праздник</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> João, onde é a festa?</p>
+          <p class="dline"><span class="speaker">João:</span> É na minha casa, perto da praia.</p>
+          <p class="dline"><span class="speaker">Ana:</span> E o teu irmão? Está em casa?</p>
+          <p class="dline"><span class="speaker">João:</span> Não, está no hospital. Está doente.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Ah não! É doente?</p>
+          <p class="dline"><span class="speaker">João:</span> Não, não é doente. Está doente hoje, mas não é nada.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Ainda bem! Então, até logo na festa.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Жуан, где праздник?<br><b>Жуан:</b> У меня дома, рядом с пляжем.<br><b>Ана:</b> А твой брат? Он дома?<br><b>Жуан:</b> Нет, он в больнице. Он болен.<br><b>Ана:</b> Ой! Он болезненный?<br><b>Жуан:</b> Нет, не болезненный. Сегодня заболел, но это пустяки.<br><b>Ана:</b> Слава богу! Тогда до встречи на празднике.</p>
+        <p class="why-note"><b>Почему так:</b> весь диалог держится на одной паре. <span class="pt"><span class="es">Está</span> doente</span> — заболел сегодня. <span class="pt"><span class="se">É</span> doente</span> — болен всегда, это про здоровье как свойство. Ана переспросила именно потому, что боялась второго.<br><br><span class="pt">Onde <span class="se">é</span> a festa?</span> — праздник это событие, поэтому <span class="se">ser</span>. А брат — человек, поэтому <span class="pt"><span class="es">está</span> no hospital</span>.<br><br><span class="pt">Ainda bem!</span> — «слава богу, вот и хорошо». Ещё одна фраза, которую учат целиком.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="servsestar">
+    <p class="quiz-instruction">Выбери глагол. Спрашивай себя: это определение предмета — или его состояние сейчас?</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="pt">A Ana</span>
+      <select class="mc" data-answer="é">
+        <option value="">—</option>
+        <option value="é">é</option>
+        <option value="está">está</option>
+      </select> <span class="pt">médica.</span>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="pt">O livro</span>
+      <select class="mc" data-answer="está">
+        <option value="">—</option>
+        <option value="é">é</option>
+        <option value="está">está</option>
+      </select> <span class="pt">na mesa.</span>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="pt">A festa</span>
+      <select class="mc" data-answer="é">
+        <option value="">—</option>
+        <option value="é">é</option>
+        <option value="está">está</option>
+      </select> <span class="pt">na praça.</span>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="pt">A loja</span>
+      <select class="mc" data-answer="está">
+        <option value="">—</option>
+        <option value="é">é</option>
+        <option value="está">está</option>
+      </select> <span class="pt">fechada.</span>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">«Я в порядке»:</span>
+      <select class="mc" data-answer="Estou bem">
+        <option value="">—</option>
+        <option value="Estou bem">Estou bem</option>
+        <option value="Sou bom">Sou bom</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">Что значит</span> <span class="pt">Está bonita</span>?
+      <select class="mc" data-answer="сегодня хорошо выглядит">
+        <option value="">—</option>
+        <option value="сегодня хорошо выглядит">сегодня хорошо выглядит</option>
+        <option value="красивая по природе">красивая по природе</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Впиши глагол: «Концерт на площади»:</span> <span class="pt">O concerto</span> <input class="blank" data-answer="é|e" style="width:4em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">na praça.</span></div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши глагол: «Жуан на пляже»:</span> <span class="pt">O João</span> <input class="blank" data-answer="está|esta" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">na praia.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Почему в «A aula é na sala dois» стоит</span> <span class="se">ser</span>?
+      <select class="mc" data-answer="занятие — событие, оно происходит">
+        <option value="">—</option>
+        <option value="занятие — событие, оно происходит">занятие — событие, оно происходит</option>
+        <option value="аудитория не меняется">аудитория не меняется</option>
+        <option value="так короче">так короче</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Ужин не готов».</span>
+      <div class="qbuild" data-answer="O jantar não está pronto" data-words="está|não|O|pronto|jantar"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="pronomes">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Pronomes pessoais — eu, tu, você и вежливое «вы»</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ 0.10 PRONOMES PESSOAIS ============ -->
+<div class="screen topic-screen" id="screen-pronomes" data-topic="pronomes" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2><span class="topic-num">0.10</span> Pronomes pessoais</h2>
+    <span class="done-badge" data-badge="pronomes">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Пять лиц, три способа сказать «вы» — и ни одного, который переводился бы напрямую.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Местоимения выглядят безобидно, но за ними стоит вещь, которой в русском нет: <b>вежливость здесь выражается третьим лицом</b>. Отдельного «вы», как русское «Вы придёте», в португальском не существует — вместо него говорят о собеседнике так, будто он рядом, но не здесь.</p>
+
+    <table>
+      <tr><th>Лицо</th><th>Местоимение</th><th class="se">ser</th><th class="es">estar</th></tr>
+      <tr><td>я</td><td class="pt">eu</td><td class="pt se">sou</td><td class="pt es">estou</td></tr>
+      <tr><td>ты</td><td class="pt">tu</td><td class="pt se">és</td><td class="pt es">estás</td></tr>
+      <tr><td>он, она</td><td class="pt">ele, ela</td><td class="pt se">é</td><td class="pt es">está</td></tr>
+      <tr><td>вы (одному)</td><td class="pt">você, o senhor</td><td class="pt se">é</td><td class="pt es">está</td></tr>
+      <tr><td>мы</td><td class="pt">nós</td><td class="pt se">somos</td><td class="pt es">estamos</td></tr>
+      <tr><td>они</td><td class="pt">eles, elas</td><td class="pt se">são</td><td class="pt es">estão</td></tr>
+      <tr><td>вы (нескольким)</td><td class="pt">vocês</td><td class="pt se">são</td><td class="pt es">estão</td></tr>
+    </table>
+
+    <p>Строк семь, а форм по-прежнему пять: <span class="pt">você</span> берёт форму от <span class="pt">ele</span>, <span class="pt">vocês</span> — от <span class="pt">eles</span>. Именно поэтому в спрягателе и во всех таблицах курса третья строка подписана <span class="pt">ele / ela / você</span>.</p>
+
+    <p>Теперь главное — <b>как обращаться к человеку в Португалии</b>. Выбор тут не грамматический, а социальный, и ошибка слышна сразу.</p>
+
+    <table>
+      <tr><th>К кому</th><th>Как</th><th>Пример</th></tr>
+      <tr><td>друзья, семья, ровесники, дети</td><td class="pt">tu</td><td class="pt">Como <span class="es">estás</span>?</td></tr>
+      <tr><td>незнакомый, старший, официальное лицо</td><td class="pt">o senhor / a senhora</td><td class="pt">Como <span class="es">está</span>?</td></tr>
+      <tr><td>знакомый, но не близкий</td><td class="pt">по имени, в третьем лице</td><td class="pt">A Ana <span class="es">está</span> bem?</td></tr>
+      <tr><td>группа людей</td><td class="pt">vocês</td><td class="pt">Vocês <span class="es">estão</span> aqui?</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b>Местоимение обычно опускают.</b> <span class="pt">Estou bem</span>, <span class="pt">Somos de Lisboa</span> — форма глагола уже назвала лицо. Ставят его для противопоставления: <span class="pt">Eu sou russa, ele é português</span></li>
+      <li><b>Но у третьего лица местоимение часто нужно:</b> форма <span class="pt"><span class="se">é</span></span> подходит и «он», и «она», и «вы» — без подсказки непонятно, о ком речь</li>
+      <li><b>Смешанная группа — <span class="pt">eles</span>.</b> Даже если женщин девять, а мужчина один, местоимение мужское. <span class="pt">elas</span> — только если все женщины</li>
+      <li><b><span class="pt">A gente</span> значит «мы»</b> в разговорной речи, но глагол при нём стоит в третьем лице единственного: <span class="pt">A gente <span class="es">está</span> aqui</span> — «мы здесь». Формально это «народ», отсюда и форма</li>
+      <li><b>Формы <span class="pt">vós</span> в живом языке нет.</b> Она встречается в молитвах и в старых текстах; в речи её место заняло <span class="pt">vocês</span></li>
+    </ul>
+
+    <div class="contrast">
+      <div class="label">Осторожно с você</div>
+      <p>В учебниках <span class="pt">você</span> подают как нейтральное «вы» — и это правда для Бразилии, где им обращаются вообще ко всем.</p>
+      <p>В Португалии всё иначе. Незнакомому <span class="pt">você</span> сказать можно, но оно звучит суховато и слегка сверху вниз — так говорят с продавцом или подчинённым. Старшему или чиновнику <span class="pt">você</span> — почти невежливо.</p>
+      <p>Поэтому португальцы часто выкручиваются: обращаются <b>по имени в третьем лице</b> (<span class="pt">A Ana está bem?</span>) или вообще без местоимения — одной формой глагола: <span class="pt">Está bem?</span> Это самый безопасный способ, пока не понял, на «ты» вы или нет.</p>
+    </div>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> <span class="pt">O senhor está</span> буквально значит «господин находится» — по-русски это звучит как разговор о ком-то третьем. Придётся привыкнуть: это и есть обращение к собеседнику.<br>
+      <b>2.</b> После <span class="pt">tu</span> глагол обязан быть во втором лице: <span class="pt">tu <span class="se">és</span></span>, <span class="pt">tu <span class="es">estás</span></span>. Сказать <span class="pt">tu é</span> — как по-русски «ты есть он».<br>
+      <b>3.</b> Перескакивать между <span class="pt">tu</span> и <span class="pt">você</span> с одним и тем же человеком нельзя: это читается как смена отношения. Выбрал — держись.</div>
+
+    <div class="tip"><b>Практическое правило для Лиссабона.</b> С ровесником и в университете — сразу <span class="pt">tu</span>, там это норма. С незнакомым старше — <span class="pt">o senhor</span> / <span class="pt">a senhora</span>. Во всех непонятных случаях — глагол в третьем лице без местоимения: <span class="pt">Está tudo bem?</span> Так ты никого не обидишь и не прозвучишь чужим.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 19 · A família — семья</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">o pai</span> <span class="tr">у пай</span><span class="t">— отец</span></div>
+          <div><span class="w">os pais</span> <span class="tr">уж пайш</span><span class="t">— родители</span></div>
+          <div><span class="w">a família</span> <span class="tr">а фамилиа</span><span class="t">— семья</span></div>
+          <div><span class="w">o marido</span> <span class="tr">у мариду</span><span class="t">— муж</span></div>
+          <div><span class="w">o tio</span> <span class="tr">у тиу</span><span class="t">— дядя</span></div>
+          <div><span class="w">a tia</span> <span class="tr">а тиа</span><span class="t">— тётя</span></div>
+          <div><span class="w">o primo</span> <span class="tr">у приму</span><span class="t">— двоюродный брат</span></div>
+          <div><span class="w">a criança</span> <span class="tr">а крианса</span><span class="t">— ребёнок</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">os pais</span> — это не «отцы», а «родители»: мужское множественное покрывает смешанную пару, ровно как <span class="pt">eles</span> покрывает смешанную группу. Так же <span class="pt">os irmãos</span> — «брат и сестра», <span class="pt">os tios</span> — «дядя с тётей».<br><br><span class="pt">a criança</span> женского рода независимо от того, мальчик это или девочка: <span class="pt">a criança está cansada</span> и про сына тоже.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 20 · Tratamento — обращение</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">o senhor</span> <span class="tr">у сеньор</span><span class="t">— господин; вежливое «вы» мужчине</span></div>
+          <div><span class="w">a senhora</span> <span class="tr">а сеньора</span><span class="t">— госпожа; вежливое «вы» женщине</span></div>
+          <div><span class="w">você</span> <span class="tr">восе</span><span class="t">— вы (осторожно, см. правило)</span></div>
+          <div><span class="w">vocês</span> <span class="tr">восейш</span><span class="t">— вы (нескольким)</span></div>
+          <div><span class="w">a gente</span> <span class="tr">а жент</span><span class="t">— мы (разговорное)</span></div>
+          <div><span class="w">o chefe</span> <span class="tr">у шеф</span><span class="t">— начальник</span></div>
+          <div><span class="w">a menina</span> <span class="tr">а мнина</span><span class="t">— девушка; обращение к молодой женщине</span></div>
+          <div><span class="w">o miúdo</span> <span class="tr">у миуду</span><span class="t">— мальчишка, ребёнок</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">o miúdo</span> — слово чисто португальское, в Бразилии на его месте <i>garoto</i>. В Лиссабоне его слышно постоянно: <span class="pt">os miúdos estão na escola</span>.<br><br><span class="pt">A menina</span> в магазине или кафе — обычное вежливое обращение к молодой женщине, а не фамильярность. К мужчине в той же роли обратятся <span class="pt">o senhor</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Com a vizinha — с соседкой</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> Bom dia, senhora Maria! Como está?</p>
+          <p class="dline"><span class="speaker">Maria:</span> Estou bem, obrigada. E a Ana, está boa?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Estou, obrigada. O senhor Paulo está em casa?</p>
+          <p class="dline"><span class="speaker">Maria:</span> Não, está no trabalho. Está muito ocupado.</p>
+          <p class="dline"><span class="speaker">Ana:</span> E os miúdos?</p>
+          <p class="dline"><span class="speaker">Maria:</span> Estão na escola. A família está bem, obrigada!</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Доброе утро, сеньора Мария! Как вы?<br><b>Мария:</b> Хорошо, спасибо. А вы, Ана, как?<br><b>Ана:</b> Хорошо, спасибо. Сеньор Паулу дома?<br><b>Мария:</b> Нет, он на работе. Очень занят.<br><b>Ана:</b> А дети?<br><b>Мария:</b> В школе. Семья в порядке, спасибо!</p>
+        <p class="why-note"><b>Почему так:</b> ни одного <span class="pt">você</span> — и это не случайность. Ана говорит <span class="pt">Como está?</span> (без местоимения) и <span class="pt">O senhor Paulo</span>; Мария отвечает <span class="pt">E a Ana?</span> — по имени, в третьем лице. Так звучит обычная вежливая соседская беседа в Португалии.<br><br><span class="pt">Estou, obrigada</span> — снова ответ повтором глагола вместо <span class="pt">sim</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Com o amigo — с другом</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">João:</span> Ana! Onde estás?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Estou perto da praça. E tu?</p>
+          <p class="dline"><span class="speaker">João:</span> A gente está no café. Estamos com o meu primo.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Vocês estão no café da universidade?</p>
+          <p class="dline"><span class="speaker">João:</span> Estamos. O jogo é hoje, e o café está aberto até tarde.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Muito bem, estou perto! Até já.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Жуан:</b> Ана! Ты где?<br><b>Ана:</b> Я рядом с площадью. А ты?<br><b>Жуан:</b> Мы в кафе. Мы с моим двоюродным братом.<br><b>Ана:</b> Вы в университетском кафе?<br><b>Жуан:</b> Да. Матч сегодня, а кафе открыто допоздна.<br><b>Ана:</b> Отлично, я рядом! До скорого.</p>
+        <p class="why-note"><b>Почему так:</b> тот же разговор, но на «ты»: <span class="pt">estás</span>, <span class="pt">tu</span>, <span class="pt">vocês</span>. Сравни с предыдущим диалогом — грамматика одна, регистр разный.<br><br><span class="pt">A gente está</span> и <span class="pt">Estamos</span> в соседних репликах значат одно и то же «мы». Первое разговорнее, второе — обычная форма; португалец свободно смешивает оба.<br><br><span class="pt">Até já</span> — «до скорого», когда встреча вот-вот: <span class="pt">até logo</span> может быть и через несколько часов, <span class="pt">até já</span> — через пять минут.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="pronomes">
+    <p class="quiz-instruction">Выбери местоимение или форму. Помни: вежливость в португальском идёт через третье лицо.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="pt">tu</span>
+      <select class="mc" data-answer="estás">
+        <option value="">—</option>
+        <option value="estás">estás</option>
+        <option value="está">está</option>
+        <option value="estão">estão</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="pt">você</span>
+      <select class="mc" data-answer="é">
+        <option value="">—</option>
+        <option value="é">é</option>
+        <option value="és">és</option>
+        <option value="sou">sou</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="pt">vocês</span>
+      <select class="mc" data-answer="estão">
+        <option value="">—</option>
+        <option value="estão">estão</option>
+        <option value="estás">estás</option>
+        <option value="estamos">estamos</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">Как обратиться к незнакомой женщине старше тебя?</span>
+      <select class="mc" data-answer="a senhora">
+        <option value="">—</option>
+        <option value="a senhora">a senhora</option>
+        <option value="tu">tu</option>
+        <option value="vocês">vocês</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">Как обратиться к однокурснику?</span>
+      <select class="mc" data-answer="tu">
+        <option value="">—</option>
+        <option value="tu">tu</option>
+        <option value="o senhor">o senhor</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="pt">A gente</span>
+      <select class="mc" data-answer="está">
+        <option value="">—</option>
+        <option value="está">está</option>
+        <option value="estamos">estamos</option>
+      </select> <span class="ru-hint">aqui («мы здесь»)</span>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Девять женщин и один мужчина — какое местоимение?</span>
+      <select class="mc" data-answer="eles">
+        <option value="">—</option>
+        <option value="eles">eles</option>
+        <option value="elas">elas</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши форму: «мы русские»</span> — <span class="pt">Nós</span> <input class="blank" data-answer="somos" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">russos.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Фраза</span> <span class="pt">O senhor está bem?</span> <span class="ru-hint">обращена:</span>
+      <select class="mc" data-answer="к собеседнику">
+        <option value="">—</option>
+        <option value="к собеседнику">к собеседнику</option>
+        <option value="к третьему лицу">к третьему лицу</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Вы в кафе?» (нескольким).</span>
+      <div class="qbuild" data-answer="Vocês estão no café" data-words="no|Vocês|café|estão"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
     <button type="button" class="next-card" data-open="vocab">
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label">Seguinte · дальше</span>
-        <span class="next-title">Dicionário — повторить слова, пока тема 0.9 не готова</span>
+        <span class="next-title">Dicionário — повторить слова, пока тема 0.11 не готова</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -2691,7 +3129,7 @@
 
   // Порядок = порядок прохождения. Темы без контента сюда не попадают,
   // иначе прогресс считался бы от несуществующих экранов.
-  var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar"];
+  var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes"];
   var PRESENTE_TOPICS = [];
   var PASSADO_TOPICS  = [];
   var EXPANSAO_TOPICS = [];
@@ -2706,7 +3144,7 @@
 
   var TOPIC_MINUTES = {
     "alfabeto":20, "acento":22, "nasais":18, "digrafos":16, "genero":20, "plural":22,
-    "ser":24, "estar":24
+    "ser":24, "estar":24, "servsestar":26, "pronomes":22
   };
 
   var STORAGE_KEY   = "ptProgressV1";
@@ -3080,7 +3518,11 @@
     "sou":"я есть (от ser)","és":"ты есть (от ser)","somos":"мы есть (от ser)",
     "estou":"я нахожусь (от estar)","estás":"ты находишься (от estar)",
     "estamos":"мы находимся (от estar)","ser":"быть (по сути)","estar":"быть (сейчас)",
-    "isto":"это","moscovo":"Москва","mas":"но","meu":"мой","pai":"отец","quem":"кто"
+    "isto":"это","moscovo":"Москва","mas":"но","meu":"мой","pai":"отец","quem":"кто",
+    // 0.9–0.10
+    "minha":"моя","teu":"твой","hospital":"больница","ainda":"ещё","então":"тогда, итак",
+    "já":"уже","maria":"Мария (женское имя)","paulo":"Паулу (мужское имя)",
+    "nós":"мы","eles":"они","elas":"они (женщины)","ele":"он","ela":"она","como":"как"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
