@@ -740,15 +740,17 @@
         <span class="row-check" data-check="ter" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="negacao">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.13</span> Negação e perguntas<span class="row-title-ru">отрицание и вопрос</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="negacao" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="preposicoes">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.14</span> Preposições e contrações<span class="row-title-ru">do, na, ao, pelos — предлоги, слитые с артиклем</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="preposicoes" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--base)"></span>
@@ -3553,11 +3555,455 @@
       <button class="btn btn-reveal" type="button">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="negacao">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Negação e perguntas — «нет» и вопрос</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ 0.13 NEGAÇÃO E PERGUNTAS ============ -->
+<div class="screen topic-screen" id="screen-negacao" data-topic="negacao" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2><span class="topic-num">0.13</span> Negação e perguntas</h2>
+    <span class="done-badge" data-badge="negacao">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Отрицание собирается одним словом перед глаголом, вопрос — вообще ничем. Обе конструкции проще русских, и обе ломаются на мелочах.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Начнём с хорошей новости. Отрицание в португальском устроено ровно как в русском: слово <span class="pt">não</span> ставится <b>перед глаголом</b>, и больше ничего не меняется.</p>
+
+    <table>
+      <tr><th>Утверждение</th><th>Отрицание</th></tr>
+      <tr><td class="pt">Tenho tempo.</td><td class="pt"><b>Não</b> tenho tempo.</td></tr>
+      <tr><td class="pt">A loja <span class="es">está</span> aberta.</td><td class="pt">A loja <b>não</b> <span class="es">está</span> aberta.</td></tr>
+      <tr><td class="pt">Há pão.</td><td class="pt"><b>Não</b> há pão.</td></tr>
+    </table>
+
+    <p>То же слово <span class="pt">não</span> работает и коротким ответом «нет». Оно не меняется никак и стоит всегда в одном месте — перед глаголом, а не перед тем словом, которое отрицаешь.</p>
+
+    <p>А вот дальше начинается то, чего в русском нет как правила, хотя по факту мы делаем так же. Португальское отрицание <b>двойное</b>: если в предложении есть «ничего», «никого», «никогда», <span class="pt">não</span> всё равно остаётся:</p>
+
+    <table>
+      <tr><th>Есть</th><th>Нет</th></tr>
+      <tr><td class="pt">alguém — кто-то</td><td class="pt">ninguém — никто</td></tr>
+      <tr><td class="pt">algum — какой-то</td><td class="pt">nenhum — никакой</td></tr>
+      <tr><td class="pt">sempre — всегда</td><td class="pt">nunca — никогда</td></tr>
+      <tr><td class="pt">também — тоже</td><td class="pt">nem — и не, даже не</td></tr>
+    </table>
+
+    <p class="pt" style="font-size:1rem; margin-bottom:14px;">Não tenho <b>nada</b>. · Não está <b>ninguém</b> em casa. · Não há <b>nenhum</b> problema.</p>
+
+    <div class="contrast">
+      <div class="label">Когда «não» пропадает</div>
+      <p>Отрицательное слово может встать <b>перед</b> глаголом — и тогда <span class="pt">não</span> становится лишним:</p>
+      <p><span class="pt"><b>Ninguém</b> está em casa.</span> = <span class="pt"><b>Não</b> está <b>ninguém</b> em casa.</span></p>
+      <p><span class="pt"><b>Nunca</b> tenho tempo.</span> = <span class="pt"><b>Não</b> tenho tempo <b>nunca</b>.</span></p>
+      <p>Правило одной строкой: отрицательное слово <b>после</b> глагола требует <span class="pt">não</span>, <b>перед</b> глаголом — обходится без него. Двух <span class="pt">não</span> подряд не бывает.</p>
+    </div>
+
+    <p>Отдельно — пара <span class="pt">também</span> / <span class="pt">nem</span>. По-русски «тоже» годится и для «да», и для «нет»; в португальском для отрицания есть своя форма:</p>
+
+    <table>
+      <tr><th>Реплика</th><th>«Я тоже»</th></tr>
+      <tr><td class="pt">Tenho fome.</td><td class="pt">Eu <b>também</b>.</td></tr>
+      <tr><td class="pt">Não tenho fome.</td><td class="pt"><b>Nem</b> eu. / Eu <b>também não</b>.</td></tr>
+    </table>
+
+    <p>Сказать <span class="pt">Eu também</span> в ответ на отрицание — грамматическая ошибка: выйдет «а я голоден».</p>
+
+    <p>Теперь вопрос. И здесь португальский <b>не делает ничего</b>: порядок слов не меняется, вспомогательного глагола нет, частицы нет. Отличие только в интонации, а на письме — в знаке:</p>
+
+    <table>
+      <tr><th>Утверждение</th><th>Вопрос</th></tr>
+      <tr><td class="pt">Tens fome.</td><td class="pt">Tens fome?</td></tr>
+      <tr><td class="pt">A Ana é médica.</td><td class="pt">A Ana é médica?</td></tr>
+      <tr><td class="pt">Há um café aqui.</td><td class="pt">Há um café aqui?</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b>Отвечают повтором глагола</b>, а не словом <span class="pt">sim</span>. <span class="pt">Tens fome? — Tenho.</span> Слово <span class="pt">sim</span> существует, но в одиночку звучит сухо; его добавляют для нажима: <span class="pt">Tenho, sim!</span></li>
+      <li><b>Отрицательный ответ — тоже глаголом:</b> <span class="pt">Não tenho.</span> Просто <span class="pt">Não</span> — коротко и резковато, как русское «нет» без продолжения</li>
+      <li><b>Переспрос в конце фразы — <span class="pt">não é?</span></b> Это португальское «правда?», «не так ли?»: <span class="pt">O jantar é hoje, não é?</span> В разговоре часто сокращают до <span class="pt">não?</span></li>
+      <li><b>Согласие — <span class="pt">pois é</span>.</b> Дословно «ведь так», по смыслу «вот именно». Одна из самых частых реплик в португальском разговоре</li>
+    </ul>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> <span class="pt">Não</span> стоит перед <b>глаголом</b>, а не перед отрицаемым словом. «Не я это сказал» через простое <span class="pt">não</span> не собирается — там нужна другая конструкция, и она в блоке 3.<br>
+      <b>2.</b> На вопрос не отвечают одним <span class="pt">sim</span>. Повтори глагол: <span class="pt">Tens tempo? — Tenho.</span> Это звучит вежливее и естественнее.<br>
+      <b>3.</b> <span class="pt">Nem eu</span>, а не <span class="pt">também eu</span>, если реплика была отрицательной.<br>
+      <b>4.</b> <b>А в Бразилии</b> в конце фразы говорят <i>né?</i> — сжатое <span class="pt">não é?</span>. В Португалии произносят полностью, а сокращают до <span class="pt">não?</span></div>
+
+    <div class="tip"><b>Что дальше.</b> Здесь были вопросы, на которые отвечают «да» или «нет». Вопросы со словами <span class="pt">onde</span>, <span class="pt">como</span>, <span class="pt">quem</span>, <span class="pt">quanto</span> устроены сложнее и разбираются в теме 1.9 — там же появятся <span class="pt">que</span>, <span class="pt">qual</span> и <span class="pt">porquê</span>.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 25 · Alguém e ninguém — есть и нет</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">alguém</span> <span class="tr">алгень</span><span class="t">— кто-то, кто-нибудь</span></div>
+          <div><span class="w">ninguém</span> <span class="tr">нингень</span><span class="t">— никто</span></div>
+          <div><span class="w">algum</span> <span class="tr">алгум</span><span class="t">— какой-то</span></div>
+          <div><span class="w">nenhum</span> <span class="tr">неньум</span><span class="t">— никакой, ни один</span></div>
+          <div><span class="w">sempre</span> <span class="tr">семпр</span><span class="t">— всегда</span></div>
+          <div><span class="w">nunca</span> <span class="tr">нунка</span><span class="t">— никогда</span></div>
+          <div><span class="w">também</span> <span class="tr">тамбень</span><span class="t">— тоже, также</span></div>
+          <div><span class="w">nem</span> <span class="tr">нень</span><span class="t">— и не, даже не</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> четыре пары стоят строго друг против друга, и отрицательное слово в каждой начинается с <b>n</b>: <span class="pt">alguém → ninguém</span>, <span class="pt">algum → nenhum</span>, <span class="pt">sempre → nunca</span>, <span class="pt">também → nem</span>. Запоминать их надо парами, иначе в речи всплывает только половина.<br><br><span class="pt">alguém</span>, <span class="pt">ninguém</span>, <span class="pt">também</span>, <span class="pt">nem</span> кончаются носовым из темы 0.3: «-ень» без внятного «н».<br><br><span class="pt">algum</span> и <span class="pt">nenhum</span> — не наречия, а прилагательные, и они согласуются: <span class="pt">nenhuma casa</span>, <span class="pt">alguns livros</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 26 · Claro, pois, talvez — реакция</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">claro</span> <span class="tr">клару</span><span class="t">— конечно; ясный</span></div>
+          <div><span class="w">pois</span> <span class="tr">пойш</span><span class="t">— ведь, вот именно</span></div>
+          <div><span class="w">talvez</span> <span class="tr">талвеш</span><span class="t">— может быть</span></div>
+          <div><span class="w">se calhar</span> <span class="tr">се калиар</span><span class="t">— пожалуй, наверное</span></div>
+          <div><span class="w">de certeza</span> <span class="tr">де сертеза</span><span class="t">— точно, наверняка</span></div>
+          <div><span class="w">só</span> <span class="tr">со</span><span class="t">— только, лишь</span></div>
+          <div><span class="w">quase</span> <span class="tr">куаз</span><span class="t">— почти</span></div>
+          <div><span class="w">que pena</span> <span class="tr">ке пена</span><span class="t">— какая жалость</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">se calhar</span> — самое португальское выражение набора. В Бразилии его не говорят вовсе, там <i>talvez</i> или <i>pode ser</i>. В Лиссабоне же <span class="pt">se calhar</span> звучит в каждом втором разговоре.<br><br><span class="pt">pois</span> — слово-паразит в лучшем смысле: <span class="pt">pois é</span> значит «вот именно», <span class="pt">pois não</span> — «ну да нет же». Само по себе оно почти ничего не значит, но без него речь звучит иностранной.<br><br><span class="pt">claro</span> — то же слово, что «ясный, светлый». <span class="pt">Claro que sim!</span> — «конечно да».</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · Um dia mau — неудачный день</div>
+      <div class="mini-text">
+        <p class="storytext">Hoje a Ana não tem sorte. O supermercado está fechado e a farmácia também. Na rua não está ninguém. Em casa não há pão, não há leite, não há nada. O gato tem fome e não está nada calmo. A Ana nunca tem tempo, e hoje não tem nenhum. Mas há uma pastelaria aberta perto de casa — claro que há! Se calhar o jantar é na pastelaria. Não é mau.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Сегодня Ане не везёт. Супермаркет закрыт, аптека тоже. На улице никого. Дома нет ни хлеба, ни молока — ничего нет. Кот голодный и совсем не спокоен. У Аны никогда нет времени, а сегодня нет вовсе. Но рядом с домом есть открытая кондитерская — конечно есть! Пожалуй, ужин будет в кондитерской. Неплохо.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">Na rua não está ninguém</span> — двойное отрицание, и оно обязательно. Можно переставить: <span class="pt">Na rua ninguém está</span> — тогда <span class="pt">não</span> уходит.<br><br><span class="pt">A Ana nunca tem tempo</span> — <span class="pt">nunca</span> стоит перед глаголом, поэтому без <span class="pt">não</span>. А <span class="pt">não tem nenhum</span> — после, поэтому с ним.<br><br><span class="pt">não está nada calmo</span> — здесь <span class="pt">nada</span> значит не «ничего», а «совсем»: усилитель отрицания. Частая разговорная конструкция.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Não tens fome? — есть не хочешь?</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> João, não tens fome?</p>
+          <p class="dline"><span class="speaker">João:</span> Não tenho, não. E tu?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Tenho, sim! Em casa não há nada. Nem pão.</p>
+          <p class="dline"><span class="speaker">João:</span> Que pena. E há alguém na pastelaria?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Claro! Está sempre aberta. Nunca está fechada.</p>
+          <p class="dline"><span class="speaker">João:</span> Então o jantar é na pastelaria, não é?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Pois é! E de certeza que o Paulo também está na pastelaria — hoje não tem trabalho.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Жуан, есть не хочешь?<br><b>Жуан:</b> Нет, не хочу. А ты?<br><b>Ана:</b> Хочу! Дома ничего нет. Даже хлеба.<br><b>Жуан:</b> Жаль. А в кондитерской кто-нибудь есть?<br><b>Ана:</b> Конечно! Она всегда открыта. Никогда не закрыта.<br><b>Жуан:</b> Тогда ужин в кондитерской, да?<br><b>Ана:</b> Вот именно! И наверняка Паулу тоже там — у него сегодня нет работы.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">Não tenho, não</span> — второе <span class="pt">não</span> в конце не ошибка, а нажим: «нет, не хочу». Так говорят в живой речи постоянно.<br><br><span class="pt">Tenho, sim!</span> — ответ повтором глагола плюс <span class="pt">sim</span> для убедительности. Просто <span class="pt">sim</span> прозвучало бы холодно.<br><br><span class="pt">não é?</span> в конце и <span class="pt">pois é!</span> в ответ — самая типичная пара реплик португальского разговора. Заметь, что <span class="pt">de certeza</span> тянет за собой <span class="pt">que</span>: «наверняка, что…».</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="negacao">
+    <p class="quiz-instruction">Собери отрицание и вопрос. Помни про двойное отрицание и про ответ повтором глагола.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">«У меня нет денег»:</span>
+      <select class="mc" data-answer="Não tenho dinheiro">
+        <option value="">—</option>
+        <option value="Não tenho dinheiro">Não tenho dinheiro</option>
+        <option value="Tenho não dinheiro">Tenho não dinheiro</option>
+        <option value="Tenho dinheiro não">Tenho dinheiro não</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="pt">Não está</span>
+      <select class="mc" data-answer="ninguém">
+        <option value="">—</option>
+        <option value="ninguém">ninguém</option>
+        <option value="alguém">alguém</option>
+      </select> <span class="pt">em casa.</span>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="pt">Não tenho</span>
+      <select class="mc" data-answer="nada">
+        <option value="">—</option>
+        <option value="nada">nada</option>
+        <option value="tudo">tudo</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span>
+      <select class="mc" data-answer="Nunca">
+        <option value="">—</option>
+        <option value="Nunca">Nunca</option>
+        <option value="Não nunca">Não nunca</option>
+      </select> <span class="pt">tenho tempo.</span>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">Как спросить «Ты голоден?»</span>
+      <select class="mc" data-answer="Tens fome?">
+        <option value="">—</option>
+        <option value="Tens fome?">Tens fome?</option>
+        <option value="Fome tens?">Fome tens?</option>
+        <option value="És fome?">És fome?</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">Как в Португалии отвечают «да» на</span> <span class="pt">Tens tempo?</span>
+      <select class="mc" data-answer="Tenho">
+        <option value="">—</option>
+        <option value="Tenho">Tenho</option>
+        <option value="Sim">Sim</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="pt">Não tenho fome.</span> <span class="ru-hint">— «Я тоже»:</span>
+      <select class="mc" data-answer="Nem eu">
+        <option value="">—</option>
+        <option value="Nem eu">Nem eu</option>
+        <option value="Também eu">Também eu</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши переспрос «правда?»:</span> <span class="pt">O jantar é hoje,</span> <input class="blank" data-answer="não é|nao e|não é?" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"><span class="pt">?</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Впиши: «Никакой проблемы нет»</span> — <span class="pt">Não há</span> <input class="blank" data-answer="nenhum" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">problema.</span></div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Дома ничего нет».</span>
+      <div class="qbuild" data-answer="Em casa não há nada" data-words="há|não|casa|Em|nada"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="preposicoes">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Preposições e contrações — do, na, ao, pelos</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ 0.14 PREPOSIÇÕES E CONTRAÇÕES ============ -->
+<div class="screen topic-screen" id="screen-preposicoes" data-topic="preposicoes" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2><span class="topic-num">0.14</span> Preposições e contrações</h2>
+    <span class="done-badge" data-badge="preposicoes">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Ты уже полтора десятка тем читаешь <span class="pt">do</span>, <span class="pt">na</span>, <span class="pt">dos</span> — и ни разу не разбирал, откуда они берутся. Пора: это четыре предлога, слипшихся с артиклем.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>В португальском перед существительным почти всегда стоит артикль. А перед артиклем часто стоит предлог. Встречаясь, четыре предлога — <span class="pt">de</span>, <span class="pt">em</span>, <span class="pt">a</span>, <span class="pt">por</span> — с артиклем <b>слипаются в одно слово</b>, и это не разговорная небрежность, а норма письма: «de o» не пишут никогда.</p>
+
+    <table>
+      <tr><th>Предлог</th><th class="m">+ o &nbsp;·&nbsp; <span class="f">+ a</span></th><th class="m">+ os &nbsp;·&nbsp; <span class="f">+ as</span></th></tr>
+      <tr><td class="pt">de — из, от, чей</td><td class="pt"><span class="m">do</span> · <span class="f">da</span></td><td class="pt"><span class="m">dos</span> · <span class="f">das</span></td></tr>
+      <tr><td class="pt">em — в, на</td><td class="pt"><span class="m">no</span> · <span class="f">na</span></td><td class="pt"><span class="m">nos</span> · <span class="f">nas</span></td></tr>
+      <tr><td class="pt">a — к, в (куда)</td><td class="pt"><span class="m">ao</span> · <span class="f">à</span></td><td class="pt"><span class="m">aos</span> · <span class="f">às</span></td></tr>
+      <tr><td class="pt">por — через, по</td><td class="pt"><span class="m">pelo</span> · <span class="f">pela</span></td><td class="pt"><span class="m">pelos</span> · <span class="f">pelas</span></td></tr>
+    </table>
+
+    <p>Шестнадцать слов, и половину из них ты уже читаешь не задумываясь. Логика простая: предлог теряет свой хвост, артикль — своё начало.</p>
+
+    <div class="contrast">
+      <div class="label">À — не ударение, а знак слияния</div>
+      <p><span class="pt">a</span> + <span class="pt">a</span> дают одну букву, и её надо как-то отличить от обычного артикля. Для этого ставят знак в другую сторону: <span class="pt">à</span>.</p>
+      <p>Это не ударение. Знак говорит: «здесь спрятаны два <b>a</b>», и звук от этого становится длиннее и открытее — <span class="pt">à</span> звучит как ясное «а», тогда как безударное <span class="pt">a</span> съедается почти до «ə».</p>
+      <p><span class="pt">Estou <b>à</b> porta.</span> — «я у двери». <span class="pt">Estou <b>a</b> porta</span> — бессмыслица, набор слов.</p>
+    </div>
+
+    <p>С неопределённым артиклем слипаются только <span class="pt">em</span> и (не всегда) <span class="pt">de</span>:</p>
+
+    <table>
+      <tr><th>Сложение</th><th>Результат</th></tr>
+      <tr><td class="pt">em + um / uma</td><td class="pt">num · numa</td></tr>
+      <tr><td class="pt">em + uns / umas</td><td class="pt">nuns · numas</td></tr>
+      <tr><td class="pt">de + um / uma</td><td class="pt">dum · duma <span style="font-family:var(--font-ru); font-size:0.8rem; color:var(--muted)">или раздельно</span></td></tr>
+    </table>
+
+    <p><span class="pt">num</span> и <span class="pt">numa</span> обязательны, а вот <span class="pt">dum</span> / <span class="pt">duma</span> в письменной речи чаще пишут раздельно: <span class="pt">de um</span>, <span class="pt">de uma</span>. Ошибкой не будет ни то ни другое.</p>
+
+    <p>И самое важное — <b>слипаются не все предлоги</b>. Остальные стоят рядом с артиклем и не меняются вообще:</p>
+
+    <table>
+      <tr><th>Предлог</th><th>С артиклем</th></tr>
+      <tr><td class="pt">com — с</td><td class="pt">com o João, com a Ana</td></tr>
+      <tr><td class="pt">sem — без</td><td class="pt">sem o livro</td></tr>
+      <tr><td class="pt">sobre — на, о (сверху)</td><td class="pt">sobre a mesa</td></tr>
+      <tr><td class="pt">entre — между</td><td class="pt">entre o café e a loja</td></tr>
+      <tr><td class="pt">para — для, к</td><td class="pt">para o Paulo</td></tr>
+    </table>
+
+    <p>У <span class="pt">com</span> есть своё, отдельное слияние — не с артиклем, а с местоимением, и оно даёт формы, которые не выводятся ниоткуда:</p>
+
+    <table>
+      <tr><th>Кто</th><th>Со мной, с тобой…</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">comigo</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">contigo</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">connosco</td></tr>
+    </table>
+
+    <p><span class="pt">connosco</span> с двумя <b>n</b> — португальское написание; бразильское <i>conosco</i> с одним. Разница видна только на письме, но она есть.</p>
+
+    <div class="trap"><b>Четыре ловушки.</b><br>
+      <b>1.</b> «Дом Жуана» — <span class="pt">a casa <b>do</b> João</span>, с артиклем внутри слияния. Имя в португальском тоже берёт артикль, поэтому «de João» звучит неправильно.<br>
+      <b>2.</b> <span class="pt">em casa</span> без артикля значит «дома, у себя». <span class="pt">na casa do João</span> — «в доме Жуана». Артикль здесь меняет смысл, а не оформление. Так же <span class="pt">em Lisboa</span>, <span class="pt">no trabalho</span>, <span class="pt">na escola</span> — это устойчивые пары, их учат целиком.<br>
+      <b>3.</b> <span class="pt">com</span> не слипается с артиклем: <span class="pt">com o João</span>, а не «colo João». Зато слипается с местоимением: <span class="pt">comigo</span>.<br>
+      <b>4.</b> <span class="pt">por</span> и <span class="pt">para</span> оба переводятся на русский как «для», «за», «к» — и это самая известная пара-ловушка португальского. Здесь мы берём у <span class="pt">por</span> только его слияния; разделение с <span class="pt">para</span> ждёт в теме 1.10.</div>
+
+    <div class="tip"><b>Как не заучивать шестнадцать слов.</b> Запомни четыре начала — <b>d</b>, <b>n</b>, <b>a</b>, <b>pel</b> — и добавляй к ним обычное окончание артикля: <b>-o</b>, <b>-a</b>, <b>-os</b>, <b>-as</b>. Вся таблица собирается из этого за секунду, а единственное исключение — <span class="pt">à</span> вместо ожидаемого «aa».</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 27 · Preposições — предлоги</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">com</span> <span class="tr">кон</span><span class="t">— с, вместе с</span></div>
+          <div><span class="w">sem</span> <span class="tr">сень</span><span class="t">— без</span></div>
+          <div><span class="w">sobre</span> <span class="tr">собр</span><span class="t">— на (сверху); о чём-то</span></div>
+          <div><span class="w">entre</span> <span class="tr">энтр</span><span class="t">— между</span></div>
+          <div><span class="w">desde</span> <span class="tr">дежд</span><span class="t">— с (какого-то момента)</span></div>
+          <div><span class="w">durante</span> <span class="tr">дуранте</span><span class="t">— в течение, во время</span></div>
+          <div><span class="w">para</span> <span class="tr">пара</span><span class="t">— для, к (см. тему 1.10)</span></div>
+          <div><span class="w">ao lado</span> <span class="tr">ау ладу</span><span class="t">— рядом, сбоку</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">com</span> и <span class="pt">sem</span> — противоположности и оба кончаются носовым: «кон» и «сень», без внятного «м».<br><br><span class="pt">ao lado</span> уже содержит слияние: <span class="pt">a</span> + <span class="pt">o</span> = <span class="pt">ao</span>. Полностью говорят <span class="pt">ao lado de</span>: <span class="pt">ao lado da igreja</span> — «рядом с церковью», и там второе слияние.<br><br><span class="pt">para</span> в разговоре часто звучит как «пра»: <span class="pt">para o café</span> → «пру кафэ». В книгах этого не пишут, но слышится именно так.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 28 · Pela cidade — по городу</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">a ponte</span> <span class="tr">а понте</span><span class="t">— мост</span></div>
+          <div><span class="w">o rio</span> <span class="tr">у риу</span><span class="t">— река</span></div>
+          <div><span class="w">a igreja</span> <span class="tr">а игрежа</span><span class="t">— церковь</span></div>
+          <div><span class="w">o museu</span> <span class="tr">у музеу</span><span class="t">— музей</span></div>
+          <div><span class="w">a esquina</span> <span class="tr">а шкина</span><span class="t">— угол улицы</span></div>
+          <div><span class="w">a estrada</span> <span class="tr">а штрада</span><span class="t">— шоссе, дорога</span></div>
+          <div><span class="w">o metro</span> <span class="tr">у метру</span><span class="t">— метро</span></div>
+          <div><span class="w">o elevador</span> <span class="tr">у элевадор</span><span class="t">— лифт, подъёмник</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">a esquina</span> и <span class="pt">a estrada</span> начинаются с того же съеденного <b>e</b>, что и <span class="pt">escola</span>: «шкина», «штрада».<br><br><span class="pt">o elevador</span> в Лиссабоне — не только лифт в доме, но и городские подъёмники, которые возят людей с нижнего города в верхний. <span class="pt">Elevador de Santa Justa</span> — тот самый.<br><br><span class="pt">o metro</span> с ударением на первый слог — метро; <span class="pt">o metro</span> же значит «метр». Различает только контекст.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · A casa perto do rio — дом у реки</div>
+      <div class="mini-text">
+        <p class="storytext">A casa da Ana é perto do rio. Na esquina da rua há uma igreja pequena e, ao lado, um café. O museu é ao lado da ponte, e a estação do metro é perto de casa. Pela rua há sempre muitos carros. O elevador é velho: é do tempo dos avós. Hoje a Ana está em casa. O gato está na cama, no quarto. O livro do João está sobre a mesa, entre o telemóvel e as chaves. Na cozinha não há nada, e o jantar é num restaurante perto da praça, com o Paulo e com a Maria.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Дом Аны рядом с рекой. На углу улицы стоит маленькая церковь, а рядом кафе. Музей рядом с мостом, а станция метро недалеко от дома. По улице всегда едет много машин. Лифт старый: он ещё со времён дедушек и бабушек. Сегодня Ана дома. Кот на кровати, в комнате. Книга Жуана на столе, между телефоном и ключами. На кухне ничего нет, и ужин будет в ресторане рядом с площадью, с Паулу и с Марией.</p>
+        <p class="why-note"><b>Почему так:</b> в первой фразе три слияния подряд: <span class="pt">da Ana</span>, <span class="pt">do rio</span>, а дальше <span class="pt">na esquina</span>, <span class="pt">da rua</span>, <span class="pt">da ponte</span>, <span class="pt">do metro</span>. Раньше ты читал их как отдельные слова — теперь видно, что внутри каждого сидит артикль.<br><br><span class="pt">está em casa</span> без артикля — «у себя дома». А <span class="pt">está na cama</span> с артиклем — «на кровати», на конкретном предмете.<br><br><span class="pt">com o Paulo e com a Maria</span> — <span class="pt">com</span> не слипается, и артикль перед именем остаётся на виду.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Onde é o museu? — где музей</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> Desculpe, o museu é aqui perto?</p>
+          <p class="dline"><span class="speaker">Senhora:</span> É, sim. É ao lado da ponte, na esquina da estrada.</p>
+          <p class="dline"><span class="speaker">Ana:</span> E a estação do metro?</p>
+          <p class="dline"><span class="speaker">Senhora:</span> Está entre a igreja e o supermercado. É perto, não é longe.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Muito obrigada! E há uma farmácia pela rua?</p>
+          <p class="dline"><span class="speaker">Senhora:</span> Há, sim, ao lado do café. Está sempre aberta durante o dia.</p>
+          <p class="dline"><span class="speaker">Ana:</span> É muito simpática. Até logo!</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Извините, музей тут рядом?<br><b>Сеньора:</b> Да, рядом. Он рядом с мостом, на углу шоссе.<br><b>Ана:</b> А станция метро?<br><b>Сеньора:</b> Она между церковью и супермаркетом. Близко, не далеко.<br><b>Ана:</b> Большое спасибо! А аптека где-нибудь по улице есть?<br><b>Сеньора:</b> Есть, рядом с кафе. Она всегда открыта днём.<br><b>Ана:</b> Вы очень любезны. До свидания!</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">ao lado da ponte</span> — два слияния в трёх словах: <span class="pt">a + o</span> и <span class="pt">de + a</span>. Это обычная плотность португальской речи.<br><br><span class="pt">É muito simpática</span> в конце — не про характер вообще, а вежливая благодарность: «вы очень любезны». Форма женская, потому что относится к собеседнице.<br><br>Ана обращается к незнакомой женщине без местоимения, одной формой глагола (<span class="pt">É</span>, <span class="pt">Está</span>) — самый безопасный регистр из темы 0.10.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="preposicoes">
+    <p class="quiz-instruction">Сложи предлог с артиклем. Четыре начала — d, n, a, pel — и окончание артикля.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="pt">de + o</span> =
+      <select class="mc" data-answer="do">
+        <option value="">—</option>
+        <option value="do">do</option>
+        <option value="deo">deo</option>
+        <option value="dao">dao</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="pt">em + a</span> =
+      <select class="mc" data-answer="na">
+        <option value="">—</option>
+        <option value="na">na</option>
+        <option value="ema">ema</option>
+        <option value="em a">em a</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="pt">a + o</span> =
+      <select class="mc" data-answer="ao">
+        <option value="">—</option>
+        <option value="ao">ao</option>
+        <option value="à">à</option>
+        <option value="o">o</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="pt">a + a</span> =
+      <select class="mc" data-answer="à">
+        <option value="">—</option>
+        <option value="à">à</option>
+        <option value="aa">aa</option>
+        <option value="ao">ao</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="pt">por + as</span> =
+      <select class="mc" data-answer="pelas">
+        <option value="">—</option>
+        <option value="pelas">pelas</option>
+        <option value="poras">poras</option>
+        <option value="polas">polas</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">«с Жуаном»:</span>
+      <select class="mc" data-answer="com o João">
+        <option value="">—</option>
+        <option value="com o João">com o João</option>
+        <option value="colo João">colo João</option>
+        <option value="cão João">cão João</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">«со мной»:</span>
+      <select class="mc" data-answer="comigo">
+        <option value="">—</option>
+        <option value="comigo">comigo</option>
+        <option value="com eu">com eu</option>
+        <option value="commigo">commigo</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши</span> <span class="pt">em + os</span>: <span class="pt">O gato está</span> <input class="blank" data-answer="nos" style="width:5em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">quartos.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Впиши</span> <span class="pt">em + um</span>: <span class="pt">O jantar é</span> <input class="blank" data-answer="num" style="width:5em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">restaurante.</span></div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Книга на столе».</span>
+      <div class="qbuild" data-answer="O livro está sobre a mesa" data-words="sobre|está|O|mesa|a|livro"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
     <button type="button" class="next-card" data-open="vocab">
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label">Seguinte · дальше</span>
-        <span class="next-title">Dicionário — повторить слова, пока тема 0.13 не готова</span>
+        <span class="next-title">Dicionário — повторить слова, пока тема 0.15 не готова</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -3589,7 +4035,7 @@
 
   // Порядок = порядок прохождения. Темы без контента сюда не попадают,
   // иначе прогресс считался бы от несуществующих экранов.
-  var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes","adjetivos","ter"];
+  var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes","adjetivos","ter","negacao","preposicoes"];
   var PRESENTE_TOPICS = [];
   var PASSADO_TOPICS  = [];
   var EXPANSAO_TOPICS = [];
@@ -3604,7 +4050,8 @@
 
   var TOPIC_MINUTES = {
     "alfabeto":20, "acento":22, "nasais":18, "digrafos":16, "genero":20, "plural":22,
-    "ser":24, "estar":24, "servsestar":26, "pronomes":22, "adjetivos":22, "ter":24
+    "ser":24, "estar":24, "servsestar":26, "pronomes":22, "adjetivos":22, "ter":24,
+    "negacao":20, "preposicoes":24
   };
 
   var STORAGE_KEY   = "ptProgressV1";
@@ -3988,7 +4435,19 @@
     // остальные — целиком (см. «технический долг» в ROADMAP).
     "ter":"иметь","tenho":"я имею (от ter)","tens":"ты имеешь (от ter)",
     "tem":"имеет (от ter)","temos":"мы имеем (от ter)","têm":"имеют (от ter)",
-    "haver":"иметься","há":"есть, имеется (от haver)"
+    "haver":"иметься","há":"есть, имеется (от haver)",
+    // 0.13: куски устойчивых фраз. Кладём их явно, иначе seedVocabFromWordsets
+    // выдаст «que» перевод всей фразы «que pena».
+    "que":"что; который","se":"если","calhar":"выпасть, случиться",
+    "certeza":"уверенность","pena":"жалость; перо",
+    // 0.14: слияния предлога с артиклем. Разбираются в теме, но встречаются
+    // в текстах с первых уроков, поэтому лежат в словаре целиком.
+    "ao":"к, у (a + o)","à":"к, у (a + a)","aos":"к, у (a + os)","às":"к, у (a + as)",
+    "pelo":"через, по (por + o)","pela":"через, по (por + a)",
+    "pelos":"через, по (por + os)","pelas":"через, по (por + as)",
+    "num":"в одном (em + um)","numa":"в одной (em + uma)",
+    "dum":"из одного (de + um)","duma":"из одной (de + uma)",
+    "comigo":"со мной","contigo":"с тобой","connosco":"с нами"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
