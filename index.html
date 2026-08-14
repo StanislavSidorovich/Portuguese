@@ -90,6 +90,12 @@
   body.dark .trap, body.dark .tip, body.dark .contrast .label,
   body.dark .contrast p, body.dark .review-title,
   body.dark .pair-cell{ color:var(--ink-fixed); }
+  /* Метки рода стоят прямо на тёмном фоне страницы, а не на светлой плашке:
+     базовые --masc и --fem дают на нём 3.6:1 и читаются плохо. Правим только
+     эти два класса, а не сами переменные: на светлых плашках (.pair-cell)
+     переменные работают как надо, и трогать их нельзя. */
+  body.dark .m{color:#5F97DC;}
+  body.dark .f{color:#DE6F9F;}
   /* .conjbox сюда НЕ добавлять: у неё фон var(--card), который в тёмной теме
      переворачивается вместе со всем остальным. Приколотишь цвет — формы
      глагола станут чёрным по чёрному. */
@@ -673,15 +679,17 @@
         <span class="row-check" data-check="digrafos" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="genero">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.5</span> Género e artigos<span class="row-title-ru">род и артикли: o, a, um, uma</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="genero" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="plural">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.6</span> Plural<span class="row-title-ru">множественное число, включая ão → ões и l → is</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="plural" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--base)"></span>
@@ -1835,11 +1843,439 @@
       <button class="btn btn-reveal" type="button">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
-    <button type="button" class="next-card" data-open="cheat-sounds">
+    <button type="button" class="next-card" data-open="genero">
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label">Seguinte · дальше</span>
-        <span class="next-title">Шпаргалка по чтению — пока тема 0.5 не готова</span>
+        <span class="next-title">Género e artigos — род и артикли</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ 0.5 GÉNERO E ARTIGOS ============ -->
+<div class="screen topic-screen" id="screen-genero" data-topic="genero" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2><span class="topic-num">0.5</span> Género e artigos</h2>
+    <span class="done-badge" data-badge="genero">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Родов два, среднего нет, а артикль обязателен — и русский род тут не помощник.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Тут кончается фонетика и начинается грамматика. Русскому это даётся легче, чем англичанину: понятие рода у нас есть. Но есть и своя ловушка — <b>род в португальском другой</b>. «Дом» у нас мужской, а <span class="pt">a casa</span> — женского. «Книга» женская, а <span class="pt">o livro</span> — мужского.</p>
+
+    <div class="pair-grid">
+      <div class="pair-cell masc">
+        <div class="p-title">Мужской род</div>
+        <div class="p-big">o livro<br>um livro</div>
+        <div class="p-note">чаще всего слова на <b>-o</b>, <b>-or</b>, <b>-ão</b></div>
+      </div>
+      <div class="pair-cell fem">
+        <div class="p-title">Женский род</div>
+        <div class="p-big">a mesa<br>uma mesa</div>
+        <div class="p-note">чаще всего слова на <b>-a</b>, <b>-ção</b>, <b>-dade</b>, <b>-agem</b></div>
+      </div>
+    </div>
+
+    <p>Артиклей два. <b>Определённый</b> (<span class="m">o</span> / <span class="f">a</span>) — «тот самый, о котором речь». <b>Неопределённый</b> (<span class="m">um</span> / <span class="f">uma</span>) — «какой-то, один из».</p>
+
+    <table>
+      <tr><th></th><th>мужской</th><th>женский</th></tr>
+      <tr><td>определённый</td><td class="pt"><span class="m">o</span> livro</td><td class="pt"><span class="f">a</span> mesa</td></tr>
+      <tr><td>неопределённый</td><td class="pt"><span class="m">um</span> livro</td><td class="pt"><span class="f">uma</span> mesa</td></tr>
+    </table>
+
+    <p>Формы множественного числа (<span class="pt">os, as, uns, umas</span>) — следующая тема; там же и множественное самих существительных.</p>
+
+    <ul class="rule-list">
+      <li><b>Артикль не необязателен.</b> В русском «стол на кухне» — законная фраза. В португальском <span class="pt">mesa está na cozinha</span> звучит оборванно: нужно <span class="pt"><span class="f">a</span> mesa está na cozinha</span></li>
+      <li><b>Учи слово вместе с артиклем.</b> Не <span class="pt">mesa</span>, а <span class="pt">a mesa</span> — одним куском, как одно слово. Иначе род придётся вспоминать каждый раз заново, и в теме 0.11 (прилагательные) это станет больно</li>
+      <li><b>Артикль ставится и там, где в русском ничего нет:</b> с именами — <span class="pt">o João</span>, <span class="pt">a Ana</span>; со странами — <span class="pt">o Brasil</span>, <span class="pt">a França</span> (но <span class="pt">Portugal</span> — без артикля, редкое исключение)</li>
+      <li><b>А вот после <span class="pt">ser</span> с профессией артикля нет:</b> <span class="pt">Ana é professora</span>, а не «одна преподавательница». Так же и с национальностью</li>
+    </ul>
+
+    <p>Окончание чаще всего выдаёт род сразу:</p>
+
+    <table>
+      <tr><th>Окончание</th><th>Род</th><th>Примеры</th></tr>
+      <tr><td>-o</td><td class="m">м</td><td class="pt">o livro, o carro, o vinho</td></tr>
+      <tr><td>-a</td><td class="f">ж</td><td class="pt">a mesa, a casa, a rua</td></tr>
+      <tr><td>-ção, -são</td><td class="f">ж</td><td class="pt">a lição, a estação</td></tr>
+      <tr><td>-dade</td><td class="f">ж</td><td class="pt">a cidade, a verdade</td></tr>
+      <tr><td>-agem</td><td class="f">ж</td><td class="pt">a viagem, a mensagem</td></tr>
+      <tr><td>-or</td><td class="m">м</td><td class="pt">o professor, o computador</td></tr>
+      <tr><td>-e</td><td>?</td><td class="pt">o leite, но a carne — запоминать</td></tr>
+    </table>
+
+    <div class="contrast">
+      <div class="label">А в Бразилии</div>
+      <p>Иногда расходится не только слово, но и его род. Португальская <span class="pt"><span class="f">a</span> casa de banho</span> (ванная, туалет) в Бразилии — <span class="pt"><span class="m">o</span> banheiro</span>: другое слово и другой род.</p>
+      <p>И артикль с именами в Португалии обязателен куда чаще: <span class="pt">A Ana está aqui</span>. Бразилец скорее скажет <span class="pt">Ana está aqui</span>, без артикля.</p>
+    </div>
+
+    <div class="trap"><b>Слова, которые обманывают окончанием.</b> Их немного, но они частые:<br>
+      <span class="pt"><span class="m">o</span> dia</span> (день), <span class="pt"><span class="m">o</span> mapa</span> (карта), <span class="pt"><span class="m">o</span> problema</span> (проблема), <span class="pt"><span class="m">o</span> programa</span> (программа), <span class="pt"><span class="m">o</span> cinema</span> — мужские, хотя кончаются на <b>-a</b>;<br>
+      <span class="pt"><span class="f">a</span> mão</span> (рука) — женская, хотя кончается на <b>-ão</b>.<br>
+      Слова греческого происхождения на <b>-ma</b> (<span class="pt">problema</span>, <span class="pt">programa</span>, <span class="pt">sistema</span>) мужские все до одного — это не список исключений, а маленькое отдельное правило.</div>
+
+    <div class="tip"><b>Как не мучиться с родом.</b> Не заучивай род отдельно от слова — это лишняя работа. Заучивай <b>артикль как часть слова</b>: «амеза», «уливру». С этой темы все новые слова в курсе даются с артиклем, и в словаре они тоже стоят с ним.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 9 · Género — ловушки рода</div>
+      <div class="mini-text">
+        <p style="font-size:0.85rem; color:var(--muted); margin:0 0 10px;">С этого набора слова даются с артиклем: он теперь часть слова. Обрати внимание, что <b>o</b> в артикле звучит «у».</p>
+        <div class="wordset">
+          <div><span class="w">o problema</span> <span class="tr">у прублема</span><span class="t">— проблема</span></div>
+          <div><span class="w">o mapa</span> <span class="tr">у мапа</span><span class="t">— карта</span></div>
+          <div><span class="w">o programa</span> <span class="tr">у пругрáма</span><span class="t">— программа; передача</span></div>
+          <div><span class="w">o cinema</span> <span class="tr">у синема</span><span class="t">— кино, кинотеатр</span></div>
+          <div><span class="w">a viagem</span> <span class="tr">а виажай</span><span class="t">— поездка</span></div>
+          <div><span class="w">a mensagem</span> <span class="tr">а мынсажай</span><span class="t">— сообщение</span></div>
+          <div><span class="w">a verdade</span> <span class="tr">а вырдад</span><span class="t">— правда</span></div>
+          <div><span class="w">a saudade</span> <span class="tr">а саудад</span><span class="t">— тоска по чему-то родному</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> первые четыре слова кончаются на <b>-a</b>, но мужские — это те самые греческие <b>-ma</b> и примкнувшие к ним. Последние четыре женские по правилу: <b>-agem</b> и <b>-dade</b> женские без исключений.<br><br><span class="pt">a saudade</span> — то самое слово, которым португальцы гордятся: тоска по тому, чего рядом нет, и одновременно нежность к нему. Переводить его одним русским словом не получается, поэтому его обычно не переводят.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 10 · Em casa e na rua — дома и на улице</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">a janela</span> <span class="tr">а жанела</span><span class="t">— окно</span></div>
+          <div><span class="w">a porta</span> <span class="tr">а порта</span><span class="t">— дверь</span></div>
+          <div><span class="w">a cadeira</span> <span class="tr">а кадейра</span><span class="t">— стул</span></div>
+          <div><span class="w">a carta</span> <span class="tr">а карта</span><span class="t">— письмо</span></div>
+          <div><span class="w">o telefone</span> <span class="tr">у тлефон</span><span class="t">— телефон</span></div>
+          <div><span class="w">o jornal</span> <span class="tr">у журнал</span><span class="t">— газета</span></div>
+          <div><span class="w">o papel</span> <span class="tr">у папел</span><span class="t">— бумага; роль</span></div>
+          <div><span class="w">o hotel</span> <span class="tr">у отел</span><span class="t">— отель</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">a carta</span> — это письмо, а не карта; карта — <span class="pt">o mapa</span> из прошлого набора. Пара ложных друзей, на которой спотыкаются все.<br><br>У <span class="pt">o jornal</span>, <span class="pt">o papel</span> и <span class="pt">o hotel</span> ударение на последнем слоге: слова кончаются на <b>-l</b> (правило 0.2). Множественное у них получается неожиданное — это следующая тема.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · A casa da Ana — дом Аны</div>
+      <div class="mini-text">
+        <p class="storytext">A casa da Ana é na rua do jardim. Na sala está a mesa com o computador. Na mesa está o jornal e uma carta da mãe. A cadeira está na janela. O telefone está na cozinha, com a chave do carro. A porta da casa de banho é aqui.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Дом Аны — на улице сада. В гостиной стоит стол с компьютером. На столе — газета и письмо от мамы. Стул стоит у окна. Телефон на кухне, вместе с ключом от машины. Дверь ванной — здесь.</p>
+        <p class="why-note"><b>Почему так:</b> артикль стоит перед каждым существительным — в русском переводе на его месте пусто, и это нормально. <span class="pt">uma carta</span> — «какое-то письмо, одно из», а <span class="pt">a carta</span> было бы «то самое письмо».<br><br><span class="pt">da</span> и <span class="pt">do</span> — предлог <span class="pt">de</span>, слитый с артиклем (<span class="pt">de + a</span>, <span class="pt">de + o</span>), <span class="pt">na</span> и <span class="pt">no</span> — то же самое с <span class="pt">em</span>. Артикль внутри них никуда не делся, поэтому род слова слышно и там: <span class="pt">da casa</span>, но <span class="pt">do jardim</span>. Полная таблица — тема 0.14.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Na loja — в магазине</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> Boa tarde! Um mapa da cidade, por favor.</p>
+          <p class="dline"><span class="speaker">Empregada:</span> Aqui está o mapa.</p>
+          <p class="dline"><span class="speaker">Ana:</span> E o jornal de hoje?</p>
+          <p class="dline"><span class="speaker">Empregada:</span> O jornal está aqui. É tudo?</p>
+          <p class="dline"><span class="speaker">Ana:</span> É tudo, obrigada.</p>
+          <p class="dline"><span class="speaker">Empregada:</span> Obrigada. Boa tarde!</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Добрый день! Карту города, пожалуйста.<br><b>Продавщица:</b> Вот карта.<br><b>Ана:</b> А сегодняшняя газета?<br><b>Продавщица:</b> Газета здесь. Это всё?<br><b>Ана:</b> Всё, спасибо.<br><b>Продавщица:</b> Спасибо. Хорошего дня!</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">um mapa</span> в просьбе — неопределённый: продавщица ещё не знает, о какой карте речь. В ответе она говорит <span class="pt">o mapa</span> — теперь это «та самая». Ровно так артикли и работают в живой речи.<br><br><span class="pt">É tudo?</span> — «это всё?» на кассе; отвечают тем же <span class="pt">É tudo</span>. И заметь: продавщица тоже говорит <span class="pt">obrigada</span> — форма зависит от говорящего.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="genero">
+    <p class="quiz-instruction">Выбери артикль или ответь на вопрос. Род смотри по окончанию, а не по русскому переводу.</p>
+    <div class="qitem"><span class="qnum">1.</span>
+      <select class="mc" data-answer="o">
+        <option value="">—</option>
+        <option value="o">o</option>
+        <option value="a">a</option>
+      </select> <span class="pt">livro</span>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span>
+      <select class="mc" data-answer="a">
+        <option value="">—</option>
+        <option value="o">o</option>
+        <option value="a">a</option>
+      </select> <span class="pt">cidade</span>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span>
+      <select class="mc" data-answer="uma">
+        <option value="">—</option>
+        <option value="um">um</option>
+        <option value="uma">uma</option>
+      </select> <span class="pt">mesa</span>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span>
+      <select class="mc" data-answer="o">
+        <option value="">—</option>
+        <option value="o">o</option>
+        <option value="a">a</option>
+      </select> <span class="pt">problema</span>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span>
+      <select class="mc" data-answer="a">
+        <option value="">—</option>
+        <option value="o">o</option>
+        <option value="a">a</option>
+      </select> <span class="pt">mão</span>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">Впиши артикль к слову</span> <span class="pt">estação</span>:<input class="blank" data-answer="a" style="width:4em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Какого рода слово</span> <span class="pt">dia</span>?
+      <select class="mc" data-answer="мужского">
+        <option value="">—</option>
+        <option value="мужского">мужского</option>
+        <option value="женского">женского</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Что значит</span> <span class="pt">a viagem</span>?
+      <select class="mc" data-answer="поездка">
+        <option value="">—</option>
+        <option value="поездка">поездка</option>
+        <option value="сообщение">сообщение</option>
+        <option value="правда">правда</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">«Дом» по-русски мужского рода, а</span> <span class="pt">casa</span> <span class="ru-hint">— женского. Значит род надо:</span>
+      <select class="mc" data-answer="запоминать вместе со словом">
+        <option value="">—</option>
+        <option value="запоминать вместе со словом">запоминать вместе со словом</option>
+        <option value="брать из русского перевода">брать из русского перевода</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Карту города, пожалуйста».</span>
+      <div class="qbuild" data-answer="Um mapa da cidade por favor" data-words="cidade|Um|favor|da|mapa|por"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="plural">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Plural — множественное число, включая ão → ões</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ 0.6 PLURAL ============ -->
+<div class="screen topic-screen" id="screen-plural" data-topic="plural" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2><span class="topic-num">0.6</span> Plural</h2>
+    <span class="done-badge" data-badge="plural">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Обычно просто <b>+s</b>. Но слова на <b>-l</b> и <b>-ão</b> меняются целиком — и это надо знать сразу.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Множественное число в португальском проще русского: падежей нет, и в девяти случаях из десяти достаточно добавить <b>-s</b>. Артикль меняется вместе со словом — и по нему множественное слышно раньше, чем по самому слову.</p>
+
+    <table>
+      <tr><th></th><th>мужской</th><th>женский</th></tr>
+      <tr><td>определённый</td><td class="pt"><span class="m">os</span> livros</td><td class="pt"><span class="f">as</span> mesas</td></tr>
+      <tr><td>неопределённый</td><td class="pt"><span class="m">uns</span> livros</td><td class="pt"><span class="f">umas</span> mesas</td></tr>
+    </table>
+
+    <p><span class="pt">uns</span> и <span class="pt">umas</span> значат не «одни», а «какие-то, несколько»: <span class="pt">umas cartas</span> — «несколько писем».</p>
+
+    <p>Что делать с самим словом, решает его последняя буква — как и с ударением в теме 0.2:</p>
+
+    <table>
+      <tr><th>Кончается на</th><th>Что делать</th><th>Пример</th></tr>
+      <tr><td>гласную</td><td>+ s</td><td class="pt">casa → casas</td></tr>
+      <tr><td>-r, -z</td><td>+ es</td><td class="pt">flor → flores, luz → luzes</td></tr>
+      <tr><td>-s ударное</td><td>+ es</td><td class="pt">país → países, mês → meses</td></tr>
+      <tr><td>-s безударное</td><td>не меняется</td><td class="pt">o lápis → os lápis</td></tr>
+      <tr><td>-m</td><td>→ ns</td><td class="pt">homem → homens</td></tr>
+      <tr><td>-l</td><td>→ is</td><td class="pt">jornal → jornais</td></tr>
+      <tr><td>-ão</td><td>три способа</td><td class="pt">lição → lições</td></tr>
+    </table>
+
+    <div class="contrast">
+      <div class="label">Слова на -l: буква уходит, ударение остаётся</div>
+      <p><b>-al, -ol, -ul</b> просто теряют <b>l</b>: <span class="pt">jornal → jornais</span>, <span class="pt">sol → sóis</span>, <span class="pt">azul → azuis</span>.</p>
+      <p><b>-el</b> получает знак ударения, потому что ударный слог никуда не сдвинулся: <span class="pt">papel → papéis</span>, <span class="pt">hotel → hotéis</span>. Знак тут не украшение, а следствие правила 0.2.</p>
+      <p>Безударное <b>-il</b> даёт <b>-eis</b>: <span class="pt">fácil → fáceis</span>. Ударное — просто <b>-is</b>: <span class="pt">funil → funis</span>.</p>
+    </div>
+
+    <p>И главное место темы — слова на <b>-ão</b>. Их три группы, и группу видно не по написанию, а по слову:</p>
+
+    <table>
+      <tr><th>Группа</th><th>Сколько слов</th><th>Примеры</th></tr>
+      <tr><td class="pt">-ões</td><td>подавляющее большинство</td><td class="pt">lição → lições<br>estação → estações<br>coração → corações<br>avião → aviões</td></tr>
+      <tr><td class="pt">-ães</td><td>горстка</td><td class="pt">pão → pães<br>cão → cães<br>alemão → alemães</td></tr>
+      <tr><td class="pt">-ãos</td><td>горстка</td><td class="pt">irmão → irmãos<br>mão → mãos<br>cidadão → cidadãos</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b>Всё, что кончается на -ção или -são, идёт в -ções / -sões без исключений.</b> Это половина всех слов на <b>-ão</b> в языке, и её можно не запоминать — она работает как правило</li>
+      <li>Остальные два списка короткие: <b>-ães</b> и <b>-ãos</b> — по десятку частых слов. Проще выучить эти двадцать, чем сомневаться в каждом</li>
+      <li>Подсказка для <b>-ãos</b>: там почти всё, где <b>-ão</b> не ударный суффикс, а часть корня (<span class="pt">mão</span>, <span class="pt">irmão</span>)</li>
+    </ul>
+
+    <ul class="examples">
+      <li>os livros <span class="ru">«уж ливруш» — s звучит «ш» и в артикле, и в слове</span></li>
+      <li>os amigos <span class="ru">«уз амигуш» — перед гласной та же s звучит «з»</span></li>
+      <li>as flores <span class="ru">«аш флореш»</span></li>
+      <li>os pães <span class="ru">«уж пайш» — носовой остался, просто стал «аи» вместо «ау»</span></li>
+      <li>os hotéis <span class="ru">«уз отейш»</span></li>
+    </ul>
+
+    <div class="trap"><b>Три ловушки.</b><br>
+      <span class="pt">o lápis → os lápis</span>: слово не меняется вообще, число слышно только по артиклю. Так же <span class="pt">o ónibus</span>, <span class="pt">o vírus</span>.<br>
+      <span class="pt">a mão → as mãos</span>: женское слово с мужским на вид окончанием, да ещё и из редкой группы <b>-ãos</b>.<br>
+      <span class="pt">o ovo → os ovos</span>: на письме ничего особенного, но в единственном <b>o</b> закрытое («ову»), а во множественном открытое («óвуш»). Таких слов десятка два, и португальцы слышат разницу мгновенно.</div>
+
+    <div class="tip"><b>Как тренировать.</b> Бери любое слово из словаря курса и говори его сразу в двух числах, с артиклем: <span class="pt">o jornal — os jornais</span>, <span class="pt">a lição — as lições</span>. Пятнадцать пар вслух дают больше, чем перечитывание таблицы: рука сама начнёт дописывать <b>-ões</b> там, где надо.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 11 · Coisas e pessoas — вещи и люди</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">o país</span> <span class="tr">у паиш</span><span class="t">— страна</span></div>
+          <div><span class="w">o lápis</span> <span class="tr">у лапиш</span><span class="t">— карандаш</span></div>
+          <div><span class="w">o mês</span> <span class="tr">у меш</span><span class="t">— месяц</span></div>
+          <div><span class="w">o rapaz</span> <span class="tr">у рапаш</span><span class="t">— парень</span></div>
+          <div><span class="w">a luz</span> <span class="tr">а луш</span><span class="t">— свет</span></div>
+          <div><span class="w">a flor</span> <span class="tr">а флор</span><span class="t">— цветок</span></div>
+          <div><span class="w">a cor</span> <span class="tr">а кор</span><span class="t">— цвет</span></div>
+          <div><span class="w">o animal</span> <span class="tr">у анимал</span><span class="t">— животное</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> здесь собраны слова со всеми «трудными» концовками сразу: <span class="pt">país → países</span>, <span class="pt">lápis → os lápis</span> (не меняется), <span class="pt">mês → meses</span>, <span class="pt">rapaz → rapazes</span>, <span class="pt">luz → luzes</span>, <span class="pt">flor → flores</span>, <span class="pt">cor → cores</span>, <span class="pt">animal → animais</span>.<br><br>Разница между <span class="pt">país</span> и <span class="pt">lápis</span> — только в ударении: у первого оно на конце, поэтому нужно <b>-es</b>; у второго на первом слоге, поэтому слово не меняется.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 12 · Palavras em -ão — слова на -ão</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">o avião</span> <span class="tr">у авиау</span><span class="t">— самолёт</span></div>
+          <div><span class="w">a canção</span> <span class="tr">а кансау</span><span class="t">— песня</span></div>
+          <div><span class="w">o alemão</span> <span class="tr">у алымау</span><span class="t">— немец; немецкий язык</span></div>
+          <div><span class="w">o cidadão</span> <span class="tr">у сидадау</span><span class="t">— гражданин</span></div>
+          <div><span class="w">o hospital</span> <span class="tr">у ошпитал</span><span class="t">— больница</span></div>
+          <div><span class="w">o sol</span> <span class="tr">у сол</span><span class="t">— солнце</span></div>
+          <div><span class="w">o ovo</span> <span class="tr">у ову</span><span class="t">— яйцо</span></div>
+          <div><span class="w">o nariz</span> <span class="tr">у нариш</span><span class="t">— нос</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> четыре слова на <b>-ão</b> в наборе — из трёх разных групп: <span class="pt">aviões</span> и <span class="pt">canções</span> (правило), <span class="pt">alemães</span> (список), <span class="pt">cidadãos</span> (список). Проговори все четыре пары вслух — это и есть вся тема.<br><br><span class="pt">o cidadão</span> — слово из документов: <i>cidadão estrangeiro</i>, «иностранный гражданин». В Португалии оно попадается быстро.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · A sala — комната</div>
+      <div class="mini-text">
+        <p class="storytext">Na sala estão os livros e os jornais. Na mesa estão os lápis, as chaves e as cartas. Os papéis estão na caixa, com as flores. Os pães e os ovos estão na cozinha. As lições estão nos livros, e os exames são na universidade.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">В комнате книги и газеты. На столе карандаши, ключи и письма. Бумаги в коробке, вместе с цветами. Хлеб и яйца на кухне. Уроки — в книгах, а экзамены — в университете.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">estão</span> — это <span class="pt">está</span> во множественном числе, «находятся». Форма из темы 0.8, здесь она нужна раньше своего разбора; пока просто узнавай её. Заметь, кстати, её окончание: <b>-ão</b>, тот самый носовой.<br><br><span class="pt">nos</span> — это <span class="pt">em + os</span>, как <span class="pt">no</span> = <span class="pt">em + o</span>. Слияние тоже показывает число: <span class="pt">nos livros</span> — «в книгах».<br><br>Прочитай текст вслух и послушай, как часто звучит «ш»: это и есть португальское множественное на слух.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · No mercado — на рынке</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> Bom dia! Dois pães, por favor.</p>
+          <p class="dline"><span class="speaker">Empregado:</span> Dois pães. Mais?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Sim, as frutas e os ovos.</p>
+          <p class="dline"><span class="speaker">Empregado:</span> As frutas e os ovos. É tudo?</p>
+          <p class="dline"><span class="speaker">Ana:</span> É tudo. Quanto é?</p>
+          <p class="dline"><span class="speaker">Empregado:</span> São setenta cêntimos.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Aqui está. Muito obrigada!</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Доброе утро! Два хлеба, пожалуйста.<br><b>Продавец:</b> Два хлеба. Ещё?<br><b>Ана:</b> Да, фрукты и яйца.<br><b>Продавец:</b> Фрукты и яйца. Это всё?<br><b>Ана:</b> Всё. Сколько с меня?<br><b>Продавец:</b> Семьдесят центов.<br><b>Ана:</b> Вот, держите. Большое спасибо!</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">dois pães</span> — из группы <b>-ães</b>: «дойш пайш». Хлеб в Португалии считают штуками, и просят его именно так.<br><br><span class="pt">São setenta cêntimos</span> — «это семьдесят центов». Глагол стоит во множественном, потому что центов много: португальский согласует число там, где русский говорит просто «семьдесят центов».</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="plural">
+    <p class="quiz-instruction">Поставь слово во множественное число или выбери верный вариант. Пиши без артикля.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="pt">livro</span> <span class="ru-hint">→</span> <input class="blank" data-answer="livros" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="pt">jornal</span> <span class="ru-hint">→</span> <input class="blank" data-answer="jornais" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="pt">lição</span> <span class="ru-hint">→</span>
+      <select class="mc" data-answer="lições">
+        <option value="">—</option>
+        <option value="lições">lições</option>
+        <option value="liçães">liçães</option>
+        <option value="liçãos">liçãos</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="pt">pão</span> <span class="ru-hint">→</span>
+      <select class="mc" data-answer="pães">
+        <option value="">—</option>
+        <option value="pães">pães</option>
+        <option value="pões">pões</option>
+        <option value="pãos">pãos</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="pt">irmão</span> <span class="ru-hint">→</span>
+      <select class="mc" data-answer="irmãos">
+        <option value="">—</option>
+        <option value="irmãos">irmãos</option>
+        <option value="irmães">irmães</option>
+        <option value="irmões">irmões</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="pt">homem</span> <span class="ru-hint">→</span> <input class="blank" data-answer="homens" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="pt">o lápis</span> <span class="ru-hint">→</span>
+      <select class="mc" data-answer="os lápis">
+        <option value="">—</option>
+        <option value="os lápis">os lápis</option>
+        <option value="os lápises">os lápises</option>
+        <option value="os lápizes">os lápizes</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="pt">papel</span> <span class="ru-hint">→</span> <input class="blank" data-answer="papéis|papeis" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Артикль множественного числа женского рода:</span>
+      <select class="mc" data-answer="as">
+        <option value="">—</option>
+        <option value="as">as</option>
+        <option value="os">os</option>
+        <option value="uns">uns</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Хлеб на кухне» (во множественном).</span>
+      <div class="qbuild" data-answer="Os pães estão na cozinha" data-words="estão|cozinha|Os|na|pães"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="vocab">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Dicionário — повторить 112 слов, пока тема 0.7 не готова</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -1871,7 +2307,7 @@
 
   // Порядок = порядок прохождения. Темы без контента сюда не попадают,
   // иначе прогресс считался бы от несуществующих экранов.
-  var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos"];
+  var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural"];
   var PRESENTE_TOPICS = [];
   var PASSADO_TOPICS  = [];
   var EXPANSAO_TOPICS = [];
@@ -1885,7 +2321,7 @@
   };
 
   var TOPIC_MINUTES = {
-    "alfabeto":20, "acento":22, "nasais":18, "digrafos":16
+    "alfabeto":20, "acento":22, "nasais":18, "digrafos":16, "genero":20, "plural":22
   };
 
   var STORAGE_KEY   = "ptProgressV1";
@@ -2249,7 +2685,11 @@
     "em":"в, на","no":"в (em + o)","não":"нет; не","sim":"да","eu":"я","muito":"очень, много",
     "estados":"штаты","unidos":"соединённые","salsa":"петрушка","sopa":"суп",
     // 0.3 диалог на улице
-    "nada":"ничего","de nada":"не за что","homem":"мужчина; человек"
+    "nada":"ничего","de nada":"не за что","homem":"мужчина; человек",
+    // 0.5–0.6: артикли и слияния, которые в текстах идут раньше темы 0.14
+    "hoje":"сегодня","mais":"ещё; больше","uns":"какие-то, несколько (муж.)",
+    "umas":"какие-то, несколько (жен.)","nos":"в (em + os)","nas":"в (em + as)",
+    "dos":"из, от (de + os)","das":"из, от (de + as)","estão":"находятся (от estar)"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
@@ -2263,6 +2703,7 @@
     // множественное число существительных и прилагательных
     ["ões","ão"], ["ães","ão"], ["ãos","ão"], ["ais","al"], ["éis","el"], ["eis","el"],
     ["óis","ol"], ["uis","ul"], ["is","l"], ["ns","m"], ["res","r"], ["zes","z"], ["ses","s"],
+    ["eses","ês"], ["eis","il"],
     ["es",""], ["s",""],
     // род прилагательных и существительных
     ["a","o"], ["as","os"], ["ora","or"], ["oras","or"],
