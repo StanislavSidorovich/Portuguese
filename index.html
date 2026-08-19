@@ -823,15 +823,17 @@
         <span class="row-check" data-check="possessivos" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="interrogativas">
         <span class="marker" style="background:var(--presente)"></span>
         <span class="row-title"><span class="topic-num">1.9</span> Palavras interrogativas<span class="row-title-ru">que, quem, onde, quando, porquê</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="interrogativas" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="porpara">
         <span class="marker" style="background:var(--presente)"></span>
         <span class="row-title"><span class="topic-num">1.10</span> Por vs para<span class="row-title-ru">два предлога на один русский «для»</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="porpara" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
     </div>
   </div>
@@ -6067,11 +6069,409 @@
       <button class="btn btn-reveal" type="button">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="interrogativas">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">1.9 Palavras interrogativas — обещание из темы 0.13</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<div class="screen topic-screen" id="screen-interrogativas" data-topic="interrogativas" style="--tint-color:var(--presente)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--presente)"></span>
+    <h2><span class="topic-num">1.9</span> Palavras interrogativas</h2>
+    <span class="done-badge" data-badge="interrogativas">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">В теме 0.13 мы взяли только вопросы «да/нет» и обещали вернуться за вопросительными словами. Возвращаемся: <span class="pt">que, quem, onde, quando, como, porquê, qual, quanto</span>.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Порядок слов простой: вопросительное слово вперёд, дальше всё как в обычной фразе. Подлежащее и глагол местами <b>не меняются</b> — в этом португальский проще английского.</p>
+
+    <table>
+      <tr><th>Слово</th><th>Пример</th></tr>
+      <tr><td class="pt">o quê</td><td class="pt">O que fazes?</td></tr>
+      <tr><td class="pt">quem</td><td class="pt">Quem é aquele homem?</td></tr>
+      <tr><td class="pt">onde</td><td class="pt">Onde moras?</td></tr>
+      <tr><td class="pt">aonde</td><td class="pt">Aonde vais?</td></tr>
+      <tr><td class="pt">quando</td><td class="pt">Quando chegas?</td></tr>
+      <tr><td class="pt">como</td><td class="pt">Como estás?</td></tr>
+      <tr><td class="pt">quanto</td><td class="pt">Quanto custa?</td></tr>
+      <tr><td class="pt">qual</td><td class="pt">Qual é o teu nome?</td></tr>
+    </table>
+
+    <div class="contrast">
+      <div class="label">«É que» — то, чего нет в учебниках, но есть в каждой второй фразе</div>
+      <p>В живой португальской речи между вопросительным словом и глаголом почти всегда вставляют <span class="pt">é que</span>. Смысл не меняется совсем, фраза просто звучит естественнее:</p>
+      <p><span class="pt">Onde moras?</span> → <span class="pt">Onde <b>é que</b> moras?</span><br>
+         <span class="pt">O que fazes?</span> → <span class="pt">O que <b>é que</b> fazes?</span><br>
+         <span class="pt">Quando chegas?</span> → <span class="pt">Quando <b>é que</b> chegas?</span></p>
+      <p>Переводить <span class="pt">é que</span> не надо — по-русски ему ничего не соответствует. Но узнавать на слух необходимо: без этого половина обычных вопросов кажется незнакомой конструкцией.</p>
+    </div>
+
+    <p>Два места, где ошибаются чаще всего.</p>
+
+    <table>
+      <tr><th>Порядок</th><th>Как пишется</th></tr>
+      <tr><td>в начале вопроса</td><td class="pt"><b>Porque</b> não vens?</td></tr>
+      <tr><td>отдельно или в конце</td><td class="pt">Não vens? <b>Porquê</b>?</td></tr>
+      <tr><td>в ответе</td><td class="pt"><b>Porque</b> estou ocupada.</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b><span class="pt">Porque</span> без шляпки — внутри фразы</b>, и в вопросе, и в ответе. <span class="pt">Porquê</span> со шляпкой — когда слово стоит одно или в самом конце</li>
+      <li><b><span class="pt">Qual</span> против <span class="pt">que</span>:</b> <span class="pt">qual</span> спрашивает «который из», <span class="pt">que</span> — «что за». Имя, номер, адрес спрашивают через <span class="pt">qual</span>: <span class="pt">Qual é o teu nome?</span>, а не <i>Que é o teu nome?</i></li>
+      <li><b>Множественное у <span class="pt">qual</span> есть:</b> <span class="pt">quais</span>. И у <span class="pt">quanto</span> есть все четыре формы: <span class="pt">quanto, quanta, quantos, quantas</span> — согласуются с тем, что считают: <span class="pt">Quantos anos tens?</span>, <span class="pt">Quantas malas tens?</span></li>
+      <li><b><span class="pt">Onde</span> — «где», <span class="pt">aonde</span> — «куда»,</b> <span class="pt">de onde</span> — «откуда». В речи <span class="pt">onde</span> часто занимает место всех трёх, но на письме различие держат</li>
+    </ul>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> <span class="pt">O que</span>, а не просто <span class="pt">que</span>, когда вопрос стоит один: <span class="pt">O que é isto?</span> Голое <span class="pt">Que é isto?</span> звучит книжно.<br>
+      <b>2.</b> Шляпка у <span class="pt">porquê</span> ставится <b>только</b> когда слово в конце или само по себе. В начале вопроса — <span class="pt">porque</span>, без неё.<br>
+      <b>3.</b> «Как тебя зовут» — это <span class="pt">Como te chamas?</span> (тема 1.5), а «какое твоё имя» — <span class="pt">Qual é o teu nome?</span> Обе фразы живые, но <span class="pt">Como é o teu nome?</span> — нет.</div>
+
+    <div class="tip"><b>Обещание закрыто.</b> Из темы 0.13 оставался долг: вопросы там были только «да/нет». Теперь набор полный. Осталась последняя тема блока — <span class="pt">por</span> и <span class="pt">para</span>.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 49 · Palavras interrogativas — вопросительные слова</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">qual</span> <span class="tr">куал</span><span class="t">— какой, который</span></div>
+          <div><span class="w">quais</span> <span class="tr">куайш</span><span class="t">— какие, которые</span></div>
+          <div><span class="w">porquê</span> <span class="tr">пуркэ</span><span class="t">— почему (одним словом)</span></div>
+          <div><span class="w">quantos</span> <span class="tr">куантуш</span><span class="t">— сколько (муж.)</span></div>
+          <div><span class="w">quantas</span> <span class="tr">куанташ</span><span class="t">— сколько (жен.)</span></div>
+          <div><span class="w">aonde</span> <span class="tr">аонд</span><span class="t">— куда</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">quais</span> — множественное от <span class="pt">qual</span> по правилу из темы 0.6: слово на <b>-l</b> меняет его на <b>-is</b>, как <span class="pt">papel</span> → <span class="pt">papéis</span>.<br><br><span class="pt">quantos</span> и <span class="pt">quantas</span> согласуются с существительным, как обычное прилагательное из темы 0.11.<br><br><span class="pt">aonde</span> — это <span class="pt">a + onde</span>, «к где». Отсюда и смысл «куда».</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 50 · Perguntar e responder — спрашивать и отвечать</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">perguntar</span> <span class="tr">пыргунтар</span><span class="t">— спрашивать</span></div>
+          <div><span class="w">responder</span> <span class="tr">рышпундэр</span><span class="t">— отвечать</span></div>
+          <div><span class="w">a pergunta</span> <span class="tr">а пыргунта</span><span class="t">— вопрос</span></div>
+          <div><span class="w">a resposta</span> <span class="tr">а рышпошта</span><span class="t">— ответ</span></div>
+          <div><span class="w">a paragem</span> <span class="tr">а паражай</span><span class="t">— остановка</span></div>
+          <div><span class="w">a morada</span> <span class="tr">а мурада</span><span class="t">— адрес</span></div>
+          <div><span class="w">o andar</span> <span class="tr">у андар</span><span class="t">— этаж</span></div>
+          <div><span class="w">o número</span> <span class="tr">у нумыру</span><span class="t">— номер, дом</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">perguntar</span> — обычный глагол на <span class="pt">-ar</span>, <span class="pt">responder</span> — на <span class="pt">-er</span>; оба по правилам тем 1.1–1.2.<br><br><span class="pt">a paragem</span> — «остановка» в Португалии. В Бразилии на этом месте <i>ponto</i>. Слово на <span class="pt">-agem</span> женского рода, как <span class="pt">a viagem</span> и <span class="pt">a mensagem</span>.<br><br><span class="pt">a morada</span> — «адрес»; сделана из <span class="pt">morar</span> (тема 1.1), «место, где живёшь». В Бразилии сказали бы <i>endereço</i>.<br><br><span class="pt">o andar</span> — и «этаж», и инфинитив «ходить»: одно слово, два занятия.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · Na rua — на улице</div>
+      <div class="mini-text">
+        <p class="storytext">Uma mulher não sabe onde fica a paragem do autocarro e pergunta a um homem: «Desculpe, onde é que fica a paragem?» O homem responde devagar, porque a mulher não é portuguesa. «Qual é a sua morada?», pergunta ele. «Rua da Estação, número doze.» «Então o autocarro é aquele. Quantas paragens? Três.» A mulher quer saber mais: «E quanto custa o bilhete?» «Um euro e vinte. Porquê? Não tem troco?» «Tenho, sim. Obrigada!»</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Женщина не знает, где остановка автобуса, и спрашивает мужчину: «Извините, где находится остановка?» Мужчина отвечает медленно, потому что женщина не португалка. «Какой у вас адрес?» — спрашивает он. «Улица Вокзальная, дом двенадцать». «Тогда вам вон тот автобус. Сколько остановок? Три». Женщина хочет знать больше: «А сколько стоит билет?» «Евро двадцать. А что? Нет мелочи?» «Есть. Спасибо!»</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">onde <b>é que</b> fica</span> — та самая вставка из врезки. Без неё вопрос тоже верен, но так говорят чаще.<br><br><span class="pt">Qual é a sua morada?</span> — адрес спрашивают через <span class="pt">qual</span>, не через <span class="pt">que</span>. И <span class="pt">a sua</span> здесь — вежливое «ваш» из темы 1.8.<br><br><span class="pt">Porquê?</span> стоит одно, значит со шляпкой. А в первой фразе <span class="pt">porque a mulher não é portuguesa</span> — внутри фразы, без шляпки.<br><br><span class="pt">Quantas paragens?</span> — <span class="pt">paragem</span> женского рода, поэтому <span class="pt">quantas</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Vinte perguntas — двадцать вопросов</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> Quem é aquele homem?</p>
+          <p class="dline"><span class="speaker">João:</span> É o meu primo. Chama-se Paulo.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Onde é que ele mora?</p>
+          <p class="dline"><span class="speaker">João:</span> No Porto. Vem cá aos sábados.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Aonde vão vocês agora?</p>
+          <p class="dline"><span class="speaker">João:</span> Ao café da esquina. Queres vir?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Não posso. Porquê? Porque tenho um exame.</p>
+          <p class="dline"><span class="speaker">João:</span> Qual é a pergunta mais difícil?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Todas. E não sei quantas são.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Кто тот мужчина?<br><b>Жуан:</b> Мой двоюродный брат. Его зовут Паулу.<br><b>Ана:</b> А где он живёт?<br><b>Жуан:</b> В Порту. Приезжает сюда по субботам.<br><b>Ана:</b> Куда вы сейчас идёте?<br><b>Жуан:</b> В кафе на углу. Хочешь с нами?<br><b>Ана:</b> Не могу. Почему? Потому что у меня экзамен.<br><b>Жуан:</b> А какой вопрос самый трудный?<br><b>Ана:</b> Все. И я не знаю, сколько их.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">Porquê? Porque tenho um exame.</span> — обе формы в одной реплике: сначала слово стоит одно (со шляпкой), потом внутри фразы (без неё). Лучший способ запомнить разницу.<br><br><span class="pt">Aonde vão vocês?</span> — «куда», движение. Было бы <span class="pt">Onde</span>, вышло бы «где вы находитесь».<br><br><span class="pt">Qual é a pergunta mais difícil?</span> — <span class="pt">qual</span>, потому что выбирают из нескольких.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="interrogativas">
+    <p class="quiz-instruction">Следи за шляпкой у <span class="pt">porquê</span> и за выбором между <span class="pt">qual</span> и <span class="pt">que</span>.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">«Как тебя зовут?» — через имя:</span>
+      <select class="mc" data-answer="Qual é o teu nome?">
+        <option value="">—</option>
+        <option value="Qual é o teu nome?">Qual é o teu nome?</option>
+        <option value="Que é o teu nome?">Que é o teu nome?</option>
+        <option value="Como é o teu nome?">Como é o teu nome?</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">«Почему ты не идёшь?» — в начале вопроса:</span>
+      <select class="mc" data-answer="Porque não vens?">
+        <option value="">—</option>
+        <option value="Porque não vens?">Porque não vens?</option>
+        <option value="Porquê não vens?">Porquê não vens?</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">«Не идёшь? Почему?» — слово стоит одно:</span>
+      <select class="mc" data-answer="Porquê?">
+        <option value="">—</option>
+        <option value="Porquê?">Porquê?</option>
+        <option value="Porque?">Porque?</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">«Сколько у тебя чемоданов?» — <span class="pt">mala</span> женского рода:</span>
+      <select class="mc" data-answer="Quantas malas tens?">
+        <option value="">—</option>
+        <option value="Quantas malas tens?">Quantas malas tens?</option>
+        <option value="Quantos malas tens?">Quantos malas tens?</option>
+        <option value="Quanto malas tens?">Quanto malas tens?</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">«Куда ты идёшь?» — движение:</span>
+      <select class="mc" data-answer="Aonde vais?">
+        <option value="">—</option>
+        <option value="Aonde vais?">Aonde vais?</option>
+        <option value="Onde vais estar?">Onde vais estar?</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">Вставка <span class="pt">é que</span> в «Onde é que moras?» меняет смысл вопроса или только звучание?</span>
+      <select class="mc" data-answer="ничего не меняет">
+        <option value="">—</option>
+        <option value="ничего не меняет">ничего не меняет</option>
+        <option value="добавляет вежливость">добавляет вежливость</option>
+        <option value="это прошедшее">это прошедшее</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Впиши: «Что это такое?» —</span> <input class="blank" data-answer="O que|O quê" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">é isto?</span></div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши: «Сколько стоит билет?» —</span> <input class="blank" data-answer="Quanto" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">custa o bilhete?</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">«остановка» по-португальски (не по-бразильски):</span>
+      <select class="mc" data-answer="a paragem">
+        <option value="">—</option>
+        <option value="a paragem">a paragem</option>
+        <option value="o ponto">o ponto</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери вопрос: «Где он живёт?» (с вставкой).</span>
+      <div class="qbuild" data-answer="Onde é que ele mora" data-words="que|Onde|mora|ele|é"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="porpara">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">1.10 Por vs para — последняя тема блока</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<div class="screen topic-screen" id="screen-porpara" data-topic="porpara" style="--tint-color:var(--presente)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--presente)"></span>
+    <h2><span class="topic-num">1.10</span> Por vs para</h2>
+    <span class="done-badge" data-badge="porpara">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Два предлога, которые по-русски часто оба переводятся «за» и «для». Переводом их не развести — нужен другой признак. Последняя тема блока и самая упрямая.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Русский перевод тут бесполезен: и <span class="pt">por</span>, и <span class="pt">para</span> становятся то «за», то «для», то «по». Поэтому запоминать надо не перевод, а <b>направление взгляда</b>.</p>
+
+    <div class="contrast">
+      <div class="label">Стрелка вперёд и стрелка назад</div>
+      <p><span class="pt"><b>para</b></span> смотрит <b>вперёд</b>: куда идём, зачем делаем, кому даём, к какому сроку. Впереди — цель.</p>
+      <p><span class="pt"><b>por</b></span> смотрит <b>назад или насквозь</b>: из-за чего произошло, за что заплатили, через что прошли. Позади — причина или путь.</p>
+      <p>Проверочный вопрос: «цель впереди?» — <span class="pt">para</span>. «Причина позади или дорога насквозь?» — <span class="pt">por</span>.</p>
+    </div>
+
+    <table>
+      <tr><th>Смысл</th><th>Пример</th></tr>
+      <tr><td>куда (конечная точка)</td><td class="pt">Vou <b>para</b> Lisboa.</td></tr>
+      <tr><td>зачем (цель)</td><td class="pt">Estudo <b>para</b> o exame.</td></tr>
+      <tr><td>кому (адресат)</td><td class="pt">Este presente é <b>para</b> ti.</td></tr>
+      <tr><td>к какому сроку</td><td class="pt">A carta é <b>para</b> amanhã.</td></tr>
+    </table>
+
+    <table>
+      <tr><th>Смысл</th><th>Пример</th></tr>
+      <tr><td>из-за чего (причина)</td><td class="pt">Obrigado <b>por</b> tudo.</td></tr>
+      <tr><td>за что (обмен, цена)</td><td class="pt">Pago dez euros <b>por</b> este livro.</td></tr>
+      <tr><td>через что (путь)</td><td class="pt">Vamos <b>pela</b> ponte.</td></tr>
+      <tr><td>сколько времени</td><td class="pt">Fico aqui <b>por</b> duas horas.</td></tr>
+    </table>
+
+    <p>Самая наглядная пара — с городом:</p>
+
+    <table>
+      <tr><th>Фраза</th><th>Что значит</th></tr>
+      <tr><td class="pt">Vou <b>para</b> o Porto.</td><td>еду в Порту — там и останусь</td></tr>
+      <tr><td class="pt">Passo <b>pelo</b> Porto.</td><td>проезжаю через Порту — дальше дальше</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b><span class="pt">Por</span> сливается с артиклем</b> по таблице из темы 0.14: <span class="pt">por + o = pelo</span>, <span class="pt">por + a = pela</span>, <span class="pt">pelos</span>, <span class="pt">pelas</span>. А <span class="pt">para</span> не сливается никогда: <span class="pt">para o</span>, <span class="pt">para a</span> так и остаются двумя словами</li>
+      <li><b>«Спасибо за» — всегда <span class="pt">por</span>:</b> <span class="pt">Obrigado <b>por</b> tudo</span>, <span class="pt">Obrigada <b>pela</b> ajuda</span>. Причина благодарности уже позади</li>
+      <li><b><span class="pt">Por isso</span> — «поэтому»</b>, знакомо ещё с блока 0. Буквально «из-за этого»: причина позади, снова <span class="pt">por</span></li>
+      <li><b>Устойчивые пары не разбирать, а выучить:</b> <span class="pt">por favor</span>, <span class="pt">por agora</span>, <span class="pt">para sempre</span>, <span class="pt">para quê</span></li>
+    </ul>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> «Спасибо за помощь» тянет сказать <i>para a ajuda</i> — по-русски ведь «за». Правильно <span class="pt">pela ajuda</span>: благодарят за причину, а она позади.<br>
+      <b>2.</b> «Я купил это для тебя» и «я заплатил за это» — по-русски похоже, по-португальски разные предлоги: <span class="pt"><b>para</b> ti</span> (адресат впереди), но <span class="pt"><b>por</b> dez euros</span> (обмен).<br>
+      <b>3.</b> <span class="pt">para</span> с артиклем не сливается. <i>pró</i> и <i>prá</i> в разговоре слышны, но это просторечие — на письме только <span class="pt">para o</span>, <span class="pt">para a</span>.</div>
+
+    <div class="tip"><b>Блок 1 закрыт.</b> Настоящее время во всех трёх спряжениях, одиннадцать неправильных глаголов, возвратные, <span class="pt">ir + infinitivo</span>, <span class="pt">estar a + infinitivo</span>, притяжательные, вопросительные слова и эта пара предлогов. Этого хватает на разговор о себе, планах и о том, что происходит вокруг. Дальше — блок 2: прошедшее время.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 51 · Comprar e pagar — покупать и платить</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">comprar</span> <span class="tr">кумпрар</span><span class="t">— покупать</span></div>
+          <div><span class="w">vender</span> <span class="tr">вэндэр</span><span class="t">— продавать</span></div>
+          <div><span class="w">pagar</span> <span class="tr">пагар</span><span class="t">— платить</span></div>
+          <div><span class="w">custar</span> <span class="tr">куштар</span><span class="t">— стоить</span></div>
+          <div><span class="w">caro</span> <span class="tr">кару</span><span class="t">— дорогой</span></div>
+          <div><span class="w">a conta</span> <span class="tr">а конта</span><span class="t">— счёт</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> четыре глагола, все правильные: <span class="pt">comprar</span>, <span class="pt">pagar</span>, <span class="pt">custar</span> на <span class="pt">-ar</span>, <span class="pt">vender</span> на <span class="pt">-er</span>.<br><br><span class="pt">custar</span>, как и <span class="pt">chover</span> из темы 1.7, живёт почти только в третьем лице: <span class="pt">custa</span>, <span class="pt">custam</span>.<br><br><span class="pt">caro</span> — пара к <span class="pt">barato</span> из темы 1.6, меняется по роду: <span class="pt">o livro caro</span>, <span class="pt">a mala cara</span>.<br><br><span class="pt">A conta, por favor</span> — то, что говорят в кафе, чтобы попросить счёт.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 52 · Causa e caminho — причина и путь</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">a causa</span> <span class="tr">а кауза</span><span class="t">— причина</span></div>
+          <div><span class="w">o caminho</span> <span class="tr">у каминью</span><span class="t">— дорога, путь</span></div>
+          <div><span class="w">a ajuda</span> <span class="tr">а ажуда</span><span class="t">— помощь</span></div>
+          <div><span class="w">o motivo</span> <span class="tr">у мутиву</span><span class="t">— повод, мотив</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">por causa de</span> — «из-за»: устойчивая тройка, которая всегда идёт с <span class="pt">por</span>. <span class="pt">Por causa da chuva</span> — «из-за дождя».<br><br><span class="pt">o caminho</span> несёт <span class="pt">nh</span> из темы 0.4: «каминью». <span class="pt">A caminho de casa</span> — «по дороге домой».<br><br><span class="pt">a ajuda</span> — то, за что чаще всего благодарят: <span class="pt">obrigado pela ajuda</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · Um presente para a Ana — подарок для Аны</div>
+      <div class="mini-text">
+        <p class="storytext">O João vai comprar um presente para a Ana, porque amanhã é o aniversário dela. Vai a pé para a loja da praça, mas não vai pela rua grande: vai pela ponte, porque é mais bonito. Na loja há um livro caro e uma mala barata. O João paga vinte euros pela mala. «É para a minha namorada», diz ele. «Obrigado pela ajuda!» Depois vai para casa. Por causa da chuva, o caminho é devagar, mas ele chega a tempo.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Жуан идёт покупать подарок для Аны, потому что завтра у неё день рождения. Идёт пешком в магазин на площади, но не по большой улице: идёт через мост, потому что так красивее. В магазине есть дорогая книга и дешёвая сумка. Жуан платит двадцать евро за сумку. «Это для моей девушки», — говорит он. «Спасибо за помощь!» Потом идёт домой. Из-за дождя дорога медленная, но он успевает вовремя.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt"><b>para</b> a Ana</span> и <span class="pt"><b>para</b> a loja</span> — адресат и конечная точка, стрелка вперёд.<br><br><span class="pt"><b>pela</b> ponte</span> — путь насквозь: он не идёт «на мост», он идёт «через мост». Тот же <span class="pt">por</span>, слитый с артиклем.<br><br><span class="pt">paga vinte euros <b>pela</b> mala</span> — обмен: деньги за вещь.<br><br><span class="pt"><b>Por causa</b> da chuva</span> — причина позади. А <span class="pt">vai <b>para</b> casa</span> в той же фразе — снова цель впереди. Две стрелки в одном предложении.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Na loja — в магазине</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">João:</span> Boa tarde. Quanto custa esta mala?</p>
+          <p class="dline"><span class="speaker">Empregado:</span> Vinte euros. É para si?</p>
+          <p class="dline"><span class="speaker">João:</span> Não, é para a minha namorada. Faz anos amanhã.</p>
+          <p class="dline"><span class="speaker">Empregado:</span> Então leve esta. É barata e muito bonita.</p>
+          <p class="dline"><span class="speaker">João:</span> Está bem. Pago vinte por ela?</p>
+          <p class="dline"><span class="speaker">Empregado:</span> Vinte, sim. A conta é para agora ou paga depois?</p>
+          <p class="dline"><span class="speaker">João:</span> Agora. Obrigado pela ajuda!</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Жуан:</b> Добрый день. Сколько стоит эта сумка?<br><b>Работник:</b> Двадцать евро. Это для вас?<br><b>Жуан:</b> Нет, для моей девушки. У неё завтра день рождения.<br><b>Работник:</b> Тогда берите эту. Она дешёвая и очень красивая.<br><b>Жуан:</b> Хорошо. Плачу за неё двадцать?<br><b>Работник:</b> Двадцать, да. Счёт сейчас или заплатите потом?<br><b>Жуан:</b> Сейчас. Спасибо за помощь!</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">É <b>para</b> si?</span> — <span class="pt">si</span> это вежливое «вас», пара к <span class="pt">o senhor</span> из темы 0.10. Адресат — значит <span class="pt">para</span>.<br><br><span class="pt">Pago vinte <b>por</b> ela</span> — обмен, значит <span class="pt">por</span>. Заметь: <span class="pt">por ela</span> здесь про сумку, а не про девушку — <span class="pt">mala</span> женского рода.<br><br><span class="pt">A conta é <b>para</b> agora</span> — срок впереди.<br><br><span class="pt">leve</span> — повелительная форма от <span class="pt">levar</span>, тема 3.3; пока готовая фраза продавца.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="porpara">
+    <p class="quiz-instruction">Один вопрос на каждое задание: цель впереди или причина позади?</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">«Спасибо за помощь»:</span>
+      <select class="mc" data-answer="Obrigado pela ajuda">
+        <option value="">—</option>
+        <option value="Obrigado pela ajuda">Obrigado pela ajuda</option>
+        <option value="Obrigado para a ajuda">Obrigado para a ajuda</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">«Этот подарок для тебя»:</span>
+      <select class="mc" data-answer="Este presente é para ti">
+        <option value="">—</option>
+        <option value="Este presente é para ti">Este presente é para ti</option>
+        <option value="Este presente é por ti">Este presente é por ti</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">«Плачу двадцать евро за сумку» — обмен:</span>
+      <select class="mc" data-answer="Pago vinte euros pela mala">
+        <option value="">—</option>
+        <option value="Pago vinte euros pela mala">Pago vinte euros pela mala</option>
+        <option value="Pago vinte euros para a mala">Pago vinte euros para a mala</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">«Еду в Лиссабон» — там и останусь:</span>
+      <select class="mc" data-answer="Vou para Lisboa">
+        <option value="">—</option>
+        <option value="Vou para Lisboa">Vou para Lisboa</option>
+        <option value="Vou por Lisboa">Vou por Lisboa</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">«Идём через мост» — путь насквозь:</span>
+      <select class="mc" data-answer="Vamos pela ponte">
+        <option value="">—</option>
+        <option value="Vamos pela ponte">Vamos pela ponte</option>
+        <option value="Vamos para a ponte">Vamos para a ponte</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">«Из-за дождя»:</span>
+      <select class="mc" data-answer="Por causa da chuva">
+        <option value="">—</option>
+        <option value="Por causa da chuva">Por causa da chuva</option>
+        <option value="Para causa da chuva">Para causa da chuva</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Впиши предлог: «учусь к экзамену» (цель) —</span> <span class="pt">Estudo</span> <input class="blank" data-answer="para" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">o exame.</span></div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши слитную форму: «через улицу» (por + a) —</span> <span class="pt">Vamos</span> <input class="blank" data-answer="pela" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">rua.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Какой предлог НЕ сливается с артиклем?</span>
+      <select class="mc" data-answer="para">
+        <option value="">—</option>
+        <option value="para">para</option>
+        <option value="por">por</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Подарок для моей девушки».</span>
+      <div class="qbuild" data-answer="Um presente para a minha namorada" data-words="para|Um|namorada|presente|minha|a"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
     <button type="button" class="next-card" data-open="vocab">
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label">Seguinte · дальше</span>
-        <span class="next-title">Dicionário — повторить слова блока 1</span>
+        <span class="next-title">Dicionário — блок 1 пройден, повторить все слова</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -6104,7 +6504,7 @@
   // Порядок = порядок прохождения. Темы без контента сюда не попадают,
   // иначе прогресс считался бы от несуществующих экранов.
   var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes","adjetivos","ter","negacao","preposicoes","demonstrativos","numeros"];
-  var PRESENTE_TOPICS = ["verbosar","verboseir","irregularesi","irregularesii","reflexivos","irinfinitivo","estarainf","possessivos"];
+  var PRESENTE_TOPICS = ["verbosar","verboseir","irregularesi","irregularesii","reflexivos","irinfinitivo","estarainf","possessivos","interrogativas","porpara"];
   var PASSADO_TOPICS  = [];
   var EXPANSAO_TOPICS = [];
   var TOPICS = BASE_TOPICS.concat(PRESENTE_TOPICS).concat(PASSADO_TOPICS).concat(EXPANSAO_TOPICS);
@@ -6121,7 +6521,8 @@
     "ser":24, "estar":24, "servsestar":26, "pronomes":22, "adjetivos":22, "ter":24,
     "negacao":20, "preposicoes":24, "demonstrativos":22, "numeros":26,
     "verbosar":24, "verboseir":22, "irregularesi":26, "irregularesii":26,
-    "reflexivos":28, "irinfinitivo":22, "estarainf":24, "possessivos":26
+    "reflexivos":28, "irinfinitivo":22, "estarainf":24, "possessivos":26,
+    "interrogativas":24, "porpara":28
   };
 
   var STORAGE_KEY   = "ptProgressV1";
@@ -6584,7 +6985,10 @@
     "seu":"его, её, ваш","sua":"его, её, ваша","seus":"его, её, ваши","suas":"его, её, ваши (жен.)",
     "nosso":"наш","nossa":"наша","nossos":"наши","nossas":"наши (жен.)",
     "dele":"его (de + ele)","dela":"её (de + ela)",
-    "deles":"их (de + eles)","delas":"их (de + elas)"
+    "deles":"их (de + eles)","delas":"их (de + elas)",
+    // 1.9–1.10: «quer» от querer до статьи не достаёт (цепочки режут -o и -em,
+    // а голое -r нет), «leve» — повелительная форма, разбирается в теме 3.3.
+    "quer":"хочет (от querer)","leve":"возьмите (от levar)"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
