@@ -787,15 +787,17 @@
         <span class="row-check" data-check="verboseir" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="irregularesi">
         <span class="marker" style="background:var(--presente)"></span>
         <span class="row-title"><span class="topic-num">1.3</span> Irregulares I<span class="row-title-ru">ir, fazer, poder, querer, ver</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="irregularesi" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="irregularesii">
         <span class="marker" style="background:var(--presente)"></span>
         <span class="row-title"><span class="topic-num">1.4</span> Irregulares II<span class="row-title-ru">vir, dar, saber, dizer, pôr, trazer</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="irregularesii" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--presente)"></span>
@@ -4884,6 +4886,411 @@
       <button class="btn btn-reveal" type="button">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="irregularesi">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">1.3 Irregulares I — ir, fazer, poder, querer, ver</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<div class="screen topic-screen" id="screen-irregularesi" data-topic="irregularesi" style="--tint-color:var(--presente)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--presente)"></span>
+    <h2><span class="topic-num">1.3</span> Irregulares I</h2>
+    <span class="done-badge" data-badge="irregularesi">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Пять самых частых глаголов языка не подчиняются трём спряжениям из тем 1.1–1.2: <span class="pt">ir, fazer, poder, querer, ver</span>.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Схема у всех пяти одна: ломается форма <span class="pt">eu</span>, у некоторых — ещё и <span class="pt">ele / ela / você</span>. Остальные три формы обычно идут по правилу своего спряжения.</p>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="ir:presente">Ir</th><th data-conj="fazer:presente">Fazer</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">vou</td><td class="pt">faço</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">vais</td><td class="pt">fazes</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">vai</td><td class="pt">faz</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">vamos</td><td class="pt">fazemos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">vão</td><td class="pt">fazem</td></tr>
+    </table>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="poder:presente">Poder</th><th data-conj="querer:presente">Querer</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">posso</td><td class="pt">quero</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">podes</td><td class="pt">queres</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">pode</td><td class="pt">quer</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">podemos</td><td class="pt">queremos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">podem</td><td class="pt">querem</td></tr>
+    </table>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="ver:presente">Ver</th><th>Перевод</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">vejo</td><td>я вижу</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">vês</td><td>ты видишь</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">vê</td><td>он, она, вы видите</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">vemos</td><td>мы видим</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">veem</td><td>они, вы видите</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b><span class="pt">ir</span> ломает основу целиком</b> — <span class="pt">vou, vamos, vão</span> не похожи на <span class="pt">ir</span> вообще, совсем как <span class="se">ser</span> в теме 0.7</li>
+      <li><b><span class="pt">fazer</span> и <span class="pt">poder</span> ломаются только в <span class="pt">eu</span></b>: <span class="pt">faço</span>, <span class="pt">posso</span>. Дальше — обычные окончания -er: <span class="pt">fazes, fazemos, fazem</span></li>
+      <li><b><span class="pt">querer</span>, наоборот, у <span class="pt">eu</span> регулярный</b> — <span class="pt">quero</span> звучит точно так, как если бы глагол не был неправильным. Ломается только <span class="pt">ele / você</span>: <span class="pt">quer</span>, без <span class="pt">-e</span> на конце</li>
+      <li><b><span class="pt">ver</span> ломает <span class="pt">eu</span> и последнюю форму</b>: <span class="pt">vejo</span>, <span class="pt">veem</span> — с двумя <span class="pt">e</span> подряд</li>
+    </ul>
+
+    <div class="contrast">
+      <div class="label">Querer и poder + инфинитив</div>
+      <p>Оба глагола почти всегда тянут за собой второй, в чистом инфинитиве, без окончания: <span class="pt">Quero <b>ir</b></span> — «я хочу пойти», <span class="pt">Posso <b>ajudar</b>?</span> — «я могу помочь?». Так же вело себя <span class="pt">gostar de</span> из темы 1.1, только здесь предлог не нужен.</p>
+    </div>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> <span class="pt">quer</span> без <span class="pt">-e</span> тянет дописать лишнюю букву: правильно <span class="pt">quer</span>, а не <i>quere</i>.<br>
+      <b>2.</b> <span class="pt">posso</span> — «я могу», а не «я мог бы»; вежливая просьба всё равно строится этой же формой: <span class="pt">Posso entrar?</span> — «можно войти?»<br>
+      <b>3.</b> <span class="pt">vamos</span> значит не только «мы идём», но и «пошли!» — приглашение, как русское «пойдём».</div>
+
+    <div class="tip"><b>Что дальше.</b> Тема 1.4 — вторая волна неправильных: <span class="pt">vir, dar, saber, dizer, pôr, trazer</span>. После неё все глаголы настоящего времени в этом курсе разобраны.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 37 · Irregulares I — первая волна неправильных</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">ir</span> <span class="tr">ир</span><span class="t">— идти, ехать</span></div>
+
+          <div><span class="w">fazer</span> <span class="tr">фазэр</span><span class="t">— делать</span></div>
+          <div><span class="w">poder</span> <span class="tr">пудэр</span><span class="t">— мочь</span></div>
+          <div><span class="w">querer</span> <span class="tr">керэр</span><span class="t">— хотеть</span></div>
+          <div><span class="w">ver</span> <span class="tr">вэр</span><span class="t">— видеть</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> все пять входят в двадцатку самых частых глаголов языка — без них не собрать почти ни одной фразы про планы.<br><br><span class="pt">ir</span> — самый короткий инфинитив курса, всего два звука, а форм у него пять совершенно разных.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 38 · Planos — планы</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">o fim</span> <span class="tr">у фи</span><span class="t">— конец</span></div>
+          <div><span class="w">o plano</span> <span class="tr">у плану</span><span class="t">— план</span></div>
+          <div><span class="w">a ideia</span> <span class="tr">а идэя</span><span class="t">— идея</span></div>
+          <div><span class="w">primeiro</span> <span class="tr">примэйру</span><span class="t">— первый; сначала</span></div>
+          <div><span class="w">juntos</span> <span class="tr">жунтуш</span><span class="t">— вместе</span></div>
+          <div><span class="w">sozinho</span> <span class="tr">созинью</span><span class="t">— один, в одиночестве</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">o fim de semana</span> — «выходные», буквально «конец недели»; слово <span class="pt">semana</span> уже знакомо с темы 0.16.<br><br><span class="pt">sozinho</span> меняется по роду, как прилагательное из темы 0.11: женщина скажет <span class="pt">sozinha</span>.<br><br><span class="pt">primeiro</span> работает и как «первый» (порядковое число), и как «сначала» (наречие) — по контексту.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · O fim de semana — выходные</div>
+      <div class="mini-text">
+        <p class="storytext">A Ana e o João têm um plano para o fim de semana. Primeiro, os dois querem ir ao cinema juntos. Mas o João não pode: tem uma aula amanhã. Por isso a Ana vai sozinha e vê um filme novo. Depois, o João faz o jantar em casa, e mais tarde os dois comem juntos.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">У Аны и Жуана есть план на выходные. Сначала они оба хотят вместе сходить в кино. Но Жуан не может: у него завтра пара. Поэтому Ана идёт одна и смотрит новый фильм. Потом Жуан готовит ужин дома, а позже они вместе ужинают.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">querem</span> — регулярная форма, <span class="pt">quer+em</span>, тот же тип, что <span class="pt">comer</span> и <span class="pt">partir</span> из темы 1.2.<br><br><span class="pt">pode</span> тоже регулярная; ломается только <span class="pt">eu</span>: <span class="pt">posso</span>, а не <i>podo</i>.<br><br><span class="pt">vai</span> — от <span class="pt">ir</span>, самого неправильного глагола этой темы: основа меняется целиком, как у <span class="se">ser</span> в 0.7.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Vamos ao cinema? — пойдём в кино?</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">João:</span> Queres ir ao cinema hoje?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Quero, mas não posso: tenho um exame amanhã.</p>
+          <p class="dline"><span class="speaker">João:</span> Então vais amanhã à noite?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Talvez. Vês sempre filmes novos, não vês?</p>
+          <p class="dline"><span class="speaker">João:</span> Vejo, sim. Gosto muito de cinema.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Então fazemos um plano juntos para o fim de semana.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Жуан:</b> Хочешь пойти в кино сегодня?<br><b>Ана:</b> Хочу, но не могу: у меня завтра экзамен.<br><b>Жуан:</b> Тогда завтра вечером?<br><b>Ана:</b> Может быть. Ты же всегда смотришь новые фильмы, да?<br><b>Жуан:</b> Смотрю, да. Очень люблю кино.<br><b>Ана:</b> Тогда давай составим план вместе на выходные.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">Vês…, não vês?</span> — вопрос-хвостик, как русское «да?»: повторяет глагол вместо отдельного слова.<br><br><span class="pt">posso</span> и <span class="pt">vejo</span> — обе формы <span class="pt">eu</span>, и обе неправильные: ни одна не похожа на регулярную -er форму.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="irregularesi">
+    <p class="quiz-instruction">Пять глаголов, у каждого своя точка излома. Проверь, где именно.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">eu (querer):</span>
+      <select class="mc" data-answer="quero">
+        <option value="">—</option>
+        <option value="quero">quero</option>
+        <option value="queiro">queiro</option>
+        <option value="quera">quera</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">eu (poder):</span>
+      <select class="mc" data-answer="posso">
+        <option value="">—</option>
+        <option value="posso">posso</option>
+        <option value="podo">podo</option>
+        <option value="pôdo">pôdo</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">tu (ir):</span>
+      <select class="mc" data-answer="vais">
+        <option value="">—</option>
+        <option value="vais">vais</option>
+        <option value="ires">ires</option>
+        <option value="vas">vas</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">ele / você (fazer):</span>
+      <select class="mc" data-answer="faz">
+        <option value="">—</option>
+        <option value="faz">faz</option>
+        <option value="faze">faze</option>
+        <option value="fazo">fazo</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">nós (ver):</span>
+      <select class="mc" data-answer="vemos">
+        <option value="">—</option>
+        <option value="vemos">vemos</option>
+        <option value="veemos">veemos</option>
+        <option value="vimos">vimos</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">eles (querer):</span>
+      <select class="mc" data-answer="querem">
+        <option value="">—</option>
+        <option value="querem">querem</option>
+        <option value="queram">queram</option>
+        <option value="querum">querum</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Впиши: «я не могу пойти сегодня» —</span> <span class="pt">Eu não</span> <input class="blank" data-answer="posso" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">ir hoje.</span></div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши: «она хочет сделать ужин» —</span> <span class="pt">Ela</span> <input class="blank" data-answer="quer" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">fazer o jantar.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">«видеть» — инфинитив:</span>
+      <select class="mc" data-answer="ver">
+        <option value="">—</option>
+        <option value="ver">ver</option>
+        <option value="vir">vir</option>
+        <option value="ir">ir</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Хочешь пойти в кино?»</span>
+      <div class="qbuild" data-answer="Queres ir ao cinema" data-words="Queres|ao|ir|cinema"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="irregularesii">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">1.4 Irregulares II — вторая волна неправильных</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<div class="screen topic-screen" id="screen-irregularesii" data-topic="irregularesii" style="--tint-color:var(--presente)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--presente)"></span>
+    <h2><span class="topic-num">1.4</span> Irregulares II</h2>
+    <span class="done-badge" data-badge="irregularesii">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Вторая и последняя волна: <span class="pt">vir, dar, saber, dizer, pôr, trazer</span>. После этой темы все глаголы настоящего времени в курсе разобраны.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <table>
+      <tr><th>Лицо</th><th data-conj="vir:presente">Vir</th><th data-conj="dar:presente">Dar</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">venho</td><td class="pt">dou</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">vens</td><td class="pt">dás</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">vem</td><td class="pt">dá</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">vimos</td><td class="pt">damos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">vêm</td><td class="pt">dão</td></tr>
+    </table>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="saber:presente">Saber</th><th data-conj="dizer:presente">Dizer</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">sei</td><td class="pt">digo</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">sabes</td><td class="pt">dizes</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">sabe</td><td class="pt">diz</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">sabemos</td><td class="pt">dizemos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">sabem</td><td class="pt">dizem</td></tr>
+    </table>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="pôr:presente">Pôr</th><th data-conj="trazer:presente">Trazer</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">ponho</td><td class="pt">trago</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">pões</td><td class="pt">trazes</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">põe</td><td class="pt">traz</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">pomos</td><td class="pt">trazemos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">põem</td><td class="pt">trazem</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b><span class="pt">vem</span> и <span class="pt">vêm</span> — разные лица, и разница только в шляпке.</b> <span class="pt">ele vem</span> — «он приходит», <span class="pt">eles vêm</span> — «они приходят». На слух почти не различаются, на письме — обязательно</li>
+      <li><b><span class="pt">pôr</span> — единственный глагол курса не на <span class="pt">-ar/-er/-ir</span>.</b> Спрягается как <span class="pt">-er</span>, но своя основа: <span class="pt">po-</span> в бо́льшей части форм, <span class="pt">pu-</span> нигде в настоящем не всплывает — она ждёт в прошедшем</li>
+      <li><b><span class="pt">saber</span> и <span class="pt">dizer</span> ломаются только в <span class="pt">eu</span>:</b> <span class="pt">sei</span>, <span class="pt">digo</span>. Дальше — обычные окончания -er, как у <span class="pt">fazer</span> в теме 1.3</li>
+      <li><b><span class="pt">trazer</span> — тот же тип, что <span class="pt">fazer</span>:</b> <span class="pt">trago</span> неправильно, <span class="pt">trazes, trazemos, trazem</span> — по правилу</li>
+    </ul>
+
+    <div class="contrast">
+      <div class="label">Saber vs conhecer — снова два глагола на одно русское слово</div>
+      <p><span class="pt">saber</span> — знать факт, информацию: <span class="pt">Sei que a loja fica perto</span>. <span class="pt">conhecer</span> — быть знакомым: с человеком, городом, книгой. <span class="pt">Sei</span> + инфинитив значит ещё и «уметь»: <span class="pt">Sei falar português</span> — «я умею говорить по-португальски».</p>
+    </div>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> <span class="pt">vem</span> / <span class="pt">vêm</span> — самая частая опечатка блока: без шляпки меняется лицо, а не просто пропадает акцент.<br>
+      <b>2.</b> <span class="pt">dás</span>, <span class="pt">dá</span> пишутся с ударением, хотя слово короткое: без него <span class="pt">das</span> совпало бы со слиянием <span class="pt">de + as</span> из темы 0.14.<br>
+      <b>3.</b> <span class="pt">trago</span> — «я приношу», а не «трагедия» и не что-либо ещё похожее по звучанию на русский; ложных друзей тут нет, но слово короткое и легко спутать по невнимательности с <span class="pt">traço</span> («черта»).</div>
+
+    <div class="tip"><b>Что теперь умеешь.</b> Одиннадцать неправильных глаголов настоящего времени из тем 1.3–1.4, плюс три правильных спряжения из 1.1–1.2 — почти весь набор для рассказа о себе и своих планах закрыт.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 39 · Irregulares II — вторая волна неправильных</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">vir</span> <span class="tr">вир</span><span class="t">— приходить</span></div>
+          <div><span class="w">dar</span> <span class="tr">дар</span><span class="t">— давать</span></div>
+          <div><span class="w">saber</span> <span class="tr">сабэр</span><span class="t">— знать; уметь</span></div>
+          <div><span class="w">dizer</span> <span class="tr">дизэр</span><span class="t">— говорить, сказать</span></div>
+          <div><span class="w">pôr</span> <span class="tr">пор</span><span class="t">— класть, положить</span></div>
+          <div><span class="w">trazer</span> <span class="tr">тразэр</span><span class="t">— приносить</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">vir</span> — «приходить», не путать с <span class="pt">ver</span> из темы 1.3: разница в одной букве и в целом смысле.<br><br><span class="pt">pôr</span> с шляпкой отличает его на письме от предлога <span class="pt">por</span> (тема 0.14) — звучат почти одинаково, пишутся по-разному.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 40 · Aniversário — день рождения</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">o aniversário</span> <span class="tr">у анивэрсариу</span><span class="t">— день рождения</span></div>
+          <div><span class="w">o presente</span> <span class="tr">у прэзэнт</span><span class="t">— подарок</span></div>
+          <div><span class="w">a surpresa</span> <span class="tr">а сурпрэза</span><span class="t">— сюрприз</span></div>
+          <div><span class="w">o convidado</span> <span class="tr">у кувидаду</span><span class="t">— гость, приглашённый</span></div>
+          <div><span class="w">a vela</span> <span class="tr">а вэла</span><span class="t">— свеча</span></div>
+          <div><span class="w">feliz</span> <span class="tr">фылиш</span><span class="t">— счастливый, радостный</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">o presente</span> значит и «подарок», и «настоящее время» — то самое слово, что в шапке таблиц спряжения; какое значение имеется в виду, всегда ясно из контекста.<br><br><span class="pt">feliz</span> не меняется по родам, как <span class="pt">grande</span> из темы 0.11: <span class="pt">feliz aniversário</span> и мужчине, и женщине.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · A surpresa — сюрприз</div>
+      <div class="mini-text">
+        <p class="storytext">Hoje é o aniversário do João. Os amigos sabem do plano e trazem presentes. A Ana traz um bolo com velas e põe tudo na mesa da cozinha. O João não sabe de nada — é uma surpresa! Os convidados vêm cedo e dizem «Feliz aniversário!» quando o João chega. Ele fica muito feliz.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Сегодня день рождения Жуана. Друзья знают о плане и приносят подарки. Ана приносит торт со свечками и ставит всё на кухонный стол. Жуан ни о чём не знает — это сюрприз! Гости приходят рано и говорят «С днём рождения!», когда приходит Жуан. Он очень рад.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">trazem</span> и <span class="pt">sabem</span> — регулярные формы: только <span class="pt">eu</span> у этих глаголов ломается (<span class="pt">trago</span>, <span class="pt">sei</span>), остальное идёт по правилу -er.<br><br><span class="pt">põe</span> — от <span class="pt">pôr</span>: основа <span class="pt">põ-</span> с шляпкой в трёх формах из пяти.<br><br><span class="pt">vêm</span> — множественное число, с шляпкой; без неё вышло бы «он приходит» вместо «они приходят».</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Antes da festa — перед праздником</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> João, sabes o que trago no saco?</p>
+          <p class="dline"><span class="speaker">João:</span> Não sei. O que é?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Trago um bolo e velas. Pões a mesa?</p>
+          <p class="dline"><span class="speaker">João:</span> Ponho já. E o presente, quem traz?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Eu trago o presente. Dizes «feliz aniversário» quando os convidados vêm?</p>
+          <p class="dline"><span class="speaker">João:</span> Digo, claro!</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Жуан, знаешь, что я несу в пакете?<br><b>Жуан:</b> Не знаю. Что там?<br><b>Ана:</b> Несу торт и свечки. Накроешь на стол?<br><b>Жуан:</b> Сейчас накрою. А подарок, кто принесёт?<br><b>Ана:</b> Подарок принесу я. Скажешь «с днём рождения», когда придут гости?<br><b>Жуан:</b> Скажу, конечно!</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">Pões a mesa?</span> — буквально «кладёшь стол?»: устойчивая фраза «накрывать на стол».<br><br><span class="pt">sei</span>, <span class="pt">trago</span>, <span class="pt">ponho</span>, <span class="pt">digo</span> — все формы <span class="pt">eu</span>, и все неправильные: ни одна не похожа на регулярную -er форму.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="irregularesii">
+    <p class="quiz-instruction">Последние шесть неправильных. Особое внимание — на шляпки.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">eu (saber):</span>
+      <select class="mc" data-answer="sei">
+        <option value="">—</option>
+        <option value="sei">sei</option>
+        <option value="sabo">sabo</option>
+        <option value="saibo">saibo</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">eu (dizer):</span>
+      <select class="mc" data-answer="digo">
+        <option value="">—</option>
+        <option value="digo">digo</option>
+        <option value="dizo">dizo</option>
+        <option value="dico">dico</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">eles (vir) — «они приходят»:</span>
+      <select class="mc" data-answer="vêm">
+        <option value="">—</option>
+        <option value="vêm">vêm</option>
+        <option value="vem">vem</option>
+        <option value="vens">vens</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">ele (vir) — «он приходит»:</span>
+      <select class="mc" data-answer="vem">
+        <option value="">—</option>
+        <option value="vem">vem</option>
+        <option value="vêm">vêm</option>
+        <option value="vindo">vindo</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">eu (pôr):</span>
+      <select class="mc" data-answer="ponho">
+        <option value="">—</option>
+        <option value="ponho">ponho</option>
+        <option value="poño">poño</option>
+        <option value="poro">poro</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">tu (dar):</span>
+      <select class="mc" data-answer="dás">
+        <option value="">—</option>
+        <option value="dás">dás</option>
+        <option value="das">das</option>
+        <option value="dai">dai</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Впиши: «я не знаю» —</span> <span class="pt">Eu não</span> <input class="blank" data-answer="sei" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">.</div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши: «он приносит вино» —</span> <span class="pt">Ele</span> <input class="blank" data-answer="traz" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">vinho.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">«знать факт» (а не «быть знакомым»):</span>
+      <select class="mc" data-answer="saber">
+        <option value="">—</option>
+        <option value="saber">saber</option>
+        <option value="conhecer">conhecer</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Ты знаешь, что я приношу?»</span>
+      <div class="qbuild" data-answer="Sabes o que trago" data-words="o|Sabes|que|trago"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
     <button type="button" class="next-card" data-open="vocab">
       <span class="next-marker"></span>
       <span class="next-text">
@@ -4921,7 +5328,7 @@
   // Порядок = порядок прохождения. Темы без контента сюда не попадают,
   // иначе прогресс считался бы от несуществующих экранов.
   var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes","adjetivos","ter","negacao","preposicoes","demonstrativos","numeros"];
-  var PRESENTE_TOPICS = ["verbosar","verboseir"];
+  var PRESENTE_TOPICS = ["verbosar","verboseir","irregularesi","irregularesii"];
   var PASSADO_TOPICS  = [];
   var EXPANSAO_TOPICS = [];
   var TOPICS = BASE_TOPICS.concat(PRESENTE_TOPICS).concat(PASSADO_TOPICS).concat(EXPANSAO_TOPICS);
@@ -4937,7 +5344,7 @@
     "alfabeto":20, "acento":22, "nasais":18, "digrafos":16, "genero":20, "plural":22,
     "ser":24, "estar":24, "servsestar":26, "pronomes":22, "adjetivos":22, "ter":24,
     "negacao":20, "preposicoes":24, "demonstrativos":22, "numeros":26,
-    "verbosar":24, "verboseir":22
+    "verbosar":24, "verboseir":22, "irregularesi":26, "irregularesii":26
   };
 
   var STORAGE_KEY   = "ptProgressV1";
@@ -5360,7 +5767,14 @@
     // что «então», «já», «mais» выше. И форма «vens» (от vir) — обещание
     // вперёд с явной пометкой в теме, закрывается темой 1.4.
     "agora":"сейчас","depois":"потом, после","ou":"или","pouco":"мало",
-    "vens":"придёшь (от vir)"
+    "vens":"придёшь (от vir)",
+    // 1.3: формы ir/poder/ver, к словарной статье не сводятся.
+    "vai":"едет, идёт (от ir)","vê":"видит (от ver)","posso":"могу (от poder)",
+    "vais":"едешь, идёшь (от ir)","vês":"видишь (от ver)","vejo":"вижу (от ver)",
+    // 1.4: формы vir/pôr/saber/dizer/trazer, целиком по той же причине.
+    "traz":"приносит (от trazer)","põe":"кладёт (от pôr)","vêm":"приходят (от vir)",
+    "sei":"знаю (от saber)","trago":"приношу (от trazer)","pões":"кладёшь (от pôr)",
+    "ponho":"кладу (от pôr)","digo":"говорю (от dizer)"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
