@@ -40,8 +40,8 @@
 | Готово | 26 тем из 47: **блоки 0 и 1 закрыты целиком**, `0.1`–`1.10` |
 | Слов в словаре | 401 (52 набора `Palavras N`) |
 | Инструменты | Conjugador (5 времён, 28 неправильных), Dicionário с коробками Лейтнера, шпаргалка по чтению |
-| Проверки | `node tools/check.js` — 6 статических; `tools/browser-checks.js` — 3 браузерных |
-| Последний коммит | «Темы 1.9 Palavras interrogativas и 1.10 Por vs para» |
+| Проверки | `tools/check.js` — 6 статических; `tools/prevocab.js` — предсверка черновика; `tools/browser-checks.js` — 3 браузерных |
+| Последний коммит | «Предсверка словаря по черновику: tools/prevocab.js» |
 
 Обвязка блоков 2–3 (цвета, теги, регистры) уже стоит в CSS и в `BLOCKS`;
 `PRESENTE_TOPICS` заполнен целиком, `PASSADO_TOPICS` и `EXPANSAO_TOPICS`
