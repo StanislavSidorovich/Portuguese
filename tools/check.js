@@ -10,6 +10,9 @@
  * пропущенная форма в таблице спряжения даёт «undefined» на экране.
  * Глазами это не ловится, поэтому шесть проверок ниже.
  *
+ * Отдельно стоит tools/prevocab.js — та же сверка словаря, но по черновику
+ * темы, до вставки в index.html. Поймать там дешевле.
+ *
  * ВАЖНО: скрипт не хранит копию данных приложения. И словарь, и список замен
  * окончаний, и таблицу неправильных глаголов он вытаскивает из самого
  * index.html — иначе они разошлись бы.
@@ -33,68 +36,14 @@ const head = (msg) => console.log('\n' + msg);
 
 /* ============ данные из самого index.html ============ */
 
-// Словарь VOCAB + наборы «Palavras N», которые досыпает seedVocabFromWordsets.
-function buildVocab() {
-  const start = html.indexOf('var VOCAB = {');
-  const end   = html.indexOf('\n  };', start);
-  if (start < 0 || end < 0) throw new Error('не нашёл объект VOCAB в index.html');
-  const vocab = new Set();
-  for (const m of html.slice(start, end).matchAll(/"([^"]+)"\s*:\s*"/g)) vocab.add(m[1]);
-  // .w может нести дополнительный класс — приложение берёт элемент через
-  // querySelector(".w"), значит и мы должны.
-  for (const m of html.matchAll(/<span class="w[^"]*">([^<]*)<\/span>/g)) {
-    const key = m[1].trim().toLowerCase();
-    vocab.add(key);
-    // Фраза из двух слов кладётся в словарь и по частям — так же, как это
-    // делает seedVocabFromWordsets.
-    for (const part of key.split(/\s+/)) if (part.length > 1) vocab.add(part);
-  }
-  return vocab;
-}
+// Словарь, цепочки замен и поиск по ним общие с tools/prevocab.js —
+// см. tools/lib-vocab.js. Держать их копией в двух файлах нельзя:
+// разойдутся, и предсверка черновиков начнёт врать.
+const { buildVocab, buildStrip, makeLookup, readableZones, PT_WORD } = require('./lib-vocab.js');
 
-// STRIP — пары [что было, чем заменить]: в португальском окончание не
-// отрезается, а подменяется (falamos → falar).
-function buildStrip() {
-  const m = html.match(/var STRIP = \[([\s\S]*?)\n  \];/);
-  if (!m) throw new Error('не нашёл массив STRIP в index.html');
-  return [...m[1].matchAll(/\["([^"]*)"\s*,\s*"([^"]*)"\]/g)].map((x) => [x[1], x[2]]);
-}
-
-const VOCAB = buildVocab();
-const STRIP = buildStrip();
-
-// Повторяет lookupWord из приложения: поиск в ширину по цепочкам замен,
-// глубина два.
-function stripOnce(w) {
-  const out = [];
-  for (const [from, to] of STRIP) {
-    if (w.length > from.length && w.slice(-from.length) === from) {
-      out.push(w.slice(0, -from.length) + to);
-    }
-  }
-  return out;
-}
-
-function lookup(raw) {
-  const w = raw.toLowerCase();
-  if (VOCAB.has(w)) return true;
-  let frontier = [w];
-  const seen = new Set();
-  for (let depth = 0; depth < 2; depth++) {
-    const next = [];
-    for (const word of frontier) {
-      for (const cand of stripOnce(word)) {
-        if (seen.has(cand)) continue;
-        seen.add(cand);
-        if (VOCAB.has(cand)) return true;
-        next.push(cand);
-      }
-    }
-    if (!next.length) break;
-    frontier = next;
-  }
-  return false;
-}
+const VOCAB  = buildVocab(html);
+const STRIP  = buildStrip(html);
+const lookup = makeLookup(VOCAB, STRIP);
 
 /* ============ 1. баланс тегов ============ */
 
@@ -172,18 +121,11 @@ function checkStructure() {
 // просто молча не переводится по тапу. Для новичка это дыра в тексте.
 function checkVocabCoverage() {
   head('3. Тап-перевод текстов');
-  const PT = /[A-Za-zÀ-ÖØ-öø-ÿ]+/g;
   const missing = new Map();
 
-  const zones = [
-    ...html.matchAll(/<p class="storytext">([\s\S]*?)<\/p>/g),
-    ...html.matchAll(/<p class="dline">([\s\S]*?)<\/p>/g),
-  ];
-  for (const zone of zones) {
-    const text = zone[1]
-      .replace(/<span class="speaker">[\s\S]*?<\/span>/g, '')
-      .replace(/<[^>]+>/g, ' ');
-    for (const m of text.matchAll(PT)) {
+  const zones = readableZones(html);
+  for (const text of zones) {
+    for (const m of text.matchAll(PT_WORD)) {
       const w = m[0].toLowerCase();
       if (!lookup(w)) missing.set(w, (missing.get(w) || 0) + 1);
     }
