@@ -8,7 +8,7 @@
  * тихие: забытый регистр не роняет страницу, а просто выключает тему; слово
  * без словарной статьи не переводится по тапу, но выглядит как обычное;
  * пропущенная форма в таблице спряжения даёт «undefined» на экране.
- * Глазами это не ловится, поэтому пять проверок ниже.
+ * Глазами это не ловится, поэтому шесть проверок ниже.
  *
  * ВАЖНО: скрипт не хранит копию данных приложения. И словарь, и список замен
  * окончаний, и таблицу неправильных глаголов он вытаскивает из самого
@@ -271,6 +271,129 @@ function checkIrregulars() {
   if (!problems) ok(`${verbs} глаголов, у всех по пять форм в каждом времени`);
 }
 
+/* ============ 6. таблицы спряжения против движка ============ */
+
+// Формы в теме и формы в спрягателе — это два разных места, где живёт одно
+// и то же знание. Разойтись они могут молча: страница не падает, ученик
+// сверить не может, а тема учит форме, которой в языке нет.
+//
+// Поэтому скрипт не сверяет таблицы со своим списком форм — своего списка
+// у него нет. Он вырезает из index.html сам движок (PERSONS … conjugate)
+// и спрашивает у него те же глаголы, что стоят в темах.
+//
+// Разметка: у колонки с формами в шапке стоит data-conj="глагол:время",
+// строки идут в порядке лиц (eu, tu, ele, nós, eles). Если строк больше
+// пяти — как в 0.9, где você и vocês дописаны отдельными строками, — лицо
+// у строки задаётся явно: data-p="2".
+function loadEngine() {
+  const start = html.indexOf('var PERSONS = [');
+  const end   = html.indexOf('/* ================= ПРОГРЕСС', start);
+  if (start < 0 || end < 0) throw new Error('не нашёл движок спряжения в index.html');
+  const src = html.slice(start, end);
+  return new Function(src + '\nreturn { conjugate: conjugate, PERSONS: PERSONS };')();
+}
+
+const TENSES = ['presente', 'preterito', 'imperfeito', 'futuro', 'condicional'];
+
+// Местоимения в первой колонке — единственный признак, по которому таблицу
+// спряжения видно без разметки. Нужен он ровно затем, чтобы поймать
+// таблицу, у которой разметку забыли: забытая проверка молчит, а это тот
+// самый случай, ради которого проверка и написана.
+const PRONOUNS = new Set([
+  'eu', 'tu', 'ele', 'ela', 'nós', 'eles', 'elas', 'você', 'vocês',
+  'ele / ela / você', 'eles / elas / vocês', 'ele, ela', 'eles, elas',
+  'você, o senhor'
+]);
+
+const cellText = (s) => s.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+
+function checkConjTables() {
+  head('6. Таблицы спряжения против движка');
+
+  let engine;
+  try { engine = loadEngine(); }
+  catch (e) { bad(e.message); return; }
+
+  // Разметка живёт только в темах: в самом движке те же слова встречаются
+  // в комментариях и в IRREG, и таблицей их считать не надо.
+  const topics = html.slice(0, html.indexOf('var PERSONS = ['));
+
+  let tables = 0, forms = 0, problems = 0;
+
+  for (const t of topics.matchAll(/<table[^>]*>[\s\S]*?<\/table>/g)) {
+    const table = t[0];
+    const line  = topics.slice(0, t.index).split('\n').length;
+    const rows  = [...table.matchAll(/<tr([^>]*)>([\s\S]*?)<\/tr>/g)].map((r) => ({
+      attrs: r[1],
+      cells: [...r[2].matchAll(/<t[dh]([^>]*)>([\s\S]*?)<\/t[dh]>/g)].map((c) => ({ attrs: c[1], text: cellText(c[2]) }))
+    }));
+
+    const head_ = rows.find((r) => r.cells.some((c) => /data-conj=/.test(c.attrs)));
+
+    if (!head_) {
+      // Разметки нет — но, может, её забыли?
+      const pron = rows.filter((r) => r.cells.some((c) => PRONOUNS.has(c.text.toLowerCase()))).length;
+      if (pron >= 4 && !/data-conj="skip"/.test(table)) {
+        bad(`строка ${line}: таблица похожа на спряжение (${pron} строк с местоимениями), но колонка форм не размечена — нужен data-conj="глагол:время" в шапке (или data-conj="skip" на таблице)`);
+        problems++;
+      }
+      continue;
+    }
+
+    tables++;
+    const body = rows.slice(rows.indexOf(head_) + 1);
+
+    head_.cells.forEach((cell, col) => {
+      const m = cell.attrs.match(/data-conj="([^"]+)"/);
+      if (!m || m[1] === 'skip') return;
+      const [verb, tense] = m[1].split(':');
+
+      if (!TENSES.includes(tense)) {
+        bad(`строка ${line}: время «${tense}» движку неизвестно (есть ${TENSES.join(', ')})`);
+        problems++;
+        return;
+      }
+      const conj = engine.conjugate(verb, tense);
+      if (!conj || conj.error) {
+        bad(`строка ${line}: движок не спрягает «${verb}» (${conj ? conj.error : 'пусто'})`);
+        problems++;
+        return;
+      }
+
+      const seen = new Set();
+      body.forEach((row, i) => {
+        const p = row.attrs.match(/data-p="(\d+)"/) ? Number(row.attrs.match(/data-p="(\d+)"/)[1]) : i;
+        if (p > 4) {
+          bad(`строка ${line}, ${verb}: строк больше пяти, а лицо у строки ${i + 1} не задано — нужен data-p`);
+          problems++;
+          return;
+        }
+        seen.add(p);
+        const got = row.cells[col] ? row.cells[col].text : '';
+        if (!got) {
+          bad(`строка ${line}, ${verb} · ${tense}, ${engine.PERSONS[p]}: пустая клетка`);
+          problems++;
+          return;
+        }
+        if (got !== conj.forms[p]) {
+          bad(`строка ${line}, ${verb} · ${tense}, ${engine.PERSONS[p]}: в теме «${got}», а движок даёт «${conj.forms[p]}»`);
+          problems++;
+          return;
+        }
+        forms++;
+      });
+
+      if (seen.size !== 5) {
+        const miss = [0, 1, 2, 3, 4].filter((p) => !seen.has(p)).map((p) => engine.PERSONS[p]);
+        bad(`строка ${line}, ${verb} · ${tense}: в таблице ${seen.size} лиц из пяти, нет: ${miss.join(', ')}`);
+        problems++;
+      }
+    });
+  }
+
+  if (!problems) ok(`${tables} таблиц, ${forms} форм — все совпали с движком`);
+}
+
 /* ============ ============ */
 
 console.log('Проверка index.html');
@@ -279,6 +402,7 @@ checkStructure();
 checkVocabCoverage();
 checkQuizData();
 checkIrregulars();
+checkConjTables();
 
 console.log('');
 if (failed) {
