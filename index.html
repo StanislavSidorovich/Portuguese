@@ -775,15 +775,17 @@
       <div class="sub">До сих пор глаголы шли готовыми кусками. Теперь разбираем, из чего они собраны: три спряжения, две волны неправильных и две конструкции, которые заменяют половину времён.</div>
     </div>
     <div class="topic-list">
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="verbosar">
         <span class="marker" style="background:var(--presente)"></span>
         <span class="row-title"><span class="topic-num">1.1</span> Verbos em -ar<span class="row-title-ru">правильные глаголы первого спряжения</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="verbosar" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="verboseir">
         <span class="marker" style="background:var(--presente)"></span>
         <span class="row-title"><span class="topic-num">1.2</span> Verbos em -er / -ir<span class="row-title-ru">второе и третье спряжение</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="verboseir" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--presente)"></span>
@@ -4480,11 +4482,413 @@
       <button class="btn btn-reveal" type="button">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="verbosar">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">1.1 Verbos em -ar — блок 1, глагол в настоящем времени</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<div class="screen topic-screen" id="screen-verbosar" data-topic="verbosar" style="--tint-color:var(--presente)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--presente)"></span>
+    <h2><span class="topic-num">1.1</span> Verbos em -ar</h2>
+    <span class="done-badge" data-badge="verbosar">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">До сих пор глаголы шли готовыми формами: <span class="pt">sou</span>, <span class="pt">tenho</span>, <span class="pt">é</span>. Теперь разбираем, откуда они берутся. Начинаем с самой большой группы — глаголов на <b>-ar</b>.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>В португальском три спряжения, и определяются они не по смыслу, а по последним двум буквам инфинитива: <b>-ar</b>, <b>-er</b>, <b>-ir</b>. У каждого свой набор окончаний, но принцип один и тот же: убрать <b>-ar</b>/<b>-er</b>/<b>-ir</b>, приклеить окончание лица. Из трёх групп <b>-ar</b> и самая большая, и самая надёжная: девять глаголов из десяти в словаре — на <b>-ar</b>, и почти все они спрягаются строго по правилу.</p>
+
+    <p>Возьмём <span class="pt">falar</span> — «говорить». Основа <span class="pt">fal-</span>, и к ней приклеивается окончание:</p>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="falar:presente">Falar</th><th>Перевод</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">falo</td><td>я говорю</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">falas</td><td>ты говоришь</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">fala</td><td>он, она, вы говорите</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">falamos</td><td>мы говорим</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">falam</td><td>они, вы говорите</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b>Окончания: <span class="pt">-o, -as, -a, -amos, -am</span>.</b> Запоминать нужно ровно пять букв на конце, основа не меняется</li>
+      <li><b>Местоимение снова можно опустить.</b> <span class="pt">Falo português</span> — «я говорю по-португальски», <span class="pt">eu</span> не нужен, окончание <span class="pt">-o</span> уже сказало «я»</li>
+      <li><b>Третье лицо и «вы» — снова одна форма.</b> <span class="pt">ele fala</span>, <span class="pt">você fala</span>: та же логика, что у <span class="se">ser</span> и <span class="es">estar</span> из тем 0.7–0.9</li>
+      <li><b>Так спрягается любой глагол на -ar</b>, у которого нет пометки «неправильный». Волна неправильных глаголов на -ar ждёт в темах 1.3–1.4, но их немного</li>
+    </ul>
+
+    <p>По этому же образцу — ещё шесть частых глаголов:</p>
+
+    <table>
+      <tr><th>Инфинитив</th><th>Перевод</th><th>eu</th></tr>
+      <tr><td class="pt">morar</td><td>жить, проживать</td><td class="pt">moro</td></tr>
+      <tr><td class="pt">trabalhar</td><td>работать</td><td class="pt">trabalho</td></tr>
+      <tr><td class="pt">estudar</td><td>учиться</td><td class="pt">estudo</td></tr>
+      <tr><td class="pt">chegar</td><td>приходить, прибывать</td><td class="pt">chego</td></tr>
+      <tr><td class="pt">ficar</td><td>оставаться; находиться</td><td class="pt">fico</td></tr>
+      <tr><td class="pt">começar</td><td>начинать</td><td class="pt">começo</td></tr>
+    </table>
+
+    <div class="contrast">
+      <div class="label">Gostar — глагол, который дружит с de</div>
+      <p><span class="pt">gostar</span> — «нравиться» — спрягается ровно как <span class="pt">falar</span>: <span class="pt">gosto, gostas, gosta, gostamos, gostam</span>. Но по-русски «мне нравится» строится от предмета, а по-португальски — от человека, и после глагола почти всегда идёт предлог <span class="pt">de</span>: <span class="pt">Gosto <b>de</b> café</span> — буквально «я нравлюсь от кофе».</p>
+      <p><span class="pt">Gosto de morar aqui.</span> — «мне нравится тут жить». После <span class="pt">gostar de</span> вторым глаголом всегда идёт инфинитив, без окончания.</p>
+    </div>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> Окончание нельзя пропустить: <span class="pt">eu fala</span> вместо <span class="pt">eu falo</span> звучит как «он», а не «я».<br>
+      <b>2.</b> <span class="pt">gosto</span> без <span class="pt">de</span> перед существительным — ошибка: не <i>gosto café</i>, а <span class="pt">gosto <b>de</b> café</span>.<br>
+      <b>3.</b> <span class="pt">ficar</span> — не только «оставаться», но и «находиться»: <span class="pt">A loja fica perto</span> — «магазин находится рядом». Оба смысла разберём подробнее в блоке 3.</div>
+
+    <div class="tip"><b>Что дальше.</b> В теме 1.2 та же схема для двух других спряжений — <span class="pt">-er</span> и <span class="pt">-ir</span>. Три группы вместе покрывают почти все глаголы курса.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 33 · Verbos em -ar — глаголы на -ar</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">morar</span> <span class="tr">мурар</span><span class="t">— жить, проживать</span></div>
+          <div><span class="w">trabalhar</span> <span class="tr">трабальяр</span><span class="t">— работать</span></div>
+          <div><span class="w">estudar</span> <span class="tr">эштудар</span><span class="t">— учиться</span></div>
+          <div><span class="w">gostar</span> <span class="tr">гуштар</span><span class="t">— нравиться</span></div>
+          <div><span class="w">chegar</span> <span class="tr">шэгар</span><span class="t">— приходить, прибывать</span></div>
+          <div><span class="w">ficar</span> <span class="tr">фикар</span><span class="t">— оставаться; находиться</span></div>
+          <div><span class="w">começar</span> <span class="tr">кумэсар</span><span class="t">— начинать</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> все семь — на <span class="pt">-ar</span>, все спрягаются строго по правилу из этой темы: <span class="pt">moro</span>, <span class="pt">trabalho</span>, <span class="pt">estudo</span> и так далее.<br><br><span class="pt">trabalhar</span> несёт то же <span class="pt">lh</span>, что и <span class="pt">trabalho</span> из темы 0.4: «л» с мягким «й».<br><br><span class="pt">chegar</span> и <span class="pt">começar</span> в этом времени звучат обычно, но в других формах у них меняется написание — об этом в блоке 2, когда дойдём до прошедшего.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 34 · Vida quotidiana — повседневная жизнь</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">o bairro</span> <span class="tr">у байрру</span><span class="t">— район</span></div>
+          <div><span class="w">o parque</span> <span class="tr">у парк</span><span class="t">— парк</span></div>
+          <div><span class="w">a amiga</span> <span class="tr">а амига</span><span class="t">— подруга</span></div>
+          <div><span class="w">amanhã</span> <span class="tr">аманьян</span><span class="t">— завтра</span></div>
+          <div><span class="w">ontem</span> <span class="tr">онтэй</span><span class="t">— вчера</span></div>
+          <div><span class="w">cedo</span> <span class="tr">сэду</span><span class="t">— рано</span></div>
+          <div><span class="w">todos</span> <span class="tr">тодуш</span><span class="t">— все, каждый</span></div>
+          <div><span class="w">porque</span> <span class="tr">пуркэ</span><span class="t">— потому что</span></div>
+          <div><span class="w">quando</span> <span class="tr">куанду</span><span class="t">— когда</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">a amiga</span> — женская форма к <span class="pt">o amigo</span>, тема 0.5 (перемена <span class="pt">-o → -a</span>).<br><br><span class="pt">amanhã</span> — ещё одно носовое слово, как <span class="pt">a manhã</span> из темы 0.16: спутать легко, но <span class="pt">amanhã</span> без артикля и значит «завтра», а не «утро».<br><br><span class="pt">todos os dias</span> — «каждый день», буквально «все дни»; <span class="pt">todos</span> тут во множественном мужском, потому что <span class="pt">dias</span> мужского рода.<br><br><span class="pt">porque</span> слитно — вопрос «почему»; в ответе то же слово, но по-русски переводится «потому что».</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · A semana da Ana — неделя Аны</div>
+      <div class="mini-text">
+        <p class="storytext">A Ana mora num bairro perto do centro. Todos os dias, ela estuda de manhã e trabalha à tarde, num café perto da universidade. O café fica perto da casa da Ana, e ela chega lá às nove. A Ana gosta muito de morar perto do trabalho: começa cedo, mas fica em casa cedo também. Amanhã não há aulas, e a Ana e a amiga Maria ficam no parque à tarde. O João também gosta do parque, mas hoje ele trabalha.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Ана живёт в районе рядом с центром. Каждый день утром она учится, а вечером работает — в кафе рядом с университетом. Кафе находится рядом с домом Аны, и она приходит туда в девять. Ане очень нравится жить рядом с работой: она начинает рано, но и домой возвращается рано. Завтра пар нет, и Ана с подругой Марией останутся в парке днём. Жуану тоже нравится парк, но сегодня он работает.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">mora num bairro</span> — <span class="pt">num</span> это слияние <span class="pt">em + um</span> из темы 0.14: «в одном районе».<br><br><span class="pt">fica perto da casa</span> — здесь <span class="pt">ficar</span> значит «находиться», не «оставаться».<br><br><span class="pt">gosta do parque</span> — <span class="pt">do</span> снова слияние, <span class="pt">de + o</span>, та же таблица из темы 0.14.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Onde moras? — где ты живёшь</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">João:</span> Ana, onde moras agora?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Moro num bairro perto do centro. E tu?</p>
+          <p class="dline"><span class="speaker">João:</span> Moro mais longe, mas trabalho aqui perto.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Gostas do trabalho?</p>
+          <p class="dline"><span class="speaker">João:</span> Gosto muito. Começo às nove e fico até às seis.</p>
+          <p class="dline"><span class="speaker">Ana:</span> E amanhã? Também trabalhas?</p>
+          <p class="dline"><span class="speaker">João:</span> Não, amanhã fico em casa.</p>
+          <p class="dline"><span class="speaker">Ana:</span> A Maria e eu ficamos no parque amanhã. Vens?</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Жуан:</b> Ана, где ты сейчас живёшь?<br><b>Ана:</b> Живу в районе рядом с центром. А ты?<br><b>Жуан:</b> Я живу дальше, но работаю тут рядом.<br><b>Ана:</b> Тебе нравится работа?<br><b>Жуан:</b> Очень нравится. Начинаю в девять и остаюсь до шести.<br><b>Ана:</b> А завтра? Тоже работаешь?<br><b>Жуан:</b> Нет, завтра я дома.<br><b>Ана:</b> Мы с Марией завтра будем в парке. Придёшь?</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">Vens?</span> — форма от <span class="pt">vir</span>, неправильного глагола из темы 1.4. Здесь она стоит как готовая фраза-приглашение, полный разбор ждёт впереди.<br><br><span class="pt">Gostas do trabalho?</span> — <span class="pt">do</span> это слияние <span class="pt">de + o</span>: «нравится ли тебе от работы».<br><br>Ответ на вопрос с <span class="pt">Também…?</span> просто повторяет глагол: <span class="pt">Não, amanhã fico em casa</span> — без <span class="pt">não trabalho também</span>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="verbosar">
+    <p class="quiz-instruction">Глаголы на -ar: пять окончаний, одна схема. Проверь себя.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">eu (falar):</span>
+      <select class="mc" data-answer="falo">
+        <option value="">—</option>
+        <option value="falo">falo</option>
+        <option value="fala">fala</option>
+        <option value="falas">falas</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">nós (morar):</span>
+      <select class="mc" data-answer="moramos">
+        <option value="">—</option>
+        <option value="moramos">moramos</option>
+        <option value="moram">moram</option>
+        <option value="morais">morais</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">eles (trabalhar):</span>
+      <select class="mc" data-answer="trabalham">
+        <option value="">—</option>
+        <option value="trabalham">trabalham</option>
+        <option value="trabalhamos">trabalhamos</option>
+        <option value="trabalha">trabalha</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">«Мне нравится кофе» — выбери верный вариант:</span>
+      <select class="mc" data-answer="Gosto de café">
+        <option value="">—</option>
+        <option value="Gosto de café">Gosto de café</option>
+        <option value="Gosto café">Gosto café</option>
+        <option value="Gosto do café de">Gosto do café de</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">tu (estudar):</span>
+      <select class="mc" data-answer="estudas">
+        <option value="">—</option>
+        <option value="estudas">estudas</option>
+        <option value="estuda">estuda</option>
+        <option value="estudo">estudo</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">você (chegar):</span>
+      <select class="mc" data-answer="chega">
+        <option value="">—</option>
+        <option value="chega">chega</option>
+        <option value="chegas">chegas</option>
+        <option value="chego">chego</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Впиши: «магазин находится рядом» —</span> <span class="pt">A loja</span> <input class="blank" data-answer="fica" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">perto.</span></div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши: «я работаю здесь» —</span> <span class="pt">Eu</span> <input class="blank" data-answer="trabalho" style="width:9em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">aqui.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">«завтра» по-португальски:</span>
+      <select class="mc" data-answer="amanhã">
+        <option value="">—</option>
+        <option value="amanhã">amanhã</option>
+        <option value="a manhã">a manhã</option>
+        <option value="ontem">ontem</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Мы начинаем в девять».</span>
+      <div class="qbuild" data-answer="Começamos às nove" data-words="nove|Começamos|às"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="verboseir">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">1.2 Verbos em -er / -ir — второе и третье спряжение</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<div class="screen topic-screen" id="screen-verboseir" data-topic="verboseir" style="--tint-color:var(--presente)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--presente)"></span>
+    <h2><span class="topic-num">1.2</span> Verbos em -er / -ir</h2>
+    <span class="done-badge" data-badge="verboseir">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Ещё два спряжения — <b>-er</b> и <b>-ir</b>. Они похожи друг на друга сильнее, чем на <span class="pt">-ar</span>, и различаются только в двух формах из пяти.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Возьмём <span class="pt">comer</span> — «есть» (кушать) — и <span class="pt">partir</span> — «уезжать; делить»:</p>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="comer:presente">Comer</th><th data-conj="partir:presente">Partir</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">como</td><td class="pt">parto</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">comes</td><td class="pt">partes</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">come</td><td class="pt">parte</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">comemos</td><td class="pt">partimos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">comem</td><td class="pt">partem</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b>Окончания -er: <span class="pt">-o, -es, -e, -emos, -em</span>.</b> Окончания -ir: <span class="pt">-o, -es, -e, -imos, -em</span></li>
+      <li><b>Разница только в одной форме из пяти.</b> <span class="pt">eu</span> у обоих на <span class="pt">-o</span>, <span class="pt">eles</span> у обоих на <span class="pt">-em</span> — совпадают все, кроме <span class="pt">nós</span>: <span class="pt">com<b>e</b>mos</span> против <span class="pt">part<b>i</b>mos</span></li>
+      <li><b>Ту же гласную несёт третье лицо в вопросах и рассказах:</b> <span class="pt">com<b>e</b></span>, <span class="pt">part<b>e</b></span> — здесь совпадают уже оба спряжения</li>
+    </ul>
+
+    <p>По тому же образцу — ещё четыре частых глагола:</p>
+
+    <table>
+      <tr><th>Инфинитив</th><th>Перевод</th><th>eu</th></tr>
+      <tr><td class="pt">beber</td><td>пить</td><td class="pt">bebo</td></tr>
+      <tr><td class="pt">viver</td><td>жить</td><td class="pt">vivo</td></tr>
+      <tr><td class="pt">escrever</td><td>писать</td><td class="pt">escrevo</td></tr>
+      <tr><td class="pt">abrir</td><td>открывать</td><td class="pt">abro</td></tr>
+    </table>
+
+    <div class="contrast">
+      <div class="label">Morar и viver — два «жить»</div>
+      <p><span class="pt">morar</span> из темы 1.1 — это «жить» в смысле «проживать по адресу»: <span class="pt">Moro em Lisboa</span>. <span class="pt">viver</span> — «жить» шире: жить вообще, быть живым, жить какой-то жизнью: <span class="pt">Vivemos bem</span> — «мы хорошо живём». По адресу спрашивают <span class="pt">Onde moras?</span>, а не <i>Onde vives?</i></p>
+    </div>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> <span class="pt">nós</span> — единственное место, где -er и -ir расходятся: <span class="pt">comemos</span>, но <span class="pt">partimos</span>. Перепутать легко, потому что в остальных четырёх формах гласная одна и та же.<br>
+      <b>2.</b> <span class="pt">como</span> означает и «я ем», и «как» (союз) — различает только контекст: <span class="pt">Como estás?</span> — «как дела», <span class="pt">Como pão</span> — «я ем хлеб».<br>
+      <b>3.</b> Инфинитив <span class="pt">partir</span> не значит «делить на части» в быту — это книжное; в разговоре чаще «уезжать», «отправляться».</div>
+
+    <div class="tip"><b>Что теперь умеешь.</b> Три спряжения из трёх покрыты: <span class="pt">-ar</span>, <span class="pt">-er</span>, <span class="pt">-ir</span>. Дальше — глаголы, которые в это правило не укладываются: темы 1.3–1.4.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 35 · Verbos em -er e -ir — глаголы на -er и -ir</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">comer</span> <span class="tr">кумэр</span><span class="t">— есть, кушать</span></div>
+          <div><span class="w">beber</span> <span class="tr">бэбэр</span><span class="t">— пить</span></div>
+          <div><span class="w">viver</span> <span class="tr">вивэр</span><span class="t">— жить</span></div>
+          <div><span class="w">escrever</span> <span class="tr">эшкревэр</span><span class="t">— писать</span></div>
+          <div><span class="w">partir</span> <span class="tr">партир</span><span class="t">— уезжать; делить</span></div>
+          <div><span class="w">abrir</span> <span class="tr">абрир</span><span class="t">— открывать</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> первые четыре — на <span class="pt">-er</span>, спрягаются как <span class="pt">comer</span>; последние два — на <span class="pt">-ir</span>, как <span class="pt">partir</span>.<br><br><span class="pt">escrever</span> длиннее остальных, но основа та же: <span class="pt">escrevo, escreves, escreve, escrevemos, escrevem</span> — окончания не меняются от длины слова.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 36 · À mesa — за столом</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">o prato</span> <span class="tr">у прату</span><span class="t">— тарелка</span></div>
+          <div><span class="w">o copo</span> <span class="tr">у копу</span><span class="t">— стакан</span></div>
+          <div><span class="w">o garfo</span> <span class="tr">у гарфу</span><span class="t">— вилка</span></div>
+          <div><span class="w">a faca</span> <span class="tr">а фака</span><span class="t">— нож</span></div>
+          <div><span class="w">a colher</span> <span class="tr">а кульер</span><span class="t">— ложка</span></div>
+          <div><span class="w">o bolo</span> <span class="tr">у болу</span><span class="t">— торт, пирог</span></div>
+          <div><span class="w">a sobremesa</span> <span class="tr">а собрэмэза</span><span class="t">— десерт</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">a colher</span> — редкое женское слово на согласную; запомнить проще всего вместе с артиклем.<br><br><span class="pt">a sobremesa</span> буквально «над столом» (<span class="pt">sobre</span> + <span class="pt">mesa</span>): десерт подают после того, как стол уже накрыт для основного блюда.<br><br><span class="pt">o bolo</span> — и «торт» на праздник, и обычный «пирог»; какой именно, ясно из контекста.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · O jantar em casa — ужин дома</div>
+      <div class="mini-text">
+        <p class="storytext">Hoje a Ana e o João comem em casa. A Ana escreve uma carta e o João abre a porta da cozinha. Bebem água com o jantar, não vinho. O João come muito, mas a Ana come pouco: come só a sobremesa, um bolo pequeno. Não há colheres na cozinha, só garfos e facas. Depois do jantar, os dois ficam em casa.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Сегодня Ана и Жуан ужинают дома. Ана пишет письмо, а Жуан открывает дверь кухни. Пьют за ужином воду, не вино. Жуан ест много, а Ана ест мало: ест только десерт, небольшой пирог. На кухне нет ложек, только вилки и ножи. После ужина они остаются дома.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">colheres</span> — то самое окончание <b>-es</b> у слов на <b>-r</b> из темы 0.6: <span class="pt">colher</span> → <span class="pt">colheres</span>.<br><br><span class="pt">come só a sobremesa</span> — <span class="pt">só</span> здесь «только», сужает смысл без нового глагола.<br><br><span class="pt">os dois ficam em casa</span> — тот же <span class="pt">ficar</span>, что и в теме 1.1, в значении «оставаться».</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Na cozinha — на кухне</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">João:</span> Ana, comes agora ou depois?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Como agora. Abres a janela? Está calor aqui.</p>
+          <p class="dline"><span class="speaker">João:</span> Abro já. Bebes vinho ou água?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Água, por favor. E há sobremesa?</p>
+          <p class="dline"><span class="speaker">João:</span> Há um bolo. Escrevo uma carta amanhã?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Escreves, sim. Não há mais garfos aqui.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Жуан:</b> Ана, ты ешь сейчас или потом?<br><b>Ана:</b> Ем сейчас. Откроешь окно? Тут жарко.<br><b>Жуан:</b> Открываю. Будешь пить вино или воду?<br><b>Ана:</b> Воду, пожалуйста. А десерт есть?<br><b>Жуан:</b> Есть пирог. Напишу письмо завтра?<br><b>Ана:</b> Да, напиши. Вилок здесь больше нет.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">Como agora</span> здесь — «ем сейчас», от <span class="pt">comer</span>, не союз «как». В речи различает только контекст, на письме — тоже ничего, кроме смысла.<br><br><span class="pt">Não há mais garfos</span> — та же конструкция <span class="pt">não há</span> из темы 0.13, а <span class="pt">mais</span> добавляет «ещё»: буквально «нет больше вилок».</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="verboseir">
+    <p class="quiz-instruction">-er и -ir почти близнецы. Где именно они расходятся?</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">eu (comer):</span>
+      <select class="mc" data-answer="como">
+        <option value="">—</option>
+        <option value="como">como</option>
+        <option value="come">come</option>
+        <option value="comes">comes</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">nós (partir):</span>
+      <select class="mc" data-answer="partimos">
+        <option value="">—</option>
+        <option value="partimos">partimos</option>
+        <option value="partemos">partemos</option>
+        <option value="partem">partem</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">nós (beber) — та же форма, что и у comer:</span>
+      <select class="mc" data-answer="bebemos">
+        <option value="">—</option>
+        <option value="bebemos">bebemos</option>
+        <option value="bebimos">bebimos</option>
+        <option value="bebem">bebem</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">tu (abrir):</span>
+      <select class="mc" data-answer="abres">
+        <option value="">—</option>
+        <option value="abres">abres</option>
+        <option value="abris">abris</option>
+        <option value="abre">abre</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">eles (escrever):</span>
+      <select class="mc" data-answer="escrevem">
+        <option value="">—</option>
+        <option value="escrevem">escrevem</option>
+        <option value="escrevemos">escrevemos</option>
+        <option value="escreve">escreve</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">«жить по адресу» (не «быть живым»):</span>
+      <select class="mc" data-answer="morar">
+        <option value="">—</option>
+        <option value="morar">morar</option>
+        <option value="viver">viver</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Впиши: «она ест мало» —</span> <span class="pt">Ela</span> <input class="blank" data-answer="come" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">pouco.</span></div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши: «мы пишем письмо» —</span> <span class="pt">Nós</span> <input class="blank" data-answer="escrevemos" style="width:10em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">uma carta.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Инструмент для супа:</span>
+      <select class="mc" data-answer="a colher">
+        <option value="">—</option>
+        <option value="a colher">a colher</option>
+        <option value="o garfo">o garfo</option>
+        <option value="a faca">a faca</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Ты пьёшь воду или вино?»</span>
+      <div class="qbuild" data-answer="Bebes água ou vinho" data-words="água|Bebes|vinho|ou"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
     <button type="button" class="next-card" data-open="vocab">
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label">Seguinte · дальше</span>
-        <span class="next-title">Dicionário — блок 0 пройден, повторить все 272 слова</span>
+        <span class="next-title">Dicionário — повторить новые слова блока 1</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -4517,7 +4921,7 @@
   // Порядок = порядок прохождения. Темы без контента сюда не попадают,
   // иначе прогресс считался бы от несуществующих экранов.
   var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes","adjetivos","ter","negacao","preposicoes","demonstrativos","numeros"];
-  var PRESENTE_TOPICS = [];
+  var PRESENTE_TOPICS = ["verbosar","verboseir"];
   var PASSADO_TOPICS  = [];
   var EXPANSAO_TOPICS = [];
   var TOPICS = BASE_TOPICS.concat(PRESENTE_TOPICS).concat(PASSADO_TOPICS).concat(EXPANSAO_TOPICS);
@@ -4532,7 +4936,8 @@
   var TOPIC_MINUTES = {
     "alfabeto":20, "acento":22, "nasais":18, "digrafos":16, "genero":20, "plural":22,
     "ser":24, "estar":24, "servsestar":26, "pronomes":22, "adjetivos":22, "ter":24,
-    "negacao":20, "preposicoes":24, "demonstrativos":22, "numeros":26
+    "negacao":20, "preposicoes":24, "demonstrativos":22, "numeros":26,
+    "verbosar":24, "verboseir":22
   };
 
   var STORAGE_KEY   = "ptProgressV1";
@@ -4950,7 +5355,12 @@
     "sessenta":"шестьдесят","oitenta":"восемьдесят","noventa":"девяносто",
     "cem":"сто","cento":"сто (с довеском)","mil":"тысяча",
     "duas":"две (жен.)","duzentos":"двести","duzentas":"двести (жен.)",
-    "meia":"половина; полчаса","meio":"половина; средний","menos":"меньше, без"
+    "meia":"половина; полчаса","meio":"половина; средний","menos":"меньше, без",
+    // 1.1–1.2: служебные слова, не входящие в набор темы, — того же рода,
+    // что «então», «já», «mais» выше. И форма «vens» (от vir) — обещание
+    // вперёд с явной пометкой в теме, закрывается темой 1.4.
+    "agora":"сейчас","depois":"потом, после","ou":"или","pouco":"мало",
+    "vens":"придёшь (от vir)"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
