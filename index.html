@@ -799,15 +799,17 @@
         <span class="row-check" data-check="irregularesii" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="reflexivos">
         <span class="marker" style="background:var(--presente)"></span>
         <span class="row-title"><span class="topic-num">1.5</span> Verbos reflexivos<span class="row-title-ru">chamar-se, levantar-se и позиция -se</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="reflexivos" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="irinfinitivo">
         <span class="marker" style="background:var(--presente)"></span>
         <span class="row-title"><span class="topic-num">1.6</span> Ir + infinitivo<span class="row-title-ru">ближайшее будущее без будущего времени</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="irinfinitivo" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--presente)"></span>
@@ -5291,11 +5293,389 @@
       <button class="btn btn-reveal" type="button">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="reflexivos">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">1.5 Verbos reflexivos — глаголы с «-ся» и позиция местоимения</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<div class="screen topic-screen" id="screen-reflexivos" data-topic="reflexivos" style="--tint-color:var(--presente)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--presente)"></span>
+    <h2><span class="topic-num">1.5</span> Verbos reflexivos</h2>
+    <span class="done-badge" data-badge="reflexivos">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Глаголы с «-ся»: <span class="pt">chamar-se</span>, <span class="pt">levantar-se</span>. Сам глагол обычный — вся трудность в том, <b>куда встаёт местоимение</b>. И вот здесь португальский расходится с бразильским сильнее всего в курсе.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Русское «-ся» приклеено к глаголу намертво: «умываюсь», «называюсь». В португальском это отдельное слово, и у каждого лица оно своё: <span class="pt">me, te, se, nos, se</span>. Глагол при этом спрягается как обычно — никакой новой таблицы окончаний учить не надо.</p>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="chamar:presente">Chamar</th><th>+ местоимение</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">chamo</td><td class="pt">chamo-me</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">chamas</td><td class="pt">chamas-te</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">chama</td><td class="pt">chama-se</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">chamamos</td><td class="pt">chamamo-nos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">chamam</td><td class="pt">chamam-se</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b>Местоимение цепляется к глаголу дефисом</b> — это и есть обычный, «спокойный» порядок: <span class="pt">Chamo-me Ana</span>, <span class="pt">Levanto-me cedo</span></li>
+      <li><b>У <span class="pt">nós</span> глагол теряет <span class="pt">-s</span>:</b> не <i>chamamos-nos</i>, а <span class="pt">chamamo-nos</span>. Два <span class="pt">s</span> подряд язык не терпит. Форма редкая, но выглядит она именно так</li>
+      <li><b>Третье лицо и «вы» снова совпадают:</b> <span class="pt">se</span> обслуживает и <span class="pt">ele</span>, и <span class="pt">eles</span>, и <span class="pt">você</span></li>
+    </ul>
+
+    <p>А теперь главное. Дефис держится не всегда: некоторые слова <b>притягивают местоимение к себе</b>, и оно перепрыгивает вперёд глагола. Дефис при этом исчезает.</p>
+
+    <table>
+      <tr><th>Магнит перед глаголом</th><th>Как получается</th></tr>
+      <tr><td>отрицание <span class="pt">não, nunca</span></td><td class="pt">Não <b>me</b> chamo Ana.</td></tr>
+      <tr><td>вопросительное слово</td><td class="pt">Como <b>te</b> chamas?</td></tr>
+      <tr><td><span class="pt">já, ainda, também, só, sempre</span></td><td class="pt">Já <b>me</b> levanto.</td></tr>
+      <tr><td>союзы <span class="pt">que, quando, se, porque</span></td><td class="pt">Sei que <b>se</b> chama Ana.</td></tr>
+    </table>
+
+    <p>Проверить себя просто: если перед глаголом пусто — местоимение сзади через дефис. Если перед глаголом стоит любой «магнит» из таблицы — местоимение уходит вперёд и дефис пропадает.</p>
+
+    <div class="contrast">
+      <div class="label">А в Бразилии — наоборот</div>
+      <p>В Бразилии местоимение по умолчанию идёт <b>перед</b> глаголом, безо всяких магнитов: <i>me chamo João</i>, <i>me levanto cedo</i>. Для португальского уха это звучит как начало фразы с середины.</p>
+      <p>В Португалии так не говорят и не пишут. Фразу <span class="pt">Chamo-me João</span> здесь слышно в первую же минуту знакомства — и именно с дефисом.</p>
+    </div>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> Местоимение нельзя выбросить: «я встаю» — <span class="pt">levanto-me</span>, а не <i>levanto</i>. Без него глагол значит «я поднимаю» — что-то другое.<br>
+      <b>2.</b> После отрицания дефис <b>исчезает</b>: <span class="pt">não me chamo</span>, а не <i>não chamo-me</i>. Это самая частая ошибка темы.<br>
+      <b>3.</b> Не все «-ся» совпадают с русскими. <span class="pt">lembrar-se</span> — «помнить», а не «помниться»; <span class="pt">esquecer-se</span> — «забывать».</div>
+
+    <div class="tip"><b>Что дальше.</b> Тема 1.6 — <span class="pt">ir + infinitivo</span>: как сказать о будущем, не зная будущего времени. Полная позиция местоимений (включая <span class="pt">-lhe</span>, <span class="pt">-o</span>) ждёт в блоке 3.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 41 · Verbos reflexivos — возвратные глаголы</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">chamar-se</span> <span class="tr">шамар-сы</span><span class="t">— зваться, называться</span></div>
+          <div><span class="w">levantar-se</span> <span class="tr">лывантар-сы</span><span class="t">— вставать, подниматься</span></div>
+          <div><span class="w">deitar-se</span> <span class="tr">дэйтар-сы</span><span class="t">— ложиться спать</span></div>
+          <div><span class="w">sentar-se</span> <span class="tr">сынтар-сы</span><span class="t">— садиться</span></div>
+          <div><span class="w">lavar-se</span> <span class="tr">лавар-сы</span><span class="t">— мыться</span></div>
+          <div><span class="w">lembrar-se</span> <span class="tr">лымбрар-сы</span><span class="t">— помнить, вспоминать</span></div>
+          <div><span class="w">esquecer-se</span> <span class="tr">эшкысэр-сы</span><span class="t">— забывать</span></div>
+          <div><span class="w">preocupar-se</span> <span class="tr">прыукупар-сы</span><span class="t">— беспокоиться</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> в словаре возвратный глагол всегда стоит с <span class="pt">-se</span> на конце — это и есть пометка «возвратный». В живой фразе <span class="pt">-se</span> заменяется на местоимение нужного лица.<br><br>Семь из восьми — обычные глаголы на <span class="pt">-ar</span> из темы 1.1, спрягаются без сюрпризов. Исключение — <span class="pt">esquecer-se</span> на <span class="pt">-er</span>: у него в форме <span class="pt">eu</span> меняется буква, <span class="pt">esqueço</span>, чтобы «с» не превратилась в «к» перед <span class="pt">o</span>. Это не исключение, а правило записи — то же, что <span class="pt">começar</span> из темы 1.1.<br><br><span class="pt">lembrar-se</span> и <span class="pt">esquecer-se</span> тянут за собой предлог <span class="pt">de</span>: <span class="pt">lembro-me <b>da</b> aula</span>, как <span class="pt">gostar de</span> из темы 1.1.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 42 · A rotina — распорядок дня</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">a rotina</span> <span class="tr">а рутина</span><span class="t">— распорядок, рутина</span></div>
+          <div><span class="w">o espelho</span> <span class="tr">у эшпэлью</span><span class="t">— зеркало</span></div>
+          <div><span class="w">o nome</span> <span class="tr">у ном</span><span class="t">— имя</span></div>
+          <div><span class="w">devagar</span> <span class="tr">дывагар</span><span class="t">— медленно</span></div>
+          <div><span class="w">depressa</span> <span class="tr">дыпрэса</span><span class="t">— быстро</span></div>
+          <div><span class="w">antes</span> <span class="tr">антыш</span><span class="t">— раньше, до</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">o espelho</span> несёт <span class="pt">lh</span> из темы 0.4 — «л» с мягким «й»: «эшпэлью».<br><br><span class="pt">devagar</span> и <span class="pt">depressa</span> — наречия, по родам не меняются: и мужчина, и женщина скажут одинаково.<br><br><span class="pt">antes</span> с предлогом <span class="pt">de</span> значит «до чего-то»: <span class="pt">antes das nove</span> — «до девяти».</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · A rotina da Ana — распорядок дня Аны</div>
+      <div class="mini-text">
+        <p class="storytext">A Ana levanta-se cedo, às sete da manhã. Lava-se, vê-se no espelho e senta-se à mesa da cozinha. Não se preocupa com as horas: a aula é só às dez. O João levanta-se devagar e nunca se deita antes das duas da noite. Por isso não se levanta cedo. A Ana lembra-se sempre das aulas, mas o João esquece-se quase sempre. À noite os dois sentam-se na sala e veem um filme juntos.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Ана встаёт рано, в семь утра. Умывается, смотрится в зеркало и садится за стол на кухне. О времени не беспокоится: пара только в десять. Жуан встаёт медленно и никогда не ложится раньше двух ночи. Поэтому и не встаёт рано. Ана всегда помнит про пары, а Жуан почти всегда забывает. Вечером оба садятся в гостиной и вместе смотрят фильм.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">levanta-se</span>, <span class="pt">lava-se</span>, <span class="pt">senta-se</span> — перед глаголом пусто, значит местоимение сзади через дефис.<br><br><span class="pt">Não <b>se</b> preocupa</span> и <span class="pt">nunca <b>se</b> deita</span> — сработал магнит-отрицание, местоимение ушло вперёд.<br><br><span class="pt">Por isso não <b>se</b> levanta</span> — тот же <span class="pt">não</span>, тот же прыжок. А в соседнем предложении <span class="pt">esquece-se</span> снова с дефисом: перед ним магнита нет.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Como te chamas? — как тебя зовут</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> Bom dia! Como te chamas?</p>
+          <p class="dline"><span class="speaker">Maria:</span> Chamo-me Maria. E tu?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Ana. A que horas te levantas?</p>
+          <p class="dline"><span class="speaker">Maria:</span> Levanto-me às oito. E tu levantas-te cedo?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Às sete. Mas nunca me deito tarde.</p>
+          <p class="dline"><span class="speaker">Maria:</span> Eu deito-me muito tarde. Por isso não me levanto às sete.</p>
+          <p class="dline"><span class="speaker">Ana:</span> E lembras-te da aula de amanhã?</p>
+          <p class="dline"><span class="speaker">Maria:</span> Lembro-me, sim. Não me esqueço.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Доброе утро! Как тебя зовут?<br><b>Мария:</b> Меня зовут Мария. А тебя?<br><b>Ана:</b> Ана. Во сколько ты встаёшь?<br><b>Мария:</b> Встаю в восемь. А ты рано встаёшь?<br><b>Ана:</b> В семь. Но я никогда не ложусь поздно.<br><b>Мария:</b> А я ложусь очень поздно. Поэтому и не встаю в семь.<br><b>Ана:</b> А про завтрашнюю пару помнишь?<br><b>Мария:</b> Помню, да. Не забываю.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">Como <b>te</b> chamas?</span> — вопросительное слово притянуло местоимение. А в ответе магнита нет: <span class="pt">Chamo-me Maria</span>, с дефисом.<br><br><span class="pt">nunca <b>me</b> deito</span> против <span class="pt">deito-me muito tarde</span> — одна и та же форма в двух позициях, разница только в том, стоит ли перед ней <span class="pt">nunca</span>.<br><br><span class="pt">Não <b>me</b> esqueço</span> — снова отрицание, снова прыжок вперёд.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="reflexivos">
+    <p class="quiz-instruction">Главное в теме — не форма глагола, а место местоимения. Следи за магнитами.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">«Меня зовут Ана»:</span>
+      <select class="mc" data-answer="Chamo-me Ana">
+        <option value="">—</option>
+        <option value="Chamo-me Ana">Chamo-me Ana</option>
+        <option value="Me chamo Ana">Me chamo Ana</option>
+        <option value="Chamo Ana">Chamo Ana</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">«Меня не зовут Ана»:</span>
+      <select class="mc" data-answer="Não me chamo Ana">
+        <option value="">—</option>
+        <option value="Não me chamo Ana">Não me chamo Ana</option>
+        <option value="Não chamo-me Ana">Não chamo-me Ana</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">«Как тебя зовут?»</span>
+      <select class="mc" data-answer="Como te chamas?">
+        <option value="">—</option>
+        <option value="Como te chamas?">Como te chamas?</option>
+        <option value="Como chamas-te?">Como chamas-te?</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">nós (chamar-se):</span>
+      <select class="mc" data-answer="chamamo-nos">
+        <option value="">—</option>
+        <option value="chamamo-nos">chamamo-nos</option>
+        <option value="chamamos-nos">chamamos-nos</option>
+        <option value="chamamos-se">chamamos-se</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">«Он никогда не ложится рано»:</span>
+      <select class="mc" data-answer="Nunca se deita cedo">
+        <option value="">—</option>
+        <option value="Nunca se deita cedo">Nunca se deita cedo</option>
+        <option value="Nunca deita-se cedo">Nunca deita-se cedo</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">«Я знаю, что её зовут Мария»:</span>
+      <select class="mc" data-answer="Sei que se chama Maria">
+        <option value="">—</option>
+        <option value="Sei que se chama Maria">Sei que se chama Maria</option>
+        <option value="Sei que chama-se Maria">Sei que chama-se Maria</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Впиши: «я встаю рано» —</span> <span class="pt">Eu</span> <input class="blank" data-answer="levanto-me" style="width:9em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">cedo.</span></div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши то же, но с отрицанием: «я не встаю рано» —</span> <span class="pt">Eu não</span> <input class="blank" data-answer="me levanto" style="width:9em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">cedo.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Где стоит местоимение, если перед глаголом пусто?</span>
+      <select class="mc" data-answer="после глагола, через дефис">
+        <option value="">—</option>
+        <option value="после глагола, через дефис">после глагола, через дефис</option>
+        <option value="перед глаголом">перед глаголом</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Меня не зовут Мария».</span>
+      <div class="qbuild" data-answer="Não me chamo Maria" data-words="me|Não|Maria|chamo"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="irinfinitivo">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">1.6 Ir + infinitivo — будущее без будущего времени</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<div class="screen topic-screen" id="screen-irinfinitivo" data-topic="irinfinitivo" style="--tint-color:var(--presente)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--presente)"></span>
+    <h2><span class="topic-num">1.6</span> Ir + infinitivo</h2>
+    <span class="done-badge" data-badge="irinfinitivo">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Будущее время в курсе ещё не разобрано, а говорить о планах надо уже сейчас. Португальский решает это так же, как русское «собираюсь сделать»: <span class="pt">vou fazer</span>.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Формула короткая: спрягаем <span class="pt">ir</span> (тема 1.3), а второй глагол ставим в <b>инфинитиве</b> — в той самой словарной форме, безо всяких окончаний.</p>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="ir:presente">Ir</th><th>Пример</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">vou</td><td class="pt">Vou comer.</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">vais</td><td class="pt">Vais partir.</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">vai</td><td class="pt">Vai chegar.</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">vamos</td><td class="pt">Vamos ver.</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">vão</td><td class="pt">Vão trabalhar.</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b>Меняется только <span class="pt">ir</span>.</b> Второй глагол не спрягается никогда: <span class="pt">vou comer</span>, <span class="pt">vais comer</span>, <span class="pt">vamos comer</span> — <span class="pt">comer</span> всюду одинаков</li>
+      <li><b>Это самый обычный способ сказать о будущем.</b> Настоящее будущее время (<span class="pt">farei</span>, <span class="pt">comerei</span>) существует, ждёт в теме 3.1 и в разговоре встречается заметно реже</li>
+      <li><b><span class="pt">Vamos</span> + инфинитив — ещё и приглашение:</b> <span class="pt">Vamos comer!</span> значит и «мы поедим», и «пойдём поедим». Как русское «пошли»</li>
+      <li><b>С возвратными глаголами из темы 1.5</b> местоимение цепляется к инфинитиву: <span class="pt">vou levantar-me cedo</span>. Магниты работают и здесь: <span class="pt">não me vou levantar cedo</span></li>
+    </ul>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> <b>Никакого предлога между глаголами.</b> Не <i>vou a comer</i>, а <span class="pt">vou comer</span>. Ловушка для тех, кто знает испанский: там как раз <i>voy a comer</i>, и рука сама дописывает лишнее <span class="pt">a</span>.<br>
+      <b>2.</b> Предлог <span class="pt">a</span> нужен, только если <span class="pt">ir</span> работает в прямом смысле «идти куда-то»: <span class="pt">Vou ao cinema</span> — «иду в кино». Тут <span class="pt">ao</span> — слияние из темы 0.14, и глагол за ним не следует.<br>
+      <b>3.</b> Второй глагол не получает окончаний ни при каком лице: <i>vamos comemos</i> — типичная ошибка первой недели.</div>
+
+    <div class="tip"><b>Что теперь умеешь.</b> Половина блока 1 позади. Настоящее время закрыто целиком — три спряжения и одиннадцать неправильных, — и к нему добавился разговор о будущем. Дальше: <span class="pt">estar a + infinitivo</span> для того, что происходит прямо сейчас.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 43 · A viagem — поездка</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">o bilhete</span> <span class="tr">у бильет</span><span class="t">— билет</span></div>
+          <div><span class="w">a mala</span> <span class="tr">а мала</span><span class="t">— чемодан, сумка</span></div>
+          <div><span class="w">o aeroporto</span> <span class="tr">у аэрупорту</span><span class="t">— аэропорт</span></div>
+          <div><span class="w">a partida</span> <span class="tr">а партида</span><span class="t">— отправление</span></div>
+          <div><span class="w">a chegada</span> <span class="tr">а шыгада</span><span class="t">— прибытие</span></div>
+          <div><span class="w">próximo</span> <span class="tr">просиму</span><span class="t">— следующий, ближайший</span></div>
+          <div><span class="w">barato</span> <span class="tr">барату</span><span class="t">— дешёвый</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">a partida</span> и <span class="pt">a chegada</span> сделаны из глаголов, которые ты уже знаешь: <span class="pt">partir</span> (тема 1.2) и <span class="pt">chegar</span> (тема 1.1). На табло вокзала они и стоят — двумя колонками.<br><br><span class="pt">o bilhete</span> несёт <span class="pt">lh</span> из темы 0.4: «бильет».<br><br><span class="pt">próximo</span> меняется по роду: <span class="pt">o próximo comboio</span>, но <span class="pt">a próxima semana</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 44 · Os dias da semana — дни недели</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">segunda-feira</span> <span class="tr">сыгунда-фэйра</span><span class="t">— понедельник</span></div>
+          <div><span class="w">terça-feira</span> <span class="tr">тэрса-фэйра</span><span class="t">— вторник</span></div>
+          <div><span class="w">quarta-feira</span> <span class="tr">куарта-фэйра</span><span class="t">— среда</span></div>
+          <div><span class="w">quinta-feira</span> <span class="tr">кинта-фэйра</span><span class="t">— четверг</span></div>
+          <div><span class="w">sexta-feira</span> <span class="tr">сэйшта-фэйра</span><span class="t">— пятница</span></div>
+          <div><span class="w">o sábado</span> <span class="tr">у сабаду</span><span class="t">— суббота</span></div>
+          <div><span class="w">o domingo</span> <span class="tr">у думингу</span><span class="t">— воскресенье</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> пять дней недели в португальском — <b>пронумерованные</b>: <span class="pt">segunda</span> — «вторая», <span class="pt">terça</span> — «третья», и так до <span class="pt">sexta</span> — «шестой». Счёт идёт от воскресенья, поэтому понедельник получился вторым.<br><br>Слово <span class="pt">feira</span> тут не «ярмарка», а остаток церковного календаря; в разговоре его сплошь и рядом отбрасывают: <span class="pt">na segunda</span>, <span class="pt">na sexta</span>.<br><br>Только суббота и воскресенье носят собственные имена — <span class="pt">sábado</span> и <span class="pt">domingo</span>, — и только они мужского рода. Дни на <span class="pt">-feira</span> женского: <span class="pt">a próxima segunda-feira</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · Vamos ao Porto — едем в Порту</div>
+      <div class="mini-text">
+        <p class="storytext">No próximo fim de semana a Ana e o João vão partir para o Porto. Vão de comboio, porque o bilhete é barato e a estação fica perto de casa. A Ana já tem a mala pronta; o João vai fazer a mala amanhã, porque nunca faz nada cedo. A partida é às oito da manhã e a chegada às onze. Lá vão ver a cidade, vão comer num restaurante perto do rio e vão escrever uma carta aos pais. À noite vão deitar-se tarde — nas viagens ninguém se deita cedo.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">В следующие выходные Ана и Жуан поедут в Порту. Поедут на поезде, потому что билет дешёвый, а вокзал рядом с домом. У Аны чемодан уже собран; Жуан соберёт свой завтра, потому что никогда ничего не делает заранее. Отправление в восемь утра, прибытие в одиннадцать. Там они посмотрят город, поедят в ресторане у реки и напишут письмо родителям. Вечером лягут поздно — в поездках никто рано не ложится.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">vão partir</span>, <span class="pt">vão ver</span>, <span class="pt">vão comer</span>, <span class="pt">vão escrever</span> — во всех четырёх второй глагол в инфинитиве, меняется только <span class="pt">ir</span>.<br><br><span class="pt">Vão de comboio</span> — а здесь <span class="pt">ir</span> в прямом смысле «ехать», и никакого инфинитива за ним нет.<br><br><span class="pt">vão deitar-se tarde</span> — возвратный глагол из темы 1.5: местоимение цепляется к инфинитиву. А в конце <span class="pt">ninguém <b>se</b> deita</span> — сработал магнит <span class="pt">ninguém</span>, и местоимение ушло вперёд.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Que vais fazer? — что будешь делать</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Ana:</span> Que vais fazer no fim de semana?</p>
+          <p class="dline"><span class="speaker">João:</span> Vou trabalhar no sábado. E no domingo vou ficar em casa.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Não vais ao cinema?</p>
+          <p class="dline"><span class="speaker">João:</span> Talvez. A que horas vais tu?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Vou às nove. Vamos juntos?</p>
+          <p class="dline"><span class="speaker">João:</span> Vamos! Mas não me vou levantar cedo no domingo.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Ninguém se levanta cedo ao domingo.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Ана:</b> Что будешь делать на выходных?<br><b>Жуан:</b> В субботу буду работать. А в воскресенье останусь дома.<br><b>Ана:</b> В кино не пойдёшь?<br><b>Жуан:</b> Может быть. Ты во сколько идёшь?<br><b>Ана:</b> Иду в девять. Пойдём вместе?<br><b>Жуан:</b> Пойдём! Только в воскресенье я рано не встану.<br><b>Ана:</b> В воскресенье никто рано не встаёт.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">Não vais ao cinema?</span> — <span class="pt">ir</span> без инфинитива, в прямом смысле, поэтому появилось <span class="pt">ao</span>.<br><br><span class="pt">Vamos juntos?</span> и ответ <span class="pt">Vamos!</span> — то самое приглашение: «пойдём» одним словом.<br><br><span class="pt">não <b>me</b> vou levantar</span> — магнит <span class="pt">não</span> вытянул местоимение в самое начало, через <b>оба</b> глагола. Так в Португалии говорят чаще, чем <span class="pt">não vou levantar-me</span>, хотя верны обе.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="irinfinitivo">
+    <p class="quiz-instruction">Спрягается только <span class="pt">ir</span>. Второй глагол не трогаем.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">«Я буду есть»:</span>
+      <select class="mc" data-answer="Vou comer">
+        <option value="">—</option>
+        <option value="Vou comer">Vou comer</option>
+        <option value="Vou a comer">Vou a comer</option>
+        <option value="Vou como">Vou como</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">«Мы будем работать»:</span>
+      <select class="mc" data-answer="Vamos trabalhar">
+        <option value="">—</option>
+        <option value="Vamos trabalhar">Vamos trabalhar</option>
+        <option value="Vamos trabalhamos">Vamos trabalhamos</option>
+        <option value="Imos trabalhar">Imos trabalhar</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">«Они напишут письмо»:</span>
+      <select class="mc" data-answer="Vão escrever uma carta">
+        <option value="">—</option>
+        <option value="Vão escrever uma carta">Vão escrever uma carta</option>
+        <option value="Vão escrevem uma carta">Vão escrevem uma carta</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">«Я иду в кино» (не «собираюсь делать», а прямо иду):</span>
+      <select class="mc" data-answer="Vou ao cinema">
+        <option value="">—</option>
+        <option value="Vou ao cinema">Vou ao cinema</option>
+        <option value="Vou cinema">Vou cinema</option>
+        <option value="Vou o cinema">Vou o cinema</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">tu (ir) + ver:</span>
+      <select class="mc" data-answer="vais ver">
+        <option value="">—</option>
+        <option value="vais ver">vais ver</option>
+        <option value="vais vês">vais vês</option>
+        <option value="vas ver">vas ver</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">«Пойдём вместе!» — приглашение:</span>
+      <select class="mc" data-answer="Vamos juntos!">
+        <option value="">—</option>
+        <option value="Vamos juntos!">Vamos juntos!</option>
+        <option value="Vão juntos!">Vão juntos!</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Впиши: «она будет жить в Лиссабоне» —</span> <span class="pt">Ela</span> <input class="blank" data-answer="vai morar" style="width:9em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">em Lisboa.</span></div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши: «мы поедем на поезде» —</span> <span class="pt">Nós</span> <input class="blank" data-answer="vamos" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">de comboio.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">«отправление» на табло:</span>
+      <select class="mc" data-answer="a partida">
+        <option value="">—</option>
+        <option value="a partida">a partida</option>
+        <option value="a chegada">a chegada</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Завтра я буду работать дома».</span>
+      <div class="qbuild" data-answer="Amanhã vou trabalhar em casa" data-words="vou|casa|Amanhã|em|trabalhar"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
     <button type="button" class="next-card" data-open="vocab">
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label">Seguinte · дальше</span>
-        <span class="next-title">Dicionário — повторить новые слова блока 1</span>
+        <span class="next-title">Dicionário — половина блока 1 пройдена, повторить слова</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -5328,7 +5708,7 @@
   // Порядок = порядок прохождения. Темы без контента сюда не попадают,
   // иначе прогресс считался бы от несуществующих экранов.
   var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes","adjetivos","ter","negacao","preposicoes","demonstrativos","numeros"];
-  var PRESENTE_TOPICS = ["verbosar","verboseir","irregularesi","irregularesii"];
+  var PRESENTE_TOPICS = ["verbosar","verboseir","irregularesi","irregularesii","reflexivos","irinfinitivo"];
   var PASSADO_TOPICS  = [];
   var EXPANSAO_TOPICS = [];
   var TOPICS = BASE_TOPICS.concat(PRESENTE_TOPICS).concat(PASSADO_TOPICS).concat(EXPANSAO_TOPICS);
@@ -5344,7 +5724,8 @@
     "alfabeto":20, "acento":22, "nasais":18, "digrafos":16, "genero":20, "plural":22,
     "ser":24, "estar":24, "servsestar":26, "pronomes":22, "adjetivos":22, "ter":24,
     "negacao":20, "preposicoes":24, "demonstrativos":22, "numeros":26,
-    "verbosar":24, "verboseir":22, "irregularesi":26, "irregularesii":26
+    "verbosar":24, "verboseir":22, "irregularesi":26, "irregularesii":26,
+    "reflexivos":28, "irinfinitivo":22
   };
 
   var STORAGE_KEY   = "ptProgressV1";
@@ -5711,7 +6092,7 @@
     "nada":"ничего","de nada":"не за что","homem":"мужчина; человек",
     // 0.5–0.6: артикли и слияния, которые в текстах идут раньше темы 0.14
     "hoje":"сегодня","mais":"ещё; больше","uns":"какие-то, несколько (муж.)",
-    "umas":"какие-то, несколько (жен.)","nos":"в (em + os)","nas":"в (em + as)",
+    "umas":"какие-то, несколько (жен.)","nos":"нас, себе (возвратное); в (em + os)","nas":"в (em + as)",
     "dos":"из, от (de + os)","das":"из, от (de + as)","estão":"находятся (от estar)",
     // 0.7–0.8: формы ser и estar. Неправильные, к словарной статье не сводятся —
     // значит, лежат в словаре целиком (см. раздел «технический долг» в ROADMAP).
@@ -5731,7 +6112,7 @@
     "haver":"иметься","há":"есть, имеется (от haver)",
     // 0.13: куски устойчивых фраз. Кладём их явно, иначе seedVocabFromWordsets
     // выдаст «que» перевод всей фразы «que pena».
-    "que":"что; который","se":"если","calhar":"выпасть, случиться",
+    "que":"что; который","se":"себя, себе (возвратное); если","calhar":"выпасть, случиться",
     "certeza":"уверенность","pena":"жалость; перо",
     // 0.14: слияния предлога с артиклем. Разбираются в теме, но встречаются
     // в текстах с первых уроков, поэтому лежат в словаре целиком.
@@ -5774,7 +6155,27 @@
     // 1.4: формы vir/pôr/saber/dizer/trazer, целиком по той же причине.
     "traz":"приносит (от trazer)","põe":"кладёт (от pôr)","vêm":"приходят (от vir)",
     "sei":"знаю (от saber)","trago":"приношу (от trazer)","pões":"кладёшь (от pôr)",
-    "ponho":"кладу (от pôr)","digo":"говорю (от dizer)"
+    "ponho":"кладу (от pôr)","digo":"говорю (от dizer)",
+    // 1.5: возвратные глаголы в наборе стоят с «-se», и дефис не режется
+    // цепочками STRIP — поэтому голый инфинитив кладём отдельно. Перевод
+    // даём с оглядкой на возвратную форму: в курсе они встречаются только так.
+    "chamar":"звать; chamar-se — зваться","levantar":"поднимать; levantar-se — вставать",
+    "deitar":"класть; deitar-se — ложиться спать","sentar":"сажать; sentar-se — садиться",
+    "lavar":"мыть; lavar-se — мыться","lembrar":"напоминать; lembrar-se — помнить",
+    "esquecer":"забывать (esquecer-se)","preocupar":"беспокоить; preocupar-se — беспокоиться",
+    // «esqueço» через ç: цепочка [o → er] даёт «esqueçer», до статьи не достаёт.
+    "esqueço":"забываю (от esquecer)",
+    // Возвратные местоимения. Без своей статьи «te» уезжает по цепочке
+    // [e → er] в «ter» и переводится как «иметь» — молча и неверно.
+    "me":"меня, мне; себя (возвратное)","te":"тебя, тебе; себя (возвратное)",
+    // 1.6: формы ir и ver, к словарной статье не сводятся.
+    "vou":"иду, еду (от ir)","vamos":"идём, едем; пойдём (от ir)",
+    "vão":"идут, едут (от ir)","veem":"видят (от ver)",
+    // Дни недели: в наборе они с дефисом, куски кладём отдельно.
+    "feira":"будний день (в названиях дней)","segunda":"вторая; понедельник",
+    "terça":"третья; вторник","quarta":"четвёртая; среда",
+    "quinta":"пятая; четверг","sexta":"шестая; пятница",
+    "porto":"Порту (город); порт"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
