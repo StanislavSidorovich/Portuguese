@@ -593,6 +593,43 @@
   body.dark .vocab-box i{background:#313B37;}
   .vocab-box i.on{background:var(--ok);}
 
+  /* ---- Настройки тренажёра: тема, направление, режим ---- */
+  .vocab-settings{margin:0 0 14px; text-align:left;}
+  .vocab-select{
+    width:100%; font-family:var(--font-ru); font-size:0.86rem; padding:9px 10px;
+    border-radius:10px; border:1.5px solid #DAE1DE; background:var(--bg); color:var(--ink);
+    margin-bottom:8px; appearance:auto;
+  }
+  body.dark .vocab-select{border-color:#2F3A36;}
+  .vocab-toggle-row{display:flex; gap:8px; flex-wrap:wrap;}
+  .vocab-toggle{display:flex; flex:1 1 140px; background:var(--bg); border-radius:10px; padding:3px; gap:3px;}
+  body.dark .vocab-toggle{background:#1B211E;}
+  .vocab-toggle button{
+    flex:1; border:none; background:none; font-family:var(--font-ru); font-size:0.78rem; font-weight:700;
+    padding:7px 4px; border-radius:8px; color:var(--muted); cursor:pointer;
+  }
+  .vocab-toggle button.active{background:var(--card); color:var(--ink);}
+
+  /* ---- Направление рус → pt: большая карточка держит русский, а не PT ---- */
+  .vocab-card-word.dir-ru{font-family:var(--font-ru); font-weight:700; font-size:1.35rem;}
+  .vocab-card-tr.pt-answer{font-family:var(--font-pt); font-weight:600; font-size:1.15rem;}
+
+  /* ---- Выбор из вариантов ---- */
+  .vocab-mc-options{display:grid; gap:8px; margin-top:14px;}
+  .mc-opt{
+    font-family:var(--font-ru); font-size:0.94rem; font-weight:600; text-align:left;
+    padding:12px 14px; border-radius:10px; border:1.5px solid #DAE1DE; background:var(--bg); color:var(--ink);
+    cursor:pointer;
+  }
+  .mc-opt.mc-pt{font-family:var(--font-pt); font-weight:700;}
+  body.dark .mc-opt{border-color:#2F3A36;}
+  /* ink-fixed, не --ok/--bad: тот же приём, что у .blank.ok в заданиях —
+     цветной текст на светлом тинте недобирает контраст (3:1 у --ok),
+     а разметку «верно/неверно» и так несёт цвет рамки и фона. */
+  .mc-opt.mc-correct{border-color:var(--ok); background:var(--ok-tint); color:var(--ink-fixed);}
+  .mc-opt.mc-wrong{border-color:var(--bad); background:var(--bad-tint); color:var(--ink-fixed);}
+  .mc-opt:disabled{cursor:default;}
+
   .float-back{
     position:fixed; left:50%; bottom:18px; transform:translateX(-50%) translateY(80px);
     background:var(--ink-fixed); color:#fff; border:none; border-radius:22px;
@@ -7670,16 +7707,111 @@
     try{ localStorage.setItem(VOCAB_KEY, JSON.stringify(v)); }catch(e){}
   }
 
-  function vocabQueue(){
+  // pool не передан — берём весь курс. Так вызывает домашний значок:
+  // фильтр по теме в тренажёре не должен красить счётчик на главной.
+  function vocabQueue(pool){
     var state = loadVocab(), now = Date.now();
     var due = [], fresh = [];
-    allVocabWords().forEach(function(x){
+    (pool || allVocabWords()).forEach(function(x){
       var st = state[x.w];
       if(!st) fresh.push(x);
       else if(st.d <= now) due.push(x);
     });
     due.sort(function(a,b){ return state[a.w].d - state[b.w].d; });
     return due.concat(fresh).slice(0, SESSION_SIZE);
+  }
+
+  /* ---- Настройки тренажёра: тема, направление, режим ----
+     Хранятся отдельно от коробок Лейтнера — сброс прогресса не должен
+     сбрасывать привычные настройки, и наоборот. */
+  var VOCAB_PREFS_KEY = "ptVocabPrefsV1";
+
+  function loadVocabPrefs(){
+    var p;
+    try{ p = JSON.parse(localStorage.getItem(VOCAB_PREFS_KEY) || "{}") || {}; }catch(e){ p = {}; }
+    return {
+      topic: typeof p.topic === "string" ? p.topic : "",
+      dir: p.dir === "ru-pt" ? "ru-pt" : "pt-ru",
+      mode: p.mode === "mc" ? "mc" : "flip"
+    };
+  }
+  function saveVocabPrefs(p){
+    try{ localStorage.setItem(VOCAB_PREFS_KEY, JSON.stringify(p)); }catch(e){}
+  }
+  var vocabPrefs = loadVocabPrefs();
+
+  // Уникальные темы в порядке прохождения курса — ровно те, у кого есть
+  // набор слов (fonética блока 0 своих наборов не имеет и в списке не появится).
+  function vocabTopicList(){
+    var seen = {}, out = [];
+    vocabSets().forEach(function(s){
+      if(seen[s.topic]) return;
+      seen[s.topic] = 1;
+      out.push({ id: s.topic, title: s.title });
+    });
+    return out;
+  }
+
+  // "Вперемешку" — это и есть пустой фильтр: все темы уже перемешаны между
+  // собой очередью по сроку повторения, отдельный переключатель не нужен.
+  function vocabPool(){
+    if(!vocabPrefs.topic) return allVocabWords();
+    var out = [], seen = {};
+    vocabSets().forEach(function(set){
+      if(set.topic !== vocabPrefs.topic) return;
+      set.words.forEach(function(x){
+        if(seen[x.w]) return;
+        seen[x.w] = 1;
+        out.push(x);
+      });
+    });
+    return out;
+  }
+
+  function shuffle(arr){
+    for(var i = arr.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  // Дистракторы — из того же пула, что и сама карточка (весь курс или
+  // выбранная тема): это уже пройденные слова, а не случайный шум.
+  function buildMcCard(card, pool, dir){
+    var keyFn = dir === "ru-pt" ? function(x){ return x.w; } : function(x){ return x.t; };
+    var correct = keyFn(card);
+    var seen = {}; seen[correct] = 1;
+    var uniq = [];
+    pool.forEach(function(x){
+      var v = keyFn(x);
+      if(!v || seen[v]) return;
+      seen[v] = 1;
+      uniq.push(v);
+    });
+    shuffle(uniq);
+    var options = shuffle(uniq.slice(0, 3).concat([correct]));
+    return { options: options, correct: correct, picked: null };
+  }
+
+  function vocabSettingsHtml(){
+    var opts = '<option value=""'+(vocabPrefs.topic === "" ? " selected" : "")+'>Все темы · вперемешку</option>' +
+      vocabTopicList().map(function(t){
+        return '<option value="'+escapeHtml(t.id)+'"'+(vocabPrefs.topic === t.id ? " selected" : "")+'>'+escapeHtml(t.title)+'</option>';
+      }).join("");
+    return '<div class="vocab-settings">' +
+      '<select class="vocab-select" data-vpref="topic">'+opts+'</select>' +
+      '<div class="vocab-toggle-row">' +
+        '<div class="vocab-toggle">' +
+          '<button type="button" data-vpref="dir" data-val="pt-ru" class="'+(vocabPrefs.dir === "pt-ru" ? "active" : "")+'">PT → RU</button>' +
+          '<button type="button" data-vpref="dir" data-val="ru-pt" class="'+(vocabPrefs.dir === "ru-pt" ? "active" : "")+'">RU → PT</button>' +
+        '</div>' +
+        '<div class="vocab-toggle">' +
+          '<button type="button" data-vpref="mode" data-val="flip" class="'+(vocabPrefs.mode === "flip" ? "active" : "")+'">Карточка</button>' +
+          '<button type="button" data-vpref="mode" data-val="mc" class="'+(vocabPrefs.mode === "mc" ? "active" : "")+'">Выбор</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
   }
 
   function vocabCounts(){
@@ -7728,11 +7860,11 @@
     if(!box) return;
 
     if(!session){
-      var n = vocabQueue().length;
-      box.innerHTML = n
+      var n = vocabQueue(vocabPool()).length;
+      box.innerHTML = vocabSettingsHtml() + (n
         ? '<p class="vocab-empty">Готово к повторению: <b>'+n+'</b> '+plural(n,"слово","слова","слов")+'.</p>' +
           '<div class="vocab-actions"><button class="btn btn-check" type="button" data-vocab="start">Начать повторение</button></div>'
-        : '<p class="vocab-empty">На сегодня всё повторено. Возвращайся завтра — слова придут сами, когда придёт их срок.</p>';
+        : '<p class="vocab-empty">'+(vocabPrefs.topic ? "В этой теме всё повторено." : "На сегодня всё повторено. Возвращайся завтра — слова придут сами, когда придёт их срок.")+'</p>');
       return;
     }
 
@@ -7743,12 +7875,37 @@
     }
 
     var card = session.queue[session.i];
-    box.innerHTML =
-      '<div class="vocab-progress">'+(session.i+1)+' / '+session.queue.length+'</div>' +
-      '<div class="vocab-card-word">'+escapeHtml(card.w)+
-        (ptVoice ? ' <button type="button" class="speak" data-say="'+escapeHtml(card.w)+'" title="Прослушать">🔊</button>' : '') +
+    var progress = '<div class="vocab-progress">'+(session.i+1)+' / '+session.queue.length+'</div>';
+    var dirRu = session.dir === "ru-pt";
+
+    if(session.mode === "mc"){
+      if(!session.mc) session.mc = buildMcCard(card, vocabPool(), session.dir);
+      var promptText = dirRu ? card.t : card.w;
+      var optsHtml = session.mc.options.map(function(opt, idx){
+        var cls = "mc-opt" + (dirRu ? " mc-pt" : "");
+        if(session.mc.picked !== null){
+          if(opt === session.mc.correct) cls += " mc-correct";
+          else if(idx === session.mc.picked) cls += " mc-wrong";
+        }
+        return '<button type="button" class="'+cls+'" data-mc="'+idx+'"'+(session.mc.picked !== null ? " disabled" : "")+'>'+escapeHtml(opt)+'</button>';
+      }).join("");
+      box.innerHTML = progress +
+        '<div class="vocab-card-word'+(dirRu ? " dir-ru" : "")+'">'+escapeHtml(promptText)+
+          (!dirRu && ptVoice ? ' <button type="button" class="speak" data-say="'+escapeHtml(card.w)+'" title="Прослушать">🔊</button>' : '') +
+        '</div>' +
+        '<div class="vocab-mc-options">'+optsHtml+'</div>';
+      return;
+    }
+
+    var promptText2 = dirRu ? card.t : card.w;
+    var answerText  = dirRu ? card.w : card.t;
+    box.innerHTML = progress +
+      '<div class="vocab-card-word'+(dirRu ? " dir-ru" : "")+'">'+escapeHtml(promptText2)+
+        (!dirRu && ptVoice ? ' <button type="button" class="speak" data-say="'+escapeHtml(card.w)+'" title="Прослушать">🔊</button>' : '') +
       '</div>' +
-      '<div class="vocab-card-tr'+(session.revealed ? "" : " hidden")+'">'+escapeHtml(card.t)+'</div>' +
+      '<div class="vocab-card-tr'+(dirRu ? " pt-answer" : "")+(session.revealed ? "" : " hidden")+'">'+escapeHtml(answerText)+
+        (dirRu && session.revealed && ptVoice ? ' <button type="button" class="speak" data-say="'+escapeHtml(card.w)+'" title="Прослушать">🔊</button>' : '') +
+      '</div>' +
       (session.revealed
         ? '<div class="vocab-actions">' +
             '<button class="btn btn-bad" type="button" data-vocab="bad">Не знаю</button>' +
@@ -7783,7 +7940,9 @@
 
   function handleVocabAction(action){
     if(action === "start"){
-      session = { queue: vocabQueue(), i:0, done:0, revealed:false };
+      // Направление и режим фиксируются на всю сессию при старте — так
+      // смена настроек посреди повторения не путает уже открытую карточку.
+      session = { queue: vocabQueue(vocabPool()), i:0, done:0, revealed:false, dir: vocabPrefs.dir, mode: vocabPrefs.mode, mc:null };
     } else if(action === "show"){
       session.revealed = true;
     } else if(action === "good" || action === "bad"){
@@ -7794,6 +7953,7 @@
       // Забытое слово возвращается в конец этой же сессии, а не через сутки.
       if(action === "bad") session.queue.push(card);
       session.i++;
+      session.mc = null;
     } else if(action === "stop"){
       session = null;
     }
@@ -7801,6 +7961,32 @@
     renderVocabTrainer();
     if(action === "stop" || action === "good" || action === "bad") renderVocabList();
     renderVocabDueBadge();
+  }
+
+  // Выбор из вариантов проверяется сразу кликом — отдельного «Проверить» нет.
+  // Правильный/неправильный подсвечиваются, следующая карточка приходит
+  // через паузу, чтобы результат успел прочитаться.
+  function handleMcPick(idx){
+    if(!session || session.mode !== "mc") return;
+    var mc = session.mc;
+    if(!mc || mc.picked !== null) return;
+    mc.picked = idx;
+    var ok = mc.options[idx] === mc.correct;
+    var card = session.queue[session.i];
+    gradeWord(card.w, ok);
+    session.done++;
+    if(!ok) session.queue.push(card);
+    renderVocabStats();
+    renderVocabTrainer();
+    renderVocabList();
+    var atIndex = session.i;
+    setTimeout(function(){
+      // Экран мог закрыться или сессия — перезапуститься, пока ждали паузу.
+      if(!session || session.i !== atIndex || !session.mc || session.mc.picked === null) return;
+      session.i++;
+      session.mc = null;
+      renderVocabTrainer();
+    }, 900);
   }
 
   /* ================= ЗАДАНИЯ ================= */
@@ -8297,6 +8483,17 @@
     var vocabBtn = e.target.closest("[data-vocab]");
     if(vocabBtn){ handleVocabAction(vocabBtn.dataset.vocab); return; }
 
+    var mcOpt = e.target.closest(".mc-opt");
+    if(mcOpt && !mcOpt.disabled){ handleMcPick(Number(mcOpt.dataset.mc)); return; }
+
+    var vpref = e.target.closest("[data-vpref]");
+    if(vpref && vpref.tagName === "BUTTON"){
+      vocabPrefs[vpref.dataset.vpref] = vpref.dataset.val;
+      saveVocabPrefs(vocabPrefs);
+      renderVocabTrainer();
+      return;
+    }
+
     var open = e.target.closest("[data-open]");
     if(open && !open.disabled){ goTopic(open.dataset.open); return; }
 
@@ -8333,6 +8530,14 @@
       if(t) t.scrollIntoView({behavior:"smooth", block:"start"});
       return;
     }
+  });
+
+  document.addEventListener("change", function(e){
+    var sel = e.target.closest('select[data-vpref="topic"]');
+    if(!sel) return;
+    vocabPrefs.topic = sel.value;
+    saveVocabPrefs(vocabPrefs);
+    renderVocabTrainer();
   });
 
   if(floatBack) floatBack.addEventListener("click", goHome);
