@@ -364,6 +364,39 @@
   .sound-ex{font-family:var(--font-pt); font-size:0.92rem; color:var(--muted);}
   .sound-ex b{font-family:var(--font-pt); color:var(--ink); font-weight:700;}
 
+  /* ---------- FRASES ----------
+     Разговорный слой. Строка-карточка вместо таблицы: на 375px в тело темы
+     влезает 343px, а фраза с переводом, транскрипцией и заметкой — это уже
+     четыре колонки, которые там не живут.
+
+     Реплика собеседника (.fr-reply) обязательна там, где она предсказуема:
+     свою фразу ученик скажет и без подсказки, а вот ответ «Diga?» или
+     «Contribuinte?» на слух не опознаёт никто. */
+  .fr-jump{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 18px;}
+  .fr-jump button{
+    font-family:var(--font-lat); font-size:0.72rem; font-weight:800; letter-spacing:0.03em;
+    background:var(--base-tint); color:var(--base-deep); border:none; border-radius:999px;
+    padding:7px 13px; cursor:pointer;
+  }
+  body.dark .fr-jump button{background:#1B3129; color:#7FD9B4;}
+
+  .fr-list{margin:0 0 18px;}
+  .fr-row{padding:11px 0; border-top:1px solid #E3E9E6;}
+  .fr-row:first-child{border-top:none;}
+  body.dark .fr-row{border-top-color:#27312D;}
+  .fr-pt{font-family:var(--font-pt); font-size:1.08rem; font-weight:700; line-height:1.35;}
+  .fr-say{font-family:var(--font-ru); font-size:0.8rem; color:var(--muted); margin-top:2px;}
+  .fr-say::before{content:"[";}
+  .fr-say::after{content:"]";}
+  .fr-ru{font-size:0.92rem; margin-top:3px;}
+  .fr-when{font-size:0.78rem; color:var(--muted); margin-top:4px;}
+  .fr-reply{
+    font-size:0.82rem; margin-top:6px; padding-left:10px;
+    border-left:3px solid var(--base-tint); color:var(--muted);
+  }
+  body.dark .fr-reply{border-left-color:#1B3129;}
+  .fr-reply b{font-family:var(--font-pt); color:var(--ink); font-weight:700;}
+
   /* ---------- CONJUGADOR ---------- */
   .conjbox{background:var(--card); border-radius:14px; padding:14px; margin:0 0 16px;}
   .conjbox-title{font-size:0.8rem; font-weight:800; margin-bottom:10px;}
@@ -651,6 +684,11 @@
       <div class="sub">Португальский пишется почти как читается — но не по английским правилам, и безударные гласные в Португалии съедаются. Пока не разобрано чтение, слово на слух не опознаётся, поэтому начинаем отсюда.</div>
     </div>
     <div class="topic-list">
+      <button type="button" class="tool-row" data-open="frases">
+        <span class="tool-icon">💬</span>
+        <span class="row-title">Frases · живые фразы<span class="row-title-ru">что говорить в кафе, на кассе и когда не понял собеседника</span></span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
       <button type="button" class="tool-row" data-open="tool-conjugador">
         <span class="tool-icon">🎛</span>
         <span class="row-title">Conjugador · спрягатель<span class="row-title-ru">вводишь инфинитив — получаешь все формы и объяснение, где глагол ломает правило</span></span>
@@ -6478,6 +6516,342 @@
   </div>
 </div>
 
+<!-- ============ FRASES ============ -->
+<div class="screen topic-screen" id="screen-frases" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2>Frases · живые фразы</h2>
+  </div>
+  <div class="topic-subtitle">Фразы для первых разговоров с местными — целыми кусками, без разбора грамматики. Здесь не учат правило, здесь дают то, что говорится сегодня: в кафе, на кассе и когда ты не понял собеседника.</div>
+  <div class="pane active">
+
+    <div class="fr-jump">
+      <button type="button" data-scroll="fr-escudo">Щит</button>
+      <button type="button" data-scroll="fr-cortesia">Вежливость</button>
+      <button type="button" data-scroll="fr-cafe">Кафе</button>
+      <button type="button" data-scroll="fr-loja">Касса</button>
+    </div>
+
+    <div class="tip"><b>Как этим пользоваться.</b> Не читать списком. Взять три фразы из «Щита», выучить наизусть до автоматизма и идти говорить — остальное подтянется само. Разговор с местным ломается не от незнания слов, а от того, что после первого непонятого ответа сказать нечего.</div>
+
+    <div class="text-label" id="fr-escudo">Щит · когда ты не понял</div>
+    <div class="fr-list">
+      <div class="fr-row">
+        <div class="fr-pt">Não percebi.</div>
+        <div class="fr-say">нау~ пырсыби́</div>
+        <div class="fr-ru">Я не понял.</div>
+        <div class="fr-when">Главная фраза первых месяцев. Говорить спокойно и сразу — после неё португальцы сбавляют темп без обид.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Pode repetir, se faz favor?</div>
+        <div class="fr-say">под рыпыти́р, сы фаш фаво́р</div>
+        <div class="fr-ru">Повторите, пожалуйста.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Pode falar mais devagar?</div>
+        <div class="fr-say">под фалáр майш дывагáр</div>
+        <div class="fr-ru">Можете говорить помедленнее?</div>
+        <div class="fr-when">Работает лучше, чем «повторите»: со второго раза на той же скорости понятнее не станет.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Estou a aprender português.</div>
+        <div class="fr-say">ышто́у а апрынде́р пуртугэ́ш</div>
+        <div class="fr-ru">Я учу португальский.</div>
+        <div class="fr-when">Сказать один раз в начале разговора — и собеседник сам замедлится и начнёт подбирать слова проще. Это тема 1.7: <span class="pt">estar a + infinitivo</span>.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Desculpe o meu português.</div>
+        <div class="fr-say">дышку́лп у ме́у пуртугэ́ш</div>
+        <div class="fr-ru">Извините мой португальский.</div>
+        <div class="fr-reply">В ответ почти всегда: <b>Está a falar muito bem!</b> — «да вы прекрасно говорите». Это вежливость, а не оценка, но разговор после неё идёт легче.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Fala inglês?</div>
+        <div class="fr-say">фáла инглэ́ш</div>
+        <div class="fr-ru">Вы говорите по-английски?</div>
+        <div class="fr-when">Запасной выход, а не первый ход. В Лиссабоне ответят «да» почти везде — и практика на этом закончится.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Como se diz … em português?</div>
+        <div class="fr-say">ко́му сы диш … э~ пуртугэ́ш</div>
+        <div class="fr-ru">Как сказать … по-португальски?</div>
+        <div class="fr-when">Самый быстрый способ учить слова: спрашивать их у того, с кем говоришь, и тут же использовать.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">O que significa …?</div>
+        <div class="fr-say">у кы сигнифи́ка</div>
+        <div class="fr-ru">Что значит …?</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Pode escrever, se faz favor?</div>
+        <div class="fr-say">под ышкрыве́р, сы фаш фаво́р</div>
+        <div class="fr-ru">Можете написать, пожалуйста?</div>
+        <div class="fr-when">Написанное слово ты прочитаешь — этому курс уже научил. На слух то же самое слово не опознаётся из-за съеденных гласных.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Outra vez, se faz favor.</div>
+        <div class="fr-say">о́тра веш, сы фаш фаво́р</div>
+        <div class="fr-ru">Ещё раз, пожалуйста.</div>
+      </div>
+    </div>
+
+    <div class="trap"><b>Armadilha: «не понял» — по-разному.</b> В Португалии говорят <span class="pt">não percebi</span>. Бразильское <span class="pt">não entendi</span> поймут, но оно сразу выдаёт, по какому учебнику ты учился. Глагол <span class="pt">perceber</span> здесь значит «понимать», а вовсе не «замечать», как подсказывает английское perceive.</div>
+
+    <div class="text-label" id="fr-cortesia">Вежливость · чем открывается любой разговор</div>
+    <div class="fr-list">
+      <div class="fr-row">
+        <div class="fr-pt">Bom dia.</div>
+        <div class="fr-say">бо~ ди́а</div>
+        <div class="fr-ru">Здравствуйте (до полудня).</div>
+        <div class="fr-when">Ровно до 12:00, а не «пока утро». В 12:30 уже <span class="pt">boa tarde</span>.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Boa tarde.</div>
+        <div class="fr-say">бо́а тáрд</div>
+        <div class="fr-ru">Здравствуйте (день).</div>
+        <div class="fr-when">С полудня и до темноты.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Boa noite.</div>
+        <div class="fr-say">бо́а но́йт</div>
+        <div class="fr-ru">Добрый вечер / спокойной ночи.</div>
+        <div class="fr-when">И приветствие, и прощание — одно слово на оба случая.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Olá.</div>
+        <div class="fr-say">олá</div>
+        <div class="fr-ru">Привет.</div>
+        <div class="fr-when">Годится и с незнакомым продавцом, но обычно идёт в связке: <span class="pt">Olá, bom dia.</span></div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Tudo bem?</div>
+        <div class="fr-say">ту́ду бай~</div>
+        <div class="fr-ru">Как дела?</div>
+        <div class="fr-reply">Ответ — та же фраза: <b>Tudo bem, obrigado. E consigo?</b> Здесь <span class="pt">consigo</span> — «с вами», вежливое; именно так спрашивают в ответ незнакомого.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Obrigado. / Obrigada.</div>
+        <div class="fr-say">убригáду / убригáда</div>
+        <div class="fr-ru">Спасибо.</div>
+        <div class="fr-when">Форма зависит от того, <b>кто говорит</b>, а не кого благодарят: мужчина всегда <span class="pt">obrigado</span>, женщина всегда <span class="pt">obrigada</span>.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">De nada.</div>
+        <div class="fr-say">ды нáда</div>
+        <div class="fr-ru">Не за что.</div>
+        <div class="fr-reply">Можно услышать и <b>ora essa</b> — то же самое, но теплее, вроде «да брось».</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Se faz favor.</div>
+        <div class="fr-say">сы фаш фаво́р</div>
+        <div class="fr-ru">Пожалуйста (при просьбе).</div>
+        <div class="fr-when">Португальский вариант. <span class="pt">Por favor</span> тоже верно и тоже здесь звучит, но <span class="pt">se faz favor</span> — более местное.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Faz favor!</div>
+        <div class="fr-say">фаш фаво́р</div>
+        <div class="fr-ru">Будьте добры! (окликнуть)</div>
+        <div class="fr-when">Так подзывают официанта и продавца. Не «эй» и не поднятая рука — просто эта фраза.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Com licença.</div>
+        <div class="fr-say">ко~ лисэ́нса</div>
+        <div class="fr-ru">Разрешите (пройти).</div>
+        <div class="fr-when">В метро, в толпе, протискиваясь к выходу.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Desculpe.</div>
+        <div class="fr-say">дышку́лп</div>
+        <div class="fr-ru">Извините.</div>
+        <div class="fr-when">И «виноват», и способ обратиться к незнакомому на улице.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Muito prazer.</div>
+        <div class="fr-say">му́йту празе́р</div>
+        <div class="fr-ru">Очень приятно.</div>
+        <div class="fr-when">При знакомстве. Можно короче — <span class="pt">Prazer.</span></div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Até logo.</div>
+        <div class="fr-say">атэ́ ло́гу</div>
+        <div class="fr-ru">До скорого.</div>
+        <div class="fr-when">Мягкое прощание. <span class="pt">Adeus</span> тоже говорят, но оно окончательнее.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Boa continuação.</div>
+        <div class="fr-say">бо́а континуасáу~</div>
+        <div class="fr-ru">Хорошего продолжения (дня).</div>
+        <div class="fr-when">Очень португальское прощание: ты уходишь, а человек остаётся при своём деле. В учебниках его почти нет, в жизни — на каждом шагу.</div>
+      </div>
+    </div>
+
+    <div class="trap"><b>Armadilha: <span class="pt">você</span> с незнакомым.</b> В Португалии это местоимение не нейтрально: от незнакомца оно звучит снисходительно. Безопасный вариант — <b>вообще без местоимения</b>, глагол в третьем лице: <span class="pt">Fala inglês?</span>, <span class="pt">Pode repetir?</span>, <span class="pt">Aceita cartão?</span> Если нужно назвать собеседника явно — <span class="pt">o senhor</span> / <span class="pt">a senhora</span>. В Бразилии всё наоборот: там <span class="pt">você</span> — обычное «ты».</div>
+
+    <div class="text-label" id="fr-cafe">Café · кофе и перекус</div>
+    <div class="fr-list">
+      <div class="fr-row">
+        <div class="fr-pt">Um café, se faz favor.</div>
+        <div class="fr-say">у~ кафэ́, сы фаш фаво́р</div>
+        <div class="fr-ru">Один кофе, пожалуйста.</div>
+        <div class="fr-when">Это <b>эспрессо</b> в маленькой чашке. Не американо и не большой стакан.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Um abatanado.</div>
+        <div class="fr-say">у~ абатанáду</div>
+        <div class="fr-ru">Большой чёрный кофе.</div>
+        <div class="fr-when">Ближайшее к американо. Слово <span class="pt">americano</span> в кафе поймут не везде.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Uma meia de leite.</div>
+        <div class="fr-say">у́ма мэ́йа ды лэ́йт</div>
+        <div class="fr-ru">Кофе с молоком в чашке.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Um galão.</div>
+        <div class="fr-say">у~ галáу~</div>
+        <div class="fr-ru">Кофе с молоком в стакане.</div>
+        <div class="fr-when">Молока больше, чем в <span class="pt">meia de leite</span>, и подают в высоком стакане. Утренний напиток по умолчанию.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Um pingado.</div>
+        <div class="fr-say">у~ пингáду</div>
+        <div class="fr-ru">Эспрессо с каплей молока.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Uma água, se faz favor. Com gás.</div>
+        <div class="fr-say">у́ма áгуа, сы фаш фаво́р. ко~ гáш</div>
+        <div class="fr-ru">Воду, пожалуйста. С газом.</div>
+        <div class="fr-when">Без газа — <span class="pt">sem gás</span> (сай~ гáш) или <span class="pt">natural</span>.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Um pastel de nata.</div>
+        <div class="fr-say">у~ паштэ́л ды нáта</div>
+        <div class="fr-ru">Одно пирожное с кремом.</div>
+        <div class="fr-when">Во множественном — <span class="pt">pastéis de nata</span>. В Белене у них своё имя: <span class="pt">pastéis de Belém</span>.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Uma tosta mista.</div>
+        <div class="fr-say">у́ма то́шта ми́шта</div>
+        <div class="fr-ru">Горячий тост с ветчиной и сыром.</div>
+        <div class="fr-when">Дежурный перекус в любом кафе.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Uma sandes de queijo.</div>
+        <div class="fr-say">у́ма сáндыш ды кэ́йжу</div>
+        <div class="fr-ru">Бутерброд с сыром.</div>
+        <div class="fr-when">Слово <span class="pt">sandes</span> и в единственном числе с <b>-s</b> на конце: <span class="pt">uma sandes</span>, <span class="pt">duas sandes</span>.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">É para levar.</div>
+        <div class="fr-say">э́ пара лывáр</div>
+        <div class="fr-ru">С собой.</div>
+        <div class="fr-reply">Спросят первыми: <b>É para levar ou para aqui?</b> — «с собой или здесь?». Ответ на второе: <b>É para aqui.</b></div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">A conta, se faz favor.</div>
+        <div class="fr-say">а ко́нта, сы фаш фаво́р</div>
+        <div class="fr-ru">Счёт, пожалуйста.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Mais nada, obrigado.</div>
+        <div class="fr-say">майш нáда, убригáду</div>
+        <div class="fr-ru">Больше ничего, спасибо.</div>
+        <div class="fr-reply">Ответ на <b>Mais alguma coisa?</b> — «что-нибудь ещё?».</div>
+      </div>
+    </div>
+
+    <div class="tip"><b>Что ты услышишь в кафе.</b> Реплик у той стороны немного, и они повторяются дословно: <span class="pt">Diga?</span> (ди́га) — «слушаю»; <span class="pt">Faz favor?</span> — то же самое; <span class="pt">Mais alguma coisa?</span> — «ещё что-нибудь?»; <span class="pt">É para levar?</span> — «с собой?»; <span class="pt">Já vai.</span> (жá вáй) — «сейчас будет»; <span class="pt">Com certeza.</span> (ко~ сырте́за) — «конечно». Выучить эти шесть — и половина разговора становится предсказуемой.</div>
+
+    <div class="text-label" id="fr-loja">Loja e caixa · магазин и касса</div>
+    <div class="fr-list">
+      <div class="fr-row">
+        <div class="fr-pt">Quanto custa?</div>
+        <div class="fr-say">куáнту ку́шта</div>
+        <div class="fr-ru">Сколько стоит?</div>
+        <div class="fr-when">Про сумму на кассе спрашивают короче: <span class="pt">Quanto é?</span> (куáнту э́).</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Tem …?</div>
+        <div class="fr-say">тай~</div>
+        <div class="fr-ru">У вас есть …?</div>
+        <div class="fr-when">Тема 0.12: <span class="pt">ter</span> в третьем лице — оно же вежливое обращение.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Estou só a ver, obrigado.</div>
+        <div class="fr-say">ышто́у со́ а ве́р, убригáду</div>
+        <div class="fr-ru">Я просто смотрю, спасибо.</div>
+        <div class="fr-reply">Ответ на <b>Precisa de ajuda?</b> — «нужна помощь?».</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Só isso, obrigado.</div>
+        <div class="fr-say">со́ и́су, убригáду</div>
+        <div class="fr-ru">Это всё, спасибо.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Não, obrigado.</div>
+        <div class="fr-say">нау~, убригáду</div>
+        <div class="fr-ru">Нет, спасибо.</div>
+        <div class="fr-when">Универсальный ответ на три вопроса кассира из четырёх.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Aceita multibanco?</div>
+        <div class="fr-say">асэ́йта мултибáнку</div>
+        <div class="fr-ru">Картой можно?</div>
+        <div class="fr-when"><span class="pt">Multibanco</span> — местная платёжная сеть, и слово здесь живее, чем <span class="pt">cartão</span>. Так же называются и банкоматы.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Precisa de saco?</div>
+        <div class="fr-say">прыси́за ды сáку</div>
+        <div class="fr-ru">Пакет нужен? (спрашивает кассир)</div>
+        <div class="fr-reply">Твой ответ: <b>Sim, se faz favor.</b> или <b>Não, obrigado.</b> Пакеты платные почти везде.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Contribuinte?</div>
+        <div class="fr-say">контрибуи́нт</div>
+        <div class="fr-ru">Налоговый номер? (спрашивает кассир)</div>
+        <div class="fr-when">Полностью — <span class="pt">Número de contribuinte?</span>, то есть NIF. Спрашивают на каждой второй кассе, и приезжие теряются именно здесь.</div>
+        <div class="fr-reply">Ответ, если номера нет: <b>Não, obrigado.</b> Если есть — просто продиктовать девять цифр.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Tem cartão de cliente?</div>
+        <div class="fr-say">тай~ картáу~ ды клие́нт</div>
+        <div class="fr-ru">Карта магазина есть? (спрашивает кассир)</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Onde é a caixa?</div>
+        <div class="fr-say">о́нд э́ а кáйша</div>
+        <div class="fr-ru">Где касса?</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Onde é a casa de banho?</div>
+        <div class="fr-say">о́нд э́ а кáза ды бáню</div>
+        <div class="fr-ru">Где туалет?</div>
+        <div class="fr-when">В Португалии — <span class="pt">casa de banho</span>. Бразильское <span class="pt">banheiro</span> здесь звучит чужеродно.</div>
+      </div>
+      <div class="fr-row">
+        <div class="fr-pt">Pode repetir o preço?</div>
+        <div class="fr-say">под рыпыти́р у пре́су</div>
+        <div class="fr-ru">Повторите цену?</div>
+        <div class="fr-when">Числа на слух — отдельная трудность, и просить повторить сумму не стыдно.</div>
+      </div>
+    </div>
+
+    <div class="trap"><b>Armadilha: сумма на слух.</b> Кассир говорит <span class="pt">São doze euros e trinta.</span> — евро и центы соединяются через <span class="pt">e</span>. Числа знакомы из темы 0.16, но в живом темпе они склеиваются: <span class="pt">e trinta</span> звучит как «итри́нта». Смотреть на экран терминала не стыдно — так делают все.</div>
+
+    <div class="tip"><b>А в Бразилии.</b> Половина этого раздела там звучала бы иначе: <span class="pt">não entendi</span> вместо <span class="pt">não percebi</span>, <span class="pt">só estou olhando</span> вместо <span class="pt">estou só a ver</span>, <span class="pt">sanduíche</span> вместо <span class="pt">sandes</span>, <span class="pt">banheiro</span> вместо <span class="pt">casa de banho</span>, а <span class="pt">multibanco</span> не поймут вовсе. Курс держит Португалию, и раздел фраз — тем более: это то, что говорится на улице за окном.</div>
+
+    <button type="button" class="next-card" data-open="vocab">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Dicionário — закрепить слова курса</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
 <!-- ============ DICIONÁRIO ============ -->
 <div class="screen topic-screen" id="screen-vocab" style="--tint-color:var(--base)">
   <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
@@ -7219,6 +7593,9 @@
     screen.querySelectorAll(".storytext").forEach(function(p){
       addSpeakButton(p, lineText(p));
     });
+    screen.querySelectorAll(".fr-pt").forEach(function(p){
+      addSpeakButton(p, lineText(p));
+    });
   }
 
   function initAudio(){
@@ -7940,6 +8317,13 @@
       var box = tr.closest(".mini-text");
       var shown = box.classList.toggle("show-translation");
       tr.textContent = shown ? "Скрыть перевод" : "Показать перевод";
+      return;
+    }
+
+    var jump = e.target.closest("[data-scroll]");
+    if(jump){
+      var target = document.getElementById(jump.dataset.scroll);
+      if(target) target.scrollIntoView({behavior:"smooth", block:"start"});
       return;
     }
 
