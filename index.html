@@ -616,19 +616,90 @@
 
   /* ---- Выбор из вариантов ---- */
   .vocab-mc-options{display:grid; gap:8px; margin-top:14px;}
-  .mc-opt{
+  .mc-opt, .dg-opt{
     font-family:var(--font-ru); font-size:0.94rem; font-weight:600; text-align:left;
     padding:12px 14px; border-radius:10px; border:1.5px solid #DAE1DE; background:var(--bg); color:var(--ink);
     cursor:pointer;
   }
-  .mc-opt.mc-pt{font-family:var(--font-pt); font-weight:700;}
-  body.dark .mc-opt{border-color:#2F3A36;}
+  .mc-opt.mc-pt, .dg-opt{font-family:var(--font-pt); font-weight:700;}
+  /* :not(...) — не украшение: «body.dark .mc-opt» специфичнее, чем
+     «.mc-opt.mc-correct», и в тёмной теме гасило зелёную и красную рамку
+     разбора. Тот же лишний элемент body, на котором уже горела активная
+     вкладка. */
+  body.dark .mc-opt:not(.mc-correct):not(.mc-wrong),
+  body.dark .dg-opt:not(.mc-correct):not(.mc-wrong){border-color:#2F3A36;}
   /* ink-fixed, не --ok/--bad: тот же приём, что у .blank.ok в заданиях —
      цветной текст на светлом тинте недобирает контраст (3:1 у --ok),
      а разметку «верно/неверно» и так несёт цвет рамки и фона. */
-  .mc-opt.mc-correct{border-color:var(--ok); background:var(--ok-tint); color:var(--ink-fixed);}
-  .mc-opt.mc-wrong{border-color:var(--bad); background:var(--bad-tint); color:var(--ink-fixed);}
-  .mc-opt:disabled{cursor:default;}
+  .mc-opt.mc-correct, .dg-opt.mc-correct{border-color:var(--ok); background:var(--ok-tint); color:var(--ink-fixed);}
+  .mc-opt.mc-wrong, .dg-opt.mc-wrong{border-color:var(--bad); background:var(--bad-tint); color:var(--ink-fixed);}
+  .mc-opt:disabled, .dg-opt:disabled{cursor:default;}
+
+  /* ============ DIÁLOGOS: сцена с состоянием ============
+     Два прохода одной сцены — это приём «снятие опоры»: сначала реплика
+     выбирается из готовых (узнавание), потом собирается из слов
+     (припоминание). Второй проход без первого слишком тяжёл, первый без
+     второго не учит говорить — поэтому режима именно два, а не один. */
+  .dg-intro{font-size:0.9rem; color:var(--muted); margin:0 0 14px;}
+  .dg-scene{background:var(--card); border-radius:14px; padding:14px; margin:0 0 12px;}
+  .dg-scene-head{display:flex; align-items:baseline; gap:8px;}
+  .dg-scene-icon{font-size:1.1rem; flex:0 0 auto;}
+  .dg-scene-title{font-family:var(--font-pt); font-size:1.02rem; font-weight:700; flex:1;}
+  .dg-scene-sub{font-size:0.84rem; color:var(--muted); margin:4px 0 10px;}
+  .dg-modes{display:flex; gap:8px; flex-wrap:wrap;}
+  .dg-modes .btn{flex:1 1 130px;}
+  .dg-done{color:var(--ok); font-weight:800; margin-left:4px;}
+
+  .dg-stage{background:var(--card); border-radius:14px; padding:14px; margin:0 0 16px;}
+  .dg-bar{display:flex; align-items:baseline; gap:8px; margin-bottom:10px;}
+  .dg-bar .dg-scene-title{font-size:0.92rem;}
+  .dg-step{
+    font-family:var(--font-lat); font-size:0.72rem; font-weight:800;
+    color:var(--muted); letter-spacing:0.05em; flex:0 0 auto;
+  }
+  .dg-mode-tag{
+    font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--muted); background:var(--bg); border-radius:6px; padding:2px 6px; flex:0 0 auto;
+  }
+  body.dark .dg-mode-tag{background:#1B211E;}
+
+  .dg-log{margin:0 0 12px;}
+  .dg-turn{margin-bottom:8px; max-width:88%;}
+  .dg-turn.me{margin-left:auto;}
+  .dg-bubble{
+    border-radius:12px; padding:9px 12px;
+    background:var(--bg); border:1px solid #E3E9E6;
+  }
+  body.dark .dg-bubble{background:#1B211E; border-color:#27312D;}
+  .dg-turn.me .dg-bubble{background:var(--ok-tint); border-color:transparent;}
+  .dg-who{
+    font-size:0.66rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--muted); margin-bottom:2px;
+  }
+  .dg-pt{font-family:var(--font-pt); font-size:1.02rem; font-weight:700; line-height:1.35;}
+  .dg-say{font-family:var(--font-ru); font-size:0.78rem; color:var(--muted); margin-top:2px;}
+  .dg-say::before{content:"[";}
+  .dg-say::after{content:"]";}
+  .dg-ru{font-size:0.86rem; color:var(--muted); margin-top:3px;}
+  .dg-turn.now .dg-bubble{border-color:var(--tint-color,var(--base));}
+
+  .dg-goal{
+    font-size:0.9rem; margin:12px 0 10px; padding-left:10px;
+    border-left:3px solid var(--tint-color,var(--base));
+  }
+  .dg-opts{display:grid; gap:8px;}
+  .dg-answer-note{font-size:0.86rem; color:var(--muted); margin-top:12px;}
+  .dg-answer-note b{color:var(--ink);}
+  .dg-why{
+    font-size:0.86rem; margin-top:12px; padding:10px 12px; border-radius:10px;
+    background:var(--bad-tint); color:var(--ink-fixed);
+  }
+  .dg-why.ok{background:var(--ok-tint);}
+  .dg-why b{font-family:var(--font-pt);}
+  .dg-actions{display:flex; gap:8px; margin-top:12px;}
+  .dg-actions .btn{flex:1;}
+  .dg-final{font-size:0.9rem; margin:4px 0 0;}
+  .dg-final b{font-size:1.05rem;}
 
   .float-back{
     position:fixed; left:50%; bottom:18px; transform:translateX(-50%) translateY(80px);
@@ -724,6 +795,11 @@
       <button type="button" class="tool-row" data-open="frases">
         <span class="tool-icon">💬</span>
         <span class="row-title">Frases · живые фразы<span class="row-title-ru">что говорить в кафе, на кассе и когда не понял собеседника</span></span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+      <button type="button" class="tool-row" data-open="dialogos">
+        <span class="tool-icon">🗣</span>
+        <span class="row-title">Diálogos · разговор целиком<span class="row-title-ru">сцена в кафе и на кассе: собеседник говорит первым, отвечаешь ты</span></span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="tool-row" data-open="tool-conjugador">
@@ -6878,6 +6954,41 @@
 
     <div class="tip"><b>А в Бразилии.</b> Половина этого раздела там звучала бы иначе: <span class="pt">não entendi</span> вместо <span class="pt">não percebi</span>, <span class="pt">só estou olhando</span> вместо <span class="pt">estou só a ver</span>, <span class="pt">sanduíche</span> вместо <span class="pt">sandes</span>, <span class="pt">banheiro</span> вместо <span class="pt">casa de banho</span>, а <span class="pt">multibanco</span> не поймут вовсе. Курс держит Португалию, и раздел фраз — тем более: это то, что говорится на улице за окном.</div>
 
+    <button type="button" class="next-card" data-open="dialogos">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">Diálogos — те же фразы в живом разговоре</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ DIÁLOGOS ============
+     Экран без data-topic — как и Frases, он вне словарного правила курса:
+     реплики идут целыми кусками. Разметка .dg-*, не .storytext / .dline,
+     поэтому ни collectVocabSets(), ни проверка 3 сюда не дотягиваются. -->
+<div class="screen topic-screen" id="screen-dialogos" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2>Diálogos · разговор целиком</h2>
+  </div>
+  <div class="topic-subtitle">Не отдельные фразы, а разговор от «Diga?» до «Boa continuação»: собеседник говорит первым, ты отвечаешь, и разговор идёт дальше только с верного хода.</div>
+  <div class="pane active">
+
+    <div class="tip"><b>Почему сцену проходят дважды.</b> Первый проход — <b>выбор из вариантов</b>: реплику достаточно узнать. Второй — <b>сборка из слов</b>: её приходится вспомнить целиком. Это называется <b>снятием опоры</b>: узнавание даётся легко и создаёт ощущение, что материал усвоен, а в кафе нужно именно припоминание. Одна и та же сцена в двух режимах закрывает разрыв между «понимаю» и «могу сказать».</div>
+
+    <div class="dg-intro">Реплики собеседника — те самые, что стоят в разделе <b>Frases</b>: они повторяются дословно и заучиваются целиком. Слушай их кнопкой 🔊 до того, как отвечать: разговор рвётся не на своей фразе, а на чужой.</div>
+
+    <div id="dgStage"></div>
+    <div id="dgScenes"></div>
+
+    <div class="trap"><b>Armadilha: ответ «да» на вопрос с «или».</b> <span class="pt">É para levar ou para aqui?</span>, <span class="pt">Com multibanco ou dinheiro?</span> — на такие вопросы <span class="pt">sim</span> не отвечает ничего, и кассир переспросит на той же скорости. Ответ — повторить ту половину вопроса, которую выбираешь: <span class="pt">É para aqui.</span>, <span class="pt">Com multibanco.</span></div>
+
+    <div class="tip"><b>Что делать, когда сцена кончилась.</b> Реплики собеседника здесь — закрытый список из шести-семи штук на ситуацию, и в жизни они звучат теми же словами. Сцену стоит вернуться и пройти сборкой через день-два: интервал между двумя проходами работает сильнее, чем два прохода подряд.</div>
+
     <button type="button" class="next-card" data-open="vocab">
       <span class="next-marker"></span>
       <span class="next-text">
@@ -7989,6 +8100,438 @@
     }, 900);
   }
 
+  /* ================= DIÁLOGOS: СЦЕНА С СОСТОЯНИЕМ =================
+     Сцена — это список шагов. Каждый шаг: реплика собеседника (её надо
+     узнать на слух) и ход ученика (его надо произвести). Разговор идёт
+     дальше только после верного хода — в этом вся разница с разделом
+     Frases, где фраза лежит готовой и её достаточно прочитать.
+
+     Реплики собеседника взяты из Frases дословно: в кафе и на кассе их
+     закрытый список, и половина разговора становится предсказуемой,
+     как только эти шесть-семь фраз опознаются.
+
+     Неверный вариант не просто краснеет: у каждого написано, чем он
+     плох. Обратная связь, которая называет ошибку, стоит дороже той,
+     которая её только отмечает. */
+
+  var DIALOG_KEY = "ptDialogV1";
+
+  var DIALOGS = [
+    {
+      id: "cafe",
+      icon: "☕",
+      title: "Café · заказать и заплатить",
+      sub: "Утро, стойка пастеларии. Заказ, «с собой или здесь», непонятая сумма и прощание.",
+      steps: [
+        {
+          npc: { pt:"Bom dia! Diga?", say:"бо~ ди́а! ди́га", ru:"Доброе утро! Слушаю?" },
+          goal: "Поздоровайся и закажи один кофе.",
+          answer: "Bom dia. Um café, se faz favor.",
+          say: "бо~ ди́а. у~ кафэ́, сы фаш фаво́р",
+          wrong: [
+            { t:"Bom dia. Quero um café.", why:"«Quero» — «хочу»: сказано верно, но звучит требовательно. В кафе просят через se faz favor, а не сообщают о своём желании." },
+            { t:"Bom dia. Tem café?", why:"«У вас есть кофе?» спрашивают о том, чего может не быть. В кафе вопрос повиснет, и заказ придётся делать заново." }
+          ],
+          note: "<b>Um café</b> — это эспрессо в маленькой чашке. Большой чёрный — <b>um abatanado</b>, с молоком в стакане — <b>um galão</b>."
+        },
+        {
+          npc: { pt:"Mais alguma coisa?", say:"майш алгу́ма ко́йза", ru:"Что-нибудь ещё?" },
+          goal: "Возьми ещё одно пирожное с кремом.",
+          answer: "Um pastel de nata, se faz favor.",
+          say: "у~ паштэ́л ды нáта, сы фаш фаво́р",
+          wrong: [
+            { t:"Mais nada, obrigado.", why:"«Больше ничего» — фраза верная и нужная, но не здесь: пирожное так и не заказано." },
+            { t:"Um pastéis de nata, se faz favor.", why:"«Pastéis» — множественное число, с «um» не сочетается. Одно — um pastel, два — dois pastéis." }
+          ],
+          note: "Единственное число — <b>pastel</b>, множественное — <b>pastéis</b>. В Белене у них своё имя: <b>pastéis de Belém</b>."
+        },
+        {
+          npc: { pt:"É para levar ou para aqui?", say:"э́ пара лывáр о пара аки́", ru:"С собой или здесь?" },
+          goal: "Ты остаёшься за стойкой.",
+          answer: "É para aqui, se faz favor.",
+          say: "э́ пара аки́, сы фаш фаво́р",
+          wrong: [
+            { t:"Sim, se faz favor.", why:"Вопрос с «или»: «да» на него не отвечает ничего. Нужно повторить ту половину, которую выбираешь." },
+            { t:"É para levar.", why:"Это «с собой» — ровно противоположный ответ: кофе нальют в картонный стакан и попрощаются." }
+          ],
+          note: "Вопрос звучит быстро и всегда идёт сразу после заказа. Если опознать его по одному слову <b>levar</b>, остального можно не разбирать."
+        },
+        {
+          npc: { pt:"Com certeza. São dois euros e quarenta.", say:"ко~ сырте́за. сáу~ дойш э́урош и куарэ́нта", ru:"Конечно. С вас два евро сорок." },
+          goal: "Сумму на слух ты не разобрал. Попроси повторить.",
+          answer: "Pode repetir, se faz favor?",
+          say: "под рыпыти́р, сы фаш фаво́р",
+          wrong: [
+            { t:"Não percebi.", why:"Это признание, а не просьба: собеседник не знает, что делать — повторить, написать или перейти на английский. Перед просьбой её ставить можно, вместо просьбы — нет." },
+            { t:"Fala inglês?", why:"Запасной выход, а не первый ход: в Лиссабоне ответят «да», и практика на этом закончится." }
+          ],
+          note: "Суммы называют через <b>ser</b> во множественном: <b>são</b> dois euros. Центы цепляются союзом <b>e</b> и в живом темпе склеиваются с ним в одно слово."
+        },
+        {
+          npc: { pt:"Dois euros e quarenta.", say:"дойш э́урош и куарэ́нта", ru:"Два евро сорок." },
+          goal: "Спроси, принимают ли карту.",
+          answer: "Aceita multibanco?",
+          say: "асэ́йта мултибáнку",
+          wrong: [
+            { t:"Tem multibanco?", why:"Словом multibanco называют и банкомат — с ter вопрос уезжает в «а где у вас банкомат?»." },
+            { t:"Posso pagar?", why:"«Могу заплатить?» — вопрос ни о чём: платить никто не запрещает. Спрашивают именно про способ оплаты." }
+          ],
+          note: "<b>Multibanco</b> — португальская платёжная сеть. Слово здесь живее, чем cartão, и им же называют банкоматы."
+        },
+        {
+          npc: { pt:"Aceitamos, sim. Faz favor.", say:"асэйтáмуш, си~. фаш фаво́р", ru:"Да, принимаем. Прошу." },
+          goal: "Расплатился. Попрощайся так, как прощаются местные: пожелай хорошего продолжения.",
+          answer: "Obrigado. Boa continuação!",
+          say: "убригáду. бо́а континуасáу~",
+          wrong: [
+            { t:"De nada. Até logo!", why:"«De nada» — ответ на чужое спасибо, а благодаришь здесь ты." },
+            { t:"Adeus!", why:"«Прощай» звучит окончательнее, чем нужно: с кафе, куда зайдёшь завтра, прощаются мягче." }
+          ],
+          note: "<b>Boa continuação</b> — прощание, которого почти нет в учебниках: ты уходишь, а человек остаётся при своём деле. В Лиссабоне звучит на каждом шагу."
+        }
+      ]
+    },
+    {
+      id: "caixa",
+      icon: "🛒",
+      title: "Loja e caixa · магазин и касса",
+      sub: "Четыре вопроса кассира подряд — и все ждут разных ответов. Здесь приезжие теряются чаще всего.",
+      steps: [
+        {
+          npc: { pt:"Boa tarde. Precisa de ajuda?", say:"бо́а тáрд. прыси́за ды ажу́да", ru:"Добрый день. Нужна помощь?" },
+          goal: "Ты просто смотришь.",
+          answer: "Estou só a ver, obrigado.",
+          say: "ышто́у со́ а ве́р, убригáду",
+          wrong: [
+            { t:"Estou só vendo, obrigado.", why:"Бразильская форма. В Португалии длящееся действие — estar a + инфинитив: estou a ver." },
+            { t:"Não percebi.", why:"Фраза-щит здесь сообщает о проблеме, которой нет: вопрос ты понял." }
+          ],
+          note: "Тема 1.7, <b>estar a + infinitivo</b>. Тот же ответ годится на <b>Posso ajudar?</b> — вопрос звучит и так."
+        },
+        {
+          npc: { pt:"Só isso?", say:"со́ и́су", ru:"Это всё?" },
+          goal: "Да, это всё.",
+          answer: "Só isso, obrigado.",
+          say: "со́ и́су, убригáду",
+          wrong: [
+            { t:"Sim, tudo bem.", why:"«Tudo bem» — «как дела» и «всё в порядке», но не «это всё». Кассир решит, что ты ответил на другой вопрос." },
+            { t:"Mais alguma coisa?", why:"Это реплика продавца, а не покупателя: «что-нибудь ещё?»." }
+          ],
+          note: "Можно и просто <b>Sim, obrigado</b>, но <b>Só isso</b> закрывает вопрос вернее — им же отвечают в кафе."
+        },
+        {
+          npc: { pt:"Contribuinte?", say:"контрибуи́нт", ru:"Налоговый номер?" },
+          goal: "Номера у тебя нет.",
+          answer: "Não, obrigado.",
+          say: "нау~, убригáду",
+          wrong: [
+            { t:"Sim, se faz favor.", why:"«Да, пожалуйста» — и кассир замрёт в ожидании девяти цифр, которых у тебя нет." },
+            { t:"Quanto custa?", why:"Про цену здесь не спрашивают: вопрос был про NIF, налоговый номер для чека." }
+          ],
+          note: "Полностью — <b>Número de contribuinte?</b>, то есть NIF. Спрашивают на каждой второй кассе, и звучит это одним слитным словом — приезжие теряются именно здесь."
+        },
+        {
+          npc: { pt:"Precisa de saco?", say:"прыси́за ды сáку", ru:"Пакет нужен?" },
+          goal: "Пакет нужен.",
+          answer: "Sim, se faz favor.",
+          say: "си~, сы фаш фаво́р",
+          wrong: [
+            { t:"Não, obrigado.", why:"Отказ — а пакет тебе нужен. Три вопроса кассира подряд ждут разных ответов, и автоматическое «нет, спасибо» на всё подряд как раз здесь оставляет покупки в руках." },
+            { t:"Sim, de nada.", why:"«De nada» — «не за что», ответ на спасибо. К согласию оно не цепляется." }
+          ],
+          note: "Пакеты платные почти везде, поэтому спрашивают всегда."
+        },
+        {
+          npc: { pt:"São doze euros e trinta.", say:"сáу~ до́з э́урош и три́нта", ru:"С вас двенадцать евро тридцать." },
+          goal: "Сумму ты не поймал. Попроси повторить цену.",
+          answer: "Pode repetir o preço?",
+          say: "под рыпыти́р у пре́су",
+          wrong: [
+            { t:"Pode escrever, se faz favor?", why:"Просьба написать выручает со словом, но не с суммой: цена и так горит на экране терминала." },
+            { t:"Quanto custa?", why:"«Сколько стоит?» — про товар на полке. Итог на кассе переспрашивают через preço." }
+          ],
+          note: "<b>e trinta</b> в живом темпе склеивается в «итри́нта». Числа на слух разбираются последними — смотреть на экран терминала не стыдно, так делают все."
+        },
+        {
+          npc: { pt:"Doze euros e trinta. Multibanco ou dinheiro?", say:"до́з э́урош и три́нта. мултибáнку о динье́йру", ru:"Двенадцать тридцать. Картой или наличными?" },
+          goal: "Заплатишь картой.",
+          answer: "Com multibanco, se faz favor.",
+          say: "ко~ мултибáнку, сы фаш фаво́р",
+          wrong: [
+            { t:"Sim, se faz favor.", why:"Снова вопрос с «или»: «да» не выбирает ничего, и кассир переспросит на той же скорости." },
+            { t:"Com cartão de cliente.", why:"Cartão de cliente — карта магазина со скидками, а не платёжная. Про неё спрашивают отдельно." }
+          ],
+          note: "<b>Dinheiro</b> — наличные. Ответ строится предлогом <b>com</b>: com multibanco, com dinheiro."
+        },
+        {
+          npc: { pt:"Obrigada. Boa tarde!", say:"убригáда. бо́а тáрд", ru:"Спасибо. Хорошего дня!" },
+          goal: "Пожелай того же в ответ.",
+          answer: "Igualmente. Boa tarde!",
+          say: "игуалме́нт. бо́а тáрд",
+          wrong: [
+            { t:"Também. Boa tarde!", why:"«Também» — «тоже», но в ответ на пожелание говорят igualmente." },
+            { t:"Igualmente. Bom dia!", why:"После полудня — boa tarde. Bom dia живёт только до обеда, и ошибка слышна сразу." }
+          ],
+          note: "<b>Igualmente</b> — «и вам того же». Универсальный ответ на любое пожелание, от boa tarde до bom fim de semana."
+        }
+      ]
+    }
+  ];
+
+  // {cafe:{mc:1,build:1}} — какие проходы сцены закрыты.
+  function loadDialogProgress(){
+    try{ return JSON.parse(localStorage.getItem(DIALOG_KEY) || "{}") || {}; }catch(e){ return {}; }
+  }
+  function saveDialogProgress(p){
+    try{ localStorage.setItem(DIALOG_KEY, JSON.stringify(p)); }catch(e){}
+  }
+
+  function dialogById(id){
+    for(var i = 0; i < DIALOGS.length; i++){ if(DIALOGS[i].id === id) return DIALOGS[i]; }
+    return null;
+  }
+
+  // Пунктуация в фишках сборки подсказывала бы порядок («favor.» — только
+  // в конец), поэтому её снимаем. norm() при сверке снимает её с обеих
+  // сторон, так что ответ от этого не портится.
+  function dgBuildWords(answer){
+    return answer.replace(/[.,!?]/g, "").split(/\s+/).filter(Boolean);
+  }
+
+  function dgSay(text){
+    return ptVoice ? ' <button type="button" class="speak" data-say="'+escapeHtml(text)+'" title="Прослушать">🔊</button>' : "";
+  }
+
+  function dgBubble(who, cls, pt, say, ru, sayBtn){
+    return '<div class="dg-turn '+cls+'"><div class="dg-who">'+who+'</div><div class="dg-bubble">' +
+      '<div class="dg-pt">'+escapeHtml(pt)+(sayBtn ? dgSay(pt) : "")+'</div>' +
+      (say ? '<div class="dg-say">'+escapeHtml(say)+'</div>' : "") +
+      (ru ? '<div class="dg-ru">'+escapeHtml(ru)+'</div>' : "") +
+      '</div></div>';
+  }
+
+  var dgRun = null;  // {id, mode, i, wrong, missed, answered, opts}
+
+  function renderDialogos(){
+    renderDgScenes();
+    renderDgStage();
+  }
+
+  function renderDgScenes(){
+    var box = document.getElementById("dgScenes");
+    if(!box) return;
+    if(dgRun){ box.innerHTML = ""; return; }
+    var done = loadDialogProgress();
+    box.innerHTML = DIALOGS.map(function(sc){
+      var d = done[sc.id] || {};
+      return '<div class="dg-scene">' +
+        '<div class="dg-scene-head"><span class="dg-scene-icon">'+sc.icon+'</span>' +
+          '<span class="dg-scene-title">'+escapeHtml(sc.title)+'</span>' +
+          '<span class="dg-step">'+sc.steps.length+' реплик</span></div>' +
+        '<div class="dg-scene-sub">'+escapeHtml(sc.sub)+'</div>' +
+        '<div class="dg-modes">' +
+          '<button type="button" class="btn btn-reveal" data-dg="start" data-scene="'+sc.id+'" data-mode="mc">Выбор'+(d.mc ? '<span class="dg-done">✓</span>' : "")+'</button>' +
+          '<button type="button" class="btn btn-check" data-dg="start" data-scene="'+sc.id+'" data-mode="build">Сборка'+(d.build ? '<span class="dg-done">✓</span>' : "")+'</button>' +
+        '</div></div>';
+    }).join("");
+  }
+
+  function renderDgStage(){
+    var box = document.getElementById("dgStage");
+    if(!box) return;
+    if(!dgRun){ box.innerHTML = ""; return; }
+
+    var sc = dialogById(dgRun.id);
+    if(dgRun.i >= sc.steps.length){ renderDgFinish(box, sc); return; }
+
+    var step = sc.steps[dgRun.i];
+    var head = '<div class="dg-bar">' +
+      '<span class="dg-scene-title">'+escapeHtml(sc.title)+'</span>' +
+      '<span class="dg-mode-tag">'+(dgRun.mode === "mc" ? "выбор" : "сборка")+'</span>' +
+      '<span class="dg-step">'+(dgRun.i+1)+' / '+sc.steps.length+'</span></div>';
+
+    // В логе — только предыдущий обмен репликами: контекст «что было сейчас»
+    // нужен, а весь разговор целиком уводил бы текущую реплику под сгиб экрана.
+    var log = "";
+    if(dgRun.i > 0){
+      var prev = sc.steps[dgRun.i - 1];
+      log += dgBubble("Собеседник", "", prev.npc.pt, "", prev.npc.ru, false);
+      log += dgBubble("Ты", "me", prev.answer, "", "", false);
+    }
+    log += dgBubble("Собеседник", "now", step.npc.pt, step.npc.say, step.npc.ru, true);
+
+    var answer = dgRun.mode === "mc"
+      ? '<div class="dg-opts">' + dgRun.opts.map(function(o, idx){
+          return '<button type="button" class="dg-opt" data-dgpick="'+idx+'">'+escapeHtml(o.t)+'</button>';
+        }).join("") + '</div>'
+      : '<div class="qbuild" id="dgBuild"></div>';
+
+    var acts = dgRun.mode === "mc" ? "" :
+      '<button type="button" class="btn btn-check" data-dg="check">Проверить</button>';
+
+    box.innerHTML = head +
+      '<div class="dg-log">'+log+'</div>' +
+      '<div class="dg-goal">'+escapeHtml(step.goal)+'</div>' +
+      '<div id="dgAnswer">'+answer+'</div>' +
+      '<div id="dgFeed"></div>' +
+      '<div class="dg-actions" id="dgActs">'+acts+'</div>';
+
+    if(dgRun.mode === "build"){
+      var bx = document.getElementById("dgBuild");
+      var words = dgBuildWords(step.answer);
+      bx.dataset.answer = words.join(" ");
+      bx.dataset.words  = words.join("|");
+      initBuild(bx);
+    }
+  }
+
+  function renderDgFinish(box, sc){
+    var lines = sc.steps.map(function(s){
+      return dgBubble("Собеседник", "", s.npc.pt, "", s.npc.ru, true) +
+             dgBubble("Ты", "me", s.answer, "", "", true);
+    }).join("");
+    var other = dgRun.mode === "mc" ? "build" : "mc";
+    box.innerHTML = '<div class="dg-bar"><span class="dg-scene-title">'+escapeHtml(sc.title)+'</span>' +
+        '<span class="dg-mode-tag">пройдено</span></div>' +
+      '<p class="dg-final"><b>Сцена пройдена.</b> ' +
+        (dgRun.wrong ? 'Промахов: '+dgRun.wrong+' из '+sc.steps.length+'. Стоит вернуться к ней завтра.'
+                     : 'Без единого промаха.') + '</p>' +
+      '<div class="dg-log" style="margin-top:12px">'+lines+'</div>' +
+      '<div class="dg-actions">' +
+        '<button type="button" class="btn btn-reveal" data-dg="close">К сценам</button>' +
+        '<button type="button" class="btn btn-check" data-dg="start" data-scene="'+sc.id+'" data-mode="'+other+'">' +
+          (other === "build" ? "Пройти сборкой" : "Пройти выбором") + '</button>' +
+      '</div>';
+  }
+
+  function dgStart(id, mode){
+    var sc = dialogById(id);
+    if(!sc) return;
+    dgRun = { id:id, mode:(mode === "build" ? "build" : "mc"), i:0, wrong:0, missed:false, answered:false, opts:null };
+    dgPrepareStep();
+    renderDialogos();
+    dgScroll();
+  }
+
+  // Над сценой стоят объяснение приёма и вводный абзац — прокрутка вверх
+  // после запуска увела бы сам разговор под сгиб экрана. Поэтому каждый шаг
+  // подводит к началу сцены, а не к началу страницы.
+  function dgScroll(){
+    var box = document.getElementById("dgStage");
+    if(box) box.scrollIntoView({block:"start"});
+  }
+
+  // Варианты тасуются один раз на шаг: перерисовка не должна менять порядок
+  // под пальцем уже после того, как ученик его прочитал.
+  function dgPrepareStep(){
+    var sc = dialogById(dgRun.id);
+    var step = sc.steps[dgRun.i];
+    dgRun.answered = false;
+    dgRun.missed = false;
+    dgRun.opts = null;
+    if(!step || dgRun.mode !== "mc") return;
+    var opts = [{ t:step.answer, ok:true }].concat(step.wrong.map(function(w){
+      return { t:w.t, why:w.why, ok:false };
+    }));
+    dgRun.opts = shuffle(opts);
+  }
+
+  function dgFeed(html, ok){
+    var f = document.getElementById("dgFeed");
+    if(f) f.innerHTML = '<div class="dg-why'+(ok ? " ok" : "")+'">'+html+'</div>';
+  }
+  function dgActs(html){
+    var a = document.getElementById("dgActs");
+    if(a) a.innerHTML = html;
+  }
+  function dgNextBtn(){
+    var sc = dialogById(dgRun.id);
+    var last = dgRun.i >= sc.steps.length - 1;
+    dgActs('<button type="button" class="btn btn-check" data-dg="next">'+(last ? "Закончить" : "Дальше")+'</button>');
+  }
+
+  // Разбор шага один на оба режима: разница только в том, как ученик добрался
+  // до ответа, а объяснять надо одно и то же.
+  function dgResolve(step, ok, whyWrong){
+    dgRun.answered = true;
+    dgFeed((ok ? "" : whyWrong + "<br><br>") + step.note, ok);
+    var f = document.getElementById("dgFeed");
+    if(f) f.insertAdjacentHTML("beforeend",
+      '<div class="dg-answer-note">Твоя реплика: <b>'+escapeHtml(step.answer)+'</b>'+dgSay(step.answer)+
+      ' <span class="dg-say">'+escapeHtml(step.say)+'</span></div>');
+    dgNextBtn();
+  }
+
+  function handleDgPick(idx){
+    if(!dgRun || dgRun.mode !== "mc" || dgRun.answered) return;
+    var sc = dialogById(dgRun.id), step = sc.steps[dgRun.i];
+    var picked = dgRun.opts[idx];
+    var ok = !!picked.ok;
+    if(!ok) dgRun.wrong++;
+    document.querySelectorAll("#dgAnswer .dg-opt").forEach(function(b, i){
+      b.disabled = true;
+      if(dgRun.opts[i].ok) b.classList.add("mc-correct");
+      else if(i === idx) b.classList.add("mc-wrong");
+    });
+    dgResolve(step, ok, "<b>"+escapeHtml(picked.t)+"</b> — "+picked.why);
+  }
+
+  function handleDgAction(btn){
+    var action = btn.dataset.dg;
+    if(action === "start"){ dgStart(btn.dataset.scene, btn.dataset.mode); return; }
+    if(!dgRun) return;
+    var sc = dialogById(dgRun.id), step = sc.steps[dgRun.i];
+
+    if(action === "close"){
+      dgRun = null;
+      renderDialogos();
+      window.scrollTo(0,0);
+      return;
+    }
+    if(action === "next"){
+      dgRun.i++;
+      dgPrepareStep();
+      // Сцена закрывается ровно один раз — в момент, когда пройден
+      // последний шаг, а не при каждом заходе на экран итога.
+      if(dgRun.i >= sc.steps.length) dgFinishScene();
+      renderDgStage();
+      dgScroll();
+      return;
+    }
+    if(action === "check"){
+      var box = document.getElementById("dgBuild");
+      if(!box || dgRun.answered) return;
+      var line = box.querySelector(".qbuild-line");
+      if(buildOk(box)){
+        // Промах уже посчитан и разобран на прошлой попытке — собранная
+        // с второго раза реплика показывается как верная, без второго упрёка.
+        line.classList.add("ok"); line.classList.remove("bad");
+        dgResolve(step, true, "");
+        return;
+      }
+      line.classList.add("bad"); line.classList.remove("ok");
+      if(!dgRun.missed){ dgRun.missed = true; dgRun.wrong++; }
+      dgFeed("Не то. Слова все нужные — другой порядок.", false);
+      dgActs('<button type="button" class="btn btn-check" data-dg="check">Проверить</button>' +
+             '<button type="button" class="btn btn-reveal" data-dg="reveal">Показать ответ</button>');
+      return;
+    }
+    if(action === "reveal"){
+      var box2 = document.getElementById("dgBuild");
+      if(!box2 || dgRun.answered) return;
+      revealBuild(box2);
+      dgResolve(step, false, "Так эта реплика собирается целиком.");
+      return;
+    }
+  }
+
+  function dgFinishScene(){
+    var p = loadDialogProgress();
+    if(!p[dgRun.id]) p[dgRun.id] = {};
+    p[dgRun.id][dgRun.mode] = 1;
+    saveDialogProgress(p);
+  }
+
   /* ================= ЗАДАНИЯ ================= */
 
   function norm(s){
@@ -8324,6 +8867,7 @@
 
     if(el.dataset.topic){ try{ localStorage.setItem(LAST_TOPIC_KEY, id); }catch(e){} }
     if(id === "vocab"){ session = null; renderVocabScreen(); }
+    if(id === "dialogos"){ dgRun = null; renderDialogos(); }
     prepareScreen(el);
     window.scrollTo(0,0);
     updateFloatBack();
@@ -8493,6 +9037,12 @@
       renderVocabTrainer();
       return;
     }
+
+    var dgBtn = e.target.closest("[data-dg]");
+    if(dgBtn){ handleDgAction(dgBtn); return; }
+
+    var dgOpt = e.target.closest("[data-dgpick]");
+    if(dgOpt && !dgOpt.disabled){ handleDgPick(Number(dgOpt.dataset.dgpick)); return; }
 
     var open = e.target.closest("[data-open]");
     if(open && !open.disabled){ goTopic(open.dataset.open); return; }
