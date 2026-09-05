@@ -997,15 +997,17 @@
       <div class="sub">В русском одно прошедшее время, в португальском их два, и выбор между ними обязателен в каждой фразе. Второй по трудности узел курса после subjuntivo.</div>
     </div>
     <div class="topic-list">
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="preterito">
         <span class="marker" style="background:var(--passado)"></span>
         <span class="row-title"><span class="topic-num">2.1</span> Pretérito perfeito<span class="row-title-ru">простое прошедшее у правильных глаголов</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="preterito" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="preteritoirreg">
         <span class="marker" style="background:var(--passado)"></span>
         <span class="row-title"><span class="topic-num">2.2</span> Perfeito irregular<span class="row-title-ru">fui, fiz, tive, estive, disse, trouxe</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-check" data-check="preteritoirreg" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--passado)"></span>
@@ -2948,7 +2950,7 @@
           <div><span class="w">a consulta</span> <span class="tr">а консулта</span><span class="t">— приём у врача</span></div>
           <div><span class="w">o concerto</span> <span class="tr">у консерту</span><span class="t">— концерт</span></div>
           <div><span class="w">o casamento</span> <span class="tr">у казаменту</span><span class="t">— свадьба</span></div>
-          <div><span class="w">o jantar</span> <span class="tr">у жантар</span><span class="t">— ужин</span></div>
+          <div><span class="w">o jantar</span> <span class="tr">у жантар</span><span class="t">— ужин; ужинать</span></div>
           <div><span class="w">o filme</span> <span class="tr">у филм</span><span class="t">— фильм</span></div>
         </div>
         <p class="why-note"><b>Почему так:</b> <span class="pt">a reunião</span> — слово на <b>-ão</b>, значит во множественном <span class="pt">reuniões</span> (тема 0.6). И оно женского рода, хотя кончается как <span class="pt">o irmão</span>: у слов на <b>-ção</b> и <b>-são</b> род всегда женский (тема 0.5).<br><br><span class="pt">o jantar</span> выглядит как инфинитив глагола — так и есть: «ужинать» и «ужин» это одно слово. Португальский часто превращает глагол в существительное просто артиклем.</p>
@@ -6618,11 +6620,498 @@
       <button class="btn btn-reveal" type="button">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="preterito">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">2.1 Pretérito perfeito — блок 2, прошедшее время</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<div class="screen topic-screen" id="screen-preterito" data-topic="preterito" style="--tint-color:var(--passado)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--passado)"></span>
+    <h2><span class="topic-num">2.1</span> Pretérito perfeito</h2>
+    <span class="done-badge" data-badge="preterito">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Весь курс до сих пор шёл в настоящем времени. Теперь — прошедшее: то, что случилось и кончилось. <span class="pt">Trabalhei</span> — «поработал», <span class="pt">comprei</span> — «купил».</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>В русском одно прошедшее время: «работал» и «поработал» — одна и та же форма глагола, разница только в виде. В португальском прошедших <b>два</b>, и выбирать между ними приходится в каждой фразе. Первое — <span class="pt">pretérito perfeito</span>: событие случилось, кончилось и стоит в рассказе точкой. <span class="pt">Ontem trabalhei</span> — «вчера я поработал», и работа закончена.</p>
+
+    <p>Второе прошедшее (<span class="pt">imperfeito</span> — «работал каждый день», фоном) ждёт в теме 2.3, а выбор между ними — в 2.4. Пока весь блок стоит на первом: всё, что случилось один раз и кончилось.</p>
+
+    <p>Строится он ровно как настоящее: убрать <b>-ar</b>/<b>-er</b>/<b>-ir</b> и приклеить окончание лица. Только окончания другие.</p>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="falar:preterito">Falar</th><th>Перевод</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">falei</td><td>я поговорил</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">falaste</td><td>ты поговорил</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">falou</td><td>он, она, вы поговорили</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">falámos</td><td>мы поговорили</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">falaram</td><td>они, вы поговорили</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b>Ударение уехало на окончание.</b> В настоящем <span class="pt">f<b>a</b>lo</span>, в прошедшем <span class="pt">fal<b>ei</b></span>. Это первое, что слышно в живой речи, и первое, что выдаёт русского: мы по привычке жмём на основу</li>
+      <li><b><span class="pt">-ou</span> — вывеска прошедшего.</b> Услышал на конце <span class="pt">-ou</span>, <span class="pt">-eu</span> или <span class="pt">-iu</span> — это третье лицо прошедшего: <span class="pt">falou</span>, <span class="pt">comeu</span>, <span class="pt">partiu</span></li>
+      <li><b>Местоимение по-прежнему не нужно.</b> <span class="pt">Comprei o bilhete</span> — «я купил билет», <span class="pt">eu</span> уже сказано окончанием</li>
+      <li><b>Схема одна на все правильные глаголы</b> своего спряжения. Неправильные — <span class="pt">fui</span>, <span class="pt">fiz</span>, <span class="pt">tive</span> — ломаются по-своему, и им отдана вся тема 2.2</li>
+    </ul>
+
+    <p>У <b>-er</b> и <b>-ir</b> окончания почти совпадают — расходятся только два лица из пяти:</p>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="comer:preterito">Comer</th><th data-conj="partir:preterito">Partir</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">comi</td><td class="pt">parti</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">comeste</td><td class="pt">partiste</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">comeu</td><td class="pt">partiu</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">comemos</td><td class="pt">partimos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">comeram</td><td class="pt">partiram</td></tr>
+    </table>
+
+    <div class="contrast">
+      <div class="label">Шляпка, которой нет в Бразилии</div>
+      <p>У глаголов на <b>-ar</b> форма <span class="pt">nós</span> в прошедшем пишется с ударением: <span class="pt">fal<b>á</b>mos</span> — «мы поговорили», а <span class="pt">falamos</span> без шляпки — «мы говорим», настоящее. Одна чёрточка отличает два времени, и на письме её пропускать нельзя.</p>
+      <p>А в Бразилии обе формы пишут одинаково — <span class="pt">falamos</span>, — и различают только по смыслу фразы. Это чисто португальская примета: увидел <span class="pt">-ámos</span>, значит текст европейский и речь о прошлом.</p>
+    </div>
+
+    <div class="contrast">
+      <div class="label">У -er и -ir форма «мы» вообще одинаковая</div>
+      <p>Шляпка спасает только <b>-ar</b>. У двух других спряжений <span class="pt">comemos</span> и <span class="pt">partimos</span> — это и «едим», и «поели», и «уезжаем», и «уехали». Различает <b>только контекст</b>: <span class="pt">Hoje comemos em casa</span> — сегодня едим дома, <span class="pt">Ontem comemos em casa</span> — вчера поели дома.</p>
+      <p>Поэтому слова времени (<span class="pt">ontem</span>, <span class="pt">hoje</span>, <span class="pt">a semana passada</span>) в португальском не украшение фразы, а часть грамматики: без них половина форм двусмысленна.</p>
+    </div>
+
+    <p>Три частых глагола на <b>-ar</b> в форме <span class="pt">eu</span> меняют написание. Звук основы остаётся тот же, меняется только запись — потому что перед <span class="pt">e</span> буквы <span class="pt">c</span> и <span class="pt">g</span> читались бы иначе:</p>
+
+    <table>
+      <tr><th>Инфинитив</th><th>Вышло бы</th><th>Пишется</th></tr>
+      <tr><td class="pt">chegar</td><td>chegei</td><td class="pt">cheguei</td></tr>
+      <tr><td class="pt">ficar</td><td>ficei</td><td class="pt">fiquei</td></tr>
+      <tr><td class="pt">começar</td><td>começei</td><td class="pt">comecei</td></tr>
+    </table>
+
+    <p>Это не исключения, которые надо зубрить: работает то же правило чтения, что в теме 0.4. <span class="pt">c</span> перед <span class="pt">e</span> читается «с», поэтому «к» приходится записывать через <span class="pt">qu</span>; <span class="pt">g</span> перед <span class="pt">e</span> смягчается, поэтому твёрдое «г» держит <span class="pt">gu</span>; а <span class="pt">ç</span> перед <span class="pt">e</span> просто не пишется — там и так «с». Глагол не сломался, сломалась бы запись.</p>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> <span class="pt">falamos</span> и <span class="pt">falámos</span> — разные времена. Шляпка не украшение: без неё фраза уезжает в настоящее.<br>
+      <b>2.</b> Третье лицо на <span class="pt">-ou</span> читается «оу» одним слогом: <span class="pt">falou</span> — «фало́у», а не «фало́».<br>
+      <b>3.</b> У <b>-er</b> третье лицо <span class="pt">comeu</span>, не <i>comou</i>: окончание берётся по спряжению глагола, а не по образцу <span class="pt">-ar</span>.<br>
+      <b>4.</b> <span class="pt">-aste</span> и <span class="pt">-este</span> — это <span class="pt">tu</span>, а не <span class="pt">ele</span>. Форма длинная и на слух похожа на «он сделал», но значит «ты сделал».</div>
+
+    <div class="tip"><b>Что дальше.</b> В теме 2.2 — неправильные глаголы в прошедшем: <span class="pt">fui</span>, <span class="pt">fiz</span>, <span class="pt">tive</span>, <span class="pt">estive</span>, <span class="pt">disse</span>, <span class="pt">trouxe</span>. Их немного, но без них не собрать ни одного рассказа о вчерашнем дне.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 53 · Quando foi — когда это было</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">anteontem</span> <span class="tr">антыонтэй</span><span class="t">— позавчера</span></div>
+          <div><span class="w">passado</span> <span class="tr">пасаду</span><span class="t">— прошлый, прошедший</span></div>
+          <div><span class="w">durante</span> <span class="tr">дурант</span><span class="t">— в течение, во время</span></div>
+          <div><span class="w">finalmente</span> <span class="tr">финалмэнт</span><span class="t">— наконец</span></div>
+          <div><span class="w">a vez</span> <span class="tr">а вэш</span><span class="t">— раз</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> прошедшее время без слов времени не работает — у формы «мы» настоящее и прошедшее часто совпадают, и только <span class="pt">ontem</span> или <span class="pt">a semana passada</span> говорят, о чём речь.<br><br><span class="pt">passado</span> ведёт себя как прилагательное из темы 0.11 и меняется по роду: <span class="pt">o ano passado</span> — «в прошлом году», но <span class="pt">a semana passada</span> — «на прошлой неделе».<br><br><span class="pt">uma vez</span> — «однажды», <span class="pt">duas vezes</span> — «дважды». Множественное по правилу темы 0.6: <span class="pt">-z</span> даёт <span class="pt">-zes</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 54 · O dia de ontem — вчерашний день</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">acabar</span> <span class="tr">акабар</span><span class="t">— заканчивать, кончаться</span></div>
+          <div><span class="w">voltar</span> <span class="tr">волтар</span><span class="t">— возвращаться</span></div>
+          <div><span class="w">entrar</span> <span class="tr">энтрар</span><span class="t">— входить</span></div>
+          <div><span class="w">passar</span> <span class="tr">пасар</span><span class="t">— проходить; проводить время</span></div>
+          <div><span class="w">encontrar</span> <span class="tr">энконтрар</span><span class="t">— находить; встречать</span></div>
+          <div><span class="w">apanhar</span> <span class="tr">апаньяр</span><span class="t">— ловить; садиться в транспорт</span></div>
+          <div><span class="w">receber</span> <span class="tr">рысыбэр</span><span class="t">— получать</span></div>
+          <div><span class="w">decidir</span> <span class="tr">дысидир</span><span class="t">— решать</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> все восемь правильные, и на каждое спряжение есть свой: шесть на <span class="pt">-ar</span>, один на <span class="pt">-er</span>, один на <span class="pt">-ir</span> — тот же перевес, что и в языке вообще. Ни один не ломается в прошедшем, поэтому на них удобно ставить схему.<br><br><span class="pt">apanhar o autocarro</span> — «сесть на автобус»: в Португалии автобус именно «ловят». Бразилец скажет <span class="pt">pegar o ônibus</span>.<br><br><span class="pt">acabar</span> работает и сам по себе («кончился»), и с предлогом: <span class="pt">acabar de comer</span> — «только что поесть».</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · Ontem e anteontem — вчера и позавчера</div>
+      <div class="mini-text">
+        <p class="storytext">Ontem a Ana trabalhou até tarde. Começou às nove da manhã e acabou às sete da noite. Depois apanhou o autocarro e voltou para casa. Em casa jantou sozinha, escreveu duas cartas e não estudou nada: ficou muito cansada.</p>
+        <p class="storytext">Anteontem passou o dia na universidade. De manhã entrou na aula às oito e respondeu a todas as perguntas do professor. À tarde encontrou a Maria no café da rua do centro. As duas falaram durante uma hora, comeram um bolo e beberam um café. A Ana pagou tudo, porque na semana passada a Maria pagou o jantar.</p>
+        <p class="storytext">Finalmente, à noite, a Ana decidiu uma vez por todas: esta semana começa a estudar cedo.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Вчера Ана работала допоздна. Начала в девять утра и закончила в семь вечера. Потом села на автобус и вернулась домой. Дома поужинала одна, написала два письма и совсем не занималась: очень устала.<br><br>Позавчера она провела день в университете. Утром вошла в аудиторию в восемь и ответила на все вопросы преподавателя. Днём встретила Марию в кафе на улице в центре. Они проговорили целый час, съели пирожное и выпили кофе. Ана заплатила за всё, потому что на прошлой неделе Мария заплатила за ужин.<br><br>Наконец вечером Ана решила раз и навсегда: на этой неделе она начинает заниматься рано.</p>
+        <p class="why-note"><b>Почему так:</b> весь рассказ, кроме последней фразы, стоит в <span class="pt">pretérito perfeito</span>: каждое действие случилось один раз и кончилось.<br><br><span class="pt">ficou muito cansada</span> — здесь <span class="pt">ficar</span> в третьем значении: не «остаться» и не «находиться», а «стать» (устала). Русское «устала» — тоже результат, а не состояние.<br><br><span class="pt">começa</span> в последней фразе — настоящее время: план на эту неделю ещё не случился, и прошедшему тут места нет.<br><br><span class="pt">uma vez por todas</span> — «раз и навсегда», готовое выражение с новым словом <span class="pt">vez</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Trabalhaste ontem? — ты вчера работала?</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">João:</span> Ana, trabalhaste ontem?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Trabalhei, sim. Comecei às nove e acabei às sete.</p>
+          <p class="dline"><span class="speaker">João:</span> E depois? Ficaste em casa?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Fiquei. Jantei sozinha e não estudei nada.</p>
+          <p class="dline"><span class="speaker">João:</span> Eu passei o dia na universidade. A aula acabou tarde.</p>
+          <p class="dline"><span class="speaker">Ana:</span> E o exame? Respondeste a todas as perguntas?</p>
+          <p class="dline"><span class="speaker">João:</span> Respondi a todas. Estudei durante uma semana.</p>
+          <p class="dline"><span class="speaker">Ana:</span> Então esta noite jantamos juntos, às oito.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Жуан:</b> Ана, ты вчера работала?<br><b>Ана:</b> Работала, да. Начала в девять и закончила в семь.<br><b>Жуан:</b> А потом? Осталась дома?<br><b>Ана:</b> Осталась. Поужинала одна и совсем не занималась.<br><b>Жуан:</b> А я провёл день в университете. Пара закончилась поздно.<br><b>Ана:</b> А экзамен? Ты ответил на все вопросы?<br><b>Жуан:</b> На все ответил. Занимался целую неделю.<br><b>Ана:</b> Тогда сегодня вечером ужинаем вместе, в восемь.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">Trabalhaste?</span> — это <span class="pt">tu</span>, а не <span class="pt">ele</span>. Окончание <span class="pt">-aste</span> длинное и на слух похоже на третье лицо, но значит «ты».<br><br><span class="pt">Fiquei</span> — та самая подгонка написания: <span class="pt">ficar</span> в форме <span class="pt">eu</span> берёт <span class="pt">qu</span>, иначе вышло бы «с» вместо «к».<br><br><span class="pt">jantamos</span> в последней реплике — настоящее время в значении будущего, как русское «ужинаем в восемь». Прошедшее у <span class="pt">-ar</span> было бы <span class="pt">jantámos</span>, со шляпкой.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="preterito">
+    <p class="quiz-instruction">Прошедшее правильных глаголов: три набора окончаний и одна шляпка. Проверь себя.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">eu (falar), прошедшее:</span>
+      <select class="mc" data-answer="falei">
+        <option value="">—</option>
+        <option value="falei">falei</option>
+        <option value="falou">falou</option>
+        <option value="falo">falo</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">ele (comer), прошедшее:</span>
+      <select class="mc" data-answer="comeu">
+        <option value="">—</option>
+        <option value="comeu">comeu</option>
+        <option value="comou">comou</option>
+        <option value="comi">comi</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">tu (trabalhar), прошедшее:</span>
+      <select class="mc" data-answer="trabalhaste">
+        <option value="">—</option>
+        <option value="trabalhaste">trabalhaste</option>
+        <option value="trabalhou">trabalhou</option>
+        <option value="trabalhas">trabalhas</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">«мы поговорили», а не «говорим»:</span>
+      <select class="mc" data-answer="falámos">
+        <option value="">—</option>
+        <option value="falámos">falámos</option>
+        <option value="falamos">falamos</option>
+        <option value="falaram">falaram</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">eu (chegar), прошедшее:</span>
+      <select class="mc" data-answer="cheguei">
+        <option value="">—</option>
+        <option value="cheguei">cheguei</option>
+        <option value="chegei">chegei</option>
+        <option value="chegou">chegou</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">eles (partir), прошедшее:</span>
+      <select class="mc" data-answer="partiram">
+        <option value="">—</option>
+        <option value="partiram">partiram</option>
+        <option value="partiam">partiam</option>
+        <option value="partem">partem</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Впиши: «вчера я работал здесь» —</span> <span class="pt">Ontem</span> <input class="blank" data-answer="trabalhei" style="width:9em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">aqui.</span></div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши: «Ана вошла в кафе» —</span> <span class="pt">A Ana</span> <input class="blank" data-answer="entrou" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">no café.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Какое слово подсказывает, что <span class="pt">comemos</span> здесь прошедшее?</span>
+      <select class="mc" data-answer="ontem">
+        <option value="">—</option>
+        <option value="ontem">ontem</option>
+        <option value="hoje">hoje</option>
+        <option value="amanhã">amanhã</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Вчера я вернулся домой поздно».</span>
+      <div class="qbuild" data-answer="Ontem voltei tarde para casa" data-words="voltei|Ontem|casa|para|tarde"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="preteritoirreg">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label">Seguinte · дальше</span>
+        <span class="next-title">2.2 Perfeito irregular — fui, fiz, tive, disse</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<div class="screen topic-screen" id="screen-preteritoirreg" data-topic="preteritoirreg" style="--tint-color:var(--passado)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--passado)"></span>
+    <h2><span class="topic-num">2.2</span> Perfeito irregular</h2>
+    <span class="done-badge" data-badge="preteritoirreg">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Самые частые глаголы языка в прошедшем не подчиняются схеме из темы 2.1: <span class="pt">fui</span>, <span class="pt">fiz</span>, <span class="pt">tive</span>, <span class="pt">disse</span>. Их пятнадцать, и без них не рассказать ни про вчера, ни про выходные.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i>правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i>тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i>задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Пятнадцать глаголов — это звучит как список на зубрёжку, и обычно так и учат: семьдесят пять форм подряд. Но учить надо не пятнадцать наборов по пять форм, а <b>по одной форме на глагол</b> — ту, что стоит при <span class="pt">eu</span>: остальные четыре из неё выводятся. Сначала признак, потом схема, потом четыре глагола, которые не лезут и в неё.</p>
+
+    <div class="contrast">
+      <div class="label">Как на слух отличить неправильный</div>
+      <p>У правильного глагола ударение стоит <b>на окончании</b>, а третье лицо кончается на <span class="pt">-ou</span>, <span class="pt">-eu</span>, <span class="pt">-iu</span>: <span class="pt">fal<b>ou</b></span>, <span class="pt">com<b>eu</b></span>, <span class="pt">part<b>iu</b></span>.</p>
+      <p>У неправильного ударение уезжает <b>на основу</b>, а на конце этих трёх сочетаний нет: <span class="pt">f<b>e</b>z</span>, <span class="pt">t<b>e</b>ve</span>, <span class="pt">d<b>i</b>sse</span>, <span class="pt">tr<b>ou</b>xe</span>. Это и есть вывеска: услышал ударение в начале слова — глагол из этой темы.</p>
+    </div>
+
+    <p>Схема простая. Возьми форму <span class="pt">eu</span>, отрежь от неё последнюю гласную — получишь основу прошедшего. К ней приклеиваются три окончания, одни и те же у всех:</p>
+
+    <table>
+      <tr><th>Лицо</th><th>Окончание</th><th>Пример</th></tr>
+      <tr><td class="pt">tu</td><td class="pt">-este</td><td class="pt">tiveste</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">-emos</td><td class="pt">tivemos</td></tr>
+      <tr><td class="pt">eles</td><td class="pt">-eram</td><td class="pt">tiveram</td></tr>
+    </table>
+
+    <p>Остаётся <span class="pt">ele / ela / você</span>. Оно тоже строится от той же основы, но у части глаголов гласная в ней меняется — <span class="pt">i</span> становится <span class="pt">e</span>, <span class="pt">u</span> становится <span class="pt">ô</span>:</p>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="ter:preterito">Ter</th><th data-conj="fazer:preterito">Fazer</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">tive</td><td class="pt">fiz</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">tiveste</td><td class="pt">fizeste</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">teve</td><td class="pt">fez</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">tivemos</td><td class="pt">fizemos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">tiveram</td><td class="pt">fizeram</td></tr>
+    </table>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="estar:preterito">Estar</th><th data-conj="dizer:preterito">Dizer</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">estive</td><td class="pt">disse</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">estiveste</td><td class="pt">disseste</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">esteve</td><td class="pt">disse</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">estivemos</td><td class="pt">dissemos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">estiveram</td><td class="pt">disseram</td></tr>
+    </table>
+
+    <ul class="rule-list">
+      <li><b>Знаешь <span class="pt">eu</span> — знаешь весь глагол.</b> <span class="pt">tive</span> даёт <span class="pt">tiveste, tivemos, tiveram</span>; <span class="pt">soube</span> даёт <span class="pt">soubeste, soubemos, souberam</span>. Ни одного исключения из этих трёх окончаний в теме нет</li>
+      <li><b>Меняется только третье лицо, и только гласная</b>: <span class="pt">tive → teve</span>, <span class="pt">fiz → fez</span>, <span class="pt">pude → pôde</span>, <span class="pt">pus → pôs</span>. У <span class="pt">disse</span>, <span class="pt">trouxe</span>, <span class="pt">quis</span>, <span class="pt">soube</span> не меняется ничего: форма <span class="pt">eu</span> и форма <span class="pt">ele</span> одинаковы</li>
+      <li><b>Ни одна из этих форм не пишется с ударением на конце</b> — значит, ни одну нельзя спутать с настоящим временем, как <span class="pt">falamos</span> и <span class="pt">falámos</span> в теме 2.1</li>
+    </ul>
+
+    <p>Вот форма <span class="pt">eu</span> у остальных шести — по ней собирается всё остальное:</p>
+
+    <table>
+      <tr><th>Инфинитив</th><th>eu</th><th>ele / ela / você</th></tr>
+      <tr><td class="pt">querer</td><td class="pt">quis</td><td class="pt">quis</td></tr>
+      <tr><td class="pt">poder</td><td class="pt">pude</td><td class="pt">pôde</td></tr>
+      <tr><td class="pt">saber</td><td class="pt">soube</td><td class="pt">soube</td></tr>
+      <tr><td class="pt">trazer</td><td class="pt">trouxe</td><td class="pt">trouxe</td></tr>
+      <tr><td class="pt">pôr</td><td class="pt">pus</td><td class="pt">pôs</td></tr>
+      <tr><td class="pt">haver</td><td>—</td><td class="pt">houve</td></tr>
+    </table>
+
+    <p><span class="pt">haver</span> стоит особняком: как и <span class="pt">há</span> из темы 0.12, в живом языке он встречается почти только третьим лицом. <span class="pt">Houve um problema</span> — «была проблема», без всякого подлежащего.</p>
+
+    <div class="contrast">
+      <div class="label">Fui — и «был», и «пошёл»</div>
+      <p><span class="se">Ser</span> и <span class="pt">ir</span> в прошедшем совпадают <b>полностью</b>, все пять форм: <span class="pt">fui, foste, foi, fomos, foram</span>. Это не совпадение и не ошибка словаря — так устроен язык, и различает только контекст.</p>
+      <p><span class="pt">Fui ao Porto</span> — «я съездил в Порту» (движение, есть куда). <span class="pt">Fui professor</span> — «я был преподавателем» (свойство, есть кем). Подсказка простая: <b>есть предлог направления — это <span class="pt">ir</span></b>, а без него остаётся <span class="se">ser</span>.</p>
+    </div>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="ser:preterito">Ser</th><th data-conj="ir:preterito">Ir</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">fui</td><td class="pt">fui</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">foste</td><td class="pt">foste</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">foi</td><td class="pt">foi</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">fomos</td><td class="pt">fomos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">foram</td><td class="pt">foram</td></tr>
+    </table>
+
+    <p>Ещё три глагола ломаются по-своему, коротко и не по общей схеме. Их формы просто короткие, и учить их приходится целиком:</p>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="ver:preterito">Ver</th><th data-conj="vir:preterito">Vir</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">vi</td><td class="pt">vim</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">viste</td><td class="pt">vieste</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">viu</td><td class="pt">veio</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">vimos</td><td class="pt">viemos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">viram</td><td class="pt">vieram</td></tr>
+    </table>
+
+    <p>Четвёртый — <span class="pt">dar</span>: <span class="pt">dei, deste, deu, demos, deram</span>. Он единственный из неправильных выглядит как правильный на <b>-ar</b>, потому что почти им и является: <span class="pt">dei</span> и <span class="pt">deu</span> — обычные окончания, ломается только основа.</p>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> <span class="pt">viu</span> — «увидел» (от <span class="pt">ver</span>), <span class="pt">veio</span> — «пришёл» (от <span class="pt">vir</span>). Разница в одной букве, и в настоящем времени эта же пара путается: <span class="pt">vê</span> и <span class="pt">vem</span>.<br>
+      <b>2.</b> <span class="pt">vimos</span> значит и «мы увидели», и «мы пришли», и «мы видим» — три времени в одной форме. Спасает только контекст.<br>
+      <b>3.</b> <span class="pt">pôde</span> со шляпкой — прошедшее, <span class="pt">pode</span> без неё — настоящее. То же с <span class="pt">pôs</span> и <span class="pt">pões</span>.<br>
+      <b>4.</b> <span class="pt">trouxe</span> пишется через <span class="pt">x</span>, а звучит через «с»: «тро́с». Написание тут не подсказывает ничего.<br>
+      <b>5.</b> Соблазн сказать <i>fazi</i>, <i>teni</i>, <i>dizeu</i> по схеме из темы 2.1 велик, но таких форм нет вовсе.</div>
+
+    <div class="tip"><b>Как это учить.</b> Задания этой темы намеренно перемешаны: правильные глаголы из 2.1 идут вперемешку с неправильными. Так и надо тренировать — не блоком «десять неправильных подряд», а вперемешку. Когда формы идут блоком, мозг узнаёт ответ по соседям и не учится выбирать; сам этот выбор («ломается или нет?») и есть то, что нужно в разговоре.</div>
+
+    <div class="tip"><b>Что дальше.</b> Тема 2.3 — второе прошедшее, <span class="pt">imperfeito</span>: «работал каждый день», фон вместо точки. После неё в теме 2.4 придётся выбирать между двумя, и это главный узел блока.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 55 · Formas do passado — девять форм наизусть</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">fui</span> <span class="tr">фуи</span><span class="t">— я был; я пошёл, съездил</span></div>
+          <div><span class="w">fiz</span> <span class="tr">фиш</span><span class="t">— я сделал</span></div>
+          <div><span class="w">tive</span> <span class="tr">тив</span><span class="t">— у меня было, я получил</span></div>
+          <div><span class="w">estive</span> <span class="tr">штив</span><span class="t">— я был, пробыл (где-то)</span></div>
+          <div><span class="w">disse</span> <span class="tr">дис</span><span class="t">— я сказал; он сказал</span></div>
+          <div><span class="w">trouxe</span> <span class="tr">трос</span><span class="t">— я принёс; он принёс</span></div>
+          <div><span class="w">quis</span> <span class="tr">киш</span><span class="t">— я захотел; он захотел</span></div>
+          <div><span class="w">pude</span> <span class="tr">пуд</span><span class="t">— я смог</span></div>
+          <div><span class="w">soube</span> <span class="tr">соуб</span><span class="t">— я узнал; он узнал</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> в наборе стоят не инфинитивы, а формы — инфинитивы ты уже знаешь с тем 1.3–1.4, а вот именно эти девять слов надо доставать из памяти мгновенно. Каждое из них — ключ ко всему глаголу: <span class="pt">tive</span> открывает <span class="pt">tiveste, tivemos, tiveram</span>.<br><br>Ударение везде на первом слоге — это и есть главный признак неправильного прошедшего.<br><br><span class="pt">trouxe</span> и <span class="pt">quis</span> кончаются на «с» и «ш», хотя написаны через <span class="pt">x</span> и <span class="pt">s</span>: португальское <span class="pt">s</span> на конце слова всегда «ш», правило темы 0.1.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 56 · Contar uma história — рассказать историю</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">a história</span> <span class="tr">а иштория</span><span class="t">— история, рассказ</span></div>
+          <div><span class="w">a coisa</span> <span class="tr">а койза</span><span class="t">— вещь; дело</span></div>
+          <div><span class="w">a notícia</span> <span class="tr">а нутисия</span><span class="t">— новость</span></div>
+          <div><span class="w">estranho</span> <span class="tr">штраньу</span><span class="t">— странный</span></div>
+          <div><span class="w">de repente</span> <span class="tr">ды рыпэнт</span><span class="t">— вдруг</span></div>
+          <div><span class="w">felizmente</span> <span class="tr">фылижмэнт</span><span class="t">— к счастью</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> шесть слов, на которых держится любой рассказ о прошлом: событие, поворот («вдруг») и оценка («к счастью»). Без них прошедшее время остаётся набором форм, а не разговором.<br><br><span class="pt">felizmente</span> собрано из <span class="pt">feliz</span> («счастливый», тема 0.11) и <span class="pt">-mente</span> — того же кусочка, что в <span class="pt">finalmente</span> из темы 2.1. Это португальское «-о» у наречий: суффикс один и тот же у сотен слов.<br><br><span class="pt">estranho</span> меняется по роду: <span class="pt">uma coisa estranha</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · Um dia no Porto — день в Порту</div>
+      <div class="mini-text">
+        <p class="storytext">No sábado passado a Ana e o João foram ao Porto. Fizeram tudo depressa: às seis já estiveram na estação, compraram os bilhetes e apanharam o comboio das sete.</p>
+        <p class="storytext">O João trouxe pão e queijo, a Ana trouxe água. Durante a viagem falaram muito e o tempo passou depressa. De repente o João disse uma coisa estranha: não teve tempo de comprar o bilhete de volta.</p>
+        <p class="storytext">No Porto viram o rio, entraram numa pastelaria e comeram três bolos. A Ana quis ficar mais uma noite, mas o João não pôde: teve uma reunião na segunda-feira de manhã.</p>
+        <p class="storytext">Felizmente houve um comboio às dez da noite. Puseram tudo no saco, apanharam o comboio e chegaram a Lisboa depois da meia-noite. Foi um dia difícil, mas bom.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">В прошлую субботу Ана и Жуан съездили в Порту. Всё сделали быстро: в шесть уже были на вокзале, купили билеты и сели на семичасовой поезд.<br><br>Жуан принёс хлеб и сыр, Ана принесла воду. В дороге они много разговаривали, и время прошло быстро. Вдруг Жуан сказал странную вещь: он не успел купить обратный билет.<br><br>В Порту они увидели реку, зашли в кондитерскую и съели три пирожных. Ана захотела остаться ещё на одну ночь, но Жуан не смог: в понедельник утром у него была встреча.<br><br>К счастью, в десять вечера был поезд. Они сложили всё в сумку, сели на поезд и приехали в Лиссабон после полуночи. День вышел трудный, но хороший.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">foram ao Porto</span> — это <span class="pt">ir</span>, а не <span class="se">ser</span>: рядом стоит <span class="pt">ao</span>, предлог направления. А <span class="pt">Foi um dia difícil</span> в конце — уже <span class="se">ser</span>: направления нет.<br><br><span class="pt">estiveram na estação</span> — <span class="es">estar</span>, потому что речь о том, где они находились в шесть часов. <span class="pt">Foram na estação</span> означало бы совсем другое.<br><br><span class="pt">não teve tempo de</span> — «не успел», буквально «не имел времени». Готовый оборот, который стоит запомнить целиком.<br><br><span class="pt">Puseram</span> — от <span class="pt">pôr</span>: форма <span class="pt">eu</span> у него <span class="pt">pus</span>, отсюда и <span class="pt">pus + eram</span>.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Como foi? — как съездили?</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Maria:</span> Então? Foste ao Porto no sábado?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Fui, sim. Fomos os dois, eu e o João.</p>
+          <p class="dline"><span class="speaker">Maria:</span> E como foi?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Foi muito bom. Vimos o rio e comemos uns bolos.</p>
+          <p class="dline"><span class="speaker">Maria:</span> Trouxeste bolos para casa?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Trouxe dois. Estão na cozinha.</p>
+          <p class="dline"><span class="speaker">Maria:</span> E o João? Também gostou?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Gostou, mas esteve muito cansado. Disse que foi um dia difícil.</p>
+          <p class="dline"><span class="speaker">Maria:</span> Que pena. E voltaram a que horas?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Chegámos depois da meia-noite. Fizemos tudo num dia.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Мария:</b> Ну как? Ты ездила в Порту в субботу?<br><b>Ана:</b> Ездила, да. Поехали вдвоём, я и Жуан.<br><b>Мария:</b> И как всё прошло?<br><b>Ана:</b> Было очень хорошо. Посмотрели реку и съели пирожных.<br><b>Мария:</b> Привезла пирожные домой?<br><b>Ана:</b> Привезла два. Они на кухне.<br><b>Мария:</b> А Жуан? Ему тоже понравилось?<br><b>Ана:</b> Понравилось, но он очень устал. Сказал, что день вышел трудный.<br><b>Мария:</b> Жаль. И во сколько вы вернулись?<br><b>Ана:</b> Приехали после полуночи. Всё сделали за один день.</p>
+        <p class="why-note"><b>Почему так:</b> <span class="pt">Foste ao Porto?</span> — <span class="pt">ir</span>, ответ <span class="pt">Fui</span> повторяет глагол вместо «да», как это принято в португальском с темы 0.13.<br><br><span class="pt">Como foi?</span> — «как прошло?»: здесь <span class="se">ser</span>, направления нет. Одна и та же форма <span class="pt">foi</span> в двух репликах подряд значит разное.<br><br><span class="pt">Vimos</span> — от <span class="pt">ver</span>: «мы увидели». От <span class="pt">vir</span> вышло бы <span class="pt">viemos</span>.<br><br><span class="pt">Chegámos</span> — со шляпкой, правильный глагол из темы 2.1: без неё было бы «мы приходим».</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="preteritoirreg">
+    <p class="quiz-instruction">Задания идут вперемешку: правильные глаголы из темы 2.1 и неправильные из этой. Так и надо тренировать — выбор «ломается или нет» важнее, чем сам список форм.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">eu (fazer), прошедшее:</span>
+      <select class="mc" data-answer="fiz">
+        <option value="">—</option>
+        <option value="fiz">fiz</option>
+        <option value="fazi">fazi</option>
+        <option value="fez">fez</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">ele (trabalhar), прошедшее:</span>
+      <select class="mc" data-answer="trabalhou">
+        <option value="">—</option>
+        <option value="trabalhou">trabalhou</option>
+        <option value="trabalheu">trabalheu</option>
+        <option value="trabalhava">trabalhava</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">nós (ter), прошедшее:</span>
+      <select class="mc" data-answer="tivemos">
+        <option value="">—</option>
+        <option value="tivemos">tivemos</option>
+        <option value="temos">temos</option>
+        <option value="tivémos">tivémos</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">«Я съездил в Порту»:</span>
+      <select class="mc" data-answer="Fui ao Porto">
+        <option value="">—</option>
+        <option value="Fui ao Porto">Fui ao Porto</option>
+        <option value="Foi ao Porto">Foi ao Porto</option>
+        <option value="Fomos ao Porto">Fomos ao Porto</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">tu (dizer), прошедшее:</span>
+      <select class="mc" data-answer="disseste">
+        <option value="">—</option>
+        <option value="disseste">disseste</option>
+        <option value="dizeste">dizeste</option>
+        <option value="disse">disse</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">ele (poder), прошедшее — со шляпкой:</span>
+      <select class="mc" data-answer="pôde">
+        <option value="">—</option>
+        <option value="pôde">pôde</option>
+        <option value="pode">pode</option>
+        <option value="podeu">podeu</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">«он увидел» (не «пришёл»):</span>
+      <select class="mc" data-answer="viu">
+        <option value="">—</option>
+        <option value="viu">viu</option>
+        <option value="veio">veio</option>
+        <option value="vem">vem</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши форму <span class="pt">eu</span> от <span class="pt">estar</span>: «я был в Порту» —</span> <input class="blank" data-answer="estive" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">no Porto.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Впиши: «они принесли хлеб» —</span> <span class="pt">Eles</span> <input class="blank" data-answer="trouxeram" style="width:9em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">pão.</span></div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Вчера была проблема».</span>
+      <div class="qbuild" data-answer="Ontem houve um problema" data-words="houve|Ontem|problema|um"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
     <button type="button" class="next-card" data-open="vocab">
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label">Seguinte · дальше</span>
-        <span class="next-title">Dicionário — блок 1 пройден, повторить все слова</span>
+        <span class="next-title">Dicionário — прогнать девять форм в тренажёре</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -7027,7 +7516,7 @@
   // иначе прогресс считался бы от несуществующих экранов.
   var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes","adjetivos","ter","negacao","preposicoes","demonstrativos","numeros"];
   var PRESENTE_TOPICS = ["verbosar","verboseir","irregularesi","irregularesii","reflexivos","irinfinitivo","estarainf","possessivos","interrogativas","porpara"];
-  var PASSADO_TOPICS  = [];
+  var PASSADO_TOPICS  = ["preterito","preteritoirreg"];
   var EXPANSAO_TOPICS = [];
   var TOPICS = BASE_TOPICS.concat(PRESENTE_TOPICS).concat(PASSADO_TOPICS).concat(EXPANSAO_TOPICS);
 
@@ -7044,7 +7533,8 @@
     "negacao":20, "preposicoes":24, "demonstrativos":22, "numeros":26,
     "verbosar":24, "verboseir":22, "irregularesi":26, "irregularesii":26,
     "reflexivos":28, "irinfinitivo":22, "estarainf":24, "possessivos":26,
-    "interrogativas":24, "porpara":28
+    "interrogativas":24, "porpara":28,
+    "preterito":26, "preteritoirreg":28
   };
 
   var STORAGE_KEY   = "ptProgressV1";
@@ -7510,7 +8000,25 @@
     "deles":"их (de + eles)","delas":"их (de + elas)",
     // 1.9–1.10: «quer» от querer до статьи не достаёт (цепочки режут -o и -em,
     // а голое -r нет), «leve» — повелительная форма, разбирается в теме 3.3.
-    "quer":"хочет (от querer)","leve":"возьмите (от levar)"
+    "quer":"хочет (от querer)","leve":"возьмите (от levar)",
+    // 2.1: три подгонки написания в форме «eu». Цепочки STRIP их не берут:
+    // «cheguei» они доводят до «cheguar», а такого глагола нет.
+    "cheguei":"я пришёл (от chegar)","fiquei":"я остался (от ficar)",
+    "comecei":"я начал (от começar)","volta":"возвращение; обратный путь",
+    // 2.2: pretérito неправильных. Ни одна из этих форм не сводится к
+    // инфинитиву заменой окончания, а «vimos», «viram», «viste» цепочки
+    // молча уводят в «vir» — то есть в «приходить» вместо «видеть».
+    "foi":"был; пошёл (от ser и ir)","foste":"ты был; ты пошёл (от ser и ir)",
+    "fomos":"мы были; мы пошли (от ser и ir)","foram":"они были; они пошли (от ser и ir)",
+    "fez":"сделал (от fazer)","fizemos":"мы сделали (от fazer)","fizeram":"они сделали (от fazer)",
+    "teve":"имел, получил (от ter)","tivemos":"мы имели (от ter)","tiveram":"они имели (от ter)",
+    "esteve":"был, пробыл (от estar)","estiveram":"они были, пробыли (от estar)",
+    "trouxeste":"ты принёс (от trazer)","trouxeram":"они принесли (от trazer)",
+    "pôde":"смог (от poder)","houve":"было, случилось (от haver)",
+    "pus":"я положил (от pôr)","pôs":"положил (от pôr)","puseram":"они положили (от pôr)",
+    "vi":"я увидел (от ver)","viu":"увидел (от ver)","viste":"ты увидел (от ver)",
+    "vimos":"мы увидели (от ver); мы пришли (от vir)","viram":"они увидели (от ver)",
+    "veio":"пришёл (от vir)","dei":"я дал (от dar)","deu":"дал (от dar)"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
