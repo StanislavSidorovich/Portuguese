@@ -756,6 +756,7 @@
 </script>
 
 <div class="settings-bar">
+  <div class="lang-switch"><button type="button" data-lang="ru">РУ</button><button type="button" data-lang="en">EN</button></div>
   <button type="button" id="fontToggle" class="settings-btn">A</button>
   <button type="button" id="themeToggle" class="settings-btn">🌙 Тёмная</button>
 </div>
@@ -763,21 +764,21 @@
 <!-- Уровень CEFR тут намеренно не дублируется: он стоит в заголовке блока,
      куда кнопка и ведёт. -->
 <nav class="blockbar">
-  <button class="base" data-target="base">BASE · ОСНОВА</button>
-  <button class="presente" data-target="presente">PRESENTE · НАСТОЯЩЕЕ</button>
-  <button class="passado" data-target="passado">PASSADO · ПРОШЕДШЕЕ</button>
-  <button class="expansao" data-target="expansao">EXPANSÃO · РАСШИРЕНИЕ</button>
+  <button class="base" data-target="base" data-en="BASE · FOUNDATIONS">BASE · ОСНОВА</button>
+  <button class="presente" data-target="presente" data-en="PRESENTE · PRESENT">PRESENTE · НАСТОЯЩЕЕ</button>
+  <button class="passado" data-target="passado" data-en="PASSADO · PAST">PASSADO · ПРОШЕДШЕЕ</button>
+  <button class="expansao" data-target="expansao" data-en="EXPANSÃO · EXPANSION">EXPANSÃO · РАСШИРЕНИЕ</button>
 </nav>
 
 <div class="screen active" id="home">
 <header class="hero" id="top">
-  <div class="eyebrow">Português europeu · грамматика · офлайн</div>
-  <h1>Португальская грамматика с нуля</h1>
-  <p>Чтение, ser и estar, спряжение глаголов и времена — в каждой теме правило, тексты для чтения и задания с проверкой.</p>
-  <p class="hero-note">Курс европейского португальского — того, на котором говорят в Лиссабоне. Бразильские отличия отмечаются врезкой «а в Бразилии», но основа везде местная: <span class="pt">tu</span>, <span class="pt">estar a fazer</span>, <span class="pt">disse-me</span>, <span class="pt">autocarro</span>.</p>
-  <p class="hero-note">Словарного запаса не требуется: слова вводятся порциями, и в текстах встречаются только те, что уже были — читать можно с первого дня.</p>
+  <div class="eyebrow" data-en="Português europeu · grammar · offline">Português europeu · грамматика · офлайн</div>
+  <h1 data-en="Portuguese grammar from scratch">Португальская грамматика с нуля</h1>
+  <p data-en="Reading, ser and estar, verb conjugation and tenses — every topic has a rule, texts to read, and checked exercises.">Чтение, ser и estar, спряжение глаголов и времена — в каждой теме правило, тексты для чтения и задания с проверкой.</p>
+  <p class="hero-note" data-en="A course in European Portuguese — the kind spoken in Lisbon. Brazilian differences are flagged with an &lsquo;in Brazil&rsquo; aside, but the base is local throughout: &lt;span class='pt'&gt;tu&lt;/span&gt;, &lt;span class='pt'&gt;estar a fazer&lt;/span&gt;, &lt;span class='pt'&gt;disse-me&lt;/span&gt;, &lt;span class='pt'&gt;autocarro&lt;/span&gt;.">Курс европейского португальского — того, на котором говорят в Лиссабоне. Бразильские отличия отмечаются врезкой «а в Бразилии», но основа везде местная: <span class="pt">tu</span>, <span class="pt">estar a fazer</span>, <span class="pt">disse-me</span>, <span class="pt">autocarro</span>.</p>
+  <p class="hero-note" data-en="No prior vocabulary needed: words are introduced in small batches, and texts only use words already covered — you can start reading from day one.">Словарного запаса не требуется: слова вводятся порциями, и в текстах встречаются только те, что уже были — читать можно с первого дня.</p>
   <p class="hero-note" id="totalTimeNote"></p>
-  <button type="button" class="about-link" data-open="about">О приложении: что внутри и как заниматься →</button>
+  <button type="button" class="about-link" data-open="about" data-en="About this app: what&rsquo;s inside and how to study →">О приложении: что внутри и как заниматься →</button>
 
   <div class="progress-wrap">
     <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
@@ -786,7 +787,7 @@
 
   <div class="level-meter">
     <div class="level-meter-head">
-      <span class="level-meter-label">Прогресс по блокам курса</span>
+      <span class="level-meter-label" data-en="Progress by course block">Прогресс по блокам курса</span>
       <span class="level-meter-pct" id="meterPct">0%</span>
     </div>
     <div class="level-track" id="meterTrack"></div>
@@ -796,347 +797,347 @@
 
   <div class="continue-block" id="continueBlock" style="display:none;"></div>
   <div class="review-block" id="reviewBlock" style="display:none;">
-    <div class="review-head">Стоит повторить</div>
+    <div class="review-head" data-en="Worth reviewing">Стоит повторить</div>
     <div class="review-list"></div>
   </div>
 </header>
 
 <main>
-  <div class="level-divider"><span>Блок 0 · Base — основа</span></div>
+  <div class="level-divider"><span data-en="Block 0 · Base — foundations">Блок 0 · Base — основа</span></div>
   <div class="topic-group" id="base">
     <div class="era-header">
-      <span class="tag" data-group="base">Блок 0 · A1 · 16 тем</span>
-      <h2>Научиться читать и сказать, кто ты</h2>
-      <div class="sub">Португальский пишется почти как читается — но не по английским правилам, и безударные гласные в Португалии съедаются. Пока не разобрано чтение, слово на слух не опознаётся, поэтому начинаем отсюда.</div>
+      <span class="tag" data-group="base" data-en="Block 0 · A1 · 16 topics">Блок 0 · A1 · 16 тем</span>
+      <h2 data-en="Learn to read and say who you are">Научиться читать и сказать, кто ты</h2>
+      <div class="sub" data-en="Portuguese spelling is almost phonetic — just not by English rules, and unstressed vowels get swallowed in Portugal. Until reading is sorted out, words don&rsquo;t register by ear, so that&rsquo;s where we start.">Португальский пишется почти как читается — но не по английским правилам, и безударные гласные в Португалии съедаются. Пока не разобрано чтение, слово на слух не опознаётся, поэтому начинаем отсюда.</div>
     </div>
     <div class="topic-list">
       <button type="button" class="tool-row" data-open="frases">
         <span class="tool-icon">💬</span>
-        <span class="row-title">Frases · живые фразы<span class="row-title-ru">что говорить в кафе, на кассе и когда не понял собеседника</span></span>
+        <span class="row-title" data-en="Frases · phrases you'll actually use&lt;span class='row-title-ru'&gt;what to say at a caf&eacute;, at checkout, and when you didn&rsquo;t understand&lt;/span&gt;">Frases · живые фразы<span class="row-title-ru">что говорить в кафе, на кассе и когда не понял собеседника</span></span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="tool-row" data-open="dialogos">
         <span class="tool-icon">🗣</span>
-        <span class="row-title">Diálogos · разговор целиком<span class="row-title-ru">семь сцен: кафе, касса, улица, транспорт, знакомство, аптека, ресторан</span></span>
+        <span class="row-title" data-en="Diálogos · a full conversation&lt;span class='row-title-ru'&gt;seven scenes: caf&eacute;, checkout, street, transport, meeting someone, pharmacy, restaurant&lt;/span&gt;">Diálogos · разговор целиком<span class="row-title-ru">семь сцен: кафе, касса, улица, транспорт, знакомство, аптека, ресторан</span></span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="tool-row" data-open="tool-conjugador">
         <span class="tool-icon">🎛</span>
-        <span class="row-title">Conjugador · спрягатель<span class="row-title-ru">вводишь инфинитив — получаешь все формы и объяснение, где глагол ломает правило</span></span>
+        <span class="row-title" data-en="Conjugador · the conjugator&lt;span class='row-title-ru'&gt;type in an infinitive &mdash; get every form, plus an explanation of where the verb breaks the rule&lt;/span&gt;">Conjugador · спрягатель<span class="row-title-ru">вводишь инфинитив — получаешь все формы и объяснение, где глагол ломает правило</span></span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="tool-row" data-open="cheat-sounds">
         <span class="tool-icon">📋</span>
-        <span class="row-title">Шпаргалка · Leitura<span class="row-title-ru">все буквы и звуки на одном экране</span></span>
+        <span class="row-title" data-en="Cheat sheet · Leitura&lt;span class='row-title-ru'&gt;every letter and sound on one screen&lt;/span&gt;">Шпаргалка · Leitura<span class="row-title-ru">все буквы и звуки на одном экране</span></span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="tool-row" data-open="vocab">
         <span class="tool-icon">🗂</span>
-        <span class="row-title">Dicionário · словарь<span class="row-title-ru">все слова курса и тренажёр с повторениями</span></span>
+        <span class="row-title" data-en="Dicionário · the dictionary&lt;span class='row-title-ru'&gt;every word in the course, with a spaced-repetition trainer&lt;/span&gt;">Dicionário · словарь<span class="row-title-ru">все слова курса и тренажёр с повторениями</span></span>
         <span class="row-vocab-due" id="vocabDueBadge"></span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
 
       <button type="button" class="topic-row" data-open="alfabeto">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.1</span> Alfabeto e leitura<span class="row-title-ru">буквы и звуки: что читается не так, как выглядит</span></span>
+        <span class="row-title"><span class="topic-num">0.1</span> Alfabeto e leitura<span class="row-title-ru" data-en="letters and sounds: what doesn't read the way it looks">буквы и звуки: что читается не так, как выглядит</span></span>
         <span class="row-check" data-check="alfabeto" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="acento">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.2</span> Acento e redução<span class="row-title-ru">ударение и съеденные безударные — главное отличие Португалии</span></span>
+        <span class="row-title"><span class="topic-num">0.2</span> Acento e redução<span class="row-title-ru" data-en="stress and swallowed unstressed vowels &mdash; the main thing that sets Portugal apart">ударение и съеденные безударные — главное отличие Португалии</span></span>
         <span class="row-check" data-check="acento" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="nasais">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.3</span> Nasais<span class="row-title-ru">носовые: ão, ãe, õe, m и n на конце слога</span></span>
+        <span class="row-title"><span class="topic-num">0.3</span> Nasais<span class="row-title-ru" data-en="nasal sounds: ão, ãe, õe, and m/n at the end of a syllable">носовые: ão, ãe, õe, m и n на конце слога</span></span>
         <span class="row-check" data-check="nasais" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="digrafos">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.4</span> nh, lh, ch, ç, x, rr<span class="row-title-ru">буквосочетания, которых нет в русском</span></span>
+        <span class="row-title"><span class="topic-num">0.4</span> nh, lh, ch, ç, x, rr<span class="row-title-ru" data-en="letter combinations with no English equivalent">буквосочетания, которых нет в русском</span></span>
         <span class="row-check" data-check="digrafos" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="genero">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.5</span> Género e artigos<span class="row-title-ru">род и артикли: o, a, um, uma</span></span>
+        <span class="row-title"><span class="topic-num">0.5</span> Género e artigos<span class="row-title-ru" data-en="gender and articles: o, a, um, uma">род и артикли: o, a, um, uma</span></span>
         <span class="row-check" data-check="genero" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="plural">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.6</span> Plural<span class="row-title-ru">множественное число, включая ão → ões и l → is</span></span>
+        <span class="row-title"><span class="topic-num">0.6</span> Plural<span class="row-title-ru" data-en="plural forms, including ão → ões and l → is">множественное число, включая ão → ões и l → is</span></span>
         <span class="row-check" data-check="plural" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="ser">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.7</span> Ser<span class="row-title-ru">быть: постоянное свойство</span></span>
+        <span class="row-title"><span class="topic-num">0.7</span> Ser<span class="row-title-ru" data-en="to be: permanent traits">быть: постоянное свойство</span></span>
         <span class="row-check" data-check="ser" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="estar">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.8</span> Estar<span class="row-title-ru">быть: состояние и место</span></span>
+        <span class="row-title"><span class="topic-num">0.8</span> Estar<span class="row-title-ru" data-en="to be: state and location">быть: состояние и место</span></span>
         <span class="row-check" data-check="estar" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="servsestar">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.9</span> Ser vs estar<span class="row-title-ru">главное разделение всего курса</span></span>
+        <span class="row-title"><span class="topic-num">0.9</span> Ser vs estar<span class="row-title-ru" data-en="the main split of the whole course">главное разделение всего курса</span></span>
         <span class="row-check" data-check="servsestar" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="pronomes">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.10</span> Pronomes pessoais<span class="row-title-ru">eu, tu, você, o senhor — и когда что</span></span>
+        <span class="row-title"><span class="topic-num">0.10</span> Pronomes pessoais<span class="row-title-ru" data-en="eu, tu, você, o senhor &mdash; and when to use which">eu, tu, você, o senhor — и когда что</span></span>
         <span class="row-check" data-check="pronomes" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="adjetivos">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.11</span> Adjetivos<span class="row-title-ru">прилагательное и согласование по роду и числу</span></span>
+        <span class="row-title"><span class="topic-num">0.11</span> Adjetivos<span class="row-title-ru" data-en="adjectives and agreement in gender and number">прилагательное и согласование по роду и числу</span></span>
         <span class="row-check" data-check="adjetivos" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="ter">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.12</span> Ter e há<span class="row-title-ru">иметь и «есть, имеется»</span></span>
+        <span class="row-title"><span class="topic-num">0.12</span> Ter e há<span class="row-title-ru" data-en="to have, and &ldquo;there is&rdquo;">иметь и «есть, имеется»</span></span>
         <span class="row-check" data-check="ter" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="negacao">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.13</span> Negação e perguntas<span class="row-title-ru">отрицание и вопрос</span></span>
+        <span class="row-title"><span class="topic-num">0.13</span> Negação e perguntas<span class="row-title-ru" data-en="negation and questions">отрицание и вопрос</span></span>
         <span class="row-check" data-check="negacao" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="preposicoes">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.14</span> Preposições e contrações<span class="row-title-ru">do, na, ao, pelos — предлоги, слитые с артиклем</span></span>
+        <span class="row-title"><span class="topic-num">0.14</span> Preposições e contrações<span class="row-title-ru" data-en="do, na, ao, pelos &mdash; prepositions fused with the article">do, na, ao, pelos — предлоги, слитые с артиклем</span></span>
         <span class="row-check" data-check="preposicoes" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="demonstrativos">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.15</span> Este, esse, aquele<span class="row-title-ru">три расстояния вместо двух</span></span>
+        <span class="row-title"><span class="topic-num">0.15</span> Este, esse, aquele<span class="row-title-ru" data-en="three distances instead of two">три расстояния вместо двух</span></span>
         <span class="row-check" data-check="demonstrativos" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="numeros">
         <span class="marker" style="background:var(--base)"></span>
-        <span class="row-title"><span class="topic-num">0.16</span> Números, horas, dinheiro<span class="row-title-ru">числа, время, деньги</span></span>
+        <span class="row-title"><span class="topic-num">0.16</span> Números, horas, dinheiro<span class="row-title-ru" data-en="numbers, time, money">числа, время, деньги</span></span>
         <span class="row-check" data-check="numeros" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
     </div>
   </div>
 
-  <div class="level-divider"><span>Блок 1 · Presente — настоящее время</span></div>
+  <div class="level-divider"><span data-en="Block 1 · Presente — present tense">Блок 1 · Presente — настоящее время</span></div>
   <div class="topic-group" id="presente">
     <div class="era-header">
-      <span class="tag" data-group="presente">Блок 1 · A1–A2 · 10 тем</span>
-      <h2>Глагол в настоящем времени</h2>
-      <div class="sub">До сих пор глаголы шли готовыми кусками. Теперь разбираем, из чего они собраны: три спряжения, две волны неправильных и две конструкции, которые заменяют половину времён.</div>
+      <span class="tag" data-group="presente" data-en="Block 1 · A1–A2 · 10 topics">Блок 1 · A1–A2 · 10 тем</span>
+      <h2 data-en="The verb in the present tense">Глагол в настоящем времени</h2>
+      <div class="sub" data-en="So far verbs have arrived as ready-made chunks. Now we take them apart: three conjugations, two waves of irregulars, and two constructions that stand in for half the tenses.">До сих пор глаголы шли готовыми кусками. Теперь разбираем, из чего они собраны: три спряжения, две волны неправильных и две конструкции, которые заменяют половину времён.</div>
     </div>
     <div class="topic-list">
       <button type="button" class="topic-row" data-open="verbosar">
         <span class="marker" style="background:var(--presente)"></span>
-        <span class="row-title"><span class="topic-num">1.1</span> Verbos em -ar<span class="row-title-ru">правильные глаголы первого спряжения</span></span>
+        <span class="row-title"><span class="topic-num">1.1</span> Verbos em -ar<span class="row-title-ru" data-en="regular verbs of the first conjugation">правильные глаголы первого спряжения</span></span>
         <span class="row-check" data-check="verbosar" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="verboseir">
         <span class="marker" style="background:var(--presente)"></span>
-        <span class="row-title"><span class="topic-num">1.2</span> Verbos em -er / -ir<span class="row-title-ru">второе и третье спряжение</span></span>
+        <span class="row-title"><span class="topic-num">1.2</span> Verbos em -er / -ir<span class="row-title-ru" data-en="the second and third conjugations">второе и третье спряжение</span></span>
         <span class="row-check" data-check="verboseir" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="irregularesi">
         <span class="marker" style="background:var(--presente)"></span>
-        <span class="row-title"><span class="topic-num">1.3</span> Irregulares I<span class="row-title-ru">ir, fazer, poder, querer, ver</span></span>
+        <span class="row-title"><span class="topic-num">1.3</span> Irregulares I<span class="row-title-ru" data-en="ir, fazer, poder, querer, ver">ir, fazer, poder, querer, ver</span></span>
         <span class="row-check" data-check="irregularesi" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="irregularesii">
         <span class="marker" style="background:var(--presente)"></span>
-        <span class="row-title"><span class="topic-num">1.4</span> Irregulares II<span class="row-title-ru">vir, dar, saber, dizer, pôr, trazer</span></span>
+        <span class="row-title"><span class="topic-num">1.4</span> Irregulares II<span class="row-title-ru" data-en="vir, dar, saber, dizer, pôr, trazer">vir, dar, saber, dizer, pôr, trazer</span></span>
         <span class="row-check" data-check="irregularesii" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="reflexivos">
         <span class="marker" style="background:var(--presente)"></span>
-        <span class="row-title"><span class="topic-num">1.5</span> Verbos reflexivos<span class="row-title-ru">chamar-se, levantar-se и позиция -se</span></span>
+        <span class="row-title"><span class="topic-num">1.5</span> Verbos reflexivos<span class="row-title-ru" data-en="chamar-se, levantar-se, and where -se goes">chamar-se, levantar-se и позиция -se</span></span>
         <span class="row-check" data-check="reflexivos" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="irinfinitivo">
         <span class="marker" style="background:var(--presente)"></span>
-        <span class="row-title"><span class="topic-num">1.6</span> Ir + infinitivo<span class="row-title-ru">ближайшее будущее без будущего времени</span></span>
+        <span class="row-title"><span class="topic-num">1.6</span> Ir + infinitivo<span class="row-title-ru" data-en="the near future without a future tense">ближайшее будущее без будущего времени</span></span>
         <span class="row-check" data-check="irinfinitivo" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="estarainf">
         <span class="marker" style="background:var(--presente)"></span>
-        <span class="row-title"><span class="topic-num">1.7</span> Estar a + infinitivo<span class="row-title-ru">то, что происходит прямо сейчас (в Бразилии иначе)</span></span>
+        <span class="row-title"><span class="topic-num">1.7</span> Estar a + infinitivo<span class="row-title-ru" data-en="what's happening right now (different in Brazil)">то, что происходит прямо сейчас (в Бразилии иначе)</span></span>
         <span class="row-check" data-check="estarainf" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="possessivos">
         <span class="marker" style="background:var(--presente)"></span>
-        <span class="row-title"><span class="topic-num">1.8</span> Possessivos<span class="row-title-ru">o meu, a minha — притяжательные с артиклем</span></span>
+        <span class="row-title"><span class="topic-num">1.8</span> Possessivos<span class="row-title-ru" data-en="o meu, a minha &mdash; possessives with an article">o meu, a minha — притяжательные с артиклем</span></span>
         <span class="row-check" data-check="possessivos" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="interrogativas">
         <span class="marker" style="background:var(--presente)"></span>
-        <span class="row-title"><span class="topic-num">1.9</span> Palavras interrogativas<span class="row-title-ru">que, quem, onde, quando, porquê</span></span>
+        <span class="row-title"><span class="topic-num">1.9</span> Palavras interrogativas<span class="row-title-ru" data-en="que, quem, onde, quando, porquê">que, quem, onde, quando, porquê</span></span>
         <span class="row-check" data-check="interrogativas" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="porpara">
         <span class="marker" style="background:var(--presente)"></span>
-        <span class="row-title"><span class="topic-num">1.10</span> Por vs para<span class="row-title-ru">два предлога на один русский «для»</span></span>
+        <span class="row-title"><span class="topic-num">1.10</span> Por vs para<span class="row-title-ru" data-en="two prepositions for one English &ldquo;for&rdquo;">два предлога на один русский «для»</span></span>
         <span class="row-check" data-check="porpara" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
     </div>
   </div>
 
-  <div class="level-divider"><span>Блок 2 · Passado — прошедшее время</span></div>
+  <div class="level-divider"><span data-en="Block 2 · Passado — past tense">Блок 2 · Passado — прошедшее время</span></div>
   <div class="topic-group" id="passado">
     <div class="era-header">
-      <span class="tag" data-group="passado">Блок 2 · A2–B1 · 7 тем</span>
-      <h2>Два прошедших вместо одного</h2>
-      <div class="sub">В русском одно прошедшее время, в португальском их два, и выбор между ними обязателен в каждой фразе. Второй по трудности узел курса после subjuntivo.</div>
+      <span class="tag" data-group="passado" data-en="Block 2 · A2–B1 · 7 topics">Блок 2 · A2–B1 · 7 тем</span>
+      <h2 data-en="Two pasts instead of one">Два прошедших вместо одного</h2>
+      <div class="sub" data-en="English gets by with one past tense; Portuguese has two, and choosing between them is mandatory in every sentence. The second-hardest knot in the course, after the subjuntivo.">В русском одно прошедшее время, в португальском их два, и выбор между ними обязателен в каждой фразе. Второй по трудности узел курса после subjuntivo.</div>
     </div>
     <div class="topic-list">
       <button type="button" class="topic-row" data-open="preterito">
         <span class="marker" style="background:var(--passado)"></span>
-        <span class="row-title"><span class="topic-num">2.1</span> Pretérito perfeito<span class="row-title-ru">простое прошедшее у правильных глаголов</span></span>
+        <span class="row-title"><span class="topic-num">2.1</span> Pretérito perfeito<span class="row-title-ru" data-en="the simple past of regular verbs">простое прошедшее у правильных глаголов</span></span>
         <span class="row-check" data-check="preterito" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="preteritoirreg">
         <span class="marker" style="background:var(--passado)"></span>
-        <span class="row-title"><span class="topic-num">2.2</span> Perfeito irregular<span class="row-title-ru">fui, fiz, tive, estive, disse, trouxe</span></span>
+        <span class="row-title"><span class="topic-num">2.2</span> Perfeito irregular<span class="row-title-ru" data-en="fui, fiz, tive, estive, disse, trouxe">fui, fiz, tive, estive, disse, trouxe</span></span>
         <span class="row-check" data-check="preteritoirreg" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--passado)"></span>
-        <span class="row-title"><span class="topic-num">2.3</span> Imperfeito<span class="row-title-ru">прошедшее «фоном»: было, ходил, каждый день</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">2.3</span> Imperfeito<span class="row-title-ru" data-en="background past: was, used to go, every day">прошедшее «фоном»: было, ходил, каждый день</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--passado)"></span>
-        <span class="row-title"><span class="topic-num">2.4</span> Perfeito vs imperfeito<span class="row-title-ru">какое из двух и почему</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">2.4</span> Perfeito vs imperfeito<span class="row-title-ru" data-en="which of the two, and why">какое из двух и почему</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--passado)"></span>
-        <span class="row-title"><span class="topic-num">2.5</span> Particípio<span class="row-title-ru">причастие и неправильные формы (feito, dito, visto)</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">2.5</span> Particípio<span class="row-title-ru" data-en="the participle and its irregular forms (feito, dito, visto)">причастие и неправильные формы (feito, dito, visto)</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--passado)"></span>
-        <span class="row-title"><span class="topic-num">2.6</span> Pretérito perfeito composto<span class="row-title-ru">tenho feito — не то, что английское present perfect</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">2.6</span> Pretérito perfeito composto<span class="row-title-ru" data-en="tenho feito &mdash; not the same as the English present perfect">tenho feito — не то, что английское present perfect</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--passado)"></span>
-        <span class="row-title"><span class="topic-num">2.7</span> Há, faz, desde<span class="row-title-ru">сколько времени назад и с каких пор</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">2.7</span> Há, faz, desde<span class="row-title-ru" data-en="how long ago, and since when">сколько времени назад и с каких пор</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
     </div>
   </div>
 
-  <div class="level-divider"><span>Блок 3 · Expansão — расширение</span></div>
+  <div class="level-divider"><span data-en="Block 3 · Expansão — expansion">Блок 3 · Expansão — расширение</span></div>
   <div class="topic-group" id="expansao">
     <div class="era-header">
-      <span class="tag" data-group="expansao">Блок 3 · B1 · 14 тем</span>
-      <h2>Наклонения, местоимения-дополнения и subjuntivo</h2>
-      <div class="sub">Здесь лежат формы, которых нет в русском вообще: conjuntivo во всех временах, будущее сослагательное и личный инфинитив. В живой речи они постоянные, поэтому блок обязательный, а не «для продвинутых».</div>
+      <span class="tag" data-group="expansao" data-en="Block 3 · B1 · 14 topics">Блок 3 · B1 · 14 тем</span>
+      <h2 data-en="Moods, object pronouns, and the subjuntivo">Наклонения, местоимения-дополнения и subjuntivo</h2>
+      <div class="sub" data-en="This block holds forms English doesn&rsquo;t have at all: the conjuntivo in every tense, the future subjunctive, and the personal infinitive. They&rsquo;re constant in real speech, so this block is required, not &lsquo;for advanced learners&rsquo;.">Здесь лежат формы, которых нет в русском вообще: conjuntivo во всех временах, будущее сослагательное и личный инфинитив. В живой речи они постоянные, поэтому блок обязательный, а не «для продвинутых».</div>
     </div>
     <div class="topic-list">
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.1</span> Futuro do presente<span class="row-title-ru">будущее время и когда оно не нужно</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.1</span> Futuro do presente<span class="row-title-ru" data-en="the future tense, and when you don't need it">будущее время и когда оно не нужно</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.2</span> Condicional<span class="row-title-ru">gostaria, seria — вежливость и «бы»</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.2</span> Condicional<span class="row-title-ru" data-en="gostaria, seria &mdash; politeness and &ldquo;would&rdquo;">gostaria, seria — вежливость и «бы»</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.3</span> Imperativo<span class="row-title-ru">просьба и приказ, включая вежливую форму</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.3</span> Imperativo<span class="row-title-ru" data-en="requests and commands, including the polite form">просьба и приказ, включая вежливую форму</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.4</span> Pronomes complemento<span class="row-title-ru">me, te, o, lhe и их позиция (disse-me)</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.4</span> Pronomes complemento<span class="row-title-ru" data-en="me, te, o, lhe, and where they go (disse-me)">me, te, o, lhe и их позиция (disse-me)</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.5</span> Conjuntivo presente<span class="row-title-ru">сослагательное: que eu faça</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.5</span> Conjuntivo presente<span class="row-title-ru" data-en="the subjunctive: que eu faça">сослагательное: que eu faça</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.6</span> Conjuntivo imperfeito<span class="row-title-ru">se eu fosse — нереальное условие</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.6</span> Conjuntivo imperfeito<span class="row-title-ru" data-en="se eu fosse &mdash; an unreal condition">se eu fosse — нереальное условие</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.7</span> Futuro do conjuntivo<span class="row-title-ru">quando eu chegar — форма, которой нет почти нигде</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.7</span> Futuro do conjuntivo<span class="row-title-ru" data-en="quando eu chegar &mdash; a form almost no other language has">quando eu chegar — форма, которой нет почти нигде</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.8</span> Condicionais<span class="row-title-ru">условные предложения всех трёх типов</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.8</span> Condicionais<span class="row-title-ru" data-en="conditional sentences, all three types">условные предложения всех трёх типов</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.9</span> Infinitivo pessoal<span class="row-title-ru">личный инфинитив — вторая уникальная форма</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.9</span> Infinitivo pessoal<span class="row-title-ru" data-en="the personal infinitive &mdash; the second unique form">личный инфинитив — вторая уникальная форма</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.10</span> Relativas<span class="row-title-ru">придаточные: que, quem, cujo, onde</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.10</span> Relativas<span class="row-title-ru" data-en="relative clauses: que, quem, cujo, onde">придаточные: que, quem, cujo, onde</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.11</span> Voz passiva e se<span class="row-title-ru">пассив и безличные обороты (vende-se)</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.11</span> Voz passiva e se<span class="row-title-ru" data-en="the passive voice and impersonal se (vende-se)">пассив и безличные обороты (vende-se)</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.12</span> Diminutivos e aumentativos<span class="row-title-ru">cafezinho, casarão — и зачем их столько</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.12</span> Diminutivos e aumentativos<span class="row-title-ru" data-en="cafezinho, casarão &mdash; and why there are so many">cafezinho, casarão — и зачем их столько</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.13</span> Expressões do dia a dia<span class="row-title-ru">ficar, dar, estar com — глаголы на все случаи</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.13</span> Expressões do dia a dia<span class="row-title-ru" data-en="ficar, dar, estar com &mdash; verbs for every occasion">ficar, dar, estar com — глаголы на все случаи</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--expansao)"></span>
-        <span class="row-title"><span class="topic-num">3.14</span> Registo formal<span class="row-title-ru">официальный стиль: письма, документы, университет</span></span>
-        <span class="row-soon">скоро</span>
+        <span class="row-title"><span class="topic-num">3.14</span> Registo formal<span class="row-title-ru" data-en="formal register: letters, documents, university">официальный стиль: письма, документы, университет</span></span>
+        <span class="row-soon" data-en="soon">скоро</span>
       </button>
     </div>
   </div>
 
-  <div class="reset-row"><button type="button" id="resetBtn">Сбросить прогресс</button></div>
+  <div class="reset-row"><button type="button" id="resetBtn" data-en="Reset progress">Сбросить прогресс</button></div>
 </main>
 </div>
 <!-- ============ О ПРИЛОЖЕНИИ ============ -->
@@ -7577,6 +7578,35 @@
 
   function L(ru, en){ return (LANG === "en" && en) ? en : ru; }
 
+  // Темы курса переводятся по одной; пока тема не попала в этот список,
+  // в EN она гаснет карточкой «coming soon» — обещание английского не
+  // должно опережать перевод. Frases и Diálogos сюда не входят: у них
+  // свой движок перевода (data-open, а не data-topic), и они уже готовы.
+  var EN_READY_TOPICS = [];
+
+  function updateTopicEnLock(){
+    document.querySelectorAll(".topic-row[data-open]").forEach(function(btn){
+      var ready = EN_READY_TOPICS.indexOf(btn.dataset.open) !== -1;
+      var locked = (LANG === "en") && !ready;
+      btn.disabled = locked;
+      var soon = btn.querySelector(".row-soon-en");
+      if(!soon){
+        soon = document.createElement("span");
+        soon.className = "row-soon row-soon-en";
+        soon.textContent = "soon";
+        btn.insertBefore(soon, btn.querySelector(".row-arrow"));
+      }
+      soon.style.display = locked ? "" : "none";
+    });
+  }
+
+  function updateThemeToggleText(){
+    var btn = document.getElementById("themeToggle");
+    if(!btn) return;
+    var dark = document.body.classList.contains("dark");
+    btn.textContent = dark ? L("☀️ Светлая", "☀️ Light") : L("🌙 Тёмная", "🌙 Dark");
+  }
+
   function applyLang(){
     document.body.classList.toggle("lang-en", LANG === "en");
     document.querySelectorAll("[data-en]").forEach(function(el){
@@ -7586,6 +7616,10 @@
     document.querySelectorAll(".lang-switch button").forEach(function(b){
       b.classList.toggle("active", b.dataset.lang === LANG);
     });
+    updateTopicEnLock();
+    updateThemeToggleText();
+    if(typeof renderProgress === "function") renderProgress();
+    if(typeof renderTotalTime === "function") renderTotalTime();
   }
 
   function setLang(v){
@@ -7805,7 +7839,7 @@
     var fill = document.getElementById("progressFill");
     var text = document.getElementById("progressText");
     if(fill) fill.style.width = (plannedTotal ? done/plannedTotal*100 : 0) + "%";
-    if(text) text.textContent = done + " / " + plannedTotal + " тем пройдено · " + TOPICS.length + " открыто";
+    if(text) text.textContent = done + " / " + plannedTotal + L(" тем пройдено · ", " topics done · ") + TOPICS.length + L(" открыто", " unlocked");
 
     document.querySelectorAll("[data-check]").forEach(function(el){
       var v = p[el.dataset.check];
@@ -7859,11 +7893,12 @@
     var pctEl = document.getElementById("meterPct");
     var cntEl = document.getElementById("meterCount");
     if(pctEl) pctEl.textContent = pct + "%";
-    var names = Object.keys(BLOCKS).map(function(k){ return "«" + BLOCKS[k].label + "»"; });
+    var quote = L("«", "“"), quoteEnd = L("»", "”");
+    var names = Object.keys(BLOCKS).map(function(k){ return quote + BLOCKS[k].label + quoteEnd; });
     var listed = names.length > 1
-      ? names.slice(0, -1).join(", ") + " и " + names[names.length - 1]
+      ? names.slice(0, -1).join(", ") + L(" и ", " and ") + names[names.length - 1]
       : names[0];
-    if(cntEl) cntEl.textContent = doneAll + " из " + plannedTotal + " тем блоков " + listed + ". Остальные темы пока в работе.";
+    if(cntEl) cntEl.textContent = doneAll + L(" из ", " of ") + plannedTotal + L(" тем блоков ", " topics in ") + listed + L(". Остальные темы пока в работе.", ". The rest are still in progress.");
   }
 
   // Тема попадает сюда, если по ней есть попытка с ошибками. Сортируем по
@@ -7888,7 +7923,7 @@
 
     var list = box.querySelector(".review-list");
     list.innerHTML = weak.slice(0,3).map(function(w){
-      var why = w.pct + "% верных" + (w.days > 0 ? " · " + w.days + " дн. назад" : "");
+      var why = w.pct + L("% верных", "% correct") + (w.days > 0 ? " · " + w.days + L(" дн. назад", " days ago") : "");
       return '<button type="button" class="review-item" data-open="'+w.id+'">' +
              '<span class="review-title">'+(titles[w.id] || w.id)+'</span>' +
              '<span class="review-why">'+why+'</span></button>';
@@ -7904,7 +7939,7 @@
     var title = last ? topicTitleMap()[last] : null;
     if(!last || !title){ box.style.display = "none"; return; }
     box.innerHTML = '<button type="button" class="review-item" data-open="'+last+'" style="border-color:#DAE1DE;margin:0;">' +
-                    '<span class="review-why">Продолжить</span>' +
+                    '<span class="review-why">'+L("Продолжить", "Continue")+'</span>' +
                     '<span class="review-title">'+title+'</span></button>';
     box.style.display = "block";
   }
@@ -7924,6 +7959,11 @@
     var n = TOPICS.length;
     var mins = TOPICS.reduce(function(s,t){ return s + (TOPIC_MINUTES[t] || 0); }, 0);
     var hours = Math.round(mins/60*10)/10;
+    if(LANG === "en"){
+      el.textContent = n + " " + (n === 1 ? "topic" : "topics") + " unlocked so far — about " +
+                        hours + " " + (hours === 1 ? "hour" : "hours") + " of study.";
+      return;
+    }
     // У дробного числа форма всегда «часа» (12,2 часа), у целого — склоняется.
     var hourWord = hours % 1 ? "часа" : plural(hours, "час", "часа", "часов");
     el.textContent = "Сейчас открыто " + n + " " + plural(n, "тема", "темы", "тем") +
@@ -10099,7 +10139,7 @@
 
   document.getElementById("themeToggle").addEventListener("click", function(){
     var dark = document.body.classList.toggle("dark");
-    this.textContent = dark ? "☀️ Светлая" : "🌙 Тёмная";
+    updateThemeToggleText();
     try{ localStorage.setItem(THEME_KEY, dark ? "dark" : "light"); }catch(e){}
   });
 
@@ -10113,7 +10153,7 @@
   });
 
   document.getElementById("resetBtn").addEventListener("click", function(){
-    if(!confirm("Сбросить весь прогресс? Отменить не получится.")) return;
+    if(!confirm(L("Сбросить весь прогресс? Отменить не получится.", "Reset all progress? This can't be undone."))) return;
     try{
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem(LAST_TOPIC_KEY);
@@ -10132,8 +10172,7 @@
   /* ================= СТАРТ ================= */
 
   (function init(){
-    document.getElementById("themeToggle").textContent =
-      document.body.classList.contains("dark") ? "☀️ Светлая" : "🌙 Тёмная";
+    updateThemeToggleText();
     var root = document.documentElement;
     document.getElementById("fontToggle").textContent =
       root.classList.contains("font-plus-plus") ? "A++" : (root.classList.contains("font-plus") ? "A+" : "A");
