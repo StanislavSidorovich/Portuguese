@@ -336,6 +336,54 @@ function checkConjTables() {
   if (!problems) ok(`${tables} таблиц, ${forms} форм — все совпали с движком`);
 }
 
+/* ============ 7. английские задания внутри data-en ============ */
+
+// Перевод задания уезжает целиком в data-en, а разметка внутри атрибута
+// пишется сущностями и одинарными кавычками — иначе проверка 1 сочла бы её
+// тегами. Побочный эффект: проверка 4 такое задание не видит вовсе, потому
+// что ищет data-answer в двойных кавычках. Здесь тот же разбор, но по
+// раскодированному содержимому атрибута.
+function checkEnQuizData() {
+  head('7. Английские задания (data-en)');
+
+  const decode = (s) => s
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/&amp;/g, '&');
+
+  let problems = 0, blanks = 0, selects = 0;
+
+  for (const attr of html.matchAll(/data-en="([^"]*)"/g)) {
+    const en = decode(attr[1]);
+
+    for (const m of en.matchAll(/<select class='mc' data-answer='([^']*)'>([\s\S]*?)<\/select>/g)) {
+      selects++;
+      const answer  = m[1];
+      const options = [...m[2].matchAll(/<option value='([^']*)'/g)].map((o) => o[1]);
+      if (!answer) { bad('EN: у выпадающего списка пустой data-answer'); problems++; continue; }
+      if (!options.includes(answer)) {
+        bad(`EN: правильного варианта «${answer}» нет среди опций (${options.filter(Boolean).join(', ')})`);
+        problems++;
+      }
+    }
+
+    for (const m of en.matchAll(/<input class='blank' data-answer='([^']*)'/g)) {
+      blanks++;
+      if (!m[1].trim()) { bad('EN: у поля ввода пустой data-answer'); problems++; }
+    }
+  }
+
+  // Английское задание, потерявшее номер, на экране съезжает в общий поток.
+  for (const attr of html.matchAll(/<div class="qitem" data-en="([^"]*)"/g)) {
+    if (!/<span class='qnum'>/.test(decode(attr[1]))) {
+      bad('EN: у задания нет номера (span.qnum)');
+      problems++;
+    }
+  }
+
+  if (!problems) ok(`${blanks} полей, ${selects} списков — ответы согласованы`);
+}
+
 /* ============ ============ */
 
 console.log('Проверка index.html');
@@ -345,6 +393,7 @@ checkVocabCoverage();
 checkQuizData();
 checkIrregulars();
 checkConjTables();
+checkEnQuizData();
 
 console.log('');
 if (failed) {
