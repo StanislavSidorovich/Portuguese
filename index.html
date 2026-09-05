@@ -257,7 +257,25 @@
 
   /* ---------- ЭКРАН ТЕМЫ ---------- */
   .topic-screen{max-width:640px; margin:0 auto; padding:0 16px 70px;}
-  .topic-topbar{position:sticky; top:0; background:var(--bg); padding:12px 0 8px; z-index:5;}
+  .topic-topbar{position:sticky; top:0; background:var(--bg); padding:12px 0 8px; z-index:5; display:flex; align-items:center; gap:8px;}
+
+  /* Переключатель языка. Стоит только на Frases и Diálogos: темы курса
+     русские, и обещать на них английский нельзя. Русский оригинал разметки
+     остаётся в DOM, перевод лежит в data-en у самого узла — см. applyLang(). */
+  .lang-switch{display:flex; gap:4px; margin-left:auto;}
+  .lang-switch button{
+    font-family:var(--font-lat); font-size:0.7rem; font-weight:800; letter-spacing:0.04em;
+    background:none; border:1px solid #D8E0DC; color:var(--muted);
+    border-radius:999px; padding:4px 10px; cursor:pointer;
+  }
+  body.dark .lang-switch button{border-color:#2F3A36;}
+  .lang-switch button.active{background:var(--base); border-color:var(--base); color:#fff;}
+  /* Транскрипция курса написана русскими буквами — англоязычному она не
+     помогает, а мешает. В EN её место занимает кнопка 🔊. */
+  body.lang-en .fr-say, body.lang-en .dg-say{display:none;}
+  .lang-note{display:none; font-size:0.84rem; color:var(--muted); background:var(--card);
+    border-radius:12px; padding:10px 12px; margin:0 0 16px;}
+  body.lang-en .lang-note{display:block;}
   .back-btn{
     background:none; border:none; padding:6px 8px 6px 0; font-family:var(--font-ru);
     font-size:0.9rem; font-weight:600; color:var(--muted); cursor:pointer; border-radius:8px;
@@ -799,7 +817,7 @@
       </button>
       <button type="button" class="tool-row" data-open="dialogos">
         <span class="tool-icon">🗣</span>
-        <span class="row-title">Diálogos · разговор целиком<span class="row-title-ru">сцена в кафе и на кассе: собеседник говорит первым, отвечаешь ты</span></span>
+        <span class="row-title">Diálogos · разговор целиком<span class="row-title-ru">семь сцен: кафе, касса, улица, транспорт, знакомство, аптека, ресторан</span></span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="tool-row" data-open="tool-conjugador">
@@ -7120,334 +7138,336 @@
 
 <!-- ============ FRASES ============ -->
 <div class="screen topic-screen" id="screen-frases" style="--tint-color:var(--base)">
-  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back data-en="← All topics">← Все темы</button><div class="lang-switch"><button type="button" data-lang="ru">РУ</button><button type="button" data-lang="en">EN</button></div></div>
   <div class="topic-header">
     <span class="marker" style="background:var(--base)"></span>
-    <h2>Frases · живые фразы</h2>
+    <h2 data-en="Frases · the phrases people actually use">Frases · живые фразы</h2>
   </div>
-  <div class="topic-subtitle">Фразы для первых разговоров с местными — целыми кусками, без разбора грамматики. Здесь не учат правило, здесь дают то, что говорится сегодня: в кафе, на кассе и когда ты не понял собеседника.</div>
+  <div class="topic-subtitle" data-en="Phrases for your first conversations with locals — whole chunks, no grammar to unpack. This is not a rule to learn, it is what gets said today: in a café, at the till, and when you did not catch a word.">Фразы для первых разговоров с местными — целыми кусками, без разбора грамматики. Здесь не учат правило, здесь дают то, что говорится сегодня: в кафе, на кассе и когда ты не понял собеседника.</div>
   <div class="pane active">
 
     <div class="fr-jump">
-      <button type="button" data-scroll="fr-escudo">Щит</button>
-      <button type="button" data-scroll="fr-cortesia">Вежливость</button>
-      <button type="button" data-scroll="fr-cafe">Кафе</button>
-      <button type="button" data-scroll="fr-loja">Касса</button>
+      <button type="button" data-scroll="fr-escudo" data-en="Shield">Щит</button>
+      <button type="button" data-scroll="fr-cortesia" data-en="Courtesy">Вежливость</button>
+      <button type="button" data-scroll="fr-cafe" data-en="Café">Кафе</button>
+      <button type="button" data-scroll="fr-loja" data-en="Checkout">Касса</button>
     </div>
 
-    <div class="tip"><b>Как этим пользоваться.</b> Не читать списком. Взять три фразы из «Щита», выучить наизусть до автоматизма и идти говорить — остальное подтянется само. Разговор с местным ломается не от незнания слов, а от того, что после первого непонятого ответа сказать нечего.</div>
+    <div class="lang-note">Only <b>Frases</b> and <b>Diálogos</b> are translated: the course topics themselves are in Russian. The pronunciation hints of this course are written in Cyrillic, so they are hidden here — tap 🔊 to hear the phrase instead.</div>
 
-    <div class="text-label" id="fr-escudo">Щит · когда ты не понял</div>
+    <div class="tip" data-en="&lt;b&gt;How to use this.&lt;/b&gt; Don't read it as a list. Take three phrases from the Shield section, learn them cold, and go talk — the rest follows. A conversation with a local breaks down not because you lack words, but because after the first answer you didn't catch, you have nothing to say."><b>Как этим пользоваться.</b> Не читать списком. Взять три фразы из «Щита», выучить наизусть до автоматизма и идти говорить — остальное подтянется само. Разговор с местным ломается не от незнания слов, а от того, что после первого непонятого ответа сказать нечего.</div>
+
+    <div class="text-label" id="fr-escudo" data-en="Shield · when you didn't catch it">Щит · когда ты не понял</div>
     <div class="fr-list">
       <div class="fr-row">
         <div class="fr-pt">Não percebi.</div>
         <div class="fr-say">нау~ пырсыби́</div>
-        <div class="fr-ru">Я не понял.</div>
-        <div class="fr-when">Главная фраза первых месяцев. Говорить спокойно и сразу — после неё португальцы сбавляют темп без обид.</div>
+        <div class="fr-ru" data-en="I didn't understand.">Я не понял.</div>
+        <div class="fr-when" data-en="The one phrase of your first months. Say it calmly and straight away — people slow down after it, without taking offence.">Главная фраза первых месяцев. Говорить спокойно и сразу — после неё португальцы сбавляют темп без обид.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Pode repetir, se faz favor?</div>
         <div class="fr-say">под рыпыти́р, сы фаш фаво́р</div>
-        <div class="fr-ru">Повторите, пожалуйста.</div>
+        <div class="fr-ru" data-en="Could you repeat that, please?">Повторите, пожалуйста.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Pode falar mais devagar?</div>
         <div class="fr-say">под фалáр майш дывагáр</div>
-        <div class="fr-ru">Можете говорить помедленнее?</div>
-        <div class="fr-when">Работает лучше, чем «повторите»: со второго раза на той же скорости понятнее не станет.</div>
+        <div class="fr-ru" data-en="Could you speak more slowly?">Можете говорить помедленнее?</div>
+        <div class="fr-when" data-en="Works better than «repeat»: the same sentence at the same speed won't be any clearer the second time.">Работает лучше, чем «повторите»: со второго раза на той же скорости понятнее не станет.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Estou a aprender português.</div>
         <div class="fr-say">ышто́у а апрынде́р пуртугэ́ш</div>
-        <div class="fr-ru">Я учу португальский.</div>
-        <div class="fr-when">Сказать один раз в начале разговора — и собеседник сам замедлится и начнёт подбирать слова проще. Это тема 1.7: <span class="pt">estar a + infinitivo</span>.</div>
+        <div class="fr-ru" data-en="I'm learning Portuguese.">Я учу португальский.</div>
+        <div class="fr-when" data-en="Say it once at the start and the other person slows down and picks simpler words on their own. This is topic 1.7: &lt;span class='pt'&gt;estar a + infinitivo&lt;/span&gt;.">Сказать один раз в начале разговора — и собеседник сам замедлится и начнёт подбирать слова проще. Это тема 1.7: <span class="pt">estar a + infinitivo</span>.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Desculpe o meu português.</div>
         <div class="fr-say">дышку́лп у ме́у пуртугэ́ш</div>
-        <div class="fr-ru">Извините мой португальский.</div>
-        <div class="fr-reply">В ответ почти всегда: <b>Está a falar muito bem!</b> — «да вы прекрасно говорите». Это вежливость, а не оценка, но разговор после неё идёт легче.</div>
+        <div class="fr-ru" data-en="Sorry for my Portuguese.">Извините мой португальский.</div>
+        <div class="fr-reply" data-en="The answer is almost always &lt;b&gt;Está a falar muito bem!&lt;/b&gt; — «you speak very well». It is politeness rather than an assessment, but the conversation goes easier after it.">В ответ почти всегда: <b>Está a falar muito bem!</b> — «да вы прекрасно говорите». Это вежливость, а не оценка, но разговор после неё идёт легче.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Fala inglês?</div>
         <div class="fr-say">фáла инглэ́ш</div>
-        <div class="fr-ru">Вы говорите по-английски?</div>
-        <div class="fr-when">Запасной выход, а не первый ход. В Лиссабоне ответят «да» почти везде — и практика на этом закончится.</div>
+        <div class="fr-ru" data-en="Do you speak English?">Вы говорите по-английски?</div>
+        <div class="fr-when" data-en="An emergency exit, not an opening move. In Lisbon almost everyone says yes — and your practice ends right there.">Запасной выход, а не первый ход. В Лиссабоне ответят «да» почти везде — и практика на этом закончится.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Como se diz … em português?</div>
         <div class="fr-say">ко́му сы диш … э~ пуртугэ́ш</div>
-        <div class="fr-ru">Как сказать … по-португальски?</div>
-        <div class="fr-when">Самый быстрый способ учить слова: спрашивать их у того, с кем говоришь, и тут же использовать.</div>
+        <div class="fr-ru" data-en="How do you say … in Portuguese?">Как сказать … по-португальски?</div>
+        <div class="fr-when" data-en="The fastest way to learn words: ask the person in front of you, then use the word straight away.">Самый быстрый способ учить слова: спрашивать их у того, с кем говоришь, и тут же использовать.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">O que significa …?</div>
         <div class="fr-say">у кы сигнифи́ка</div>
-        <div class="fr-ru">Что значит …?</div>
+        <div class="fr-ru" data-en="What does … mean?">Что значит …?</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Pode escrever, se faz favor?</div>
         <div class="fr-say">под ышкрыве́р, сы фаш фаво́р</div>
-        <div class="fr-ru">Можете написать, пожалуйста?</div>
-        <div class="fr-when">Написанное слово ты прочитаешь — этому курс уже научил. На слух то же самое слово не опознаётся из-за съеденных гласных.</div>
+        <div class="fr-ru" data-en="Could you write it down, please?">Можете написать, пожалуйста?</div>
+        <div class="fr-when" data-en="A written word you can read — the course has already taught you that. The same word by ear is unrecognisable, because the vowels get swallowed.">Написанное слово ты прочитаешь — этому курс уже научил. На слух то же самое слово не опознаётся из-за съеденных гласных.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Outra vez, se faz favor.</div>
         <div class="fr-say">о́тра веш, сы фаш фаво́р</div>
-        <div class="fr-ru">Ещё раз, пожалуйста.</div>
+        <div class="fr-ru" data-en="Once more, please.">Ещё раз, пожалуйста.</div>
       </div>
     </div>
 
-    <div class="trap"><b>Armadilha: «не понял» — по-разному.</b> В Португалии говорят <span class="pt">não percebi</span>. Бразильское <span class="pt">não entendi</span> поймут, но оно сразу выдаёт, по какому учебнику ты учился. Глагол <span class="pt">perceber</span> здесь значит «понимать», а вовсе не «замечать», как подсказывает английское perceive.</div>
+    <div class="trap" data-en="&lt;b&gt;Armadilha: «I didn't understand» — two ways.&lt;/b&gt; In Portugal people say &lt;span class='pt'&gt;não percebi&lt;/span&gt;. The Brazilian &lt;span class='pt'&gt;não entendi&lt;/span&gt; will be understood, but it gives away which textbook you learned from. The verb &lt;span class='pt'&gt;perceber&lt;/span&gt; here means «to understand», not «to perceive», whatever English suggests."><b>Armadilha: «не понял» — по-разному.</b> В Португалии говорят <span class="pt">não percebi</span>. Бразильское <span class="pt">não entendi</span> поймут, но оно сразу выдаёт, по какому учебнику ты учился. Глагол <span class="pt">perceber</span> здесь значит «понимать», а вовсе не «замечать», как подсказывает английское perceive.</div>
 
-    <div class="text-label" id="fr-cortesia">Вежливость · чем открывается любой разговор</div>
+    <div class="text-label" id="fr-cortesia" data-en="Courtesy · how every conversation opens">Вежливость · чем открывается любой разговор</div>
     <div class="fr-list">
       <div class="fr-row">
         <div class="fr-pt">Bom dia.</div>
         <div class="fr-say">бо~ ди́а</div>
-        <div class="fr-ru">Здравствуйте (до полудня).</div>
-        <div class="fr-when">Ровно до 12:00, а не «пока утро». В 12:30 уже <span class="pt">boa tarde</span>.</div>
+        <div class="fr-ru" data-en="Hello (before noon).">Здравствуйте (до полудня).</div>
+        <div class="fr-when" data-en="Until 12:00 sharp, not «while it still feels like morning». At 12:30 it is already &lt;span class='pt'&gt;boa tarde&lt;/span&gt;.">Ровно до 12:00, а не «пока утро». В 12:30 уже <span class="pt">boa tarde</span>.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Boa tarde.</div>
         <div class="fr-say">бо́а тáрд</div>
-        <div class="fr-ru">Здравствуйте (день).</div>
-        <div class="fr-when">С полудня и до темноты.</div>
+        <div class="fr-ru" data-en="Hello (afternoon).">Здравствуйте (день).</div>
+        <div class="fr-when" data-en="From noon until dark.">С полудня и до темноты.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Boa noite.</div>
         <div class="fr-say">бо́а но́йт</div>
-        <div class="fr-ru">Добрый вечер / спокойной ночи.</div>
-        <div class="fr-when">И приветствие, и прощание — одно слово на оба случая.</div>
+        <div class="fr-ru" data-en="Good evening / good night.">Добрый вечер / спокойной ночи.</div>
+        <div class="fr-when" data-en="Both a greeting and a goodbye — one phrase for either.">И приветствие, и прощание — одно слово на оба случая.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Olá.</div>
         <div class="fr-say">олá</div>
-        <div class="fr-ru">Привет.</div>
-        <div class="fr-when">Годится и с незнакомым продавцом, но обычно идёт в связке: <span class="pt">Olá, bom dia.</span></div>
+        <div class="fr-ru" data-en="Hi.">Привет.</div>
+        <div class="fr-when" data-en="Fine with a shop assistant you don't know, but it usually comes paired: &lt;span class='pt'&gt;Olá, bom dia.&lt;/span&gt;">Годится и с незнакомым продавцом, но обычно идёт в связке: <span class="pt">Olá, bom dia.</span></div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Tudo bem?</div>
         <div class="fr-say">ту́ду бай~</div>
-        <div class="fr-ru">Как дела?</div>
-        <div class="fr-reply">Ответ — та же фраза: <b>Tudo bem, obrigado. E consigo?</b> Здесь <span class="pt">consigo</span> — «с вами», вежливое; именно так спрашивают в ответ незнакомого.</div>
+        <div class="fr-ru" data-en="How are you?">Как дела?</div>
+        <div class="fr-reply" data-en="The answer is the same phrase: &lt;b&gt;Tudo bem, obrigado. E consigo?&lt;/b&gt; Here &lt;span class='pt'&gt;consigo&lt;/span&gt; is the polite «with you» — that is how you ask a stranger back.">Ответ — та же фраза: <b>Tudo bem, obrigado. E consigo?</b> Здесь <span class="pt">consigo</span> — «с вами», вежливое; именно так спрашивают в ответ незнакомого.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Obrigado. / Obrigada.</div>
         <div class="fr-say">убригáду / убригáда</div>
-        <div class="fr-ru">Спасибо.</div>
-        <div class="fr-when">Форма зависит от того, <b>кто говорит</b>, а не кого благодарят: мужчина всегда <span class="pt">obrigado</span>, женщина всегда <span class="pt">obrigada</span>.</div>
+        <div class="fr-ru" data-en="Thank you.">Спасибо.</div>
+        <div class="fr-when" data-en="The form depends on &lt;b&gt;who is speaking&lt;/b&gt;, not on who is thanked: a man always says &lt;span class='pt'&gt;obrigado&lt;/span&gt;, a woman always &lt;span class='pt'&gt;obrigada&lt;/span&gt;.">Форма зависит от того, <b>кто говорит</b>, а не кого благодарят: мужчина всегда <span class="pt">obrigado</span>, женщина всегда <span class="pt">obrigada</span>.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">De nada.</div>
         <div class="fr-say">ды нáда</div>
-        <div class="fr-ru">Не за что.</div>
-        <div class="fr-reply">Можно услышать и <b>ora essa</b> — то же самое, но теплее, вроде «да брось».</div>
+        <div class="fr-ru" data-en="You're welcome.">Не за что.</div>
+        <div class="fr-reply" data-en="You may also hear &lt;b&gt;ora essa&lt;/b&gt; — the same thing, but warmer, closer to «oh, don't mention it».">Можно услышать и <b>ora essa</b> — то же самое, но теплее, вроде «да брось».</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Se faz favor.</div>
         <div class="fr-say">сы фаш фаво́р</div>
-        <div class="fr-ru">Пожалуйста (при просьбе).</div>
-        <div class="fr-when">Португальский вариант. <span class="pt">Por favor</span> тоже верно и тоже здесь звучит, но <span class="pt">se faz favor</span> — более местное.</div>
+        <div class="fr-ru" data-en="Please (when asking for something).">Пожалуйста (при просьбе).</div>
+        <div class="fr-when" data-en="The Portuguese version. &lt;span class='pt'&gt;Por favor&lt;/span&gt; is correct too and is heard here, but &lt;span class='pt'&gt;se faz favor&lt;/span&gt; is the more local one.">Португальский вариант. <span class="pt">Por favor</span> тоже верно и тоже здесь звучит, но <span class="pt">se faz favor</span> — более местное.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Faz favor!</div>
         <div class="fr-say">фаш фаво́р</div>
-        <div class="fr-ru">Будьте добры! (окликнуть)</div>
-        <div class="fr-when">Так подзывают официанта и продавца. Не «эй» и не поднятая рука — просто эта фраза.</div>
+        <div class="fr-ru" data-en="Excuse me! (calling someone over)">Будьте добры! (окликнуть)</div>
+        <div class="fr-when" data-en="This is how you call a waiter or a shop assistant. Not «hey», not a raised hand — just this phrase.">Так подзывают официанта и продавца. Не «эй» и не поднятая рука — просто эта фраза.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Com licença.</div>
         <div class="fr-say">ко~ лисэ́нса</div>
-        <div class="fr-ru">Разрешите (пройти).</div>
-        <div class="fr-when">В метро, в толпе, протискиваясь к выходу.</div>
+        <div class="fr-ru" data-en="Excuse me (let me through).">Разрешите (пройти).</div>
+        <div class="fr-when" data-en="On the metro, in a crowd, squeezing towards the door.">В метро, в толпе, протискиваясь к выходу.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Desculpe.</div>
         <div class="fr-say">дышку́лп</div>
-        <div class="fr-ru">Извините.</div>
-        <div class="fr-when">И «виноват», и способ обратиться к незнакомому на улице.</div>
+        <div class="fr-ru" data-en="Sorry.">Извините.</div>
+        <div class="fr-when" data-en="Both an apology and the way to approach a stranger in the street.">И «виноват», и способ обратиться к незнакомому на улице.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Muito prazer.</div>
         <div class="fr-say">му́йту празе́р</div>
-        <div class="fr-ru">Очень приятно.</div>
-        <div class="fr-when">При знакомстве. Можно короче — <span class="pt">Prazer.</span></div>
+        <div class="fr-ru" data-en="Nice to meet you.">Очень приятно.</div>
+        <div class="fr-when" data-en="When being introduced. Shorter version: &lt;span class='pt'&gt;Prazer.&lt;/span&gt;">При знакомстве. Можно короче — <span class="pt">Prazer.</span></div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Até logo.</div>
         <div class="fr-say">атэ́ ло́гу</div>
-        <div class="fr-ru">До скорого.</div>
-        <div class="fr-when">Мягкое прощание. <span class="pt">Adeus</span> тоже говорят, но оно окончательнее.</div>
+        <div class="fr-ru" data-en="See you soon.">До скорого.</div>
+        <div class="fr-when" data-en="A soft goodbye. &lt;span class='pt'&gt;Adeus&lt;/span&gt; is said too, but it sounds more final.">Мягкое прощание. <span class="pt">Adeus</span> тоже говорят, но оно окончательнее.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Boa continuação.</div>
         <div class="fr-say">бо́а континуасáу~</div>
-        <div class="fr-ru">Хорошего продолжения (дня).</div>
-        <div class="fr-when">Очень португальское прощание: ты уходишь, а человек остаётся при своём деле. В учебниках его почти нет, в жизни — на каждом шагу.</div>
+        <div class="fr-ru" data-en="Enjoy the rest of your day.">Хорошего продолжения (дня).</div>
+        <div class="fr-when" data-en="A very Portuguese goodbye: you are leaving, the other person stays with what they were doing. Textbooks barely mention it; in real life it is everywhere.">Очень португальское прощание: ты уходишь, а человек остаётся при своём деле. В учебниках его почти нет, в жизни — на каждом шагу.</div>
       </div>
     </div>
 
-    <div class="trap"><b>Armadilha: <span class="pt">você</span> с незнакомым.</b> В Португалии это местоимение не нейтрально: от незнакомца оно звучит снисходительно. Безопасный вариант — <b>вообще без местоимения</b>, глагол в третьем лице: <span class="pt">Fala inglês?</span>, <span class="pt">Pode repetir?</span>, <span class="pt">Aceita cartão?</span> Если нужно назвать собеседника явно — <span class="pt">o senhor</span> / <span class="pt">a senhora</span>. В Бразилии всё наоборот: там <span class="pt">você</span> — обычное «ты».</div>
+    <div class="trap" data-en="&lt;b&gt;Armadilha: &lt;span class='pt'&gt;você&lt;/span&gt; with a stranger.&lt;/b&gt; In Portugal this pronoun is not neutral: from someone you don't know it sounds condescending. The safe option is &lt;b&gt;no pronoun at all&lt;/b&gt;, verb in the third person: &lt;span class='pt'&gt;Fala inglês?&lt;/span&gt;, &lt;span class='pt'&gt;Pode repetir?&lt;/span&gt;, &lt;span class='pt'&gt;Aceita cartão?&lt;/span&gt; If you must name the person, use &lt;span class='pt'&gt;o senhor&lt;/span&gt; / &lt;span class='pt'&gt;a senhora&lt;/span&gt;. In Brazil it is the other way round: there &lt;span class='pt'&gt;você&lt;/span&gt; is the everyday «you»."><b>Armadilha: <span class="pt">você</span> с незнакомым.</b> В Португалии это местоимение не нейтрально: от незнакомца оно звучит снисходительно. Безопасный вариант — <b>вообще без местоимения</b>, глагол в третьем лице: <span class="pt">Fala inglês?</span>, <span class="pt">Pode repetir?</span>, <span class="pt">Aceita cartão?</span> Если нужно назвать собеседника явно — <span class="pt">o senhor</span> / <span class="pt">a senhora</span>. В Бразилии всё наоборот: там <span class="pt">você</span> — обычное «ты».</div>
 
-    <div class="text-label" id="fr-cafe">Café · кофе и перекус</div>
+    <div class="text-label" id="fr-cafe" data-en="Café · coffee and a bite">Café · кофе и перекус</div>
     <div class="fr-list">
       <div class="fr-row">
         <div class="fr-pt">Um café, se faz favor.</div>
         <div class="fr-say">у~ кафэ́, сы фаш фаво́р</div>
-        <div class="fr-ru">Один кофе, пожалуйста.</div>
-        <div class="fr-when">Это <b>эспрессо</b> в маленькой чашке. Не американо и не большой стакан.</div>
+        <div class="fr-ru" data-en="One coffee, please.">Один кофе, пожалуйста.</div>
+        <div class="fr-when" data-en="That is an &lt;b&gt;espresso&lt;/b&gt; in a small cup. Not an americano, not a large mug.">Это <b>эспрессо</b> в маленькой чашке. Не американо и не большой стакан.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Um abatanado.</div>
         <div class="fr-say">у~ абатанáду</div>
-        <div class="fr-ru">Большой чёрный кофе.</div>
-        <div class="fr-when">Ближайшее к американо. Слово <span class="pt">americano</span> в кафе поймут не везде.</div>
+        <div class="fr-ru" data-en="A large black coffee.">Большой чёрный кофе.</div>
+        <div class="fr-when" data-en="The closest thing to an americano. The word &lt;span class='pt'&gt;americano&lt;/span&gt; is not understood in every café.">Ближайшее к американо. Слово <span class="pt">americano</span> в кафе поймут не везде.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Uma meia de leite.</div>
         <div class="fr-say">у́ма мэ́йа ды лэ́йт</div>
-        <div class="fr-ru">Кофе с молоком в чашке.</div>
+        <div class="fr-ru" data-en="Coffee with milk, in a cup.">Кофе с молоком в чашке.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Um galão.</div>
         <div class="fr-say">у~ галáу~</div>
-        <div class="fr-ru">Кофе с молоком в стакане.</div>
-        <div class="fr-when">Молока больше, чем в <span class="pt">meia de leite</span>, и подают в высоком стакане. Утренний напиток по умолчанию.</div>
+        <div class="fr-ru" data-en="Coffee with milk, in a glass.">Кофе с молоком в стакане.</div>
+        <div class="fr-when" data-en="More milk than in a &lt;span class='pt'&gt;meia de leite&lt;/span&gt;, served in a tall glass. The default morning drink.">Молока больше, чем в <span class="pt">meia de leite</span>, и подают в высоком стакане. Утренний напиток по умолчанию.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Um pingado.</div>
         <div class="fr-say">у~ пингáду</div>
-        <div class="fr-ru">Эспрессо с каплей молока.</div>
+        <div class="fr-ru" data-en="Espresso with a drop of milk.">Эспрессо с каплей молока.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Uma água, se faz favor. Com gás.</div>
         <div class="fr-say">у́ма áгуа, сы фаш фаво́р. ко~ гáш</div>
-        <div class="fr-ru">Воду, пожалуйста. С газом.</div>
-        <div class="fr-when">Без газа — <span class="pt">sem gás</span> (сай~ гáш) или <span class="pt">natural</span>.</div>
+        <div class="fr-ru" data-en="A water, please. Sparkling.">Воду, пожалуйста. С газом.</div>
+        <div class="fr-when" data-en="Still water — &lt;span class='pt'&gt;sem gás&lt;/span&gt; or &lt;span class='pt'&gt;natural&lt;/span&gt;.">Без газа — <span class="pt">sem gás</span> (сай~ гáш) или <span class="pt">natural</span>.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Um pastel de nata.</div>
         <div class="fr-say">у~ паштэ́л ды нáта</div>
-        <div class="fr-ru">Одно пирожное с кремом.</div>
-        <div class="fr-when">Во множественном — <span class="pt">pastéis de nata</span>. В Белене у них своё имя: <span class="pt">pastéis de Belém</span>.</div>
+        <div class="fr-ru" data-en="One custard tart.">Одно пирожное с кремом.</div>
+        <div class="fr-when" data-en="Plural — &lt;span class='pt'&gt;pastéis de nata&lt;/span&gt;. In Belém they have a name of their own: &lt;span class='pt'&gt;pastéis de Belém&lt;/span&gt;.">Во множественном — <span class="pt">pastéis de nata</span>. В Белене у них своё имя: <span class="pt">pastéis de Belém</span>.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Uma tosta mista.</div>
         <div class="fr-say">у́ма то́шта ми́шта</div>
-        <div class="fr-ru">Горячий тост с ветчиной и сыром.</div>
-        <div class="fr-when">Дежурный перекус в любом кафе.</div>
+        <div class="fr-ru" data-en="A hot ham and cheese toastie.">Горячий тост с ветчиной и сыром.</div>
+        <div class="fr-when" data-en="The standard snack in any café.">Дежурный перекус в любом кафе.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Uma sandes de queijo.</div>
         <div class="fr-say">у́ма сáндыш ды кэ́йжу</div>
-        <div class="fr-ru">Бутерброд с сыром.</div>
-        <div class="fr-when">Слово <span class="pt">sandes</span> и в единственном числе с <b>-s</b> на конце: <span class="pt">uma sandes</span>, <span class="pt">duas sandes</span>.</div>
+        <div class="fr-ru" data-en="A cheese sandwich.">Бутерброд с сыром.</div>
+        <div class="fr-when" data-en="The word &lt;span class='pt'&gt;sandes&lt;/span&gt; ends in &lt;b&gt;-s&lt;/b&gt; in the singular too: &lt;span class='pt'&gt;uma sandes&lt;/span&gt;, &lt;span class='pt'&gt;duas sandes&lt;/span&gt;.">Слово <span class="pt">sandes</span> и в единственном числе с <b>-s</b> на конце: <span class="pt">uma sandes</span>, <span class="pt">duas sandes</span>.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">É para levar.</div>
         <div class="fr-say">э́ пара лывáр</div>
-        <div class="fr-ru">С собой.</div>
-        <div class="fr-reply">Спросят первыми: <b>É para levar ou para aqui?</b> — «с собой или здесь?». Ответ на второе: <b>É para aqui.</b></div>
+        <div class="fr-ru" data-en="To take away.">С собой.</div>
+        <div class="fr-reply" data-en="They ask it first: &lt;b&gt;É para levar ou para aqui?&lt;/b&gt; — «to take away or to have here?». For the second one: &lt;b&gt;É para aqui.&lt;/b&gt;">Спросят первыми: <b>É para levar ou para aqui?</b> — «с собой или здесь?». Ответ на второе: <b>É para aqui.</b></div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">A conta, se faz favor.</div>
         <div class="fr-say">а ко́нта, сы фаш фаво́р</div>
-        <div class="fr-ru">Счёт, пожалуйста.</div>
+        <div class="fr-ru" data-en="The bill, please.">Счёт, пожалуйста.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Mais nada, obrigado.</div>
         <div class="fr-say">майш нáда, убригáду</div>
-        <div class="fr-ru">Больше ничего, спасибо.</div>
-        <div class="fr-reply">Ответ на <b>Mais alguma coisa?</b> — «что-нибудь ещё?».</div>
+        <div class="fr-ru" data-en="Nothing else, thank you.">Больше ничего, спасибо.</div>
+        <div class="fr-reply" data-en="The answer to &lt;b&gt;Mais alguma coisa?&lt;/b&gt; — «anything else?».">Ответ на <b>Mais alguma coisa?</b> — «что-нибудь ещё?».</div>
       </div>
     </div>
 
-    <div class="tip"><b>Что ты услышишь в кафе.</b> Реплик у той стороны немного, и они повторяются дословно: <span class="pt">Diga?</span> (ди́га) — «слушаю»; <span class="pt">Faz favor?</span> — то же самое; <span class="pt">Mais alguma coisa?</span> — «ещё что-нибудь?»; <span class="pt">É para levar?</span> — «с собой?»; <span class="pt">Já vai.</span> (жá вáй) — «сейчас будет»; <span class="pt">Com certeza.</span> (ко~ сырте́за) — «конечно». Выучить эти шесть — и половина разговора становится предсказуемой.</div>
+    <div class="tip" data-en="&lt;b&gt;What you will hear in a café.&lt;/b&gt; The other side has few lines and they repeat word for word: &lt;span class='pt'&gt;Diga?&lt;/span&gt; — «yes?»; &lt;span class='pt'&gt;Faz favor?&lt;/span&gt; — the same; &lt;span class='pt'&gt;Mais alguma coisa?&lt;/span&gt; — «anything else?»; &lt;span class='pt'&gt;É para levar?&lt;/span&gt; — «to take away?»; &lt;span class='pt'&gt;Já vai.&lt;/span&gt; — «coming right up»; &lt;span class='pt'&gt;Com certeza.&lt;/span&gt; — «of course». Learn these six and half the conversation becomes predictable."><b>Что ты услышишь в кафе.</b> Реплик у той стороны немного, и они повторяются дословно: <span class="pt">Diga?</span> (ди́га) — «слушаю»; <span class="pt">Faz favor?</span> — то же самое; <span class="pt">Mais alguma coisa?</span> — «ещё что-нибудь?»; <span class="pt">É para levar?</span> — «с собой?»; <span class="pt">Já vai.</span> (жá вáй) — «сейчас будет»; <span class="pt">Com certeza.</span> (ко~ сырте́за) — «конечно». Выучить эти шесть — и половина разговора становится предсказуемой.</div>
 
-    <div class="text-label" id="fr-loja">Loja e caixa · магазин и касса</div>
+    <div class="text-label" id="fr-loja" data-en="Loja e caixa · shop and checkout">Loja e caixa · магазин и касса</div>
     <div class="fr-list">
       <div class="fr-row">
         <div class="fr-pt">Quanto custa?</div>
         <div class="fr-say">куáнту ку́шта</div>
-        <div class="fr-ru">Сколько стоит?</div>
-        <div class="fr-when">Про сумму на кассе спрашивают короче: <span class="pt">Quanto é?</span> (куáнту э́).</div>
+        <div class="fr-ru" data-en="How much is it?">Сколько стоит?</div>
+        <div class="fr-when" data-en="For the total at the till there is a shorter question: &lt;span class='pt'&gt;Quanto é?&lt;/span&gt;">Про сумму на кассе спрашивают короче: <span class="pt">Quanto é?</span> (куáнту э́).</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Tem …?</div>
         <div class="fr-say">тай~</div>
-        <div class="fr-ru">У вас есть …?</div>
-        <div class="fr-when">Тема 0.12: <span class="pt">ter</span> в третьем лице — оно же вежливое обращение.</div>
+        <div class="fr-ru" data-en="Do you have …?">У вас есть …?</div>
+        <div class="fr-when" data-en="Topic 0.12: &lt;span class='pt'&gt;ter&lt;/span&gt; in the third person — which doubles as the polite form of address.">Тема 0.12: <span class="pt">ter</span> в третьем лице — оно же вежливое обращение.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Estou só a ver, obrigado.</div>
         <div class="fr-say">ышто́у со́ а ве́р, убригáду</div>
-        <div class="fr-ru">Я просто смотрю, спасибо.</div>
-        <div class="fr-reply">Ответ на <b>Precisa de ajuda?</b> — «нужна помощь?».</div>
+        <div class="fr-ru" data-en="I'm just looking, thanks.">Я просто смотрю, спасибо.</div>
+        <div class="fr-reply" data-en="The answer to &lt;b&gt;Precisa de ajuda?&lt;/b&gt; — «do you need help?».">Ответ на <b>Precisa de ajuda?</b> — «нужна помощь?».</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Só isso, obrigado.</div>
         <div class="fr-say">со́ и́су, убригáду</div>
-        <div class="fr-ru">Это всё, спасибо.</div>
+        <div class="fr-ru" data-en="That's all, thanks.">Это всё, спасибо.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Não, obrigado.</div>
         <div class="fr-say">нау~, убригáду</div>
-        <div class="fr-ru">Нет, спасибо.</div>
-        <div class="fr-when">Универсальный ответ на три вопроса кассира из четырёх.</div>
+        <div class="fr-ru" data-en="No, thank you.">Нет, спасибо.</div>
+        <div class="fr-when" data-en="The universal answer to three of the cashier's four questions.">Универсальный ответ на три вопроса кассира из четырёх.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Aceita multibanco?</div>
         <div class="fr-say">асэ́йта мултибáнку</div>
-        <div class="fr-ru">Картой можно?</div>
-        <div class="fr-when"><span class="pt">Multibanco</span> — местная платёжная сеть, и слово здесь живее, чем <span class="pt">cartão</span>. Так же называются и банкоматы.</div>
+        <div class="fr-ru" data-en="Do you take card?">Картой можно?</div>
+        <div class="fr-when" data-en="&lt;span class='pt'&gt;Multibanco&lt;/span&gt; is the local payment network, and the word is more alive here than &lt;span class='pt'&gt;cartão&lt;/span&gt;. Cash machines go by the same name."><span class="pt">Multibanco</span> — местная платёжная сеть, и слово здесь живее, чем <span class="pt">cartão</span>. Так же называются и банкоматы.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Precisa de saco?</div>
         <div class="fr-say">прыси́за ды сáку</div>
-        <div class="fr-ru">Пакет нужен? (спрашивает кассир)</div>
-        <div class="fr-reply">Твой ответ: <b>Sim, se faz favor.</b> или <b>Não, obrigado.</b> Пакеты платные почти везде.</div>
+        <div class="fr-ru" data-en="Do you need a bag? (the cashier asks)">Пакет нужен? (спрашивает кассир)</div>
+        <div class="fr-reply" data-en="Your answer: &lt;b&gt;Sim, se faz favor.&lt;/b&gt; or &lt;b&gt;Não, obrigado.&lt;/b&gt; Bags cost money almost everywhere.">Твой ответ: <b>Sim, se faz favor.</b> или <b>Não, obrigado.</b> Пакеты платные почти везде.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Contribuinte?</div>
         <div class="fr-say">контрибуи́нт</div>
-        <div class="fr-ru">Налоговый номер? (спрашивает кассир)</div>
-        <div class="fr-when">Полностью — <span class="pt">Número de contribuinte?</span>, то есть NIF. Спрашивают на каждой второй кассе, и приезжие теряются именно здесь.</div>
-        <div class="fr-reply">Ответ, если номера нет: <b>Não, obrigado.</b> Если есть — просто продиктовать девять цифр.</div>
+        <div class="fr-ru" data-en="Tax number? (the cashier asks)">Налоговый номер? (спрашивает кассир)</div>
+        <div class="fr-when" data-en="In full — &lt;span class='pt'&gt;Número de contribuinte?&lt;/span&gt;, that is your NIF. Asked at every second till, and this is exactly where newcomers freeze.">Полностью — <span class="pt">Número de contribuinte?</span>, то есть NIF. Спрашивают на каждой второй кассе, и приезжие теряются именно здесь.</div>
+        <div class="fr-reply" data-en="If you don't have one: &lt;b&gt;Não, obrigado.&lt;/b&gt; If you do — just read out the nine digits.">Ответ, если номера нет: <b>Não, obrigado.</b> Если есть — просто продиктовать девять цифр.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Tem cartão de cliente?</div>
         <div class="fr-say">тай~ картáу~ ды клие́нт</div>
-        <div class="fr-ru">Карта магазина есть? (спрашивает кассир)</div>
+        <div class="fr-ru" data-en="Do you have a loyalty card? (the cashier asks)">Карта магазина есть? (спрашивает кассир)</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Onde é a caixa?</div>
         <div class="fr-say">о́нд э́ а кáйша</div>
-        <div class="fr-ru">Где касса?</div>
+        <div class="fr-ru" data-en="Where is the till?">Где касса?</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Onde é a casa de banho?</div>
         <div class="fr-say">о́нд э́ а кáза ды бáню</div>
-        <div class="fr-ru">Где туалет?</div>
-        <div class="fr-when">В Португалии — <span class="pt">casa de banho</span>. Бразильское <span class="pt">banheiro</span> здесь звучит чужеродно.</div>
+        <div class="fr-ru" data-en="Where is the toilet?">Где туалет?</div>
+        <div class="fr-when" data-en="In Portugal it is &lt;span class='pt'&gt;casa de banho&lt;/span&gt;. The Brazilian &lt;span class='pt'&gt;banheiro&lt;/span&gt; sounds foreign here.">В Португалии — <span class="pt">casa de banho</span>. Бразильское <span class="pt">banheiro</span> здесь звучит чужеродно.</div>
       </div>
       <div class="fr-row">
         <div class="fr-pt">Pode repetir o preço?</div>
         <div class="fr-say">под рыпыти́р у пре́су</div>
-        <div class="fr-ru">Повторите цену?</div>
-        <div class="fr-when">Числа на слух — отдельная трудность, и просить повторить сумму не стыдно.</div>
+        <div class="fr-ru" data-en="Could you repeat the price?">Повторите цену?</div>
+        <div class="fr-when" data-en="Numbers by ear are a difficulty of their own, and asking for the total again is nothing to be ashamed of.">Числа на слух — отдельная трудность, и просить повторить сумму не стыдно.</div>
       </div>
     </div>
 
-    <div class="trap"><b>Armadilha: сумма на слух.</b> Кассир говорит <span class="pt">São doze euros e trinta.</span> — евро и центы соединяются через <span class="pt">e</span>. Числа знакомы из темы 0.16, но в живом темпе они склеиваются: <span class="pt">e trinta</span> звучит как «итри́нта». Смотреть на экран терминала не стыдно — так делают все.</div>
+    <div class="trap" data-en="&lt;b&gt;Armadilha: the total by ear.&lt;/b&gt; The cashier says &lt;span class='pt'&gt;São doze euros e trinta.&lt;/span&gt; — euros and cents are joined by &lt;span class='pt'&gt;e&lt;/span&gt;. The numbers are familiar from topic 0.16, but at speaking speed they run together: &lt;span class='pt'&gt;e trinta&lt;/span&gt; comes out as one word. Looking at the terminal screen is no shame — everyone does it."><b>Armadilha: сумма на слух.</b> Кассир говорит <span class="pt">São doze euros e trinta.</span> — евро и центы соединяются через <span class="pt">e</span>. Числа знакомы из темы 0.16, но в живом темпе они склеиваются: <span class="pt">e trinta</span> звучит как «итри́нта». Смотреть на экран терминала не стыдно — так делают все.</div>
 
-    <div class="tip"><b>А в Бразилии.</b> Половина этого раздела там звучала бы иначе: <span class="pt">não entendi</span> вместо <span class="pt">não percebi</span>, <span class="pt">só estou olhando</span> вместо <span class="pt">estou só a ver</span>, <span class="pt">sanduíche</span> вместо <span class="pt">sandes</span>, <span class="pt">banheiro</span> вместо <span class="pt">casa de banho</span>, а <span class="pt">multibanco</span> не поймут вовсе. Курс держит Португалию, и раздел фраз — тем более: это то, что говорится на улице за окном.</div>
+    <div class="tip" data-en="&lt;b&gt;Meanwhile in Brazil.&lt;/b&gt; Half of this section would sound different there: &lt;span class='pt'&gt;não entendi&lt;/span&gt; instead of &lt;span class='pt'&gt;não percebi&lt;/span&gt;, &lt;span class='pt'&gt;só estou olhando&lt;/span&gt; instead of &lt;span class='pt'&gt;estou só a ver&lt;/span&gt;, &lt;span class='pt'&gt;sanduíche&lt;/span&gt; instead of &lt;span class='pt'&gt;sandes&lt;/span&gt;, &lt;span class='pt'&gt;banheiro&lt;/span&gt; instead of &lt;span class='pt'&gt;casa de banho&lt;/span&gt;, and &lt;span class='pt'&gt;multibanco&lt;/span&gt; would not be understood at all. The course holds to Portugal, and the phrase section all the more: this is what is spoken on the street outside."><b>А в Бразилии.</b> Половина этого раздела там звучала бы иначе: <span class="pt">não entendi</span> вместо <span class="pt">não percebi</span>, <span class="pt">só estou olhando</span> вместо <span class="pt">estou só a ver</span>, <span class="pt">sanduíche</span> вместо <span class="pt">sandes</span>, <span class="pt">banheiro</span> вместо <span class="pt">casa de banho</span>, а <span class="pt">multibanco</span> не поймут вовсе. Курс держит Португалию, и раздел фраз — тем более: это то, что говорится на улице за окном.</div>
 
     <button type="button" class="next-card" data-open="dialogos">
       <span class="next-marker"></span>
       <span class="next-text">
-        <span class="next-label">Seguinte · дальше</span>
-        <span class="next-title">Diálogos — те же фразы в живом разговоре</span>
+        <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
+        <span class="next-title" data-en="Diálogos — the same phrases in a real conversation">Diálogos — те же фразы в живом разговоре</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -7459,30 +7479,28 @@
      реплики идут целыми кусками. Разметка .dg-*, не .storytext / .dline,
      поэтому ни collectVocabSets(), ни проверка 3 сюда не дотягиваются. -->
 <div class="screen topic-screen" id="screen-dialogos" style="--tint-color:var(--base)">
-  <div class="topic-topbar"><button type="button" class="back-btn" data-back>← Все темы</button></div>
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back data-en="← All topics">← Все темы</button><div class="lang-switch"><button type="button" data-lang="ru">РУ</button><button type="button" data-lang="en">EN</button></div></div>
   <div class="topic-header">
     <span class="marker" style="background:var(--base)"></span>
-    <h2>Diálogos · разговор целиком</h2>
+    <h2 data-en="Diálogos · the whole conversation">Diálogos · разговор целиком</h2>
   </div>
-  <div class="topic-subtitle">Не отдельные фразы, а разговор от «Diga?» до «Boa continuação»: собеседник говорит первым, ты отвечаешь, и разговор идёт дальше только с верного хода.</div>
+  <div class="topic-subtitle" data-en="Not single phrases but a conversation from «Diga?» to «Boa continuação»: the other person speaks first, you answer, and the conversation only moves on when your answer works.">Не отдельные фразы, а разговор от «Diga?» до «Boa continuação»: собеседник говорит первым, ты отвечаешь, и разговор идёт дальше только с верного хода.</div>
   <div class="pane active">
 
-    <div class="tip"><b>Почему сцену проходят дважды.</b> Первый проход — <b>выбор из вариантов</b>: реплику достаточно узнать. Второй — <b>сборка из слов</b>: её приходится вспомнить целиком. Это называется <b>снятием опоры</b>: узнавание даётся легко и создаёт ощущение, что материал усвоен, а в кафе нужно именно припоминание. Одна и та же сцена в двух режимах закрывает разрыв между «понимаю» и «могу сказать».</div>
+    <div class="lang-note">Only <b>Frases</b> and <b>Diálogos</b> are translated: the course topics themselves are in Russian. The pronunciation hints of this course are written in Cyrillic, so they are hidden here — tap 🔊 to hear the phrase instead.</div>
 
-    <div class="dg-intro">Реплики собеседника — те самые, что стоят в разделе <b>Frases</b>: они повторяются дословно и заучиваются целиком. Слушай их кнопкой 🔊 до того, как отвечать: разговор рвётся не на своей фразе, а на чужой.</div>
-
+    <div class="tip" data-en="&lt;b&gt;Why you walk through a scene twice.&lt;/b&gt; The first pass is &lt;b&gt;multiple choice&lt;/b&gt;: you only have to recognise the line. The second is &lt;b&gt;building it from words&lt;/b&gt;: you have to recall it whole. This is called &lt;b&gt;fading the support&lt;/b&gt;: recognition comes easily and creates the feeling that the material is learned, but in a café you need recall. The same scene in two modes closes the gap between «I understand» and «I can say it»."><b>Почему сцену проходят дважды.</b> Первый проход — <b>выбор из вариантов</b>: реплику достаточно узнать. Второй — <b>сборка из слов</b>: её приходится вспомнить целиком. Это называется <b>снятием опоры</b>: узнавание даётся легко и создаёт ощущение, что материал усвоен, а в кафе нужно именно припоминание. Одна и та же сцена в двух режимах закрывает разрыв между «понимаю» и «могу сказать».</div>
+    <div class="dg-intro" data-en="The lines of the other person are the same ones listed under &lt;b&gt;Frases&lt;/b&gt;: they repeat word for word and are worth learning whole. Listen to them with the 🔊 button before you answer — a conversation breaks on the other person's line, not on yours.">Реплики собеседника — те самые, что стоят в разделе <b>Frases</b>: они повторяются дословно и заучиваются целиком. Слушай их кнопкой 🔊 до того, как отвечать: разговор рвётся не на своей фразе, а на чужой.</div>
     <div id="dgStage"></div>
     <div id="dgScenes"></div>
 
-    <div class="trap"><b>Armadilha: ответ «да» на вопрос с «или».</b> <span class="pt">É para levar ou para aqui?</span>, <span class="pt">Com multibanco ou dinheiro?</span> — на такие вопросы <span class="pt">sim</span> не отвечает ничего, и кассир переспросит на той же скорости. Ответ — повторить ту половину вопроса, которую выбираешь: <span class="pt">É para aqui.</span>, <span class="pt">Com multibanco.</span></div>
-
-    <div class="tip"><b>Что делать, когда сцена кончилась.</b> Реплики собеседника здесь — закрытый список из шести-семи штук на ситуацию, и в жизни они звучат теми же словами. Сцену стоит вернуться и пройти сборкой через день-два: интервал между двумя проходами работает сильнее, чем два прохода подряд.</div>
-
+    <div class="trap" data-en="&lt;b&gt;Armadilha: answering «yes» to an either/or question.&lt;/b&gt; &lt;span class='pt'&gt;É para levar ou para aqui?&lt;/span&gt;, &lt;span class='pt'&gt;Com multibanco ou dinheiro?&lt;/span&gt; — &lt;span class='pt'&gt;sim&lt;/span&gt; answers nothing here, and the cashier will ask again at the same speed. The answer is to repeat the half you choose: &lt;span class='pt'&gt;É para aqui.&lt;/span&gt;, &lt;span class='pt'&gt;Com multibanco.&lt;/span&gt;"><b>Armadilha: ответ «да» на вопрос с «или».</b> <span class="pt">É para levar ou para aqui?</span>, <span class="pt">Com multibanco ou dinheiro?</span> — на такие вопросы <span class="pt">sim</span> не отвечает ничего, и кассир переспросит на той же скорости. Ответ — повторить ту половину вопроса, которую выбираешь: <span class="pt">É para aqui.</span>, <span class="pt">Com multibanco.</span></div>
+    <div class="tip" data-en="&lt;b&gt;What to do once a scene is over.&lt;/b&gt; The other person's lines are a closed list of six or seven per situation, and in real life they come in the same words. Come back and do the scene in build mode a day or two later: the gap between the two passes works harder than two passes back to back."><b>Что делать, когда сцена кончилась.</b> Реплики собеседника здесь — закрытый список из шести-семи штук на ситуацию, и в жизни они звучат теми же словами. Сцену стоит вернуться и пройти сборкой через день-два: интервал между двумя проходами работает сильнее, чем два прохода подряд.</div>
     <button type="button" class="next-card" data-open="vocab">
       <span class="next-marker"></span>
       <span class="next-text">
-        <span class="next-label">Seguinte · дальше</span>
-        <span class="next-title">Dicionário — закрепить слова курса</span>
+        <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
+        <span class="next-title" data-en="Dicionário — drill the words of the course">Dicionário — закрепить слова курса</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -7541,6 +7559,44 @@
   var LAST_TOPIC_KEY= "ptLastTopicV1";
   var THEME_KEY     = "ptThemeV1";
   var FONT_KEY      = "ptFontV1";
+  var LANG_KEY      = "ptLangV1";
+
+  /* ================= ЯЗЫК ИНТЕРФЕЙСА ================= */
+  /* Английский включается только на разговорном слое: Frases и Diálogos —
+     готовые куски, их перевести можно, а двадцать восемь тем курса написаны
+     по-русски и таковыми остаются. Переключатель поэтому стоит на двух
+     экранах, а не в шапке приложения: обещание должно совпадать с тем,
+     что переведено.
+
+     Статическая разметка Frases несёт перевод в data-en у самого узла, а
+     сцены диалогов — данные, и там работает L(ru, en). Русский оригинал при
+     первом переключении сташится в dataset.ruHtml: обратный ход должен
+     возвращать то, что было, а не второй перевод. */
+  var LANG = "ru";
+  try{ if(localStorage.getItem(LANG_KEY) === "en") LANG = "en"; }catch(e){}
+
+  function L(ru, en){ return (LANG === "en" && en) ? en : ru; }
+
+  function applyLang(){
+    document.body.classList.toggle("lang-en", LANG === "en");
+    document.querySelectorAll("[data-en]").forEach(function(el){
+      if(el.dataset.ruHtml === undefined) el.dataset.ruHtml = el.innerHTML;
+      el.innerHTML = (LANG === "en") ? el.dataset.en : el.dataset.ruHtml;
+    });
+    document.querySelectorAll(".lang-switch button").forEach(function(b){
+      b.classList.toggle("active", b.dataset.lang === LANG);
+    });
+  }
+
+  function setLang(v){
+    var next = (v === "en") ? "en" : "ru";
+    if(next === LANG) return;
+    LANG = next;
+    try{ localStorage.setItem(LANG_KEY, LANG); }catch(e){}
+    applyLang();
+    // Сцены диалогов рисуются кодом, data-en до них не дотягивается.
+    if(document.getElementById("screen-dialogos").classList.contains("active")) renderDialogos();
+  }
 
   /* ================= CONJUGADOR ================= */
   /* Движок спряжения. Он же питает экран «Conjugador» и объяснения в нём —
@@ -8629,73 +8685,87 @@
       id: "cafe",
       icon: "☕",
       title: "Café · заказать и заплатить",
+      titleEn: "Café · order and pay",
       sub: "Утро, стойка пастеларии. Заказ, «с собой или здесь», непонятая сумма и прощание.",
+      subEn: "Morning, the counter of a pastelaria. Ordering, «here or to take away», a total you did not catch, and the goodbye.",
       steps: [
         {
-          npc: { pt:"Bom dia! Diga?", say:"бо~ ди́а! ди́га", ru:"Доброе утро! Слушаю?" },
+          npc: { pt:"Bom dia! Diga?", say:"бо~ ди́а! ди́га", ru:"Доброе утро! Слушаю?", en:"Good morning! Yes?" },
           goal: "Поздоровайся и закажи один кофе.",
+          goalEn: "Say hello and order one coffee.",
           answer: "Bom dia. Um café, se faz favor.",
           say: "бо~ ди́а. у~ кафэ́, сы фаш фаво́р",
           wrong: [
-            { t:"Bom dia. Quero um café.", why:"«Quero» — «хочу»: сказано верно, но звучит требовательно. В кафе просят через se faz favor, а не сообщают о своём желании." },
-            { t:"Bom dia. Tem café?", why:"«У вас есть кофе?» спрашивают о том, чего может не быть. В кафе вопрос повиснет, и заказ придётся делать заново." }
+            { t:"Bom dia. Quero um café.", why:"«Quero» — «хочу»: сказано верно, но звучит требовательно. В кафе просят через se faz favor, а не сообщают о своём желании.", whyEn:"«Quero» means «I want»: grammatical, but it lands as a demand. In a café you ask with se faz favor instead of announcing your wishes." },
+            { t:"Bom dia. Tem café?", why:"«У вас есть кофе?» спрашивают о том, чего может не быть. В кафе вопрос повиснет, и заказ придётся делать заново.", whyEn:"«Do you have coffee?» asks about something that might be missing. In a café the question hangs in the air and you have to order all over again." }
           ],
-          note: "<b>Um café</b> — это эспрессо в маленькой чашке. Большой чёрный — <b>um abatanado</b>, с молоком в стакане — <b>um galão</b>."
+          note: "<b>Um café</b> — это эспрессо в маленькой чашке. Большой чёрный — <b>um abatanado</b>, с молоком в стакане — <b>um galão</b>.",
+          noteEn: "<b>Um café</b> is an espresso in a small cup. A large black one is <b>um abatanado</b>, milky and in a tall glass is <b>um galão</b>."
         },
         {
-          npc: { pt:"Mais alguma coisa?", say:"майш алгу́ма ко́йза", ru:"Что-нибудь ещё?" },
+          npc: { pt:"Mais alguma coisa?", say:"майш алгу́ма ко́йза", ru:"Что-нибудь ещё?", en:"Anything else?" },
           goal: "Возьми ещё одно пирожное с кремом.",
+          goalEn: "Add one custard tart.",
           answer: "Um pastel de nata, se faz favor.",
           say: "у~ паштэ́л ды нáта, сы фаш фаво́р",
           wrong: [
-            { t:"Mais nada, obrigado.", why:"«Больше ничего» — фраза верная и нужная, но не здесь: пирожное так и не заказано." },
-            { t:"Um pastéis de nata, se faz favor.", why:"«Pastéis» — множественное число, с «um» не сочетается. Одно — um pastel, два — dois pastéis." }
+            { t:"Mais nada, obrigado.", why:"«Больше ничего» — фраза верная и нужная, но не здесь: пирожное так и не заказано.", whyEn:"«Nothing else» is a correct and useful phrase, but not here: the tart never got ordered." },
+            { t:"Um pastéis de nata, se faz favor.", why:"«Pastéis» — множественное число, с «um» не сочетается. Одно — um pastel, два — dois pastéis.", whyEn:"«Pastéis» is plural and does not go with «um». One is um pastel, two are dois pastéis." }
           ],
-          note: "Единственное число — <b>pastel</b>, множественное — <b>pastéis</b>. В Белене у них своё имя: <b>pastéis de Belém</b>."
+          note: "Единственное число — <b>pastel</b>, множественное — <b>pastéis</b>. В Белене у них своё имя: <b>pastéis de Belém</b>.",
+          noteEn: "Singular <b>pastel</b>, plural <b>pastéis</b>. In Belém they have a name of their own: <b>pastéis de Belém</b>."
         },
         {
-          npc: { pt:"É para levar ou para aqui?", say:"э́ пара лывáр о пара аки́", ru:"С собой или здесь?" },
+          npc: { pt:"É para levar ou para aqui?", say:"э́ пара лывáр о пара аки́", ru:"С собой или здесь?", en:"To take away or to have here?" },
           goal: "Ты остаёшься за стойкой.",
+          goalEn: "You are staying at the counter.",
           answer: "É para aqui, se faz favor.",
           say: "э́ пара аки́, сы фаш фаво́р",
           wrong: [
-            { t:"Sim, se faz favor.", why:"Вопрос с «или»: «да» на него не отвечает ничего. Нужно повторить ту половину, которую выбираешь." },
-            { t:"É para levar.", why:"Это «с собой» — ровно противоположный ответ: кофе нальют в картонный стакан и попрощаются." }
+            { t:"Sim, se faz favor.", why:"Вопрос с «или»: «да» на него не отвечает ничего. Нужно повторить ту половину, которую выбираешь.", whyEn:"An either/or question: «yes» answers none of it. You repeat the half you are choosing." },
+            { t:"É para levar.", why:"Это «с собой» — ровно противоположный ответ: кофе нальют в картонный стакан и попрощаются.", whyEn:"That is «to take away» — the exact opposite: the coffee goes into a paper cup and they say goodbye." }
           ],
-          note: "Вопрос звучит быстро и всегда идёт сразу после заказа. Если опознать его по одному слову <b>levar</b>, остального можно не разбирать."
+          note: "Вопрос звучит быстро и всегда идёт сразу после заказа. Если опознать его по одному слову <b>levar</b>, остального можно не разбирать.",
+          noteEn: "The question comes fast and always right after the order. Catch the single word <b>levar</b> and you do not need the rest."
         },
         {
-          npc: { pt:"Com certeza. São dois euros e quarenta.", say:"ко~ сырте́за. сáу~ дойш э́урош и куарэ́нта", ru:"Конечно. С вас два евро сорок." },
+          npc: { pt:"Com certeza. São dois euros e quarenta.", say:"ко~ сырте́за. сáу~ дойш э́урош и куарэ́нта", ru:"Конечно. С вас два евро сорок.", en:"Of course. That is two euros forty." },
           goal: "Сумму на слух ты не разобрал. Попроси повторить.",
+          goalEn: "You did not catch the total. Ask them to repeat it.",
           answer: "Pode repetir, se faz favor?",
           say: "под рыпыти́р, сы фаш фаво́р",
           wrong: [
-            { t:"Não percebi.", why:"Это признание, а не просьба: собеседник не знает, что делать — повторить, написать или перейти на английский. Перед просьбой её ставить можно, вместо просьбы — нет." },
-            { t:"Fala inglês?", why:"Запасной выход, а не первый ход: в Лиссабоне ответят «да», и практика на этом закончится." }
+            { t:"Não percebi.", why:"Это признание, а не просьба: собеседник не знает, что делать — повторить, написать или перейти на английский. Перед просьбой её ставить можно, вместо просьбы — нет.", whyEn:"That is an admission, not a request: the other person does not know whether to repeat, write it down or switch to English. Fine before a request, not instead of one." },
+            { t:"Fala inglês?", why:"Запасной выход, а не первый ход: в Лиссабоне ответят «да», и практика на этом закончится.", whyEn:"An emergency exit, not an opening move: in Lisbon they will say yes, and your practice ends there." }
           ],
-          note: "Суммы называют через <b>ser</b> во множественном: <b>são</b> dois euros. Центы цепляются союзом <b>e</b> и в живом темпе склеиваются с ним в одно слово."
+          note: "Суммы называют через <b>ser</b> во множественном: <b>são</b> dois euros. Центы цепляются союзом <b>e</b> и в живом темпе склеиваются с ним в одно слово.",
+          noteEn: "Totals come with <b>ser</b> in the plural: <b>são</b> dois euros. The cents hang off the word <b>e</b>, and at speaking speed the two fuse into one."
         },
         {
-          npc: { pt:"Dois euros e quarenta.", say:"дойш э́урош и куарэ́нта", ru:"Два евро сорок." },
+          npc: { pt:"Dois euros e quarenta.", say:"дойш э́урош и куарэ́нта", ru:"Два евро сорок.", en:"Two euros forty." },
           goal: "Спроси, принимают ли карту.",
+          goalEn: "Ask whether they take card.",
           answer: "Aceita multibanco?",
           say: "асэ́йта мултибáнку",
           wrong: [
-            { t:"Tem multibanco?", why:"Словом multibanco называют и банкомат — с ter вопрос уезжает в «а где у вас банкомат?»." },
-            { t:"Posso pagar?", why:"«Могу заплатить?» — вопрос ни о чём: платить никто не запрещает. Спрашивают именно про способ оплаты." }
+            { t:"Tem multibanco?", why:"Словом multibanco называют и банкомат — с ter вопрос уезжает в «а где у вас банкомат?».", whyEn:"Multibanco is also the word for a cash machine — with ter the question turns into «do you have an ATM?»." },
+            { t:"Posso pagar?", why:"«Могу заплатить?» — вопрос ни о чём: платить никто не запрещает. Спрашивают именно про способ оплаты.", whyEn:"«May I pay?» asks nothing: nobody is stopping you. The question is about the method of payment." }
           ],
-          note: "<b>Multibanco</b> — португальская платёжная сеть. Слово здесь живее, чем cartão, и им же называют банкоматы."
+          note: "<b>Multibanco</b> — португальская платёжная сеть. Слово здесь живее, чем cartão, и им же называют банкоматы.",
+          noteEn: "<b>Multibanco</b> is the Portuguese payment network. The word is more alive here than cartão, and cash machines go by it too."
         },
         {
-          npc: { pt:"Aceitamos, sim. Faz favor.", say:"асэйтáмуш, си~. фаш фаво́р", ru:"Да, принимаем. Прошу." },
+          npc: { pt:"Aceitamos, sim. Faz favor.", say:"асэйтáмуш, си~. фаш фаво́р", ru:"Да, принимаем. Прошу.", en:"Yes, we do. Go ahead." },
           goal: "Расплатился. Попрощайся так, как прощаются местные: пожелай хорошего продолжения.",
+          goalEn: "You have paid. Say goodbye the way locals do: wish them a good rest of the day.",
           answer: "Obrigado. Boa continuação!",
           say: "убригáду. бо́а континуасáу~",
           wrong: [
-            { t:"De nada. Até logo!", why:"«De nada» — ответ на чужое спасибо, а благодаришь здесь ты." },
-            { t:"Adeus!", why:"«Прощай» звучит окончательнее, чем нужно: с кафе, куда зайдёшь завтра, прощаются мягче." }
+            { t:"De nada. Até logo!", why:"«De nada» — ответ на чужое спасибо, а благодаришь здесь ты.", whyEn:"«De nada» answers somebody else's thanks, and here the one saying thank you is you." },
+            { t:"Adeus!", why:"«Прощай» звучит окончательнее, чем нужно: с кафе, куда зайдёшь завтра, прощаются мягче.", whyEn:"«Farewell» is more final than the moment needs: you leave a café you will walk into tomorrow more softly than that." }
           ],
-          note: "<b>Boa continuação</b> — прощание, которого почти нет в учебниках: ты уходишь, а человек остаётся при своём деле. В Лиссабоне звучит на каждом шагу."
+          note: "<b>Boa continuação</b> — прощание, которого почти нет в учебниках: ты уходишь, а человек остаётся при своём деле. В Лиссабоне звучит на каждом шагу.",
+          noteEn: "<b>Boa continuação</b> is the goodbye textbooks barely mention: you are leaving, the other person stays with what they were doing. In Lisbon it is everywhere."
         }
       ]
     },
@@ -8703,84 +8773,501 @@
       id: "caixa",
       icon: "🛒",
       title: "Loja e caixa · магазин и касса",
+      titleEn: "Loja e caixa · shop and checkout",
       sub: "Четыре вопроса кассира подряд — и все ждут разных ответов. Здесь приезжие теряются чаще всего.",
+      subEn: "Four questions from the cashier in a row, each wanting a different answer. This is where newcomers freeze most often.",
       steps: [
         {
-          npc: { pt:"Boa tarde. Precisa de ajuda?", say:"бо́а тáрд. прыси́за ды ажу́да", ru:"Добрый день. Нужна помощь?" },
+          npc: { pt:"Boa tarde. Precisa de ajuda?", say:"бо́а тáрд. прыси́за ды ажу́да", ru:"Добрый день. Нужна помощь?", en:"Good afternoon. Do you need any help?" },
           goal: "Ты просто смотришь.",
+          goalEn: "You are just browsing.",
           answer: "Estou só a ver, obrigado.",
           say: "ышто́у со́ а ве́р, убригáду",
           wrong: [
-            { t:"Estou só vendo, obrigado.", why:"Бразильская форма. В Португалии длящееся действие — estar a + инфинитив: estou a ver." },
-            { t:"Não percebi.", why:"Фраза-щит здесь сообщает о проблеме, которой нет: вопрос ты понял." }
+            { t:"Estou só vendo, obrigado.", why:"Бразильская форма. В Португалии длящееся действие — estar a + инфинитив: estou a ver.", whyEn:"The Brazilian form. In Portugal an action in progress is estar a + infinitive: estou a ver." },
+            { t:"Não percebi.", why:"Фраза-щит здесь сообщает о проблеме, которой нет: вопрос ты понял.", whyEn:"The shield phrase reports a problem that does not exist: you understood the question fine." }
           ],
-          note: "Тема 1.7, <b>estar a + infinitivo</b>. Тот же ответ годится на <b>Posso ajudar?</b> — вопрос звучит и так."
+          note: "Тема 1.7, <b>estar a + infinitivo</b>. Тот же ответ годится на <b>Posso ajudar?</b> — вопрос звучит и так.",
+          noteEn: "Topic 1.7, <b>estar a + infinitivo</b>. The same answer works for <b>Posso ajudar?</b> — the question comes in that shape too."
         },
         {
-          npc: { pt:"Só isso?", say:"со́ и́су", ru:"Это всё?" },
+          npc: { pt:"Só isso?", say:"со́ и́су", ru:"Это всё?", en:"Is that all?" },
           goal: "Да, это всё.",
+          goalEn: "Yes, that is everything.",
           answer: "Só isso, obrigado.",
           say: "со́ и́су, убригáду",
           wrong: [
-            { t:"Sim, tudo bem.", why:"«Tudo bem» — «как дела» и «всё в порядке», но не «это всё». Кассир решит, что ты ответил на другой вопрос." },
-            { t:"Mais alguma coisa?", why:"Это реплика продавца, а не покупателя: «что-нибудь ещё?»." }
+            { t:"Sim, tudo bem.", why:"«Tudo bem» — «как дела» и «всё в порядке», но не «это всё». Кассир решит, что ты ответил на другой вопрос.", whyEn:"«Tudo bem» means «how are you» and «all good», but not «that is all». The cashier will think you answered a different question." },
+            { t:"Mais alguma coisa?", why:"Это реплика продавца, а не покупателя: «что-нибудь ещё?».", whyEn:"That is the cashier's line, not the customer's: «anything else?»." }
           ],
-          note: "Можно и просто <b>Sim, obrigado</b>, но <b>Só isso</b> закрывает вопрос вернее — им же отвечают в кафе."
+          note: "Можно и просто <b>Sim, obrigado</b>, но <b>Só isso</b> закрывает вопрос вернее — им же отвечают в кафе.",
+          noteEn: "A plain <b>Sim, obrigado</b> works too, but <b>Só isso</b> closes the question better — and it is the same answer used in cafés."
         },
         {
-          npc: { pt:"Contribuinte?", say:"контрибуи́нт", ru:"Налоговый номер?" },
+          npc: { pt:"Contribuinte?", say:"контрибуи́нт", ru:"Налоговый номер?", en:"Tax number?" },
           goal: "Номера у тебя нет.",
+          goalEn: "You do not have one.",
           answer: "Não, obrigado.",
           say: "нау~, убригáду",
           wrong: [
-            { t:"Sim, se faz favor.", why:"«Да, пожалуйста» — и кассир замрёт в ожидании девяти цифр, которых у тебя нет." },
-            { t:"Quanto custa?", why:"Про цену здесь не спрашивают: вопрос был про NIF, налоговый номер для чека." }
+            { t:"Sim, se faz favor.", why:"«Да, пожалуйста» — и кассир замрёт в ожидании девяти цифр, которых у тебя нет.", whyEn:"«Yes, please» — and the cashier waits for nine digits you do not have." },
+            { t:"Quanto custa?", why:"Про цену здесь не спрашивают: вопрос был про NIF, налоговый номер для чека.", whyEn:"Price is not the subject here: the question was about your NIF, the tax number printed on the receipt." }
           ],
-          note: "Полностью — <b>Número de contribuinte?</b>, то есть NIF. Спрашивают на каждой второй кассе, и звучит это одним слитным словом — приезжие теряются именно здесь."
+          note: "Полностью — <b>Número de contribuinte?</b>, то есть NIF. Спрашивают на каждой второй кассе, и звучит это одним слитным словом — приезжие теряются именно здесь.",
+          noteEn: "In full it is <b>Número de contribuinte?</b>, i.e. your NIF. Asked at every second till, and it comes out as one run-together word — which is exactly where newcomers freeze."
         },
         {
-          npc: { pt:"Precisa de saco?", say:"прыси́за ды сáку", ru:"Пакет нужен?" },
+          npc: { pt:"Precisa de saco?", say:"прыси́за ды сáку", ru:"Пакет нужен?", en:"Do you need a bag?" },
           goal: "Пакет нужен.",
+          goalEn: "You do need a bag.",
           answer: "Sim, se faz favor.",
           say: "си~, сы фаш фаво́р",
           wrong: [
-            { t:"Não, obrigado.", why:"Отказ — а пакет тебе нужен. Три вопроса кассира подряд ждут разных ответов, и автоматическое «нет, спасибо» на всё подряд как раз здесь оставляет покупки в руках." },
-            { t:"Sim, de nada.", why:"«De nada» — «не за что», ответ на спасибо. К согласию оно не цепляется." }
+            { t:"Não, obrigado.", why:"Отказ — а пакет тебе нужен. Три вопроса кассира подряд ждут разных ответов, и автоматическое «нет, спасибо» на всё подряд как раз здесь оставляет покупки в руках.", whyEn:"A refusal — and you wanted the bag. Three questions in a row want different answers, and an automatic «no, thanks» to all of them leaves your shopping in your arms right here." },
+            { t:"Sim, de nada.", why:"«De nada» — «не за что», ответ на спасибо. К согласию оно не цепляется.", whyEn:"«De nada» means «you're welcome», an answer to thanks. It does not attach to a yes." }
           ],
-          note: "Пакеты платные почти везде, поэтому спрашивают всегда."
+          note: "Пакеты платные почти везде, поэтому спрашивают всегда.",
+          noteEn: "Bags cost money almost everywhere, which is why they always ask."
         },
         {
-          npc: { pt:"São doze euros e trinta.", say:"сáу~ до́з э́урош и три́нта", ru:"С вас двенадцать евро тридцать." },
+          npc: { pt:"São doze euros e trinta.", say:"сáу~ до́з э́урош и три́нта", ru:"С вас двенадцать евро тридцать.", en:"That is twelve euros thirty." },
           goal: "Сумму ты не поймал. Попроси повторить цену.",
+          goalEn: "You did not catch the total. Ask for the price again.",
           answer: "Pode repetir o preço?",
           say: "под рыпыти́р у пре́су",
           wrong: [
-            { t:"Pode escrever, se faz favor?", why:"Просьба написать выручает со словом, но не с суммой: цена и так горит на экране терминала." },
-            { t:"Quanto custa?", why:"«Сколько стоит?» — про товар на полке. Итог на кассе переспрашивают через preço." }
+            { t:"Pode escrever, se faz favor?", why:"Просьба написать выручает со словом, но не с суммой: цена и так горит на экране терминала.", whyEn:"Asking someone to write it down saves you on a word, not on a total: the price is already lit up on the terminal." },
+            { t:"Quanto custa?", why:"«Сколько стоит?» — про товар на полке. Итог на кассе переспрашивают через preço.", whyEn:"«How much is it?» is about an item on the shelf. The total at the till is asked again with preço." }
           ],
-          note: "<b>e trinta</b> в живом темпе склеивается в «итри́нта». Числа на слух разбираются последними — смотреть на экран терминала не стыдно, так делают все."
+          note: "<b>e trinta</b> в живом темпе склеивается в «итри́нта». Числа на слух разбираются последними — смотреть на экран терминала не стыдно, так делают все.",
+          noteEn: "At speaking speed <b>e trinta</b> fuses into one word. Numbers by ear are the last thing to click — looking at the terminal screen is no shame, everyone does it."
         },
         {
-          npc: { pt:"Doze euros e trinta. Multibanco ou dinheiro?", say:"до́з э́урош и три́нта. мултибáнку о динье́йру", ru:"Двенадцать тридцать. Картой или наличными?" },
+          npc: { pt:"Doze euros e trinta. Multibanco ou dinheiro?", say:"до́з э́урош и три́нта. мултибáнку о динье́йру", ru:"Двенадцать тридцать. Картой или наличными?", en:"Twelve thirty. Card or cash?" },
           goal: "Заплатишь картой.",
+          goalEn: "You are paying by card.",
           answer: "Com multibanco, se faz favor.",
           say: "ко~ мултибáнку, сы фаш фаво́р",
           wrong: [
-            { t:"Sim, se faz favor.", why:"Снова вопрос с «или»: «да» не выбирает ничего, и кассир переспросит на той же скорости." },
-            { t:"Com cartão de cliente.", why:"Cartão de cliente — карта магазина со скидками, а не платёжная. Про неё спрашивают отдельно." }
+            { t:"Sim, se faz favor.", why:"Снова вопрос с «или»: «да» не выбирает ничего, и кассир переспросит на той же скорости.", whyEn:"Another either/or question: «yes» chooses nothing, and the cashier will ask again at the same speed." },
+            { t:"Com cartão de cliente.", why:"Cartão de cliente — карта магазина со скидками, а не платёжная. Про неё спрашивают отдельно.", whyEn:"Cartão de cliente is the shop's loyalty card, not a payment card. That one gets asked about separately." }
           ],
-          note: "<b>Dinheiro</b> — наличные. Ответ строится предлогом <b>com</b>: com multibanco, com dinheiro."
+          note: "<b>Dinheiro</b> — наличные. Ответ строится предлогом <b>com</b>: com multibanco, com dinheiro.",
+          noteEn: "<b>Dinheiro</b> is cash. The answer is built with <b>com</b>: com multibanco, com dinheiro."
         },
         {
-          npc: { pt:"Obrigada. Boa tarde!", say:"убригáда. бо́а тáрд", ru:"Спасибо. Хорошего дня!" },
+          npc: { pt:"Obrigada. Boa tarde!", say:"убригáда. бо́а тáрд", ru:"Спасибо. Хорошего дня!", en:"Thank you. Have a good afternoon!" },
           goal: "Пожелай того же в ответ.",
+          goalEn: "Wish them the same back.",
           answer: "Igualmente. Boa tarde!",
           say: "игуалме́нт. бо́а тáрд",
           wrong: [
-            { t:"Também. Boa tarde!", why:"«Também» — «тоже», но в ответ на пожелание говорят igualmente." },
-            { t:"Igualmente. Bom dia!", why:"После полудня — boa tarde. Bom dia живёт только до обеда, и ошибка слышна сразу." }
+            { t:"Também. Boa tarde!", why:"«Também» — «тоже», но в ответ на пожелание говорят igualmente.", whyEn:"«Também» means «also», but the reply to a good wish is igualmente." },
+            { t:"Igualmente. Bom dia!", why:"После полудня — boa tarde. Bom dia живёт только до обеда, и ошибка слышна сразу.", whyEn:"After midday it is boa tarde. Bom dia only lives until noon, and the slip is audible straight away." }
           ],
-          note: "<b>Igualmente</b> — «и вам того же». Универсальный ответ на любое пожелание, от boa tarde до bom fim de semana."
+          note: "<b>Igualmente</b> — «и вам того же». Универсальный ответ на любое пожелание, от boa tarde до bom fim de semana.",
+          noteEn: "<b>Igualmente</b> means «same to you». The universal answer to any good wish, from boa tarde to bom fim de semana."
+        }
+      ]
+    },
+    {
+      id: "rua",
+      icon: "🧭",
+      title: "Na rua · спросить дорогу",
+      titleEn: "Na rua · asking the way",
+      sub: "Прохожий у Rossio. Метро, ориентир, «далеко ли» и проверка, что ты понял верно.",
+      subEn: "A passer-by near Rossio. The metro, a landmark, «is it far» and a check that you got it right.",
+      steps: [
+        {
+          npc: { pt:"Sim? Faz favor.", say:"си~? фаш фаво́р", ru:"Да? Слушаю.", en:"Yes? Go ahead." },
+          goal: "Ты сказал Desculpe, человек обернулся. Спроси, где станция метро.",
+          goalEn: "You said Desculpe and the person turned round. Ask where the metro station is.",
+          answer: "Onde é a estação de metro, se faz favor?",
+          say: "о́нд э́ а ыштасáу~ ды мэ́тру, сы фаш фаво́р",
+          wrong: [
+            { t:"Onde está a estação de metro?", why:"Станция стоит на своём месте всегда, а это <b>ser</b>: onde é. Estar спрашивает о том, где что-то оказалось сейчас (тема 0.9).", whyEn:"A station is always where it is, and that calls for <b>ser</b>: onde é. Estar asks where something happens to be right now (topic 0.9)." },
+            { t:"Quero a estação de metro.", why:"«Хочу станцию метро» — не вопрос. Слова человек поймёт, а чего от него хотят — нет.", whyEn:"«I want the metro station» is not a question. The words land; what you need from the person does not." }
+          ],
+          note: "В Португалии — <b>metro</b>, в Бразилии <b>metrô</b>. Вход помечен красной буквой <b>M</b>.",
+          noteEn: "In Portugal it is <b>metro</b>, in Brazil <b>metrô</b>. The entrance is marked with a red <b>M</b>."
+        },
+        {
+          npc: { pt:"É já ali. Vira à direita nos semáforos.", say:"э́ жá али́. ви́ра а дире́йта нуш сымáфоруш", ru:"Да вот прямо там. Поверните направо у светофора.", en:"It is right there. Turn right at the traffic lights." },
+          goal: "Ты не поймал одно слово — semáforos. Спроси, что оно значит.",
+          goalEn: "You missed one word — semáforos. Ask what it means.",
+          answer: "O que significa semáforos?",
+          say: "у кы сигнифи́ка сымáфоруш",
+          wrong: [
+            { t:"Não percebi.", why:"Щит уместен, когда не понял ничего. Здесь ты понял почти всё — и получишь весь маршрут заново, с тем же незнакомым словом внутри.", whyEn:"The shield phrase is for when nothing landed. Here almost everything did — and you will get the whole route again, with the same unknown word inside it." },
+            { t:"Pode escrever, se faz favor?", why:"Написать просят адрес или название. На «поверните направо» это лишний ход.", whyEn:"You ask for writing when it is an address or a name. For «turn right» it is a wasted move." }
+          ],
+          note: "<b>Semáforos</b> — светофор. Ориентиры в объяснениях повторяются: <b>a rotunda</b> — круговая, <b>a esquina</b> — угол, <b>o cruzamento</b> — перекрёсток.",
+          noteEn: "<b>Semáforos</b> are traffic lights. The landmarks repeat from one explanation to the next: <b>a rotunda</b> — roundabout, <b>a esquina</b> — corner, <b>o cruzamento</b> — crossroads."
+        },
+        {
+          npc: { pt:"Semáforos... as luzes. Vermelho, verde.", say:"сымáфоруш... аш лу́зыш. вырме́лю, ве́рд", ru:"Semáforos… огни. Красный, зелёный.", en:"Semáforos… the lights. Red, green." },
+          goal: "Понял. Спроси, далеко ли идти.",
+          goalEn: "Got it. Ask whether it is far.",
+          answer: "É longe?",
+          say: "э́ ло́нж",
+          wrong: [
+            { t:"Está longe?", why:"Снова estar вместо ser: расстояние до места — его постоянное свойство, а не сегодняшнее состояние.", whyEn:"Estar instead of ser again: the distance to a place is a property of it, not today's state." },
+            { t:"Quanto tempo é?", why:"Так о времени не спрашивают. «Сколько идти» — <b>Quanto tempo demora?</b>, а «É longe?» короче и работает всегда.", whyEn:"That is not how you ask about time. «How long does it take» is <b>Quanto tempo demora?</b>, and «É longe?» is shorter and always works." }
+          ],
+          note: "Ответ будет коротким: <b>Não, é aqui perto.</b> — «нет, тут рядом», или <b>Uns dez minutos a pé.</b> — «минут десять пешком».",
+          noteEn: "The answer will be short: <b>Não, é aqui perto.</b> — «no, it is close by», or <b>Uns dez minutos a pé.</b> — «about ten minutes on foot»."
+        },
+        {
+          npc: { pt:"Não, são cinco minutos a pé.", say:"нау~, сáу~ си́нку мину́туш а пэ́", ru:"Нет, пять минут пешком.", en:"No, five minutes on foot." },
+          goal: "Проверь, что понял: повтори маршрут своими словами.",
+          goalEn: "Check that you got it: say the route back in your own words.",
+          answer: "À direita nos semáforos, certo?",
+          say: "а дире́йта нуш сымáфоруш, се́рту",
+          wrong: [
+            { t:"À esquerda nos semáforos, certo?", why:"<b>Esquerda</b> — налево, а сказали направо. Проверочный вопрос имеет смысл только с той половиной, которую ты услышал.", whyEn:"<b>Esquerda</b> is left, and they said right. A check-back question is only worth asking with the half you actually heard." },
+            { t:"Está bem, obrigado.", why:"Согласие закрывает разговор, а маршрут остался непроверенным. Проверять понимание надо, пока человек ещё рядом.", whyEn:"Agreement closes the conversation with the route still unchecked. You verify while the person is still standing there." }
+          ],
+          note: "Повтор своими словами — самый дешёвый способ проверить понимание. В ответ услышишь <b>Exatamente.</b> или <b>Isso mesmo.</b>",
+          noteEn: "Saying it back is the cheapest way to check you understood. The answer comes as <b>Exatamente.</b> or <b>Isso mesmo.</b>"
+        },
+        {
+          npc: { pt:"Isso mesmo. À direita e depois sempre em frente.", say:"и́су ме́жму. а дире́йта и депо́йш се́мпр э~ фро́нт", ru:"Именно. Направо, а потом всё время прямо.", en:"That's it. Right, then straight on all the way." },
+          goal: "Поблагодари и попрощайся.",
+          goalEn: "Thank them and say goodbye.",
+          answer: "Muito obrigado. Boa tarde!",
+          say: "му́йту убригáду. бо́а тáрд",
+          wrong: [
+            { t:"De nada. Boa tarde!", why:"«De nada» — ответ на чужое спасибо, а благодаришь здесь ты.", whyEn:"«De nada» answers somebody else's thanks, and here the one saying thank you is you." },
+            { t:"Muito obrigado. Bom dia!", why:"После полудня — boa tarde. Ошибка во времени суток слышна сразу.", whyEn:"After midday it is boa tarde. Getting the time of day wrong is audible immediately." }
+          ],
+          note: "<b>Sempre em frente</b> — «всё время прямо», самая частая фраза в объяснениях дороги. Рядом с ней живут <b>vira</b> — поверни и <b>atravessa</b> — перейди.",
+          noteEn: "<b>Sempre em frente</b> — «straight on all the way», the most frequent phrase in directions. Its neighbours are <b>vira</b> — turn, and <b>atravessa</b> — cross."
+        }
+      ]
+    },
+    {
+      id: "transporte",
+      icon: "🚇",
+      title: "Transportes · метро и автобус",
+      titleEn: "Transportes · metro and bus",
+      sub: "Карта Navegante в кассе метро, потом автобус: «идёт ли до Belém» и просьба предупредить, где выходить.",
+      subEn: "A Navegante card at the metro counter, then the bus: «does it go to Belém» and asking to be told where to get off.",
+      steps: [
+        {
+          npc: { pt:"Boa tarde. Diga.", say:"бо́а тáрд. ди́га", ru:"Добрый день. Слушаю.", en:"Good afternoon. Go ahead." },
+          goal: "Попроси карту Navegante и пять евро на неё.",
+          goalEn: "Ask for a Navegante card with five euros on it.",
+          answer: "Um cartão Navegante com cinco euros, se faz favor.",
+          say: "у~ картáу~ навыгáнт ко~ си́нку э́урош, сы фаш фаво́р",
+          wrong: [
+            { t:"Um bilhete para o metro, se faz favor.", why:"Бумажных билетов в лиссабонском метро нет: поездку записывают на карту <b>Navegante</b>, и её сначала покупают.", whyEn:"There are no paper tickets on the Lisbon metro: a journey is loaded onto a <b>Navegante</b> card, and the card is bought first." },
+            { t:"Quero cinco euros.", why:"«Хочу пять евро» — просьба о деньгах, а не о поездке.", whyEn:"«I want five euros» asks for money, not for travel." }
+          ],
+          note: "Карта <b>Navegante Ocasional</b> стоит около полуевро и живёт год. Деньги на неё кладут глаголом <b>carregar</b>: <b>carregar com cinco euros</b>.",
+          noteEn: "The <b>Navegante Ocasional</b> card costs about half a euro and lasts a year. You top it up with the verb <b>carregar</b>: <b>carregar com cinco euros</b>."
+        },
+        {
+          npc: { pt:"Zapping ou uma viagem?", say:"зáпин о у́ма виáжай~", ru:"Zapping или одна поездка?", en:"Zapping or a single journey?" },
+          goal: "Пусть будет zapping — деньгами на несколько поездок.",
+          goalEn: "Go with zapping — money on the card for several journeys.",
+          answer: "Zapping, se faz favor.",
+          say: "зáпин, сы фаш фаво́р",
+          wrong: [
+            { t:"Sim, se faz favor.", why:"Снова вопрос с «или»: «да» не выбирает ничего, и кассир переспросит.", whyEn:"Another either/or question: «yes» chooses nothing, and the clerk will ask again." },
+            { t:"Uma viagem.", why:"Это одна поездка: карта опустеет сразу после первой, и на обратный путь придётся вставать в очередь снова.", whyEn:"That is a single journey: the card empties after the first ride and you queue again for the way back." }
+          ],
+          note: "<b>Zapping</b> — деньги на карте, списываются по поездке и выходят дешевле разовых. Слово английское, но произносят его по-португальски.",
+          noteEn: "<b>Zapping</b> is money on the card, charged per ride and cheaper than singles. The word is English, the pronunciation is not."
+        },
+        {
+          npc: { pt:"Bom dia.", say:"бо~ ди́а", ru:"Доброе утро. (водитель автобуса)", en:"Good morning. (the bus driver)" },
+          goal: "Ты у автобуса. Спроси, идёт ли он до Belém.",
+          goalEn: "You are at the bus door. Ask whether it goes to Belém.",
+          answer: "Este autocarro vai para Belém?",
+          say: "е́шт аутокáрру вáй пара быле́й~",
+          wrong: [
+            { t:"Este ônibus vai para Belém?", why:"<b>Ônibus</b> — бразильское слово. В Португалии автобус — <b>autocarro</b>, и это одна из самых заметных разниц между вариантами.", whyEn:"<b>Ônibus</b> is the Brazilian word. In Portugal a bus is an <b>autocarro</b> — one of the loudest differences between the two variants." },
+            { t:"Este autocarro é Belém?", why:"Направление — глагол движения <b>ir</b>: vai para. С ser фраза значит «этот автобус — Белен».", whyEn:"Direction takes the verb <b>ir</b>: vai para. With ser the sentence says «this bus is Belém»." }
+          ],
+          note: "<b>Autocarro</b> — автобус, <b>elétrico</b> — трамвай, <b>comboio</b> — поезд. Все три слова в Бразилии другие.",
+          noteEn: "<b>Autocarro</b> — bus, <b>elétrico</b> — tram, <b>comboio</b> — train. All three words are different in Brazil."
+        },
+        {
+          npc: { pt:"Vai, sim. São três paragens.", say:"вáй, си~. сáу~ трэ́ш парáжай~ш", ru:"Идёт, да. Три остановки.", en:"It does. Three stops." },
+          goal: "Попроси предупредить тебя, когда выходить.",
+          goalEn: "Ask them to give you a shout when it is your stop.",
+          answer: "Pode avisar-me, se faz favor?",
+          say: "под авизáр-мы, сы фаш фаво́р",
+          wrong: [
+            { t:"Pode me avisar?", why:"Бразильский порядок: местоимение перед глаголом. В Португалии оно цепляется дефисом сзади — <b>avisar-me</b> (тема 1.5).", whyEn:"Brazilian word order: the pronoun before the verb. In Portugal it hooks on behind with a hyphen — <b>avisar-me</b> (topic 1.5)." },
+            { t:"Onde é a paragem?", why:"«Где остановка?» — вопрос с тротуара, а ты уже в автобусе. Тебе нужно, чтобы предупредили.", whyEn:"«Where is the stop?» is a question from the pavement, and you are already on the bus. What you need is to be told." }
+          ],
+          note: "<b>Paragem</b> — остановка. Считать их проще, чем ловить название на слух: сказали <b>três paragens</b> — значит выходить на третьей.",
+          noteEn: "<b>Paragem</b> is a stop. Counting them is easier than catching the name by ear: they said <b>três paragens</b>, so you get off at the third."
+        },
+        {
+          npc: { pt:"Com certeza. Eu aviso.", say:"ко~ сырте́за. е́у ави́зу", ru:"Конечно. Скажу.", en:"Of course. I will tell you." },
+          goal: "Поблагодари.",
+          goalEn: "Thank them.",
+          answer: "Muito obrigado, é muito simpático.",
+          say: "му́йту убригáду, э́ му́йту симпáтику",
+          wrong: [
+            { t:"Igualmente, obrigado.", why:"«И вам того же» отвечают на пожелание, а не на согласие помочь.", whyEn:"«Same to you» answers a good wish, not an offer of help." },
+            { t:"De nada, obrigado.", why:"Две несовместимые реплики подряд: «не за что» и «спасибо». Благодаришь здесь ты.", whyEn:"Two incompatible lines in a row: «you're welcome» and «thank you». Here the one thanking is you." }
+          ],
+          note: "<b>Simpático</b> — «милый, любезный», и в Португалии это самая ходовая похвала человеку. <b>É muito simpático</b> звучит теплее, чем ещё одно obrigado.",
+          noteEn: "<b>Simpático</b> means «kind, friendly», and in Portugal it is the most common compliment there is. <b>É muito simpático</b> lands warmer than one more obrigado."
+        }
+      ]
+    },
+    {
+      id: "conhecer",
+      icon: "👋",
+      title: "Conhecer alguém · знакомство",
+      titleEn: "Conhecer alguém · meeting someone",
+      sub: "Сосед, однокурсник, гость на дне рождения: имя, откуда ты, чем занимаешься — и как не застрять после третьей фразы.",
+      subEn: "A neighbour, a classmate, someone at a birthday party: your name, where you are from, what you do — and how not to stall after the third line.",
+      steps: [
+        {
+          npc: { pt:"Olá! Tudo bem? Eu sou o Miguel.", say:"олá! ту́ду бай~? е́у со́у у мигэ́л", ru:"Привет! Как дела? Я Мигел.", en:"Hi! How's it going? I'm Miguel." },
+          goal: "Представься в ответ. Ты — Nuno.",
+          goalEn: "Introduce yourself back. You are Nuno.",
+          answer: "Olá, muito prazer. Sou o Nuno.",
+          say: "олá, му́йту празе́р. со́у у ну́ну",
+          wrong: [
+            { t:"Olá, muito prazer. Eu sou Nuno.", why:"В Португалии перед именем ставят артикль: <b>sou o Nuno</b>, <b>é a Ana</b>. Без артикля звучит по-книжному.", whyEn:"In Portugal the name takes an article: <b>sou o Nuno</b>, <b>é a Ana</b>. Without it the sentence sounds like a textbook." },
+            { t:"Olá, muito prazer. Eu chamo Nuno.", why:"Глагол возвратный: <b>chamo-me</b> Nuno. «Eu chamo Nuno» значит «я зову Нуну».", whyEn:"The verb is reflexive: <b>chamo-me</b> Nuno. «Eu chamo Nuno» means «I am calling Nuno over»." }
+          ],
+          note: "Два равных способа: <b>Sou o Nuno</b> и <b>Chamo-me Nuno</b>. Артикль перед именем — португальская привычка, к ней быстро привыкаешь.",
+          noteEn: "Two equal options: <b>Sou o Nuno</b> and <b>Chamo-me Nuno</b>. The article before a name is a Portuguese habit you pick up fast."
+        },
+        {
+          npc: { pt:"De onde é que és?", say:"ды о́нд э́ кы э́ш", ru:"А ты откуда?", en:"So where are you from?" },
+          goal: "Скажи, что ты не отсюда и живёшь в Лиссабоне уже год.",
+          goalEn: "Say you are not from here and have been living in Lisbon for a year.",
+          answer: "Não sou daqui, vivo em Lisboa há um ano.",
+          say: "нау~ со́у даки́, ви́ву э~ лижбо́а á у~ áну",
+          wrong: [
+            { t:"Não sou daqui, vivo em Lisboa por um ano.", why:"<b>Por um ano</b> — «на год», про срок вперёд. Сколько уже длится — <b>há um ano</b> (тема 1.10).", whyEn:"<b>Por um ano</b> means «for a year» looking forward. How long something has already lasted is <b>há um ano</b> (topic 1.10)." },
+            { t:"Não sou aqui, vivo em Lisboa há um ano.", why:"«Отсюда» — <b>daqui</b>, слияние de + aqui. Без предлога фраза значит «я не здесь».", whyEn:"«From here» is <b>daqui</b>, de + aqui merged. Without the preposition the sentence says «I am not here»." }
+          ],
+          note: "<b>Há um ano</b> — «уже год». То же <b>há</b>, что и «есть» из темы 0.12, но про время: <b>há dois meses</b>, <b>há muito tempo</b>.",
+          noteEn: "<b>Há um ano</b> — «for a year now». The same <b>há</b> as the «there is» of topic 0.12, but about time: <b>há dois meses</b>, <b>há muito tempo</b>."
+        },
+        {
+          npc: { pt:"E o que é que fazes?", say:"и у кы э́ кы фáзыш", ru:"А чем занимаешься?", en:"And what do you do?" },
+          goal: "Скажи, что учишься в университете.",
+          goalEn: "Say that you study at the university.",
+          answer: "Estudo na universidade.",
+          say: "ышту́ду на унивырсидáд",
+          wrong: [
+            { t:"Estou a estudar na universidade.", why:"<b>Estar a + infinitivo</b> — это «прямо сейчас, в эту минуту». На вопрос «чем занимаешься вообще» отвечают простым настоящим (тема 1.7).", whyEn:"<b>Estar a + infinitivo</b> means «right now, this minute». A question about what you do in general takes the plain present (topic 1.7)." },
+            { t:"Sou estudo na universidade.", why:"После <b>ser</b> идёт существительное: <b>sou estudante</b>. С глаголом estudo оно не сочетается.", whyEn:"After <b>ser</b> comes a noun: <b>sou estudante</b>. It does not combine with the verb estudo." }
+          ],
+          note: "Пара из темы 1.7: <b>estudo</b> — вообще, <b>estou a estudar</b> — прямо сейчас. На вопрос о работе или учёбе идёт первое.",
+          noteEn: "The pair from topic 1.7: <b>estudo</b> — in general, <b>estou a estudar</b> — at this moment. A question about work or study takes the first."
+        },
+        {
+          npc: { pt:"Boa! E gostas de Lisboa?", say:"бо́а! и го́шташ ды лижбо́а", ru:"Здорово! А Лиссабон нравится?", en:"Nice! And do you like Lisbon?" },
+          goal: "Скажи, что очень нравится, но лето тяжёлое.",
+          goalEn: "Say you like it a lot, but the summer is hard.",
+          answer: "Gosto muito, mas o verão é difícil.",
+          say: "го́шту му́йту, маш у вырáу~ э́ дифи́сил",
+          wrong: [
+            { t:"Eu gosto Lisboa, mas o verão é difícil.", why:"Глагол <b>gostar</b> требует предлога <b>de</b>: gosto de Lisboa. Без него фраза разваливается.", whyEn:"The verb <b>gostar</b> needs the preposition <b>de</b>: gosto de Lisboa. Without it the sentence falls apart." },
+            { t:"Gosto-me muito, mas o verão é difícil.", why:"<b>Gostar</b> не возвратный — местоимение здесь лишнее.", whyEn:"<b>Gostar</b> is not reflexive — the pronoun has no business here." }
+          ],
+          note: "<b>Gostar de</b> — всегда с предлогом: <b>gosto de café</b>, <b>gostas de Lisboa?</b> С артиклем предлог сливается: <b>gosto do Porto</b>.",
+          noteEn: "<b>Gostar de</b> always keeps its preposition: <b>gosto de café</b>, <b>gostas de Lisboa?</b> With an article it merges: <b>gosto do Porto</b>."
+        },
+        {
+          npc: { pt:"Pois, o verão aqui é duro. Bem, foi um prazer!", say:"по́йш, у вырáу~ аки́ э́ ду́ру. бай~, фо́й у~ празе́р", ru:"Да, лето тут суровое. Ну, было приятно!", en:"Yeah, summer here is brutal. Well, it was a pleasure!" },
+          goal: "Ответь тем же и попрощайся мягко.",
+          goalEn: "Say the same back and give a soft goodbye.",
+          answer: "Igualmente. Até à próxima!",
+          say: "игуалме́нт. атэ́ а про́сима",
+          wrong: [
+            { t:"Igualmente. Adeus!", why:"<b>Adeus</b> окончательнее, чем нужно: с новым знакомым прощаются мягче — <b>até à próxima</b>, <b>até logo</b>.", whyEn:"<b>Adeus</b> is more final than the moment needs: with someone you have just met you close softer — <b>até à próxima</b>, <b>até logo</b>." },
+            { t:"De nada. Até à próxima!", why:"«De nada» — ответ на спасибо, а тебе сказали не спасибо, а «было приятно».", whyEn:"«De nada» answers thanks, and what you got was not thanks but «it was a pleasure»." }
+          ],
+          note: "<b>Igualmente</b> — «и мне тоже». Тот же ответ годится на <b>Boa tarde</b>, <b>Bom fim de semana</b> и любое пожелание.",
+          noteEn: "<b>Igualmente</b> — «likewise». The same answer works for <b>Boa tarde</b>, <b>Bom fim de semana</b> and any good wish."
+        }
+      ]
+    },
+    {
+      id: "farmacia",
+      icon: "💊",
+      title: "Farmácia · аптека",
+      titleEn: "Farmácia · the pharmacy",
+      sub: "Болит голова. Как давно, есть ли аллергия, сколько раз в день и нужен ли рецепт.",
+      subEn: "A headache. How long for, any allergies, how many times a day, and whether you need a prescription.",
+      steps: [
+        {
+          npc: { pt:"Boa tarde. Faz favor?", say:"бо́а тáрд. фаш фаво́р", ru:"Добрый день. Чем помочь?", en:"Good afternoon. How can I help?" },
+          goal: "Скажи, что у тебя болит голова.",
+          goalEn: "Say that you have a headache.",
+          answer: "Boa tarde. Tenho dores de cabeça.",
+          say: "бо́а тáрд. тэ́ню до́рыш ды кабэ́са",
+          wrong: [
+            { t:"Boa tarde. Estou dores de cabeça.", why:"Боль — это то, что у тебя <b>есть</b>: ter (тема 0.12). Estar сюда не ставится.", whyEn:"Pain is something you <b>have</b>: ter (topic 0.12). Estar does not go here." },
+            { t:"Boa tarde. Minha cabeça dói.", why:"Понять поймут, но перед притяжательным нужен артикль: <b>a minha cabeça</b> (тема 1.8). В аптеке к тому же привычнее <b>tenho dores de cabeça</b>.", whyEn:"They will understand, but a possessive needs its article: <b>a minha cabeça</b> (topic 1.8). And in a pharmacy <b>tenho dores de cabeça</b> is the usual line anyway." }
+          ],
+          note: "<b>Dor</b> — боль, во множественном <b>dores</b>. Схема одна на всё: <b>dores de cabeça</b>, <b>dores de garganta</b>, <b>dores de barriga</b>.",
+          noteEn: "<b>Dor</b> is pain, plural <b>dores</b>. One pattern covers everything: <b>dores de cabeça</b>, <b>dores de garganta</b>, <b>dores de barriga</b>."
+        },
+        {
+          npc: { pt:"Há quantos dias?", say:"á куáнтуш ди́аш", ru:"Сколько дней уже?", en:"For how many days now?" },
+          goal: "Два дня.",
+          goalEn: "Two days.",
+          answer: "Há dois dias.",
+          say: "á до́йш ди́аш",
+          wrong: [
+            { t:"Por dois dias.", why:"<b>Por</b> — про срок вперёд, «на два дня». Сколько уже длится — <b>há</b> (тема 1.10).", whyEn:"<b>Por</b> looks forward, «for the next two days». How long it has already lasted is <b>há</b> (topic 1.10)." },
+            { t:"São dois dias.", why:"Так называют сумму или время на часах, но не длительность. Длительность вводится словом <b>há</b>.", whyEn:"That shape is for totals and clock time, not duration. Duration is introduced with <b>há</b>." }
+          ],
+          note: "<b>Há</b> отвечает и на «как давно», и на «сколько уже»: <b>há dois dias</b>, <b>há uma semana</b>, <b>há muito tempo</b>.",
+          noteEn: "<b>Há</b> answers both «how long ago» and «for how long now»: <b>há dois dias</b>, <b>há uma semana</b>, <b>há muito tempo</b>."
+        },
+        {
+          npc: { pt:"Tem alergia a algum medicamento?", say:"тай~ алыржи́а а алгу~ мыдикаме́нту", ru:"Аллергия на лекарства есть?", en:"Any allergies to medication?" },
+          goal: "Аллергии нет.",
+          goalEn: "You have none.",
+          answer: "Não, não tenho.",
+          say: "нау~, нау~ тэ́ню",
+          wrong: [
+            { t:"Não, obrigado.", why:"«Нет, спасибо» — вежливый отказ, а спросили о факте. В аптеке это ответ не на тот вопрос.", whyEn:"«No, thank you» is a polite refusal, and what was asked was a fact. In a pharmacy that answers the wrong question." },
+            { t:"Sim, não tenho.", why:"«Да, у меня нет» — противоречие в одной фразе. Отрицательный ответ начинается с <b>não</b>.", whyEn:"«Yes, I don't» contradicts itself. A negative answer opens with <b>não</b>." }
+          ],
+          note: "Двойное <b>não</b> — норма: первое отвечает на вопрос, второе отрицает глагол. <b>Não, não tenho.</b>, <b>Não, não sei.</b>",
+          noteEn: "The double <b>não</b> is normal: the first answers the question, the second negates the verb. <b>Não, não tenho.</b>, <b>Não, não sei.</b>"
+        },
+        {
+          npc: { pt:"Então leve este. Um comprimido de oito em oito horas.", say:"энтáу~ ле́вы е́шт. у~ компрыми́ду ды о́йту э~ о́йту о́раш", ru:"Тогда возьмите вот это. По таблетке каждые восемь часов.", en:"Then take this one. One tablet every eight hours." },
+          goal: "Ты не понял, как часто. Спроси про частоту.",
+          goalEn: "You did not catch how often. Ask about the frequency.",
+          answer: "Quantas vezes por dia?",
+          say: "куáнташ ве́зыш пур ди́а",
+          wrong: [
+            { t:"Pode repetir, se faz favor?", why:"Повторят той же фразой и на той же скорости. Точный вопрос дешевле: непонятна именно частота.", whyEn:"They will repeat the same sentence at the same speed. A precise question costs less: what is unclear is the frequency." },
+            { t:"Quanto custa?", why:"Про цену спросишь потом. Сейчас неясно главное — сколько раз в день пить.", whyEn:"Price can wait. Right now the thing you do not know is how many times a day to take it." }
+          ],
+          note: "<b>De oito em oito horas</b> — «каждые восемь часов». Схема повторяется: <b>de dois em dois dias</b> — раз в два дня.",
+          noteEn: "<b>De oito em oito horas</b> — «every eight hours». The pattern repeats: <b>de dois em dois dias</b> — every other day."
+        },
+        {
+          npc: { pt:"Três vezes por dia, depois das refeições.", say:"трэ́ш ве́зыш пур ди́а, депо́йш даш рыфэйсо́й~ш", ru:"Три раза в день, после еды.", en:"Three times a day, after meals." },
+          goal: "Спроси, нужен ли рецепт.",
+          goalEn: "Ask whether you need a prescription.",
+          answer: "Preciso de receita?",
+          say: "прыси́зу ды рысэ́йта",
+          wrong: [
+            { t:"Preciso receita?", why:"<b>Precisar</b> идёт с предлогом <b>de</b>: preciso de receita — как в кассовом <b>precisa de saco?</b>", whyEn:"<b>Precisar</b> comes with <b>de</b>: preciso de receita — same as the checkout's <b>precisa de saco?</b>" },
+            { t:"Tem receita?", why:"Так ты спрашиваешь, есть ли рецепт у самого фармацевта.", whyEn:"That asks whether the pharmacist has a prescription." }
+          ],
+          note: "<b>Receita</b> — и рецепт врача, и кулинарный. Без рецепта — <b>sem receita</b>; так и написано на половине полок.",
+          noteEn: "<b>Receita</b> is both a doctor's prescription and a cooking recipe. Over the counter is <b>sem receita</b> — it says so on half the shelves."
+        },
+        {
+          npc: { pt:"Não, este é sem receita. São quatro euros e vinte.", say:"нау~, е́шт э́ сай~ рысэ́йта. сáу~ куáтру э́урош и ви́нт", ru:"Нет, этот без рецепта. Четыре евро двадцать.", en:"No, this one is over the counter. Four euros twenty." },
+          goal: "Поблагодари за помощь.",
+          goalEn: "Thank them for the help.",
+          answer: "Muito obrigado pela ajuda.",
+          say: "му́йту убригáду пе́ла ажу́да",
+          wrong: [
+            { t:"Muito obrigado para a ajuda.", why:"Благодарят через <b>por</b>: obrigado pela ajuda. <b>Para</b> смотрит вперёд, к цели (тема 1.10).", whyEn:"Thanks go through <b>por</b>: obrigado pela ajuda. <b>Para</b> looks forward, at a goal (topic 1.10)." },
+            { t:"Muito obrigado de ajuda.", why:"Предлог не тот. Нужное слияние — <b>por + a = pela</b>.", whyEn:"Wrong preposition. The merge you need is <b>por + a = pela</b>." }
+          ],
+          note: "<b>Obrigado pela ajuda</b> — «спасибо за помощь». Слияния из темы 0.14: <b>por + a = pela</b>, <b>por + o = pelo</b>.",
+          noteEn: "<b>Obrigado pela ajuda</b> — «thanks for the help». The merges from topic 0.14: <b>por + a = pela</b>, <b>por + o = pelo</b>."
+        }
+      ]
+    },
+    {
+      id: "restaurante",
+      icon: "🍽️",
+      title: "Restaurante · обед",
+      titleEn: "Restaurante · lunch",
+      sub: "Столик, вода из-под крана, «что это за блюдо», счёт — и вопрос про couvert, которого нет в других странах.",
+      subEn: "A table, tap water, «what is that dish», the bill — and the couvert question that other countries do not have.",
+      steps: [
+        {
+          npc: { pt:"Boa tarde. São quantas pessoas?", say:"бо́а тáрд. сáу~ куáнташ пысо́аш", ru:"Добрый день. Сколько вас?", en:"Good afternoon. How many of you?" },
+          goal: "Вас двое.",
+          goalEn: "There are two of you.",
+          answer: "Somos dois, se faz favor.",
+          say: "со́муш до́йш, сы фаш фаво́р",
+          wrong: [
+            { t:"Estamos dois, se faz favor.", why:"Количество — это <b>ser</b>: somos dois. Estar говорит о состоянии, а не о том, кто вы (тема 0.9).", whyEn:"A count takes <b>ser</b>: somos dois. Estar speaks about a state, not about who you are (topic 0.9)." },
+            { t:"Dois pessoas, se faz favor.", why:"<b>Pessoa</b> — женского рода: duas pessoas. И на «сколько вас» отвечают глаголом: somos dois.", whyEn:"<b>Pessoa</b> is feminine: duas pessoas. And «how many of you» is answered with a verb: somos dois." }
+          ],
+          note: "Можно и <b>Mesa para dois, se faz favor.</b> Но когда спросили первыми, <b>somos dois</b> звучит естественнее.",
+          noteEn: "<b>Mesa para dois, se faz favor.</b> works too. But when they ask first, <b>somos dois</b> is the natural answer."
+        },
+        {
+          npc: { pt:"Faz favor, sentem-se. Querem beber alguma coisa?", say:"фаш фаво́р, се́нтай~-сы. кэ́рай~ бабе́р алгу́ма ко́йза", ru:"Прошу, садитесь. Пить что-нибудь будете?", en:"Please, sit down. Would you like anything to drink?" },
+          goal: "Попроси кувшин воды из-под крана.",
+          goalEn: "Ask for a jug of tap water.",
+          answer: "Um jarro de água da torneira, se faz favor.",
+          say: "у~ жáрру ды áгуа да турнэ́йра, сы фаш фаво́р",
+          wrong: [
+            { t:"Uma água natural, se faz favor.", why:"Это бутилированная вода без газа — её принесут и посчитают. Бесплатная из-под крана — <b>água da torneira</b>.", whyEn:"That is still water in a bottle — it arrives and it goes on the bill. The free one from the tap is <b>água da torneira</b>." },
+            { t:"Água, se faz favor.", why:"Слишком общо: принесут бутылку на выбор официанта, с газом или без, и она окажется в счёте.", whyEn:"Too vague: a bottle arrives, sparkling or still at the waiter's discretion, and it lands on the bill." }
+          ],
+          note: "<b>Torneira</b> — кран. Воду из-под крана в Португалии подают спокойно, но просить надо явно, иначе принесут бутылку.",
+          noteEn: "<b>Torneira</b> is a tap. Tap water is served without fuss in Portugal, but you have to ask for it by name or a bottle arrives."
+        },
+        {
+          npc: { pt:"E para comer? Hoje temos bacalhau à Brás.", say:"и пара куме́р? о́ж те́муш бакалья́у а брáш", ru:"А поесть? Сегодня есть бакальяу-а-Браш.", en:"And to eat? Today we have bacalhau à Brás." },
+          goal: "Спроси, что это за блюдо.",
+          goalEn: "Ask what that dish is.",
+          answer: "O que é bacalhau à Brás?",
+          say: "у кы э́ бакалья́у а брáш",
+          wrong: [
+            { t:"O que significa bacalhau à Brás?", why:"<b>Significa</b> — про значение слова. Про блюдо спрашивают <b>o que é</b>: тебе нужен состав, а не перевод.", whyEn:"<b>Significa</b> is about what a word means. A dish is asked about with <b>o que é</b>: you want the ingredients, not a translation." },
+            { t:"Bacalhau à Brás é bom?", why:"«Вкусно ли?» — вопрос вежливости: официант ответит «sim», и ты так и не узнаешь, что это.", whyEn:"«Is it good?» is a politeness question: the waiter says «sim» and you still do not know what it is." }
+          ],
+          note: "<b>Bacalhau</b> — треска, главная рыба страны. <b>À Brás</b> — с картошкой соломкой и яйцом; способов приготовить бакальяу, по легенде, 365.",
+          noteEn: "<b>Bacalhau</b> is salt cod, the national fish. <b>À Brás</b> means with shredded potato and egg; legend counts 365 ways to cook bacalhau."
+        },
+        {
+          npc: { pt:"É bacalhau desfiado com batata e ovo. Muito bom.", say:"э́ бакалья́у дышфиáду ко~ батáта и о́ву. му́йту бо~", ru:"Это треска волокнами с картошкой и яйцом. Очень вкусно.", en:"It's shredded cod with potato and egg. Very good." },
+          goal: "Закажи одну порцию.",
+          goalEn: "Order one.",
+          answer: "Então um bacalhau à Brás, se faz favor.",
+          say: "энтáу~ у~ бакалья́у а брáш, сы фаш фаво́р",
+          wrong: [
+            { t:"Então quero bacalhau à Brás.", why:"«Quero» звучит требовательно — заказ идёт через <b>se faz favor</b>, как и в кафе.", whyEn:"«Quero» lands as a demand — an order goes through <b>se faz favor</b>, same as in a café." },
+            { t:"Então uma bacalhau à Brás, se faz favor.", why:"<b>Bacalhau</b> — мужского рода: um bacalhau.", whyEn:"<b>Bacalhau</b> is masculine: um bacalhau." }
+          ],
+          note: "<b>Então</b> — «ну, тогда, значит». Слово-связка, с которого начинается половина живых реплик.",
+          noteEn: "<b>Então</b> — «so, then, well». The connector that opens half the lines in a real conversation."
+        },
+        {
+          npc: { pt:"Muito bem. E o couvert? Pão, azeitonas e queijo.", say:"му́йту бай~. и у куве́р? пáу~, азэйто́наш и кэ́йжу", ru:"Отлично. А куверт? Хлеб, оливки и сыр.", en:"Very good. And the couvert? Bread, olives and cheese." },
+          goal: "Couvert платный. Откажись.",
+          goalEn: "The couvert is not free. Turn it down.",
+          answer: "Não, obrigado. Só a água.",
+          say: "нау~, убригáду. со́ а áгуа",
+          wrong: [
+            { t:"Sim, se faz favor.", why:"Согласие — и хлеб с оливками появятся в счёте отдельной строкой. Это не бесплатное угощение.", whyEn:"Say yes and the bread and olives show up as their own line on the bill. It is not a free welcome snack." },
+            { t:"Não percebi.", why:"Щит уместен, когда не понял; вопрос здесь ясен, а уклончивый ответ оставит couvert на столе — и в счёте.", whyEn:"The shield phrase is for when you did not understand; here the question is clear, and a vague answer leaves the couvert on the table — and on the bill." }
+          ],
+          note: "<b>Couvert</b> — хлеб, оливки, паштет, которые приносят до заказа. Их считают в счёте, и отказаться можно спокойно.",
+          noteEn: "<b>Couvert</b> is the bread, olives and pâté brought before the order. It goes on the bill, and turning it down is perfectly normal."
+        },
+        {
+          npc: { pt:"Com certeza. Bom apetite!", say:"ко~ сырте́за. бо~ апыти́т", ru:"Конечно. Приятного аппетита!", en:"Of course. Enjoy your meal!" },
+          goal: "Обед закончен. Попроси счёт.",
+          goalEn: "Lunch is over. Ask for the bill.",
+          answer: "A conta, se faz favor.",
+          say: "а ко́нта, сы фаш фаво́р",
+          wrong: [
+            { t:"O preço, se faz favor.", why:"<b>Preço</b> — цена одной вещи. Счёт целиком — <b>a conta</b>.", whyEn:"<b>Preço</b> is the price of one thing. The whole bill is <b>a conta</b>." },
+            { t:"Quanto custa, se faz favor?", why:"Так спрашивают о цене блюда до заказа, а не об итоге в конце обеда.", whyEn:"That asks the price of a dish before ordering, not the total at the end of the meal." }
+          ],
+          note: "Жест ручкой в воздухе понимают везде, но фраза короче. <b>Bom apetite</b> здесь говорят все, включая соседей за столиком.",
+          noteEn: "The scribble-in-the-air gesture works everywhere, but the phrase is shorter. <b>Bom apetite</b> is said by everyone here, neighbouring tables included."
         }
       ]
     }
@@ -8810,6 +9297,10 @@
     return ptVoice ? ' <button type="button" class="speak" data-say="'+escapeHtml(text)+'" title="Прослушать">🔊</button>' : "";
   }
 
+  // Подписи пузырей — в EN сцена целиком английская, включая «кто говорит».
+  function THEM(){ return L("Собеседник", "Them"); }
+  function YOU(){ return L("Ты", "You"); }
+
   function dgBubble(who, cls, pt, say, ru, sayBtn){
     return '<div class="dg-turn '+cls+'"><div class="dg-who">'+who+'</div><div class="dg-bubble">' +
       '<div class="dg-pt">'+escapeHtml(pt)+(sayBtn ? dgSay(pt) : "")+'</div>' +
@@ -8832,14 +9323,15 @@
     var done = loadDialogProgress();
     box.innerHTML = DIALOGS.map(function(sc){
       var d = done[sc.id] || {};
+      var n = sc.steps.length;
       return '<div class="dg-scene">' +
         '<div class="dg-scene-head"><span class="dg-scene-icon">'+sc.icon+'</span>' +
-          '<span class="dg-scene-title">'+escapeHtml(sc.title)+'</span>' +
-          '<span class="dg-step">'+sc.steps.length+' реплик</span></div>' +
-        '<div class="dg-scene-sub">'+escapeHtml(sc.sub)+'</div>' +
+          '<span class="dg-scene-title">'+escapeHtml(L(sc.title, sc.titleEn))+'</span>' +
+          '<span class="dg-step">'+n+L(' реплик', ' lines')+'</span></div>' +
+        '<div class="dg-scene-sub">'+escapeHtml(L(sc.sub, sc.subEn))+'</div>' +
         '<div class="dg-modes">' +
-          '<button type="button" class="btn btn-reveal" data-dg="start" data-scene="'+sc.id+'" data-mode="mc">Выбор'+(d.mc ? '<span class="dg-done">✓</span>' : "")+'</button>' +
-          '<button type="button" class="btn btn-check" data-dg="start" data-scene="'+sc.id+'" data-mode="build">Сборка'+(d.build ? '<span class="dg-done">✓</span>' : "")+'</button>' +
+          '<button type="button" class="btn btn-reveal" data-dg="start" data-scene="'+sc.id+'" data-mode="mc">'+L("Выбор","Choice")+(d.mc ? '<span class="dg-done">✓</span>' : "")+'</button>' +
+          '<button type="button" class="btn btn-check" data-dg="start" data-scene="'+sc.id+'" data-mode="build">'+L("Сборка","Build")+(d.build ? '<span class="dg-done">✓</span>' : "")+'</button>' +
         '</div></div>';
     }).join("");
   }
@@ -8854,8 +9346,8 @@
 
     var step = sc.steps[dgRun.i];
     var head = '<div class="dg-bar">' +
-      '<span class="dg-scene-title">'+escapeHtml(sc.title)+'</span>' +
-      '<span class="dg-mode-tag">'+(dgRun.mode === "mc" ? "выбор" : "сборка")+'</span>' +
+      '<span class="dg-scene-title">'+escapeHtml(L(sc.title, sc.titleEn))+'</span>' +
+      '<span class="dg-mode-tag">'+(dgRun.mode === "mc" ? L("выбор","choice") : L("сборка","build"))+'</span>' +
       '<span class="dg-step">'+(dgRun.i+1)+' / '+sc.steps.length+'</span></div>';
 
     // В логе — только предыдущий обмен репликами: контекст «что было сейчас»
@@ -8863,10 +9355,10 @@
     var log = "";
     if(dgRun.i > 0){
       var prev = sc.steps[dgRun.i - 1];
-      log += dgBubble("Собеседник", "", prev.npc.pt, "", prev.npc.ru, false);
-      log += dgBubble("Ты", "me", prev.answer, "", "", false);
+      log += dgBubble(THEM(), "", prev.npc.pt, "", L(prev.npc.ru, prev.npc.en), false);
+      log += dgBubble(YOU(), "me", prev.answer, "", "", false);
     }
-    log += dgBubble("Собеседник", "now", step.npc.pt, step.npc.say, step.npc.ru, true);
+    log += dgBubble(THEM(), "now", step.npc.pt, step.npc.say, L(step.npc.ru, step.npc.en), true);
 
     var answer = dgRun.mode === "mc"
       ? '<div class="dg-opts">' + dgRun.opts.map(function(o, idx){
@@ -8875,11 +9367,11 @@
       : '<div class="qbuild" id="dgBuild"></div>';
 
     var acts = dgRun.mode === "mc" ? "" :
-      '<button type="button" class="btn btn-check" data-dg="check">Проверить</button>';
+      '<button type="button" class="btn btn-check" data-dg="check">'+L("Проверить","Check")+'</button>';
 
     box.innerHTML = head +
       '<div class="dg-log">'+log+'</div>' +
-      '<div class="dg-goal">'+escapeHtml(step.goal)+'</div>' +
+      '<div class="dg-goal">'+escapeHtml(L(step.goal, step.goalEn))+'</div>' +
       '<div id="dgAnswer">'+answer+'</div>' +
       '<div id="dgFeed"></div>' +
       '<div class="dg-actions" id="dgActs">'+acts+'</div>';
@@ -8895,20 +9387,21 @@
 
   function renderDgFinish(box, sc){
     var lines = sc.steps.map(function(s){
-      return dgBubble("Собеседник", "", s.npc.pt, "", s.npc.ru, true) +
-             dgBubble("Ты", "me", s.answer, "", "", true);
+      return dgBubble(THEM(), "", s.npc.pt, "", L(s.npc.ru, s.npc.en), true) +
+             dgBubble(YOU(), "me", s.answer, "", "", true);
     }).join("");
     var other = dgRun.mode === "mc" ? "build" : "mc";
-    box.innerHTML = '<div class="dg-bar"><span class="dg-scene-title">'+escapeHtml(sc.title)+'</span>' +
-        '<span class="dg-mode-tag">пройдено</span></div>' +
-      '<p class="dg-final"><b>Сцена пройдена.</b> ' +
-        (dgRun.wrong ? 'Промахов: '+dgRun.wrong+' из '+sc.steps.length+'. Стоит вернуться к ней завтра.'
-                     : 'Без единого промаха.') + '</p>' +
+    box.innerHTML = '<div class="dg-bar"><span class="dg-scene-title">'+escapeHtml(L(sc.title, sc.titleEn))+'</span>' +
+        '<span class="dg-mode-tag">'+L("пройдено","done")+'</span></div>' +
+      '<p class="dg-final"><b>'+L("Сцена пройдена.","Scene complete.")+'</b> ' +
+        (dgRun.wrong ? L('Промахов: '+dgRun.wrong+' из '+sc.steps.length+'. Стоит вернуться к ней завтра.',
+                         'Slips: '+dgRun.wrong+' of '+sc.steps.length+'. Worth coming back to it tomorrow.')
+                     : L('Без единого промаха.','Not a single slip.')) + '</p>' +
       '<div class="dg-log" style="margin-top:12px">'+lines+'</div>' +
       '<div class="dg-actions">' +
-        '<button type="button" class="btn btn-reveal" data-dg="close">К сценам</button>' +
+        '<button type="button" class="btn btn-reveal" data-dg="close">'+L("К сценам","Back to scenes")+'</button>' +
         '<button type="button" class="btn btn-check" data-dg="start" data-scene="'+sc.id+'" data-mode="'+other+'">' +
-          (other === "build" ? "Пройти сборкой" : "Пройти выбором") + '</button>' +
+          (other === "build" ? L("Пройти сборкой","Now in build mode") : L("Пройти выбором","Now in choice mode")) + '</button>' +
       '</div>';
   }
 
@@ -8939,7 +9432,7 @@
     dgRun.opts = null;
     if(!step || dgRun.mode !== "mc") return;
     var opts = [{ t:step.answer, ok:true }].concat(step.wrong.map(function(w){
-      return { t:w.t, why:w.why, ok:false };
+      return { t:w.t, why:w.why, whyEn:w.whyEn, ok:false };
     }));
     dgRun.opts = shuffle(opts);
   }
@@ -8955,17 +9448,17 @@
   function dgNextBtn(){
     var sc = dialogById(dgRun.id);
     var last = dgRun.i >= sc.steps.length - 1;
-    dgActs('<button type="button" class="btn btn-check" data-dg="next">'+(last ? "Закончить" : "Дальше")+'</button>');
+    dgActs('<button type="button" class="btn btn-check" data-dg="next">'+(last ? L("Закончить","Finish") : L("Дальше","Next"))+'</button>');
   }
 
   // Разбор шага один на оба режима: разница только в том, как ученик добрался
   // до ответа, а объяснять надо одно и то же.
   function dgResolve(step, ok, whyWrong){
     dgRun.answered = true;
-    dgFeed((ok ? "" : whyWrong + "<br><br>") + step.note, ok);
+    dgFeed((ok ? "" : whyWrong + "<br><br>") + L(step.note, step.noteEn), ok);
     var f = document.getElementById("dgFeed");
     if(f) f.insertAdjacentHTML("beforeend",
-      '<div class="dg-answer-note">Твоя реплика: <b>'+escapeHtml(step.answer)+'</b>'+dgSay(step.answer)+
+      '<div class="dg-answer-note">'+L("Твоя реплика","Your line")+': <b>'+escapeHtml(step.answer)+'</b>'+dgSay(step.answer)+
       ' <span class="dg-say">'+escapeHtml(step.say)+'</span></div>');
     dgNextBtn();
   }
@@ -8981,7 +9474,7 @@
       if(dgRun.opts[i].ok) b.classList.add("mc-correct");
       else if(i === idx) b.classList.add("mc-wrong");
     });
-    dgResolve(step, ok, "<b>"+escapeHtml(picked.t)+"</b> — "+picked.why);
+    dgResolve(step, ok, "<b>"+escapeHtml(picked.t)+"</b> — "+L(picked.why, picked.whyEn));
   }
 
   function handleDgAction(btn){
@@ -9019,16 +9512,17 @@
       }
       line.classList.add("bad"); line.classList.remove("ok");
       if(!dgRun.missed){ dgRun.missed = true; dgRun.wrong++; }
-      dgFeed("Не то. Слова все нужные — другой порядок.", false);
-      dgActs('<button type="button" class="btn btn-check" data-dg="check">Проверить</button>' +
-             '<button type="button" class="btn btn-reveal" data-dg="reveal">Показать ответ</button>');
+      dgFeed(L("Не то. Слова все нужные — другой порядок.",
+                "Not quite. The words are all right — the order is not."), false);
+      dgActs('<button type="button" class="btn btn-check" data-dg="check">'+L("Проверить","Check")+'</button>' +
+             '<button type="button" class="btn btn-reveal" data-dg="reveal">'+L("Показать ответ","Show the answer")+'</button>');
       return;
     }
     if(action === "reveal"){
       var box2 = document.getElementById("dgBuild");
       if(!box2 || dgRun.answered) return;
       revealBuild(box2);
-      dgResolve(step, false, "Так эта реплика собирается целиком.");
+      dgResolve(step, false, L("Так эта реплика собирается целиком.","This is how the line goes."));
       return;
     }
   }
@@ -9532,6 +10026,9 @@
     var say = e.target.closest("[data-say]");
     if(say){ speak(say.dataset.say); return; }
 
+    var lang = e.target.closest("[data-lang]");
+    if(lang){ setLang(lang.dataset.lang); return; }
+
     var vocabBtn = e.target.closest("[data-vocab]");
     if(vocabBtn){ handleVocabAction(vocabBtn.dataset.vocab); return; }
 
@@ -9649,6 +10146,7 @@
       addPaneNext(screen, ".pane-texts", "quiz",  "Дальше: задания");
     });
 
+    applyLang();
     seedVocabFromWordsets();
     initAudio();
     initConjugador();
