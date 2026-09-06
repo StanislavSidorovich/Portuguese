@@ -8634,6 +8634,41 @@
     "comida":"еда","estava":"был, находился (от estar)","gente":"народ, люди; a gente — мы (разговорное)"
   };
 
+  // Английский оверлей словаря. Не копия VOCAB, а заплатка на те слова, до
+  // которых дотягиваются переведённые темы: наборы «Palavras N» приносят свой
+  // перевод сами (см. seedVocabFromWordsets), а сюда вписано всё остальное —
+  // служебные слова, приветствия и формы, которые в темах встречаются раньше
+  // своего разбора. Чего здесь нет, то показывается по-русски: словарь
+  // курса русский, и переводить все 456 статей ради пяти тем незачем.
+  //
+  // Ключ должен существовать и в VOCAB — иначе слово не станет тапаемым
+  // вовсе, и запись сюда просто не сработает. Это сторожит проверка 8.
+  var VOCAB_EN = {
+    // приветствия и вежливость
+    "bom":"good; kind","boa":"good; kind (fem.)","dia":"day",
+    "tarde":"afternoon; late","noite":"evening, night","até":"until, up to",
+    "logo":"soon, right away","por":"through, for, by","favor":"favour",
+    "nada":"nothing","hoje":"today",
+    // ответы и связки
+    "sim":"yes","não":"no; not","tudo":"everything","bem":"well",
+    "e":"and","com":"with","muito":"very, a lot","aqui":"here",
+    "ah":"ah (interjection)",
+    // артикли и слияния с предлогом
+    "o":"masculine article; that one","a":"feminine article; that one",
+    "um":"one; masculine article","uma":"one; feminine article",
+    "de":"of, from","do":"of, from (de + o)","da":"of, from (de + a)",
+    "na":"in, on (em + a)",
+    // формы глаголов, которые встречаются раньше своего разбора
+    "é":"is (from ser)","são":"are (from ser)","está":"is, is located (from estar)",
+    "faz":"does, makes (from fazer)","tu":"you (informal)",
+    // кафе, счёт, числа
+    "empregado":"employee; waiter","empregada":"employee; waitress",
+    "açúcar":"sugar","sopa":"soup","quanto":"how much","cêntimos":"cents",
+    "dois":"two","setenta":"seventy",
+    // люди
+    "homem":"man; person","ana":"Ana (a woman's name)","joão":"João (a man's name)"
+  };
+
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
   // известные окончания и пробуем снова.
   //
@@ -8688,9 +8723,9 @@
   // Поиск в ширину по цепочкам замен. Глубина два: португальские окончания
   // не навешиваются друг на друга, как казахские, и третий шаг даёт только
   // мусор и лишнюю работу.
-  function lookupWord(raw){
+  function lookupIn(dict, raw){
     var w = raw.toLowerCase();
-    if(VOCAB[w]) return VOCAB[w];
+    if(dict[w]) return dict[w];
     var frontier = [w], seen = {};
     for(var depth = 0; depth < 2; depth++){
       var next = [];
@@ -8700,7 +8735,7 @@
           var c = cands[j];
           if(seen[c]) continue;
           seen[c] = 1;
-          if(VOCAB[c]) return VOCAB[c];
+          if(dict[c]) return dict[c];
           next.push(c);
         }
       }
@@ -8710,23 +8745,40 @@
     return null;
   }
 
+  function lookupWord(raw){   return lookupIn(VOCAB, raw); }
+  // Может вернуть null: оверлей неполный, и это нормально — тогда по тапу
+  // покажется русская статья.
+  function lookupWordEn(raw){ return lookupIn(VOCAB_EN, raw); }
+
   // Наборы «Palavras N · …» в темах и словарь для перевода по тапу — это два
   // списка, которые пришлось бы держать в согласии руками. Поэтому наборы
   // досыпаются в словарь сами: единственный источник правды — сама тема.
   function seedVocabFromWordsets(){
+    // Фраза из двух слов («bom dia») в текстах встречается по частям, а
+    // тапается по одному слову — поэтому кладём и её куски, если их ещё нет:
+    // перевод куска даст хотя бы приблизительный смысл.
+    function put(dict, key, val){
+      if(!val) return;
+      if(!dict[key]) dict[key] = val;
+      key.split(/\s+/).forEach(function(part){
+        if(part.length > 1 && !dict[part]) dict[part] = val;
+      });
+    }
+    var box = document.createElement("div");
+    function plain(html){ box.innerHTML = html; return box.textContent.replace(/^\s*[—-]\s*/,"").trim(); }
+
     document.querySelectorAll(".wordset > div").forEach(function(row){
       var w = row.querySelector(".w"), t = row.querySelector(".t");
       if(!w || !t) return;
       var key = w.textContent.trim().toLowerCase();
       if(!key) return;
-      var val = t.textContent.replace(/^\s*[—-]\s*/,"").trim();
-      if(!VOCAB[key]) VOCAB[key] = val;
-      // Фраза из двух слов («bom dia») в текстах встречается по частям,
-      // а тапается по одному слову — поэтому кладём и её куски, если их
-      // ещё нет: перевод куска даст хотя бы приблизительный смысл.
-      key.split(/\s+/).forEach(function(part){
-        if(part.length > 1 && !VOCAB[part]) VOCAB[part] = val;
-      });
+      // applyLang() отработал раньше и мог подменить содержимое .t. Поэтому
+      // русское берём из ruHtml, а английское из data-en: оба словаря выходят
+      // одинаковыми независимо от того, на каком языке открыли страницу.
+      var ru = plain(t.dataset.ruHtml !== undefined ? t.dataset.ruHtml : t.innerHTML);
+      var en = (t.dataset.en !== undefined) ? plain(t.dataset.en) : "";
+      put(VOCAB, key, ru);
+      put(VOCAB_EN, key, en);
     });
   }
 
@@ -8753,6 +8805,11 @@
         var span = document.createElement("span");
         span.className = "tap-word";
         span.dataset.tr = tr;
+        // Английский кладём сразу, а не ищем при показе: wrapTapWords()
+        // заменяет текстовые узлы необратимо, и перестроить их на смене
+        // языка уже нельзя.
+        var trEn = lookupWordEn(word);
+        if(trEn) span.dataset.trEn = trEn;
         span.textContent = word;
         frag.appendChild(span);
         last = m.index + word.length;
@@ -8773,7 +8830,7 @@
     hideTapPopup();
     var b = document.createElement("div");
     b.className = "tap-popup";
-    b.textContent = w.dataset.tr;
+    b.textContent = (LANG === "en" && w.dataset.trEn) ? w.dataset.trEn : w.dataset.tr;
     document.body.appendChild(b);
     var r = w.getBoundingClientRect();
     var top = r.top - b.offsetHeight - 9;

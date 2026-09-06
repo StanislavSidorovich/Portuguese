@@ -384,6 +384,38 @@ function checkEnQuizData() {
   if (!problems) ok(`${blanks} полей, ${selects} списков — ответы согласованы`);
 }
 
+/* ============ 8. английский оверлей словаря ============ */
+
+// VOCAB_EN — заплатка поверх VOCAB, а не второй словарь. Слово становится
+// тапаемым по наличию русской статьи: wrapTapWords сначала ищет в VOCAB и
+// молча пропускает слово, если не нашёл. Поэтому английская статья на слово,
+// до которого русский словарь не дотягивается, не покажется никогда — и
+// сказать об этом некому. Проверяем тем же поиском, каким ищет приложение.
+function checkVocabEn() {
+  head('8. Английский оверлей словаря');
+
+  const start = html.indexOf('var VOCAB_EN = {');
+  if (start < 0) { bad('не нашёл объект VOCAB_EN'); return; }
+  const end = html.indexOf('\n  };', start);
+  if (end < 0) { bad('не нашёл конец объекта VOCAB_EN'); return; }
+
+  let problems = 0;
+  const seen = new Set();
+  for (const m of html.slice(start, end).matchAll(/"([^"]+)"\s*:\s*"([^"]*)"/g)) {
+    const [, key, val] = m;
+    if (seen.has(key)) { bad(`EN-словарь: ключ «${key}» задан дважды`); problems++; }
+    seen.add(key);
+    if (!val.trim()) { bad(`EN-словарь: у «${key}» пустой перевод`); problems++; }
+    if (!lookup(key)) {
+      bad(`EN-словарь: «${key}» не находится в русском словаре — слово не станет тапаемым, и перевод не покажется`);
+      problems++;
+    }
+    if (/[Ѐ-ӿ]/.test(val)) { bad(`EN-словарь: у «${key}» перевод кириллицей`); problems++; }
+  }
+
+  if (!problems) ok(`${seen.size} статей, все опираются на русский словарь`);
+}
+
 /* ============ ============ */
 
 console.log('Проверка index.html');
@@ -394,6 +426,7 @@ checkQuizData();
 checkIrregulars();
 checkConjTables();
 checkEnQuizData();
+checkVocabEn();
 
 console.log('');
 if (failed) {
