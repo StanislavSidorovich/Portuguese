@@ -1028,15 +1028,17 @@
         <span class="row-check" data-check="preteritoirreg" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="imperfeito">
         <span class="marker" style="background:var(--passado)"></span>
         <span class="row-title"><span class="topic-num">2.3</span> Imperfeito<span class="row-title-ru" data-en="background past: was, used to go, every day">прошедшее «фоном»: было, ходил, каждый день</span></span>
-        <span class="row-soon" data-en="soon">скоро</span>
+        <span class="row-check" data-check="imperfeito" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
-      <button type="button" class="topic-row" disabled>
+      <button type="button" class="topic-row" data-open="perfvsimp">
         <span class="marker" style="background:var(--passado)"></span>
         <span class="row-title"><span class="topic-num">2.4</span> Perfeito vs imperfeito<span class="row-title-ru" data-en="which of the two, and why">какое из двух и почему</span></span>
-        <span class="row-soon" data-en="soon">скоро</span>
+        <span class="row-check" data-check="perfvsimp" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" disabled>
         <span class="marker" style="background:var(--passado)"></span>
@@ -7126,11 +7128,499 @@
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="imperfeito">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
+        <span class="next-title">2.3 Imperfeito — второе прошедшее</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<div class="screen topic-screen" id="screen-imperfeito" data-topic="imperfeito" style="--tint-color:var(--passado)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back data-en="← All topics">← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--passado)"></span>
+    <h2><span class="topic-num">2.3</span> Imperfeito</h2>
+    <span class="done-badge" data-badge="imperfeito" data-en="✓ done">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Второе прошедшее. Не «что случилось», а «как там было»: <span class="pt">era</span>, <span class="pt">tinha</span>, <span class="pt">ia</span>, <span class="pt">trabalhava</span>. После пятнадцати неправильных из темы 2.2 это время — подарок: неправильных в нём четыре штуки на весь язык.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i data-en="rule">правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i data-en="texts">тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i data-en="exercises">задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>Прошедшее из тем 2.1 и 2.2 отвечает на вопрос «что случилось?». Это точка: событие произошло и кончилось. Но половина рассказов о прошлом — не про события, а про обстановку: где ты жил, сколько тебе было лет, что происходило каждый день, какая была погода. Для этого в португальском отдельное время — <span class="pt">imperfeito</span>.</p>
+
+    <div class="contrast">
+      <div class="label">Два вопроса, два времени</div>
+      <p><b>Что случилось?</b> — <span class="pt">Ontem <b>comi</b> peixe.</span> Один раз, есть начало и конец. Это <span class="pt">pretérito perfeito</span> из тем 2.1–2.2.</p>
+      <p><b>А как там было?</b> — <span class="pt">Antigamente <b>comia</b> peixe todos os dias.</span> Не событие, а фон: привычка, состояние, обстановка. Это <span class="pt">imperfeito</span>.</p>
+    </div>
+
+    <p>Окончаний всего два набора, и это первое время в курсе, где <b>-er и -ir не различаются вовсе</b>:</p>
+
+    <table data-conj="skip">
+      <tr><th>Лицо</th><th>-ar</th><th>-er / -ir</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">-ava</td><td class="pt">-ia</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">-avas</td><td class="pt">-ias</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">-ava</td><td class="pt">-ia</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">-ávamos</td><td class="pt">-íamos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">-avam</td><td class="pt">-iam</td></tr>
+    </table>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="trabalhar:imperfeito">Trabalhar</th><th data-conj="comer:imperfeito">Comer</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">trabalhava</td><td class="pt">comia</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">trabalhavas</td><td class="pt">comias</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">trabalhava</td><td class="pt">comia</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">trabalhávamos</td><td class="pt">comíamos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">trabalhavam</td><td class="pt">comiam</td></tr>
+    </table>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="partir:imperfeito">Partir</th><th data-conj="ir:imperfeito">Ir</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">partia</td><td class="pt">ia</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">partias</td><td class="pt">ias</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">partia</td><td class="pt">ia</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">partíamos</td><td class="pt">íamos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">partiam</td><td class="pt">iam</td></tr>
+    </table>
+
+    <p><span class="pt">Ir</span> стоит в этой таблице не как неправильный, а наоборот: глагол, который ломался во всех остальных временах, здесь ведёт себя как обычный <b>-ir</b>. Основы у него не остаётся вовсе, поэтому от <span class="pt">ir</span> в имперфекте остаются голые окончания: <span class="pt">ia, ias, ia, íamos, iam</span>.</p>
+
+    <div class="contrast">
+      <div class="label">Неправильных всего четыре</div>
+      <p>Во всём языке имперфект ломают <b>четыре глагола</b>: <span class="se">ser</span>, <span class="pt">ter</span>, <span class="pt">vir</span>, <span class="pt">pôr</span>. Больше ни одного — ни <span class="pt">fazer</span>, ни <span class="pt">dizer</span>, ни <span class="pt">trazer</span>, которые ломали всё в теме 2.2.</p>
+      <p>Даже <span class="es">estar</span> здесь правильный: <span class="pt">estava</span>. И <span class="pt">haver</span> тоже: <span class="pt">havia</span> — «было, имелось», прошедшее от <span class="pt">há</span>.</p>
+    </div>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="ser:imperfeito">Ser</th><th data-conj="ter:imperfeito">Ter</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">era</td><td class="pt">tinha</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">eras</td><td class="pt">tinhas</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">era</td><td class="pt">tinha</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">éramos</td><td class="pt">tínhamos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">eram</td><td class="pt">tinham</td></tr>
+    </table>
+
+    <table>
+      <tr><th>Лицо</th><th data-conj="vir:imperfeito">Vir</th><th data-conj="pôr:imperfeito">Pôr</th></tr>
+      <tr><td class="pt">eu</td><td class="pt">vinha</td><td class="pt">punha</td></tr>
+      <tr><td class="pt">tu</td><td class="pt">vinhas</td><td class="pt">punhas</td></tr>
+      <tr><td class="pt">ele / ela / você</td><td class="pt">vinha</td><td class="pt">punha</td></tr>
+      <tr><td class="pt">nós</td><td class="pt">vínhamos</td><td class="pt">púnhamos</td></tr>
+      <tr><td class="pt">eles / elas / vocês</td><td class="pt">vinham</td><td class="pt">punham</td></tr>
+    </table>
+
+    <p>Все четыре ломают не окончание, а основу: окончания у них те же самые <span class="pt">-ia</span>. Значит, выучить надо четыре формы <span class="pt">eu</span>, а дальше работает правило из темы 2.2: <b>знаешь <span class="pt">eu</span> — знаешь весь глагол</b>.</p>
+
+    <p>Где имперфект стоит обязательно — три случая:</p>
+
+    <ul class="rule-list">
+      <li><b>Привычка и повтор.</b> <span class="pt">Todos os dias ia para a escola de autocarro</span> — «каждый день ездил в школу на автобусе». Слова-маячки: <span class="pt">sempre, nunca, todos os dias, às vezes, antigamente</span></li>
+      <li><b>Обстановка и описание.</b> <span class="pt">A casa era pequena e tinha um jardim</span> — не событие, а картинка. Сюда же погода: <span class="pt">estava frio</span>, <span class="pt">chovia</span></li>
+      <li><b>Время и возраст в прошлом — всегда имперфект.</b> <span class="pt">Eram oito horas</span> («было восемь часов»), <span class="pt">Ela tinha vinte anos</span> («ей было двадцать»). Формы <span class="pt">foram</span> и <span class="pt">teve</span> здесь просто не употребляются</li>
+    </ul>
+
+    <div class="tip"><b>Вежливое <span class="pt">queria</span>.</b> В кафе <span class="pt">Quero um café</span> звучит резко — примерно как «дай кофе». Португалец скажет <span class="pt">Queria um café, por favor</span> — буквально «я хотел бы». То же с просьбой: <span class="pt">Podia ajudar?</span> мягче, чем <span class="pt">Pode ajudar?</span>. Имперфект здесь не про прошлое вовсе: он отодвигает просьбу от собеседника и тем смягчает её. Это первое, что стоит унести из темы в живой разговор.</div>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> <span class="pt">eu</span> и <span class="pt">ele</span> совпадают полностью: <span class="pt">eu trabalhava</span> и <span class="pt">ele trabalhava</span>. В настоящем и в прошедшем из темы 2.1 они различались, здесь — нет, и <b>местоимение становится обязательным</b>, иначе непонятно, о ком речь.<br>
+      <b>2.</b> <span class="pt">ia</span> — это «ходил, ездил», прошедшее от <span class="pt">ir</span>. С будущим <span class="pt">vai</span> из темы 1.6 у него общий глагол, но разные времена: <span class="pt">ia comer</span> — «собирался поесть», <span class="pt">vai comer</span> — «сейчас поест».<br>
+      <b>3.</b> <span class="pt">vinha</span> — «приходил», а <span class="pt">vinho</span> — «вино». Разница в одной букве.<br>
+      <b>4.</b> Русское «-л» не помогает выбрать время: «работал» — это и <span class="pt">trabalhava</span>, и <span class="pt">trabalhou</span>. Русский вид и португальские два прошедших почти совпадают, но не совсем, и там, где они расходятся, ошибаются все. Разбираемся с этим в теме 2.4 — это главный узел блока.<br>
+      <b>5.</b> Ударение в формах <span class="pt">nós</span> стоит на шляпке и слышно: <span class="pt">trabalh<b>á</b>vamos</span>, <span class="pt">com<b>í</b>amos</span>, <span class="pt">t<b>í</b>nhamos</span>. Без шляпки слово читается неверно.</div>
+
+    <div class="tip"><b>Как это учить.</b> Приём — <b>эффект порождения</b>: то, что ты составил сам, держится в памяти в несколько раз лучше, чем то, что прочитал готовым. Поэтому после заданий сделай то, чего в заданиях нет: скажи вслух пять фраз про <b>своё</b> детство — где жил, что делал каждый день, кто приходил в гости, чего тогда не было. Пять своих фраз стоят тридцати чужих.</div>
+
+    <div class="tip"><b>Что дальше.</b> Тема 2.4 — выбор между двумя прошедшими. Формы обоих ты уже знаешь; осталось понять, какое из них ставить, и это единственное место блока, где ошибка меняет смысл, а не только звучание.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint" data-en="Tap any Portuguese word to see its translation.">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 57 · Formas do imperfeito — шесть форм фона</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">era</span> <span class="tr">эра</span><span class="t">— был, была (какой)</span></div>
+          <div><span class="w">tinha</span> <span class="tr">тинья</span><span class="t">— было (у кого-то), имел</span></div>
+          <div><span class="w">vinha</span> <span class="tr">винья</span><span class="t">— приходил, приезжал</span></div>
+          <div><span class="w">punha</span> <span class="tr">пунья</span><span class="t">— клал, ставил</span></div>
+          <div><span class="w">ia</span> <span class="tr">иа</span><span class="t">— ходил, ездил</span></div>
+          <div><span class="w">havia</span> <span class="tr">авиа</span><span class="t">— было, имелось</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> в наборе снова не инфинитивы, а формы. Четыре из них — весь список неправильных в этом времени (<span class="pt">era, tinha, vinha, punha</span>), пятая — <span class="pt">ia</span>, у которой от глагола не осталось ничего, кроме окончания.<br><br><span class="pt">havia</span> — прошедшее от <span class="pt">há</span> из темы 0.12, и ведёт себя так же: подлежащего не требует. <span class="pt">Havia um telefone</span> — «был телефон».<br><br>Все шесть — формы <span class="pt">eu</span> и одновременно формы <span class="pt">ele</span>: в этом времени они всегда совпадают.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 58 · A infância — детство</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">a infância</span> <span class="tr">а инфансия</span><span class="t">— детство</span></div>
+          <div><span class="w">antigamente</span> <span class="tr">антигамэнт</span><span class="t">— раньше, в прежние времена</span></div>
+          <div><span class="w">a aldeia</span> <span class="tr">а алдэйя</span><span class="t">— деревня, посёлок</span></div>
+          <div><span class="w">o mar</span> <span class="tr">у мар</span><span class="t">— море</span></div>
+          <div><span class="w">brincar</span> <span class="tr">бринкар</span><span class="t">— играть (о детях)</span></div>
+          <div><span class="w">a música</span> <span class="tr">а музика</span><span class="t">— музыка</span></div>
+          <div><span class="w">outro</span> <span class="tr">отру</span><span class="t">— другой</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> имперфект живёт там, где рассказывают про детство и про «раньше», поэтому и слова взяты оттуда же. Без них время остаётся таблицей окончаний.<br><br><span class="pt">antigamente</span> собрано тем же суффиксом <span class="pt">-mente</span>, что <span class="pt">felizmente</span> из темы 2.2 и <span class="pt">finalmente</span> из 2.1. Это уже третье слово на нём — суффикс стоит запомнить как приём, а не как отдельное слово.<br><br><span class="pt">brincar</span> — это именно детская игра, возиться и бегать. Играть в футбол — <span class="pt">jogar</span>, играть на гитаре — <span class="pt">tocar</span>; оба ждут дальше.<br><br><span class="pt">outro</span> идёт без артикля там, где русский ставит «ещё один»: <span class="pt">outro café</span> — «ещё один кофе».</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · A casa da avó — дом бабушки</div>
+      <div class="mini-text">
+        <p class="storytext">Quando eu era pequeno, passava muito tempo na aldeia da minha avó. A casa era pequena e velha, mas tinha um jardim grande. De manhã havia sempre pão e leite na mesa, e havia música na cozinha.</p>
+        <p class="storytext">O meu avô levantava-se cedo e ia para o jardim. Eu ficava na cama até às nove. Depois brincava com o cão e com os primos, que moravam ao lado.</p>
+        <p class="storytext">À tarde íamos todos ao mar. A minha avó punha a comida num saco grande e comíamos na praia. Às vezes chovia, e então ficávamos em casa até à noite.</p>
+        <p class="storytext">Antigamente não havia telemóveis na aldeia. Havia um telefone na cozinha e mais nada. Mas ninguém tinha pressa e o tempo passava devagar.</p>
+        <p class="storytext">Agora a casa está fechada e a aldeia é outra. Mas eu lembro-me de tudo.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Когда я был маленький, я проводил много времени в деревне у бабушки. Дом был маленький и старый, но при нём был большой сад. Утром на столе всегда были хлеб и молоко, а на кухне играла музыка.<br><br>Дедушка вставал рано и шёл в сад. Я оставался в кровати до девяти. Потом играл с собакой и с двоюродными братьями, которые жили по соседству.<br><br>Днём мы все ходили к морю. Бабушка складывала еду в большую сумку, и мы ели на пляже. Иногда шёл дождь, и тогда мы оставались дома до вечера.<br><br>Раньше в деревне не было мобильных. На кухне стоял телефон, и больше ничего. Но никто никуда не спешил, и время шло медленно.<br><br>Сейчас дом закрыт, и деревня стала другой. Но я помню всё.</p>
+        <p class="why-note"><b>Почему так:</b> во всём тексте нет ни одной формы из тем 2.1–2.2 — и это не случайность. Здесь не рассказывают, что случилось; здесь описывают, как было устроено. Такой текст целиком стоит в имперфекте, и по нему хорошо слышно, как звучит фон без событий.<br><br><span class="pt">íamos</span> — от <span class="pt">ir</span>, со шляпкой: <span class="pt">í</span> и <span class="pt">amos</span> читаются раздельно.<br><br><span class="pt">levantava-se</span> — возвратный глагол из темы 1.5, дефис сзади, потому что перед глаголом ничего не тянет местоимение вперёд. А в последней строке <span class="pt">lembro-me</span> — то же правило, но уже в настоящем.<br><br><span class="pt">a aldeia é outra</span> — настоящее время: деревня другая <b>сейчас</b>. Смена времени в последнем абзаце и есть то, ради чего он написан.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Quando eras pequena — когда ты была маленькой</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Maria:</span> Onde é que moravas quando eras pequena?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Morava numa aldeia pequena, perto do mar.</p>
+          <p class="dline"><span class="speaker">Maria:</span> E gostavas?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Gostava muito. Brincava na rua todos os dias.</p>
+          <p class="dline"><span class="speaker">Maria:</span> Tinhas muitos amigos?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Tinha, sim. Havia sempre alguém na rua.</p>
+          <p class="dline"><span class="speaker">Maria:</span> E a escola? Era longe?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Era. Ia de autocarro, mas o autocarro vinha sempre tarde.</p>
+          <p class="dline"><span class="speaker">Maria:</span> E os teus pais? Trabalhavam na aldeia?</p>
+          <p class="dline"><span class="speaker">Ana:</span> A minha mãe era professora. O meu pai ia todos os dias para a cidade.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Мария:</b> Где ты жила, когда была маленькой?<br><b>Ана:</b> Жила в маленькой деревне, у моря.<br><b>Мария:</b> И тебе нравилось?<br><b>Ана:</b> Очень нравилось. Каждый день играла на улице.<br><b>Мария:</b> У тебя было много друзей?<br><b>Ана:</b> Было, да. На улице всегда кто-нибудь был.<br><b>Мария:</b> А школа? Была далеко?<br><b>Ана:</b> Была. Ездила на автобусе, но автобус всегда приходил поздно.<br><b>Мария:</b> А твои родители? Работали в деревне?<br><b>Ана:</b> Мама была учительницей. Папа каждый день ездил в город.</p>
+        <p class="why-note"><b>Почему так:</b> ответы здесь повторяют глагол вместо «да» — <span class="pt">Gostava</span>, <span class="pt">Tinha</span>, <span class="pt">Era</span>. Это то же правило, что в теме 0.13, но теперь в имперфекте, и звучит оно совершенно естественно.<br><br><span class="pt">Onde é que moravas</span> — вставка <span class="pt">é que</span> из темы 1.9: в живом вопросе она стоит почти всегда.<br><br><span class="pt">Era longe?</span> — «было далеко?». Про расстояние и в прошлом идёт <span class="se">ser</span>, а не <span class="es">estar</span>: это свойство школы, а не её состояние в тот день.<br><br><span class="pt">Ia de autocarro</span> — «ездила на автобусе»: <span class="pt">de</span> без артикля, как в теме 0.14.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="imperfeito">
+    <p class="quiz-instruction">Половина заданий проверяет форму, половина — выбор между «точкой» и «фоном». Второе важнее: формы этой темы простые, а вот привычка ставить имперфект там, где надо, нарабатывается только на смысле.</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">eu (trabalhar), имперфект:</span>
+      <select class="mc" data-answer="trabalhava">
+        <option value="">—</option>
+        <option value="trabalhava">trabalhava</option>
+        <option value="trabalhei">trabalhei</option>
+        <option value="trabalhia">trabalhia</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">nós (comer), имперфект:</span>
+      <select class="mc" data-answer="comíamos">
+        <option value="">—</option>
+        <option value="comíamos">comíamos</option>
+        <option value="comiamos">comiamos</option>
+        <option value="comemos">comemos</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">«ей было двадцать лет»:</span>
+      <select class="mc" data-answer="Ela tinha vinte anos">
+        <option value="">—</option>
+        <option value="Ela tinha vinte anos">Ela tinha vinte anos</option>
+        <option value="Ela teve vinte anos">Ela teve vinte anos</option>
+        <option value="Ela era vinte anos">Ela era vinte anos</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">eles (ser), имперфект:</span>
+      <select class="mc" data-answer="eram">
+        <option value="">—</option>
+        <option value="eram">eram</option>
+        <option value="foram">foram</option>
+        <option value="seriam">seriam</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">«каждый день ездил в школу»:</span>
+      <select class="mc" data-answer="ia todos os dias">
+        <option value="">—</option>
+        <option value="ia todos os dias">ia todos os dias</option>
+        <option value="fui todos os dias">fui todos os dias</option>
+        <option value="vou todos os dias">vou todos os dias</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">В кафе, вежливо. Что скажет португалец:</span>
+      <select class="mc" data-answer="Queria um café">
+        <option value="">—</option>
+        <option value="Queria um café">Queria um café</option>
+        <option value="Quis um café">Quis um café</option>
+        <option value="Quero um café">Quero um café</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">Сколько глаголов ломают имперфект:</span>
+      <select class="mc" data-answer="четыре">
+        <option value="">—</option>
+        <option value="четыре">четыре</option>
+        <option value="пятнадцать">пятнадцать</option>
+        <option value="ни одного">ни одного</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши форму <span class="pt">eu</span> от <span class="pt">pôr</span>: «я всегда клал» —</span> <span class="pt">Eu</span> <input class="blank" data-answer="punha" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">tudo no saco.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Впиши: «в деревне не было телефона» —</span> <span class="pt">Na aldeia não</span> <input class="blank" data-answer="havia" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">telefone.</span></div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Раньше мы ходили к морю».</span>
+      <div class="qbuild" data-answer="Antigamente íamos ao mar" data-words="íamos|mar|Antigamente|ao"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <button type="button" class="next-card" data-open="perfvsimp">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
+        <span class="next-title">2.4 Perfeito vs imperfeito — какое из двух</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<div class="screen topic-screen" id="screen-perfvsimp" data-topic="perfvsimp" style="--tint-color:var(--passado)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back data-en="← All topics">← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--passado)"></span>
+    <h2><span class="topic-num">2.4</span> Perfeito vs imperfeito</h2>
+    <span class="done-badge" data-badge="perfvsimp" data-en="✓ done">✓ пройдено</span>
+  </div>
+  <div class="topic-subtitle">Формы обоих прошедших ты уже знаешь. Осталось выбирать между ними — а выбор обязателен в каждой фразе, и русский вид глагола подсказывает верно примерно в трёх случаях из четырёх. Тема про четвёртый.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i data-en="rule">правило</i></button>
+    <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i data-en="texts">тексты</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i data-en="exercises">задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <p>В русском одно прошедшее время и два вида: «делал» и «сделал». В португальском наоборот — вида нет, зато прошедших два. Похоже настолько, что почти все начинают переводить напрямую: «делал» → <span class="pt">imperfeito</span>, «сделал» → <span class="pt">perfeito</span>. И три фразы из четырёх выходят верными.</p>
+
+    <div class="trap"><b>Ловушка, ради которой написана тема.</b><br>
+      «Вчера я <b>работал</b> с девяти до шести» — глагол несовершенный, а по-португальски здесь <span class="pt">trabalh<b>ei</b></span>, не <span class="pt">trabalhava</span>.<br>
+      «Я <b>жил</b> в Порту три года» — <span class="pt">viv<b>i</b> no Porto três anos</span>.<br><br>
+      Русский вид отвечает на вопрос «завершено ли действие». Португальское прошедшее отвечает на другой: <b>есть ли у отрезка края</b>. «С девяти до шести» — края есть, значит perfeito, и неважно, что по-русски глагол несовершенный.</div>
+
+    <p>Отсюда рабочая картинка, которая не подводит:</p>
+
+    <div class="contrast">
+      <div class="label">Сцена и событие</div>
+      <p><span class="pt">Imperfeito</span> — это <b>декорации</b>. Где дело было, какая стояла погода, сколько кому лет, что происходило обычно. У декораций нет начала и конца: они просто есть, пока идёт рассказ.</p>
+      <p><span class="pt">Perfeito</span> — это <b>то, что на сцене произошло</b>. Одно событие с краями, даже если краёв друг от друга три года.</p>
+      <p><span class="pt">Estava frio e não havia ninguém na rua. De repente o telefone tocou.</span> Первые два глагола — декорации, третий — событие. Так устроен любой рассказ.</p>
+    </div>
+
+    <p>Проверка на месте — <b>два вопроса</b>. Задай их фразе, и время выберется само:</p>
+
+    <ul class="rule-list">
+      <li><b>«Что произошло?»</b> — если фраза отвечает на этот вопрос, ставь <span class="pt">perfeito</span>. Отрезок с краями: <span class="pt">cheguei, comi, foi, disse</span></li>
+      <li><b>«А как там было?»</b> — если фраза отвечает на этот, ставь <span class="pt">imperfeito</span>. Рамка без краёв: <span class="pt">estava, havia, tinha, era</span></li>
+      <li><b>Не спрашивай «завершено ли действие»</b> — это русский вопрос, и именно он даёт ту самую четвёртую ошибку из четырёх</li>
+    </ul>
+
+    <p>Самая частая конструкция языка — когда оба времени встречаются в одной фразе: рамка стоит в имперфекте, событие врывается в перфекте.</p>
+
+    <table data-conj="skip">
+      <tr><th>Рамка (imperfeito)</th><th>Событие (perfeito)</th></tr>
+      <tr><td class="pt">Estava a comer</td><td class="pt">quando o João chegou</td></tr>
+      <tr><td class="pt">Enquanto eu esperava</td><td class="pt">o telefone tocou</td></tr>
+      <tr><td class="pt">Eram oito horas</td><td class="pt">quando ela chegou</td></tr>
+    </table>
+
+    <p>Оборот <span class="pt">estar a + infinitivo</span> из темы 1.7 в прошлом становится <span class="pt">estava a + infinitivo</span> и делает рамку особенно наглядной: <span class="pt">estava a comer</span> — «был в процессе еды». В точку он не ставится никогда — <i>estive a comer quando chegou</i> сказать нельзя.</p>
+
+    <div class="contrast">
+      <div class="label">Пять глаголов, у которых меняется смысл</div>
+      <p>У большинства глаголов выбор времени меняет только вид картинки. Но у пяти он меняет <b>значение</b>, и это надо знать наизусть — иначе фраза выйдет не про то.</p>
+    </div>
+
+    <table data-conj="skip">
+      <tr><th>Глагол</th><th>Imperfeito</th><th>Perfeito</th></tr>
+      <tr><td class="pt">saber</td><td class="pt">sabia — знал</td><td class="pt">soube — узнал</td></tr>
+      <tr><td class="pt">conhecer</td><td class="pt">conhecia — был знаком</td><td class="pt">conheci — познакомился</td></tr>
+      <tr><td class="pt">querer</td><td class="pt">queria — хотел</td><td class="pt">quis — взялся, решил</td></tr>
+      <tr><td class="pt">poder</td><td class="pt">podia — мог вообще</td><td class="pt">pude — сумел в тот раз</td></tr>
+      <tr><td class="pt">ter</td><td class="pt">tinha — было у меня</td><td class="pt">teve — получил</td></tr>
+    </table>
+
+    <p>Логика везде одна и та же: имперфект даёт состояние («знал»), перфект — момент, когда состояние началось («узнал»). <span class="pt">Sabia que ele estava em Lisboa</span> — знал и всё. <span class="pt">Soube ontem</span> — до вчера не знал, со вчера знаю.</p>
+
+    <p>Слова-маячки помогают, но не решают: они лишь показывают, куда автор смотрит.</p>
+
+    <table data-conj="skip">
+      <tr><th>К имперфекту</th><th>К перфекту</th></tr>
+      <tr><td class="pt">sempre, nunca</td><td class="pt">ontem, anteontem</td></tr>
+      <tr><td class="pt">todos os dias</td><td class="pt">de repente</td></tr>
+      <tr><td class="pt">normalmente</td><td class="pt">uma vez</td></tr>
+      <tr><td class="pt">antigamente</td><td class="pt">finalmente</td></tr>
+      <tr><td class="pt">enquanto</td><td class="pt">no sábado passado</td></tr>
+    </table>
+
+    <div class="trap"><b>Что сбивает русского.</b><br>
+      <b>1.</b> Длинное действие — не повод для имперфекта. <span class="pt">Vivi no Porto três anos</span>: три года, но края есть. А <span class="pt">Vivia no Porto</span> — «жил себе в Порту», рамка без краёв.<br>
+      <b>2.</b> <span class="pt">Havia</span> — «было, стояло» (декорация): <span class="pt">Havia muita gente</span>. <span class="pt">Houve</span> — «случилось» (событие): <span class="pt">Houve um problema</span>. Один глагол, разные роли в рассказе.<br>
+      <b>3.</b> Часы и возраст — всегда имперфект: <span class="pt">Eram oito horas</span>, <span class="pt">Ela tinha vinte anos</span>. Но оценка дня целиком — перфект: <span class="pt">Foi um dia difícil</span>.<br>
+      <b>4.</b> <span class="pt">Não quis</span> значит не «не хотел», а «отказался», взял и не стал. «Не хотел» — <span class="pt">não queria</span>. Разница видна в лицо собеседника.<br>
+      <b>5.</b> Повтор, у которого назван счёт, уходит в перфект: <span class="pt">Fui ao Porto três vezes</span>. Без счёта остаётся имперфект: <span class="pt">Ia ao Porto muitas vezes</span>.</div>
+
+    <div class="tip"><b>Как это учить.</b> Приём — <b>минимальные пары</b>: учить не правило отдельно и примеры отдельно, а пару фраз, где меняется ровно одно слово и вместе с ним смысл. <span class="pt">Sabia</span> / <span class="pt">soube</span>. <span class="pt">Havia</span> / <span class="pt">houve</span>. <span class="pt">Não queria</span> / <span class="pt">não quis</span>. Память держит контраст гораздо лучше, чем список: правило вспоминается медленно и на экзамене, а пара — сразу и в разговоре.</div>
+
+    <div class="tip"><b>Что дальше.</b> Тема 2.5 — <span class="pt">particípio</span>, причастие: <span class="pt">feito, dito, visto</span>. Из него собирается третье прошедшее, <span class="pt">tenho feito</span> в теме 2.6, и оно опять не совпадает с тем, чего ждёт английский.</div>
+  </div>
+
+  <div class="pane pane-texts">
+    <p class="tap-hint" data-en="Tap any Portuguese word to see its translation.">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label">Palavras 59 · Fundo e ponto — фон и точка</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">enquanto</span> <span class="tr">энкуанту</span><span class="t">— пока, в то время как</span></div>
+          <div><span class="w">normalmente</span> <span class="tr">нормалмэнт</span><span class="t">— обычно</span></div>
+          <div><span class="w">tocar</span> <span class="tr">тукар</span><span class="t">— звонить; играть (на инструменте)</span></div>
+          <div><span class="w">assim</span> <span class="tr">асинь</span><span class="t">— так, вот так</span></div>
+          <div><span class="w">a altura</span> <span class="tr">а алтура</span><span class="t">— пора, момент</span></div>
+          <div><span class="w">de vez em quando</span> <span class="tr">ды веж энь куанду</span><span class="t">— время от времени</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> это слова, которые сами тянут за собой время. <span class="pt">Enquanto</span> почти всегда стоит при имперфекте («пока я ждал»), <span class="pt">normalmente</span> — тоже. Выучив слово, ты выучиваешь и половину выбора.<br><br><span class="pt">naquela altura</span> — «в ту пору», готовый оборот и самый обычный способ сказать «тогда» про далёкое прошлое.<br><br><span class="pt">tocar</span> — и «телефон звонит», и «играть на гитаре», и «трогать». Один глагол на три русских.<br><br><span class="pt">de vez em quando</span> — оборот из четырёх слов, который учится как одно. Он же и маячок: «время от времени» — это всегда имперфект.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Palavras 60 · Dois passados, um verbo — два прошедших у одного глагола</div>
+      <div class="mini-text">
+        <div class="wordset">
+          <div><span class="w">conhecer</span> <span class="tr">куньысэр</span><span class="t">— быть знакомым, знать (человека)</span></div>
+          <div><span class="w">conheci</span> <span class="tr">куньыси</span><span class="t">— я познакомился</span></div>
+          <div><span class="w">conhecia</span> <span class="tr">куньысиа</span><span class="t">— я был знаком, знал</span></div>
+          <div><span class="w">sabia</span> <span class="tr">сабиа</span><span class="t">— я знал (факт)</span></div>
+          <div><span class="w">queria</span> <span class="tr">кыриа</span><span class="t">— я хотел; я хотел бы</span></div>
+          <div><span class="w">podia</span> <span class="tr">пудиа</span><span class="t">— я мог; не могли бы вы</span></div>
+        </div>
+        <p class="why-note"><b>Почему так:</b> набор собран парами, а не по алфавиту — в этом и приём. <span class="pt">conheci</span> против <span class="pt">conhecia</span>, <span class="pt">sabia</span> против <span class="pt">soube</span> из темы 2.2, <span class="pt">queria</span> против <span class="pt">quis</span> оттуда же.<br><br><span class="pt">conhecer</span> — «знать человека или место», в отличие от <span class="pt">saber</span> («знать факт») из темы 1.4. По-русски оба «знать», по-португальски путать их нельзя: <span class="pt">sei que ele mora aqui</span>, но <span class="pt">conheço o João</span>.<br><br><span class="pt">queria</span> и <span class="pt">podia</span> в живом разговоре чаще не про прошлое, а про вежливость: <span class="pt">Queria um café</span>, <span class="pt">Podia ajudar?</span> — приём из темы 2.3.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Texto · O comboio que não chegou — поезд, который не пришёл</div>
+      <div class="mini-text">
+        <p class="storytext">Era sexta-feira e estava frio. Eu esperava o comboio na estação, como todas as semanas. Normalmente o comboio das oito chegava a horas.</p>
+        <p class="storytext">Naquele dia não chegou. Esperei uma hora e depois esperei outra. Havia muita gente na estação e ninguém sabia nada.</p>
+        <p class="storytext">De repente uma senhora disse que não havia comboios até à noite. Eu queria ir de autocarro, mas não pude: não tinha dinheiro comigo.</p>
+        <p class="storytext">Então encontrei o João. Ele ia para Lisboa de carro e fomos juntos. Falámos duas horas e chegámos às dez.</p>
+        <p class="storytext">Foi um dia difícil, mas naquela altura eu ainda não conhecia o João. Agora somos amigos. Assim começou tudo.</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation">Была пятница, и было холодно. Я ждал поезд на вокзале, как каждую неделю. Обычно восьмичасовой поезд приходил вовремя.<br><br>В тот день он не пришёл. Я прождал час, потом прождал ещё один. На вокзале было много народу, и никто ничего не знал.<br><br>Вдруг одна женщина сказала, что поездов не будет до вечера. Я хотел поехать на автобусе, но не смог: денег с собой не было.<br><br>Тогда я встретил Жуана. Он ехал в Лиссабон на машине, и мы поехали вместе. Проговорили два часа и приехали в десять.<br><br>День вышел трудный, но в ту пору я ещё не был знаком с Жуаном. Сейчас мы друзья. Вот так всё и началось.</p>
+        <p class="why-note"><b>Почему так:</b> первый абзац — сплошные декорации: <span class="pt">era, estava, esperava, chegava</span>. Ни одного события ещё не произошло, идёт настройка сцены.<br><br><span class="pt">Esperei uma hora</span> — а вот здесь перфект, хотя по-русски «ждал». Час — отрезок с краями, и это ровно та ловушка, ради которой написана тема.<br><br><span class="pt">Havia muita gente</span> — декорация, а не событие. Скажи <span class="pt">Houve</span> — и выйдет «случился народ».<br><br><span class="pt">não conhecia o João</span> — состояние, поэтому имперфект. Если бы стояло <span class="pt">não conheci</span>, вышло бы «я с ним не познакомился», то есть про момент, которого не было.<br><br><span class="pt">chegámos</span> — со шляпкой, правильный глагол из темы 2.1: без неё вышло бы настоящее время.</p>
+      </div>
+    </div>
+
+    <div class="reading-block">
+      <div class="text-label">Diálogo · Como foi a festa — как прошла вечеринка</div>
+      <div class="mini-text">
+        <div class="dialogue">
+          <p class="dline"><span class="speaker">Maria:</span> Como foi a festa de ontem?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Foi muito boa. Havia muita gente e havia música até tarde.</p>
+          <p class="dline"><span class="speaker">Maria:</span> Ficaste até que horas?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Fiquei até às duas. Normalmente chego a casa às onze, mas ontem não.</p>
+          <p class="dline"><span class="speaker">Maria:</span> E o João? Estava lá?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Estava. Eu não o conhecia bem, mas ontem falámos duas horas.</p>
+          <p class="dline"><span class="speaker">Maria:</span> Então já são amigos?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Somos. Enquanto falávamos, ele disse uma coisa estranha.</p>
+          <p class="dline"><span class="speaker">Maria:</span> O que foi?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Que já me conhecia. Mas eu só soube ontem quem ele era.</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation"><b>Мария:</b> Как прошла вчерашняя вечеринка?<br><b>Ана:</b> Очень хорошо. Народу было много, и музыка играла допоздна.<br><b>Мария:</b> Ты до скольких там была?<br><b>Ана:</b> Осталась до двух. Обычно я прихожу домой в одиннадцать, но вчера нет.<br><b>Мария:</b> А Жуан? Он был там?<br><b>Ана:</b> Был. Я его плохо знала, но вчера мы проговорили два часа.<br><b>Мария:</b> Так вы теперь друзья?<br><b>Ана:</b> Друзья. Пока мы разговаривали, он сказал странную вещь.<br><b>Мария:</b> И что же?<br><b>Ана:</b> Что он меня уже знал. А я только вчера узнала, кто он такой.</p>
+        <p class="why-note"><b>Почему так:</b> первые две реплики — вся тема в миниатюре. <span class="pt">Como foi a festa</span> — событие целиком, у него есть края. <span class="pt">Havia muita gente</span> — то, что было внутри этих краёв, декорация.<br><br><span class="pt">Ficaste até às duas</span> — перфект, потому что назван край. А <span class="pt">Normalmente chego</span> — настоящее время: привычка, которая жива и сегодня, в прошедшее не уходит.<br><br><span class="pt">não o conhecia</span> против <span class="pt">só soube ontem</span> — обе пары из таблицы стоят рядом в одном разговоре. Состояние в имперфекте, момент его начала — в перфекте.<br><br><span class="pt">Enquanto falávamos</span> — <span class="pt">enquanto</span> тянет имперфект почти всегда: это рамка по определению.<br><br><span class="pt">quem ele era</span> — имперфект и внутри придаточного: «кто он такой» — свойство, а не событие.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-topic="perfvsimp">
+    <p class="quiz-instruction">Здесь почти нет вопросов про формы — они были в темах 2.1–2.3. Каждое задание проверяет одно: есть у отрезка края или нет. Отвечай не «завершено ли действие», а «что произошло или как там было».</p>
+    <div class="qitem"><span class="qnum">1.</span> <span class="ru-hint">«Вчера я работал с девяти до шести» — <span class="pt">Ontem</span> …</span>
+      <select class="mc" data-answer="trabalhei">
+        <option value="">—</option>
+        <option value="trabalhei">trabalhei</option>
+        <option value="trabalhava">trabalhava</option>
+        <option value="trabalho">trabalho</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint">«Раньше я работал в кафе» — <span class="pt">Antigamente</span> …</span>
+      <select class="mc" data-answer="trabalhava">
+        <option value="">—</option>
+        <option value="trabalhava">trabalhava</option>
+        <option value="trabalhei">trabalhei</option>
+        <option value="trabalhavam">trabalhavam</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint">«Было восемь часов»:</span>
+      <select class="mc" data-answer="Eram oito horas">
+        <option value="">—</option>
+        <option value="Eram oito horas">Eram oito horas</option>
+        <option value="Foram oito horas">Foram oito horas</option>
+        <option value="Tinham oito horas">Tinham oito horas</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">4.</span> <span class="ru-hint">«Когда я пришёл, она ела» — <span class="pt">Quando cheguei, ela</span> …</span>
+      <select class="mc" data-answer="estava a comer">
+        <option value="">—</option>
+        <option value="estava a comer">estava a comer</option>
+        <option value="esteve a comer">esteve a comer</option>
+        <option value="comeu">comeu</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint">«Я узнал об этом вчера» — <span class="pt">Eu</span> … <span class="pt">ontem</span>:</span>
+      <select class="mc" data-answer="soube">
+        <option value="">—</option>
+        <option value="soube">soube</option>
+        <option value="sabia">sabia</option>
+        <option value="sei">sei</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint">«Я познакомился с ним в Порту»:</span>
+      <select class="mc" data-answer="Conheci-o no Porto">
+        <option value="">—</option>
+        <option value="Conheci-o no Porto">Conheci-o no Porto</option>
+        <option value="Conhecia-o no Porto">Conhecia-o no Porto</option>
+        <option value="Sabia-o no Porto">Sabia-o no Porto</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint">«Он приходил каждую субботу» — <span class="pt">Ele</span> … <span class="pt">todos os sábados</span>:</span>
+      <select class="mc" data-answer="vinha">
+        <option value="">—</option>
+        <option value="vinha">vinha</option>
+        <option value="veio">veio</option>
+        <option value="vem">vem</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint">Впиши: «была одна проблема» (событие) —</span> <input class="blank" data-answer="Houve" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">um problema.</span></div>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Впиши форму от <span class="pt">esperar</span>: «пока я ждал, зазвонил телефон» —</span> <span class="pt">Enquanto eu</span> <input class="blank" data-answer="esperava" style="width:8em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">, o telefone tocou.</span></div>
+    <div class="qitem">
+      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Шёл дождь, когда я пришёл домой».</span>
+      <div class="qbuild" data-answer="Chovia quando cheguei a casa" data-words="cheguei|Chovia|casa|quando|a"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
     <button type="button" class="next-card" data-open="vocab">
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
-        <span class="next-title">Dicionário — прогнать девять форм в тренажёре</span>
+        <span class="next-title">Dicionário — прогнать пары sabia / soube</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -7535,7 +8025,7 @@
   // иначе прогресс считался бы от несуществующих экранов.
   var BASE_TOPICS     = ["alfabeto","acento","nasais","digrafos","genero","plural","ser","estar","servsestar","pronomes","adjetivos","ter","negacao","preposicoes","demonstrativos","numeros"];
   var PRESENTE_TOPICS = ["verbosar","verboseir","irregularesi","irregularesii","reflexivos","irinfinitivo","estarainf","possessivos","interrogativas","porpara"];
-  var PASSADO_TOPICS  = ["preterito","preteritoirreg"];
+  var PASSADO_TOPICS  = ["preterito","preteritoirreg","imperfeito","perfvsimp"];
   var EXPANSAO_TOPICS = [];
   var TOPICS = BASE_TOPICS.concat(PRESENTE_TOPICS).concat(PASSADO_TOPICS).concat(EXPANSAO_TOPICS);
 
@@ -7553,7 +8043,7 @@
     "verbosar":24, "verboseir":22, "irregularesi":26, "irregularesii":26,
     "reflexivos":28, "irinfinitivo":22, "estarainf":24, "possessivos":26,
     "interrogativas":24, "porpara":28,
-    "preterito":26, "preteritoirreg":28
+    "preterito":26, "preteritoirreg":28, "imperfeito":24, "perfvsimp":30
   };
 
   var STORAGE_KEY   = "ptProgressV1";
@@ -8129,7 +8619,19 @@
     "pus":"я положил (от pôr)","pôs":"положил (от pôr)","puseram":"они положили (от pôr)",
     "vi":"я увидел (от ver)","viu":"увидел (от ver)","viste":"ты увидел (от ver)",
     "vimos":"мы увидели (от ver); мы пришли (от vir)","viram":"они увидели (от ver)",
-    "veio":"пришёл (от vir)","dei":"я дал (от dar)","deu":"дал (от dar)"
+    "veio":"пришёл (от vir)","dei":"я дал (от dar)","deu":"дал (от dar)",
+    // 2.3: imperfeito четырёх неправильных и ir. Формы eu и ele лежат в
+    // наборе темы, а остальные цепочками не берутся вовсе: «eram» и
+    // «tinham» не сводятся к инфинитиву заменой окончания, а «vinha»
+    // цепочка [a → o] молча уводит в «vinho» — то есть в «вино».
+    "eras":"ты был (от ser)","éramos":"мы были (от ser)","eram":"они были (от ser)",
+    "ias":"ты ходил (от ir)","íamos":"мы ходили (от ir)","iam":"они ходили (от ir)",
+    "tinhas":"у тебя было (от ter)","tínhamos":"у нас было (от ter)","tinham":"у них было (от ter)",
+    "vinhas":"ты приходил (от vir)","vínhamos":"мы приходили (от vir)","vinham":"они приходили (от vir)",
+    "punhas":"ты клал (от pôr)","púnhamos":"мы клали (от pôr)","punham":"они клали (от pôr)",
+    // 2.4: «comida» цепочка [ida → er] уводит в «comer», то есть в глагол
+    // вместо еды; «estava» без своей статьи переводится «быть (сейчас)».
+    "comida":"еда","estava":"был, находился (от estar)","gente":"народ, люди; a gente — мы (разговорное)"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
