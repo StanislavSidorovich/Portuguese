@@ -103,7 +103,7 @@
      читаются как заметки маркером. Значит и текст в них надо приколотить
      к тёмной краске, иначе --ink перевернётся и станет невидимым. */
   body.dark .trap, body.dark .tip, body.dark .contrast .label,
-  body.dark .contrast p, body.dark .review-title,
+  body.dark .contrast p,
   body.dark .pair-cell{ color:var(--ink-fixed); }
   /* Метки рода красятся парой --masc-ink / --fem-ink, и она переворачивается
      здесь же, вместе с --ser-ink / --estar-ink. Отдельных правил для .m и .f
@@ -188,7 +188,7 @@
   .level-legend b{font-family:var(--font-lat); font-weight:800;}
   .level-note{font-size:0.76rem; color:var(--muted); margin-top:6px;}
 
-  .continue-block, .review-block{
+  .start-block, .continue-block, .review-block{
     background:var(--card); border-radius:var(--radius); padding:14px 16px; margin:12px 0 0;
   }
   .review-block{background:var(--bad-tint);}
@@ -200,6 +200,10 @@
   }
   .review-title{font-weight:600;}
   .review-why{display:block; font-size:0.74rem; color:var(--muted); margin-top:2px;}
+  .review-item.start-item{display:flex; align-items:center; gap:10px; border-color:var(--base);}
+  .start-text{flex:1; min-width:0;}
+  .start-text .review-why{margin-top:0; margin-bottom:1px;}
+  .start-minutes{flex:none; font-family:var(--font-lat); font-size:0.76rem; font-weight:800; color:var(--base);}
 
   main{max-width:640px; margin:0 auto; padding:8px 16px 60px;}
 
@@ -235,7 +239,14 @@
   .row-check{color:var(--ok); font-weight:800; opacity:0; font-size:0.95rem;}
   .row-check.on{opacity:1;}
   .row-pct{font-family:var(--font-lat); font-size:0.72rem; font-weight:800; color:var(--muted);}
+  .row-minutes{font-family:var(--font-lat); font-size:0.72rem; color:var(--muted); flex:none;}
   .row-soon{font-size:0.68rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em;}
+  .row-hidden-en{display:none !important;}
+  .topic-collapsed{
+    font-family:var(--font-ru); font-size:0.82rem; color:var(--muted); text-align:center;
+    padding:11px 14px; border:1.5px dashed #D2DBD7; border-radius:12px;
+  }
+  body.dark .topic-collapsed{border-color:#2F3A36;}
   .row-arrow{color:#BFC9C5; font-size:1.1rem;}
 
   .tool-row{
@@ -548,6 +559,14 @@
   }
   .btn-check{background:var(--tint-color,var(--base)); color:#fff;}
   .btn-reveal{background:transparent; border:1.5px solid #DAE1DE; color:var(--muted);}
+  /* Подсказка стоит между «проверить» и «показать ответы» — заметнее
+     сдачи (var(--ink), не var(--muted); рамка цветом темы, не серая),
+     иначе самый заметный призыв на первом же застревании вёл бы мимо
+     первого успеха. Цвет темы — только в рамке: раскраска текста тем же
+     var(--tint-color) на var(--card) не проверена по контрасту ни в одном
+     из четырёх блоков (--ser/--estar когда-то потребовали отдельных -ink
+     переменных именно по этой причине), а var(--ink) уже проверен всюду. */
+  .btn-hint{background:transparent; border:1.5px solid var(--tint-color,var(--base)); color:var(--ink); font-weight:700;}
   .btn-translate{
     background:transparent; border:1.5px solid #DAE1DE; color:var(--muted);
     font-family:var(--font-ru); font-size:0.8rem; font-weight:600; padding:6px 12px;
@@ -565,6 +584,12 @@
   .next-label{display:block; font-size:0.7rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted);}
   .next-title{display:block; font-weight:600; margin-top:2px;}
   .next-arrow{color:#BFC9C5; font-size:1.1rem;}
+  /* Аside-карточка ведёт в Frases / Diálogos — вне порядка тем (см. README,
+     «Frases и Diálogos живут вне этого порядка»), поэтому пунктир и прозрачный
+     фон отличают её от сплошной .next-card: это не следующий шаг курса,
+     а необязательное ответвление рядом с ним. */
+  .next-card.aside{background:transparent; border:1.5px dashed #D2DBD7; margin-top:10px;}
+  body.dark .next-card.aside{border-color:#2F3A36;}
 
   .pane-next-btn{
     display:block; width:100%; margin-top:24px; padding:13px;
@@ -774,6 +799,10 @@
 <header class="hero" id="top">
   <div class="eyebrow" data-en="Português europeu · grammar · offline">Português europeu · грамматика · офлайн</div>
   <h1 data-en="Portuguese grammar from scratch">Португальская грамматика с нуля</h1>
+
+  <div class="start-block" id="startBlock" style="display:none;"></div>
+  <div class="continue-block" id="continueBlock" style="display:none;"></div>
+
   <p data-en="Reading, ser and estar, verb conjugation and tenses — every topic has a rule, texts to read, and checked exercises.">Чтение, ser и estar, спряжение глаголов и времена — в каждой теме правило, тексты для чтения и задания с проверкой.</p>
   <p class="hero-note" data-en="A course in European Portuguese — the kind spoken in Lisbon. Brazilian differences are flagged with an &lsquo;in Brazil&rsquo; aside, but the base is local throughout: &lt;span class='pt'&gt;tu&lt;/span&gt;, &lt;span class='pt'&gt;estar a fazer&lt;/span&gt;, &lt;span class='pt'&gt;disse-me&lt;/span&gt;, &lt;span class='pt'&gt;autocarro&lt;/span&gt;.">Курс европейского португальского — того, на котором говорят в Лиссабоне. Бразильские отличия отмечаются врезкой «а в Бразилии», но основа везде местная: <span class="pt">tu</span>, <span class="pt">estar a fazer</span>, <span class="pt">disse-me</span>, <span class="pt">autocarro</span>.</p>
   <p class="hero-note" data-en="No prior vocabulary needed: words are introduced in small batches, and texts only use words already covered — you can start reading from day one.">Словарного запаса не требуется: слова вводятся порциями, и в текстах встречаются только те, что уже были — читать можно с первого дня.</p>
@@ -795,7 +824,6 @@
     <div class="level-note" id="meterCount"></div>
   </div>
 
-  <div class="continue-block" id="continueBlock" style="display:none;"></div>
   <div class="review-block" id="reviewBlock" style="display:none;">
     <div class="review-head" data-en="Worth reviewing">Стоит повторить</div>
     <div class="review-list"></div>
@@ -1435,6 +1463,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -1638,6 +1667,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -1858,6 +1888,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -2047,6 +2078,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -2267,6 +2299,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -2275,6 +2308,14 @@
       <span class="next-text">
         <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
         <span class="next-title" data-en="Plural — plurals, including ão → ões">Plural — множественное число, включая ão → ões</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+    <button type="button" class="next-card aside" data-open="frases">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label" data-en="Aside · try it live">В сторону · попробовать вживую</span>
+        <span class="next-title" data-en="Frases — order a coffee with what you already know">Frases — заказать кофе тем, что уже знаешь</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -2475,6 +2516,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -2667,6 +2709,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -2849,6 +2892,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -3067,6 +3111,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -3285,6 +3330,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -3507,6 +3553,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -3738,6 +3785,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -3960,6 +4008,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -4182,6 +4231,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -4408,6 +4458,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -4661,6 +4712,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -4868,6 +4920,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -5063,6 +5116,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -5071,6 +5125,14 @@
       <span class="next-text">
         <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
         <span class="next-title">1.3 Irregulares I — ir, fazer, poder, querer, ver</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+    <button type="button" class="next-card aside" data-open="dialogos">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label" data-en="Aside · try it live">В сторону · попробовать вживую</span>
+        <span class="next-title" data-en="Diálogos — put the verb into a real scene">Diálogos — вставить глагол в живую сцену</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -5267,6 +5329,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -5468,6 +5531,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -5665,6 +5729,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -5846,6 +5911,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -6036,6 +6102,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -6240,6 +6307,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -6443,6 +6511,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -6638,6 +6707,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -6863,6 +6933,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -7125,6 +7196,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -7376,6 +7448,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -7613,6 +7686,7 @@
     </div>
     <div class="quiz-actions">
       <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="Hint">Подсказка</button>
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
@@ -8074,19 +8148,43 @@
   // свой движок перевода (data-open, а не data-topic), и они уже готовы.
   var EN_READY_TOPICS = ["alfabeto", "acento", "nasais", "digrafos", "genero"];
 
+  // В EN 42 темы из 47 не переведены — по одной «soon»-строке на тему это
+  // стена, которая читается как заброшенный проект. Вместо неё запертые
+  // строки блока (и уже недостроенные, со своим статичным «скоро», и ещё
+  // не переведённые) прячутся, а на их месте встаёт одна строка со счётом.
   function updateTopicEnLock(){
-    document.querySelectorAll(".topic-row[data-open]").forEach(function(btn){
-      var ready = EN_READY_TOPICS.indexOf(btn.dataset.open) !== -1;
-      var locked = (LANG === "en") && !ready;
-      btn.disabled = locked;
-      var soon = btn.querySelector(".row-soon-en");
-      if(!soon){
-        soon = document.createElement("span");
-        soon.className = "row-soon row-soon-en";
-        soon.textContent = "soon";
-        btn.insertBefore(soon, btn.querySelector(".row-arrow"));
+    document.querySelectorAll(".topic-group").forEach(function(group){
+      var list = group.querySelector(".topic-list");
+      if(!list) return;
+      var lockedCount = 0;
+
+      list.querySelectorAll(".topic-row[data-open]").forEach(function(btn){
+        var ready = EN_READY_TOPICS.indexOf(btn.dataset.open) !== -1;
+        var locked = (LANG === "en") && !ready;
+        btn.disabled = locked;
+        btn.classList.toggle("row-hidden-en", locked);
+        if(locked) lockedCount++;
+      });
+      // Темы совсем без экрана — то же «скоро», но по другой причине
+      // (не сделана, а не «не переведена»); в EN это та же стена, и второй
+      // рядом не нужно.
+      list.querySelectorAll(".topic-row:not([data-open])").forEach(function(btn){
+        var locked = LANG === "en";
+        btn.classList.toggle("row-hidden-en", locked);
+        if(locked) lockedCount++;
+      });
+
+      var summary = list.querySelector(".topic-collapsed");
+      if(LANG === "en" && lockedCount){
+        if(!summary){
+          summary = document.createElement("div");
+          summary.className = "topic-collapsed";
+          list.appendChild(summary);
+        }
+        summary.textContent = lockedCount + (lockedCount === 1 ? " more topic" : " more topics") + " — being translated";
+      } else if(summary){
+        summary.remove();
       }
-      soon.style.display = locked ? "" : "none";
     });
   }
 
@@ -8355,8 +8453,24 @@
       var v = p[el.dataset.check];
       el.classList.toggle("on", isDone(v));
       var row = el.parentElement;
+
+      var mins = TOPIC_MINUTES[el.dataset.check];
+      var minEl = row.querySelector(".row-minutes");
+      if(mins != null){
+        if(!minEl){
+          minEl = document.createElement("span");
+          minEl.className = "row-minutes";
+          row.insertBefore(minEl, el);
+        }
+        minEl.textContent = mins + L(" мин", " min");
+      } else if(minEl){ minEl.remove(); }
+
       var badge = row.querySelector(".row-pct");
-      var showPct = v && typeof v === "object" && !v.done && typeof v.pct === "number";
+      // Раньше бейдж прятался сразу с галочкой (!v.done) — 8 из 10 давали
+      // ровно ту же строку, что 10 из 10. Теперь бейдж живёт до настоящего
+      // 10/10 (!v.perfect), а не до одного 80%-порога: «пройдено» и
+      // «пройдено на отлично» — разные строки на главной.
+      var showPct = v && typeof v === "object" && !v.perfect && typeof v.pct === "number";
       if(showPct){
         if(!badge){
           badge = document.createElement("span");
@@ -8374,6 +8488,7 @@
     renderMeter(p);
     renderReviewBlock(p);
     renderContinueBlock();
+    renderStartBlock();
   }
 
   function renderMeter(p){
@@ -8451,6 +8566,38 @@
     box.innerHTML = '<button type="button" class="review-item" data-open="'+last+'" style="border-color:#DAE1DE;margin:0;">' +
                     '<span class="review-why">'+L("Продолжить", "Continue")+'</span>' +
                     '<span class="review-title">'+title+'</span></button>';
+    box.style.display = "block";
+  }
+
+  // До первого открытой темы continueBlock молчит (нечего продолжать) —
+  // здесь его место занимает приглашение начать с самой первой темы курса.
+  // Как только ученик откроет любую тему, LAST_TOPIC_KEY появится и это
+  // место навсегда займёт renderContinueBlock.
+  //
+  // По-английски курс открыт только на пяти темах чтения (см.
+  // EN_READY_TOPICS) — вести туда означало бы пять тем фонетики без единой
+  // произносимой фразы. Diálogos переведён целиком, реплик там не даётся
+  // вне курса без включения истории, сцена «кафе» стоит в DIALOGS первой,
+  // и открывшему её сразу видно, зачем всё это. У Diálogos нет data-topic,
+  // поэтому LAST_TOPIC_KEY не выставляется, и приглашение вернётся снова —
+  // это верно: continueBlock подхватит только настоящую тему курса.
+  function renderStartBlock(){
+    var box = document.getElementById("startBlock");
+    if(!box) return;
+    var last;
+    try{ last = localStorage.getItem(LAST_TOPIC_KEY); }catch(e){}
+    if(last){ box.style.display = "none"; return; }
+    var first = (LANG === "en") ? "dialogos" : TOPICS[0];
+    var title = topicTitleMap()[first];
+    if(!title){ box.style.display = "none"; return; }
+    var mins = TOPIC_MINUTES[first];
+    box.innerHTML = '<button type="button" class="review-item start-item" data-open="'+first+'">' +
+                    '<span class="start-text">' +
+                    '<span class="review-why">'+L("Начать здесь", "Start here")+'</span>' +
+                    '<span class="review-title">'+title+'</span>' +
+                    '</span>' +
+                    (mins ? '<span class="start-minutes">'+mins+L(" мин", " min")+'</span>' : '') +
+                    '</button>';
     box.style.display = "block";
   }
 
@@ -9015,6 +9162,19 @@
     return due.concat(fresh).slice(0, SESSION_SIZE);
   }
 
+  // Только настоящий долг повторения — слова, которые уже видели и срок
+  // вернулся. Непросмотренные слова сюда не попадают: на чистом профиле
+  // vocabQueue() набивает сессию ими же, и бейдж на главной показывал бы
+  // «12» ещё до первого занятия, как будто ученик уже должен повторить.
+  function vocabDueCount(){
+    var state = loadVocab(), now = Date.now(), n = 0;
+    allVocabWords().forEach(function(x){
+      var st = state[x.w];
+      if(st && st.d <= now) n++;
+    });
+    return n;
+  }
+
   /* ---- Настройки тренажёра: тема, направление, режим ----
      Хранятся отдельно от коробок Лейтнера — сброс прогресса не должен
      сбрасывать привычные настройки, и наоборот. */
@@ -9236,7 +9396,7 @@
   function renderVocabDueBadge(){
     var el = document.getElementById("vocabDueBadge");
     if(!el) return;
-    var n = vocabQueue().length;
+    var n = vocabDueCount();
     el.textContent = n ? n : "";
     el.style.display = n ? "inline-block" : "none";
   }
@@ -10269,17 +10429,27 @@
     });
 
     var total = inputs.length + builds.length;
+    var share = correct / total;
     result.textContent = correct + " / " + total + L(" верно", " correct");
-    result.style.color = (correct === total) ? "var(--ok)" : "var(--bad)";
+    // Порог прохождения — 80%, не 100%: девять верных из десяти раньше
+    // визуально равнялись нулю (без отметки и без цвета «верно»), хотя
+    // тема по сути усвоена. Отдельная метка для ровно 10/10 остаётся —
+    // это .row-pct рядом с галочкой, см. renderProgress().
+    result.style.color = (share >= 0.8) ? "var(--ok)" : "var(--bad)";
 
     var topic = pane.dataset.topic;
     if(topic && total){
       var p = loadProgress();
       var prev = p[topic];
       var attempts = (prev && typeof prev === "object" && prev.attempts) ? prev.attempts : 0;
+      // perfect копится так же, как done: раз добытый 10/10 не должен
+      // пропадать из-за худшей повторной попытки — иначе рядом с галочкой
+      // всплыл бы обманчивый процент после честного возврата к теме.
+      var wasPerfect = prev && typeof prev === "object" && prev.perfect;
       p[topic] = {
-        done: correct === total || isDone(prev),
-        pct: Math.round(correct/total*100),
+        done: share >= 0.8 || isDone(prev),
+        perfect: share === 1 || !!wasPerfect,
+        pct: Math.round(share*100),
         attempts: attempts + 1,
         ts: Date.now()
       };
@@ -10473,6 +10643,7 @@
     else window.scrollTo(0,0);
     updateFloatBack();
     renderContinueBlock();
+    renderStartBlock();
   }
 
   function activeTopicId(){
@@ -10691,6 +10862,12 @@
 
     var reveal = e.target.closest(".btn-reveal");
     if(reveal){ revealQuiz(reveal.closest(".pane-quiz")); return; }
+
+    // Между «проверить» и «показать ответы» раньше не было середины:
+    // застрявший на первом же задании видел один выход — разбор всех
+    // десяти. Кнопка «Подсказка» возвращает к правилу без ответов.
+    var hint = e.target.closest(".btn-hint");
+    if(hint){ goPane(hint.closest(".topic-screen"), "rule"); return; }
 
     var tr = e.target.closest(".btn-translate");
     if(tr){
