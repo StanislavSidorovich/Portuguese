@@ -416,6 +416,74 @@ function checkVocabEn() {
   if (!problems) ok(`${seen.size} статей, все опираются на русский словарь`);
 }
 
+/* ============ 9. английский Conjugador ============ */
+
+// Conjugador рисуется кодом, и весь его текст ходит парами: label/labelEn,
+// note/noteEn, VERB_TR/VERB_TR_EN. Забытая половина пары не падает с
+// ошибкой — L() молча отдаёт русский, и англоговорящий видит кириллицу
+// посреди английского разбора. Ровно тот случай, который ловится скриптом
+// и не ловится глазами.
+function checkConjugadorEn() {
+  head('9. Английский Conjugador');
+
+  const block = (marker) => {
+    const start = html.indexOf(marker);
+    if (start < 0) return null;
+    const end = html.indexOf('\n  };', start);
+    return end < 0 ? null : html.slice(start, end);
+  };
+
+  let problems = 0;
+
+  const tenses = block('var TENSES = {');
+  if (!tenses) { bad('не нашёл объект TENSES'); return; }
+  let nTenses = 0;
+  for (const m of tenses.matchAll(/^\s*(\w+):\s*\{([\s\S]*?)\},?$/gm)) {
+    nTenses++;
+    if (!/labelEn:/.test(m[2])) { bad(`TENSES: у времени «${m[1]}» нет labelEn`); problems++; }
+  }
+
+  const irreg = block('var IRREG = {');
+  if (!irreg) { bad('не нашёл таблицу IRREG'); return; }
+  let nNotes = 0;
+  for (const v of irreg.matchAll(/"([^"]+)":\s*\{([\s\S]*?)\n(?=\s*"|\s*\};)/g)) {
+    if (!/note:/.test(v[2])) continue;
+    nNotes++;
+    if (!/noteEn:/.test(v[2])) { bad(`IRREG: у заметки к «${v[1]}» нет noteEn`); problems++; }
+  }
+
+  const keys = (marker) => {
+    const b = block(marker);
+    return b ? new Set([...b.matchAll(/"([^"]+)"\s*:\s*"/g)].map((m) => m[1])) : null;
+  };
+  const ru = keys('var VERB_TR = {');
+  const en = keys('var VERB_TR_EN = {');
+  if (!ru || !en) { bad('не нашёл VERB_TR или VERB_TR_EN'); problems++; }
+  else {
+    for (const k of ru) if (!en.has(k)) { bad(`VERB_TR_EN: нет статьи на «${k}»`); problems++; }
+    for (const k of en) if (!ru.has(k)) { bad(`VERB_TR_EN: «${k}» — лишний, в русском словаре его нет`); problems++; }
+  }
+
+  // Чипы примеров — тройки [глагол, русский, английский].
+  const samples = html.match(/var CONJ_SAMPLES = \[([\s\S]*?)\n  \];/);
+  let nSamples = 0;
+  if (!samples) { bad('не нашёл CONJ_SAMPLES'); problems++; }
+  else {
+    for (const m of samples[1].matchAll(/\[([^\]]*)\]/g)) {
+      nSamples++;
+      const parts = [...m[1].matchAll(/"([^"]*)"/g)].map((p) => p[1]);
+      if (parts.length !== 3) {
+        bad(`CONJ_SAMPLES: у «${parts[0] || '?'}» ${parts.length} значения вместо трёх`);
+        problems++;
+      }
+    }
+  }
+
+  if (!problems) {
+    ok(`${nTenses} времён, ${nNotes} заметок, ${ru.size} переводов, ${nSamples} чипов — обе половины на месте`);
+  }
+}
+
 /* ============ ============ */
 
 console.log('Проверка index.html');
@@ -427,6 +495,7 @@ checkIrregulars();
 checkConjTables();
 checkEnQuizData();
 checkVocabEn();
+checkConjugadorEn();
 
 console.log('');
 if (failed) {

@@ -1218,13 +1218,13 @@
   <div class="topic-topbar"><button type="button" class="back-btn" data-back data-en="← All topics">← Все темы</button></div>
   <div class="topic-header">
     <span class="marker" style="background:var(--base)"></span>
-    <h2>Conjugador · спрягатель</h2>
+    <h2 data-en="Conjugador · the conjugator">Conjugador · спрягатель</h2>
   </div>
-  <div class="topic-subtitle">Вводишь инфинитив — получаешь все формы времени и объяснение, что именно в этом глаголе неправильно. Правило живёт здесь в одном месте, а не переписано в каждой теме.</div>
+  <div class="topic-subtitle" data-en="Type in an infinitive and get every form of the tense, plus an explanation of what exactly this verb does wrong. The rule lives here in one place instead of being copied into every topic.">Вводишь инфинитив — получаешь все формы времени и объяснение, что именно в этом глаголе неправильно. Правило живёт здесь в одном месте, а не переписано в каждой теме.</div>
   <div class="pane active">
     <div class="conjbox">
-      <div class="conjbox-title">Проспрягать глагол</div>
-      <label for="conjWord">Инфинитив</label>
+      <div class="conjbox-title" data-en="Conjugate a verb">Проспрягать глагол</div>
+      <label for="conjWord" data-en="Infinitive">Инфинитив</label>
       <input type="text" id="conjWord" class="conj-input" value="falar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">
       <select id="conjTense" class="conj-select"></select>
       <div class="chips" id="conjChips"></div>
@@ -1238,8 +1238,8 @@
         <div class="conj-why" id="conjWhy"></div>
       </div>
     </div>
-    <div class="tip"><b>Как этим пользоваться.</b> Не «посмотреть ответ», а проверить себя: сначала произнеси форму вслух, потом сверься. Подсвеченные куски — те, где глагол отступает от правила; именно их надо запоминать, всё остальное выводится.</div>
-    <div class="trap"><b>Формы «вы» тут нет намеренно.</b> В португальском вежливое обращение идёт <b>третьим лицом</b>: <span class="pt">o senhor fala</span>, <span class="pt">a senhora está</span>, <span class="pt">você tem</span> — то есть той же формой, что «он говорит». Отдельного окончания для вежливости не существует, и это одна из главных ловушек для русскоязычного. Строка <span class="pt">vós</span> (старое «вы») в живом языке не встречается вообще, поэтому её здесь тоже нет.</div>
+    <div class="tip" data-en="&lt;b&gt;How to use this.&lt;/b&gt; Not to look the answer up, but to test yourself: say the form aloud first, then check. The highlighted pieces are where the verb departs from the rule &mdash; those are what has to be memorised; everything else follows."><b>Как этим пользоваться.</b> Не «посмотреть ответ», а проверить себя: сначала произнеси форму вслух, потом сверься. Подсвеченные куски — те, где глагол отступает от правила; именно их надо запоминать, всё остальное выводится.</div>
+    <div class="trap" data-en="&lt;b&gt;There is no polite &lsquo;you&rsquo; row here, and that is deliberate.&lt;/b&gt; Portuguese addresses people politely in the &lt;b&gt;third person&lt;/b&gt;: &lt;span class='pt'&gt;o senhor fala&lt;/span&gt;, &lt;span class='pt'&gt;a senhora está&lt;/span&gt;, &lt;span class='pt'&gt;você tem&lt;/span&gt; &mdash; the same form as &lsquo;he speaks&rsquo;. English has one &lsquo;you&rsquo; for everybody, so this is the harder half: the verb tells you nothing about how formal you are being, and choosing &lt;span class='pt'&gt;tu&lt;/span&gt; or the third person is a decision you make every time you open your mouth. The old &lt;span class='pt'&gt;vós&lt;/span&gt; row is absent too &mdash; nobody uses it in living speech."><b>Формы «вы» тут нет намеренно.</b> В португальском вежливое обращение идёт <b>третьим лицом</b>: <span class="pt">o senhor fala</span>, <span class="pt">a senhora está</span>, <span class="pt">você tem</span> — то есть той же формой, что «он говорит». Отдельного окончания для вежливости не существует, и это одна из главных ловушек для русскоязычного. Строка <span class="pt">vós</span> (старое «вы») в живом языке не встречается вообще, поэтому её здесь тоже нет.</div>
   </div>
 </div>
 
@@ -2346,7 +2346,7 @@
     <h2><span class="topic-num">0.6</span> Plural</h2>
     <span class="done-badge" data-badge="plural" data-en="✓ done">✓ пройдено</span>
   </div>
-  <div class="topic-subtitle">Обычно просто <b>+s</b>. Но слова на <b>-l</b> и <b>-ão</b> меняются целиком — и это надо знать сразу.</div>
+  <div class="topic-subtitle" data-en="Usually just &lt;b&gt;+s&lt;/b&gt;, as in English. But words in &lt;b&gt;-l&lt;/b&gt; and &lt;b&gt;-ão&lt;/b&gt; change shape instead &mdash; and those you need from day one.">Обычно просто <b>+s</b>. Но слова на <b>-l</b> и <b>-ão</b> меняются целиком — и это надо знать сразу.</div>
   <div class="subnav">
     <button type="button" class="subnav-btn active" data-pane="rule"><b>Regra</b><i data-en="rule">правило</i></button>
     <button type="button" class="subnav-btn" data-pane="texts"><b>Textos</b><i data-en="texts">тексты</i></button>
@@ -2354,115 +2354,115 @@
   </div>
 
   <div class="pane pane-rule active">
-    <p>Множественное число в португальском проще русского: падежей нет, и в девяти случаях из десяти достаточно добавить <b>-s</b>. Артикль меняется вместе со словом — и по нему множественное слышно раньше, чем по самому слову.</p>
+    <p data-en="The plural itself works much as in English: nine times out of ten you add &lt;b&gt;-s&lt;/b&gt; and you are done. Two things are new. The article changes along with the noun, so the plural is audible one word &lt;b&gt;before&lt;/b&gt; the noun is. And a few endings do not take &lt;b&gt;-s&lt;/b&gt; at all &mdash; they rebuild the end of the word.">Множественное число в португальском проще русского: падежей нет, и в девяти случаях из десяти достаточно добавить <b>-s</b>. Артикль меняется вместе со словом — и по нему множественное слышно раньше, чем по самому слову.</p>
 
     <table>
-      <tr><th></th><th>мужской</th><th>женский</th></tr>
-      <tr><td>определённый</td><td class="pt"><span class="m">os</span> livros</td><td class="pt"><span class="f">as</span> mesas</td></tr>
-      <tr><td>неопределённый</td><td class="pt"><span class="m">uns</span> livros</td><td class="pt"><span class="f">umas</span> mesas</td></tr>
+      <tr><th></th><th data-en="masculine">мужской</th><th data-en="feminine">женский</th></tr>
+      <tr><td data-en="definite">определённый</td><td class="pt"><span class="m">os</span> livros</td><td class="pt"><span class="f">as</span> mesas</td></tr>
+      <tr><td data-en="indefinite">неопределённый</td><td class="pt"><span class="m">uns</span> livros</td><td class="pt"><span class="f">umas</span> mesas</td></tr>
     </table>
 
-    <p><span class="pt">uns</span> и <span class="pt">umas</span> значат не «одни», а «какие-то, несколько»: <span class="pt">umas cartas</span> — «несколько писем».</p>
+    <p data-en="&lt;span class='pt'&gt;uns&lt;/span&gt; and &lt;span class='pt'&gt;umas&lt;/span&gt; are the plural of &lsquo;a&rsquo;, which English does not have &mdash; so they come out as &lsquo;some&rsquo;: &lt;span class='pt'&gt;umas cartas&lt;/span&gt; is &lsquo;some letters&rsquo;, a few of them."><span class="pt">uns</span> и <span class="pt">umas</span> значат не «одни», а «какие-то, несколько»: <span class="pt">umas cartas</span> — «несколько писем».</p>
 
-    <p>Что делать с самим словом, решает его последняя буква — как и с ударением в теме 0.2:</p>
+    <p data-en="What happens to the noun itself is decided by its last letter &mdash; the same way stress was decided in topic 0.2:">Что делать с самим словом, решает его последняя буква — как и с ударением в теме 0.2:</p>
 
     <table>
-      <tr><th>Кончается на</th><th>Что делать</th><th>Пример</th></tr>
-      <tr><td>гласную</td><td>+ s</td><td class="pt">casa → casas</td></tr>
+      <tr><th data-en="Ends in">Кончается на</th><th data-en="What to do">Что делать</th><th data-en="Example">Пример</th></tr>
+      <tr><td data-en="a vowel">гласную</td><td>+ s</td><td class="pt">casa → casas</td></tr>
       <tr><td>-r, -z</td><td>+ es</td><td class="pt">flor → flores, luz → luzes</td></tr>
-      <tr><td>-s ударное</td><td>+ es</td><td class="pt">país → países, mês → meses</td></tr>
-      <tr><td>-s безударное</td><td>не меняется</td><td class="pt">o lápis → os lápis</td></tr>
+      <tr><td data-en="stressed -s">-s ударное</td><td>+ es</td><td class="pt">país → países, mês → meses</td></tr>
+      <tr><td data-en="unstressed -s">-s безударное</td><td data-en="no change">не меняется</td><td class="pt">o lápis → os lápis</td></tr>
       <tr><td>-m</td><td>→ ns</td><td class="pt">homem → homens</td></tr>
       <tr><td>-l</td><td>→ is</td><td class="pt">jornal → jornais</td></tr>
-      <tr><td>-ão</td><td>три способа</td><td class="pt">lição → lições</td></tr>
+      <tr><td>-ão</td><td data-en="three ways">три способа</td><td class="pt">lição → lições</td></tr>
     </table>
 
     <div class="contrast">
-      <div class="label">Слова на -l: буква уходит, ударение остаётся</div>
-      <p><b>-al, -ol, -ul</b> просто теряют <b>l</b>: <span class="pt">jornal → jornais</span>, <span class="pt">sol → sóis</span>, <span class="pt">azul → azuis</span>.</p>
-      <p><b>-el</b> получает знак ударения, потому что ударный слог никуда не сдвинулся: <span class="pt">papel → papéis</span>, <span class="pt">hotel → hotéis</span>. Знак тут не украшение, а следствие правила 0.2.</p>
-      <p>Безударное <b>-il</b> даёт <b>-eis</b>: <span class="pt">fácil → fáceis</span>. Ударное — просто <b>-is</b>: <span class="pt">funil → funis</span>.</p>
+      <div class="label" data-en="Words in -l: the letter goes, the stress stays">Слова на -l: буква уходит, ударение остаётся</div>
+      <p data-en="&lt;b&gt;-al, -ol, -ul&lt;/b&gt; simply lose the &lt;b&gt;l&lt;/b&gt;: &lt;span class='pt'&gt;jornal → jornais&lt;/span&gt;, &lt;span class='pt'&gt;sol → sóis&lt;/span&gt;, &lt;span class='pt'&gt;azul → azuis&lt;/span&gt;."><b>-al, -ol, -ul</b> просто теряют <b>l</b>: <span class="pt">jornal → jornais</span>, <span class="pt">sol → sóis</span>, <span class="pt">azul → azuis</span>.</p>
+      <p data-en="&lt;b&gt;-el&lt;/b&gt; picks up an accent mark, because the stressed syllable has not moved anywhere: &lt;span class='pt'&gt;papel → papéis&lt;/span&gt;, &lt;span class='pt'&gt;hotel → hotéis&lt;/span&gt;. The mark is not decoration but a consequence of rule 0.2."><b>-el</b> получает знак ударения, потому что ударный слог никуда не сдвинулся: <span class="pt">papel → papéis</span>, <span class="pt">hotel → hotéis</span>. Знак тут не украшение, а следствие правила 0.2.</p>
+      <p data-en="Unstressed &lt;b&gt;-il&lt;/b&gt; gives &lt;b&gt;-eis&lt;/b&gt;: &lt;span class='pt'&gt;fácil → fáceis&lt;/span&gt;. Stressed &lt;b&gt;-il&lt;/b&gt; gives plain &lt;b&gt;-is&lt;/b&gt;: &lt;span class='pt'&gt;funil → funis&lt;/span&gt;.">Безударное <b>-il</b> даёт <b>-eis</b>: <span class="pt">fácil → fáceis</span>. Ударное — просто <b>-is</b>: <span class="pt">funil → funis</span>.</p>
     </div>
 
-    <p>И главное место темы — слова на <b>-ão</b>. Их три группы, и группу видно не по написанию, а по слову:</p>
+    <p data-en="And the heart of the topic &mdash; words in &lt;b&gt;-ão&lt;/b&gt;. There are three groups, and which group a word is in cannot be read off the spelling: it is a fact about the word, like gender.">И главное место темы — слова на <b>-ão</b>. Их три группы, и группу видно не по написанию, а по слову:</p>
 
     <table>
-      <tr><th>Группа</th><th>Сколько слов</th><th>Примеры</th></tr>
-      <tr><td class="pt">-ões</td><td>подавляющее большинство</td><td class="pt">lição → lições<br>estação → estações<br>coração → corações<br>avião → aviões</td></tr>
-      <tr><td class="pt">-ães</td><td>горстка</td><td class="pt">pão → pães<br>cão → cães<br>alemão → alemães</td></tr>
-      <tr><td class="pt">-ãos</td><td>горстка</td><td class="pt">irmão → irmãos<br>mão → mãos<br>cidadão → cidadãos</td></tr>
+      <tr><th data-en="Group">Группа</th><th data-en="How many">Сколько слов</th><th data-en="Examples">Примеры</th></tr>
+      <tr><td class="pt">-ões</td><td data-en="the vast majority">подавляющее большинство</td><td class="pt">lição → lições<br>estação → estações<br>coração → corações<br>avião → aviões</td></tr>
+      <tr><td class="pt">-ães</td><td data-en="a handful">горстка</td><td class="pt">pão → pães<br>cão → cães<br>alemão → alemães</td></tr>
+      <tr><td class="pt">-ãos</td><td data-en="a handful">горстка</td><td class="pt">irmão → irmãos<br>mão → mãos<br>cidadão → cidadãos</td></tr>
     </table>
 
     <ul class="rule-list">
-      <li><b>Всё, что кончается на -ção или -são, идёт в -ções / -sões без исключений.</b> Это половина всех слов на <b>-ão</b> в языке, и её можно не запоминать — она работает как правило</li>
-      <li>Остальные два списка короткие: <b>-ães</b> и <b>-ãos</b> — по десятку частых слов. Проще выучить эти двадцать, чем сомневаться в каждом</li>
-      <li>Подсказка для <b>-ãos</b>: там почти всё, где <b>-ão</b> не ударный суффикс, а часть корня (<span class="pt">mão</span>, <span class="pt">irmão</span>)</li>
+      <li data-en="&lt;b&gt;Everything ending in -ção or -são goes to -ções / -sões, with no exceptions.&lt;/b&gt; That is half of all the &lt;b&gt;-ão&lt;/b&gt; words in the language, and there is nothing to memorise &mdash; it behaves as a rule"><b>Всё, что кончается на -ção или -são, идёт в -ções / -sões без исключений.</b> Это половина всех слов на <b>-ão</b> в языке, и её можно не запоминать — она работает как правило</li>
+      <li data-en="The other two lists are short: &lt;b&gt;-ães&lt;/b&gt; and &lt;b&gt;-ãos&lt;/b&gt; hold about ten frequent words each. Learning those twenty is easier than hesitating over every word">Остальные два списка короткие: <b>-ães</b> и <b>-ãos</b> — по десятку частых слов. Проще выучить эти двадцать, чем сомневаться в каждом</li>
+      <li data-en="A hint for &lt;b&gt;-ãos&lt;/b&gt;: it holds mostly words where &lt;b&gt;-ão&lt;/b&gt; is not a suffix but part of the root itself (&lt;span class='pt'&gt;mão&lt;/span&gt;, &lt;span class='pt'&gt;irmão&lt;/span&gt;)">Подсказка для <b>-ãos</b>: там почти всё, где <b>-ão</b> не ударный суффикс, а часть корня (<span class="pt">mão</span>, <span class="pt">irmão</span>)</li>
     </ul>
 
     <ul class="examples">
-      <li>os livros <span class="ru">«уж ливруш» — s звучит «ш» и в артикле, и в слове</span></li>
-      <li>os amigos <span class="ru">«уз амигуш» — перед гласной та же s звучит «з»</span></li>
-      <li>as flores <span class="ru">«аш флореш»</span></li>
-      <li>os pães <span class="ru">«уж пайш» — носовой остался, просто стал «аи» вместо «ау»</span></li>
-      <li>os hotéis <span class="ru">«уз отейш»</span></li>
+      <li data-en="os livros &lt;span class='ru'&gt;oozh LEE-vroosh &mdash; the s is a hushing sound in the article and in the noun alike&lt;/span&gt;">os livros <span class="ru">«уж ливруш» — s звучит «ш» и в артикле, и в слове</span></li>
+      <li data-en="os amigos &lt;span class='ru'&gt;ooz ah-MEE-goosh &mdash; before a vowel that same s is a plain z&lt;/span&gt;">os amigos <span class="ru">«уз амигуш» — перед гласной та же s звучит «з»</span></li>
+      <li data-en="as flores &lt;span class='ru'&gt;ash FLOH-resh&lt;/span&gt;">as flores <span class="ru">«аш флореш»</span></li>
+      <li data-en="os pães &lt;span class='ru'&gt;oozh PAYNGSH &mdash; the nasal has not gone anywhere, it only turned from owng into ayng&lt;/span&gt;">os pães <span class="ru">«уж пайш» — носовой остался, просто стал «аи» вместо «ау»</span></li>
+      <li data-en="os hotéis &lt;span class='ru'&gt;ooz oh-TAYSH&lt;/span&gt;">os hotéis <span class="ru">«уз отейш»</span></li>
     </ul>
 
-    <div class="trap"><b>Три ловушки.</b><br>
+    <div class="trap" data-en="&lt;b&gt;Three traps.&lt;/b&gt;&lt;br&gt;&lt;span class='pt'&gt;o lápis → os lápis&lt;/span&gt;: the word does not change at all, and the number is audible only in the article. Same with &lt;span class='pt'&gt;o ónibus&lt;/span&gt;, &lt;span class='pt'&gt;o vírus&lt;/span&gt;.&lt;br&gt;&lt;span class='pt'&gt;a mão → as mãos&lt;/span&gt;: a feminine word with a masculine-looking ending, and from the rare &lt;b&gt;-ãos&lt;/b&gt; group on top of that.&lt;br&gt;&lt;span class='pt'&gt;o ovo → os ovos&lt;/span&gt;: nothing unusual on paper, but the &lt;b&gt;o&lt;/b&gt; is closed in the singular (OH-voo) and open in the plural (AW-voosh). There are a couple of dozen such words, and the Portuguese hear the difference instantly."><b>Три ловушки.</b><br>
       <span class="pt">o lápis → os lápis</span>: слово не меняется вообще, число слышно только по артиклю. Так же <span class="pt">o ónibus</span>, <span class="pt">o vírus</span>.<br>
       <span class="pt">a mão → as mãos</span>: женское слово с мужским на вид окончанием, да ещё и из редкой группы <b>-ãos</b>.<br>
       <span class="pt">o ovo → os ovos</span>: на письме ничего особенного, но в единственном <b>o</b> закрытое («ову»), а во множественном открытое («óвуш»). Таких слов десятка два, и португальцы слышат разницу мгновенно.</div>
 
-    <div class="tip"><b>Как тренировать.</b> Бери любое слово из словаря курса и говори его сразу в двух числах, с артиклем: <span class="pt">o jornal — os jornais</span>, <span class="pt">a lição — as lições</span>. Пятнадцать пар вслух дают больше, чем перечитывание таблицы: рука сама начнёт дописывать <b>-ões</b> там, где надо.</div>
+    <div class="tip" data-en="&lt;b&gt;How to drill it.&lt;/b&gt; Take any word from the course dictionary and say it in both numbers at once, article included: &lt;span class='pt'&gt;o jornal — os jornais&lt;/span&gt;, &lt;span class='pt'&gt;a lição — as lições&lt;/span&gt;. Fifteen pairs said aloud do more than rereading the table: your hand starts writing &lt;b&gt;-ões&lt;/b&gt; where it belongs on its own."><b>Как тренировать.</b> Бери любое слово из словаря курса и говори его сразу в двух числах, с артиклем: <span class="pt">o jornal — os jornais</span>, <span class="pt">a lição — as lições</span>. Пятнадцать пар вслух дают больше, чем перечитывание таблицы: рука сама начнёт дописывать <b>-ões</b> там, где надо.</div>
   </div>
 
   <div class="pane pane-texts">
     <p class="tap-hint" data-en="Tap any Portuguese word to see its translation.">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
     <div class="reading-block">
-      <div class="text-label">Palavras 11 · Coisas e pessoas — вещи и люди</div>
+      <div class="text-label" data-en="Palavras 11 · Coisas e pessoas — things and people">Palavras 11 · Coisas e pessoas — вещи и люди</div>
       <div class="mini-text">
         <div class="wordset">
-          <div><span class="w">o país</span> <span class="tr">у паиш</span><span class="t">— страна</span></div>
-          <div><span class="w">o lápis</span> <span class="tr">у лапиш</span><span class="t">— карандаш</span></div>
-          <div><span class="w">o mês</span> <span class="tr">у меш</span><span class="t">— месяц</span></div>
-          <div><span class="w">o rapaz</span> <span class="tr">у рапаш</span><span class="t">— парень</span></div>
-          <div><span class="w">a luz</span> <span class="tr">а луш</span><span class="t">— свет</span></div>
-          <div><span class="w">a flor</span> <span class="tr">а флор</span><span class="t">— цветок</span></div>
-          <div><span class="w">a cor</span> <span class="tr">а кор</span><span class="t">— цвет</span></div>
-          <div><span class="w">o animal</span> <span class="tr">у анимал</span><span class="t">— животное</span></div>
+          <div><span class="w">o país</span> <span class="tr" data-en="oo pah-EESH">у паиш</span><span class="t" data-en="— country">— страна</span></div>
+          <div><span class="w">o lápis</span> <span class="tr" data-en="oo LAH-peesh">у лапиш</span><span class="t" data-en="— pencil">— карандаш</span></div>
+          <div><span class="w">o mês</span> <span class="tr" data-en="oo MEHSH">у меш</span><span class="t" data-en="— month">— месяц</span></div>
+          <div><span class="w">o rapaz</span> <span class="tr" data-en="oo rah-PAHSH">у рапаш</span><span class="t" data-en="— boy, young man">— парень</span></div>
+          <div><span class="w">a luz</span> <span class="tr" data-en="ah LOOSH">а луш</span><span class="t" data-en="— light">— свет</span></div>
+          <div><span class="w">a flor</span> <span class="tr" data-en="ah FLOR">а флор</span><span class="t" data-en="— flower">— цветок</span></div>
+          <div><span class="w">a cor</span> <span class="tr" data-en="ah KOR">а кор</span><span class="t" data-en="— colour">— цвет</span></div>
+          <div><span class="w">o animal</span> <span class="tr" data-en="oo ah-nee-MAHL">у анимал</span><span class="t" data-en="— animal">— животное</span></div>
         </div>
-        <p class="why-note"><b>Почему так:</b> здесь собраны слова со всеми «трудными» концовками сразу: <span class="pt">país → países</span>, <span class="pt">lápis → os lápis</span> (не меняется), <span class="pt">mês → meses</span>, <span class="pt">rapaz → rapazes</span>, <span class="pt">luz → luzes</span>, <span class="pt">flor → flores</span>, <span class="pt">cor → cores</span>, <span class="pt">animal → animais</span>.<br><br>Разница между <span class="pt">país</span> и <span class="pt">lápis</span> — только в ударении: у первого оно на конце, поэтому нужно <b>-es</b>; у второго на первом слоге, поэтому слово не меняется.</p>
+        <p class="why-note" data-en="&lt;b&gt;Why it works this way:&lt;/b&gt; this set gathers every difficult ending at once: &lt;span class='pt'&gt;país → países&lt;/span&gt;, &lt;span class='pt'&gt;lápis → os lápis&lt;/span&gt; (no change), &lt;span class='pt'&gt;mês → meses&lt;/span&gt;, &lt;span class='pt'&gt;rapaz → rapazes&lt;/span&gt;, &lt;span class='pt'&gt;luz → luzes&lt;/span&gt;, &lt;span class='pt'&gt;flor → flores&lt;/span&gt;, &lt;span class='pt'&gt;cor → cores&lt;/span&gt;, &lt;span class='pt'&gt;animal → animais&lt;/span&gt;.&lt;br&gt;&lt;br&gt;The only difference between &lt;span class='pt'&gt;país&lt;/span&gt; and &lt;span class='pt'&gt;lápis&lt;/span&gt; is the stress: the first has it on the last syllable, so it needs &lt;b&gt;-es&lt;/b&gt;; the second has it on the first, so the word stands still."><b>Почему так:</b> здесь собраны слова со всеми «трудными» концовками сразу: <span class="pt">país → países</span>, <span class="pt">lápis → os lápis</span> (не меняется), <span class="pt">mês → meses</span>, <span class="pt">rapaz → rapazes</span>, <span class="pt">luz → luzes</span>, <span class="pt">flor → flores</span>, <span class="pt">cor → cores</span>, <span class="pt">animal → animais</span>.<br><br>Разница между <span class="pt">país</span> и <span class="pt">lápis</span> — только в ударении: у первого оно на конце, поэтому нужно <b>-es</b>; у второго на первом слоге, поэтому слово не меняется.</p>
       </div>
     </div>
 
     <div class="reading-block">
-      <div class="text-label">Palavras 12 · Palavras em -ão — слова на -ão</div>
+      <div class="text-label" data-en="Palavras 12 · Palavras em -ão — words in -ão">Palavras 12 · Palavras em -ão — слова на -ão</div>
       <div class="mini-text">
         <div class="wordset">
-          <div><span class="w">o avião</span> <span class="tr">у авиау</span><span class="t">— самолёт</span></div>
-          <div><span class="w">a canção</span> <span class="tr">а кансау</span><span class="t">— песня</span></div>
-          <div><span class="w">o alemão</span> <span class="tr">у алымау</span><span class="t">— немец; немецкий язык</span></div>
-          <div><span class="w">o cidadão</span> <span class="tr">у сидадау</span><span class="t">— гражданин</span></div>
-          <div><span class="w">o hospital</span> <span class="tr">у ошпитал</span><span class="t">— больница</span></div>
-          <div><span class="w">o sol</span> <span class="tr">у сол</span><span class="t">— солнце</span></div>
-          <div><span class="w">o ovo</span> <span class="tr">у ову</span><span class="t">— яйцо</span></div>
-          <div><span class="w">o nariz</span> <span class="tr">у нариш</span><span class="t">— нос</span></div>
+          <div><span class="w">o avião</span> <span class="tr" data-en="oo ah-vee-OWNG">у авиау</span><span class="t" data-en="— aeroplane">— самолёт</span></div>
+          <div><span class="w">a canção</span> <span class="tr" data-en="ah kang-SOWNG">а кансау</span><span class="t" data-en="— song">— песня</span></div>
+          <div><span class="w">o alemão</span> <span class="tr" data-en="oo ah-leh-MOWNG">у алымау</span><span class="t" data-en="— German man; the German language">— немец; немецкий язык</span></div>
+          <div><span class="w">o cidadão</span> <span class="tr" data-en="oo see-dah-DOWNG">у сидадау</span><span class="t" data-en="— citizen">— гражданин</span></div>
+          <div><span class="w">o hospital</span> <span class="tr" data-en="oo osh-pee-TAHL">у ошпитал</span><span class="t" data-en="— hospital">— больница</span></div>
+          <div><span class="w">o sol</span> <span class="tr" data-en="oo SOL">у сол</span><span class="t" data-en="— sun">— солнце</span></div>
+          <div><span class="w">o ovo</span> <span class="tr" data-en="oo OH-voo">у ову</span><span class="t" data-en="— egg">— яйцо</span></div>
+          <div><span class="w">o nariz</span> <span class="tr" data-en="oo nah-REESH">у нариш</span><span class="t" data-en="— nose">— нос</span></div>
         </div>
-        <p class="why-note"><b>Почему так:</b> четыре слова на <b>-ão</b> в наборе — из трёх разных групп: <span class="pt">aviões</span> и <span class="pt">canções</span> (правило), <span class="pt">alemães</span> (список), <span class="pt">cidadãos</span> (список). Проговори все четыре пары вслух — это и есть вся тема.<br><br><span class="pt">o cidadão</span> — слово из документов: <i>cidadão estrangeiro</i>, «иностранный гражданин». В Португалии оно попадается быстро.</p>
+        <p class="why-note" data-en="&lt;b&gt;Why it works this way:&lt;/b&gt; the four &lt;b&gt;-ão&lt;/b&gt; words in this set come from all three groups: &lt;span class='pt'&gt;aviões&lt;/span&gt; and &lt;span class='pt'&gt;canções&lt;/span&gt; (the rule), &lt;span class='pt'&gt;alemães&lt;/span&gt; (one list), &lt;span class='pt'&gt;cidadãos&lt;/span&gt; (the other). Say all four pairs aloud &mdash; that is the whole topic.&lt;br&gt;&lt;br&gt;&lt;span class='pt'&gt;o cidadão&lt;/span&gt; is a paperwork word: &lt;i&gt;cidadão estrangeiro&lt;/i&gt;, &lsquo;foreign citizen&rsquo;. In Portugal you meet it early and often."><b>Почему так:</b> четыре слова на <b>-ão</b> в наборе — из трёх разных групп: <span class="pt">aviões</span> и <span class="pt">canções</span> (правило), <span class="pt">alemães</span> (список), <span class="pt">cidadãos</span> (список). Проговори все четыре пары вслух — это и есть вся тема.<br><br><span class="pt">o cidadão</span> — слово из документов: <i>cidadão estrangeiro</i>, «иностранный гражданин». В Португалии оно попадается быстро.</p>
       </div>
     </div>
 
     <div class="reading-block">
-      <div class="text-label">Texto · A sala — комната</div>
+      <div class="text-label" data-en="Texto · A sala — the living room">Texto · A sala — комната</div>
       <div class="mini-text">
         <p class="storytext">Na sala estão os livros e os jornais. Na mesa estão os lápis, as chaves e as cartas. Os papéis estão na caixa, com as flores. Os pães e os ovos estão na cozinha. As lições estão nos livros, e os exames são na universidade.</p>
         <button class="btn btn-translate" type="button">Показать перевод</button>
-        <p class="ru-translation">В комнате книги и газеты. На столе карандаши, ключи и письма. Бумаги в коробке, вместе с цветами. Хлеб и яйца на кухне. Уроки — в книгах, а экзамены — в университете.</p>
-        <p class="why-note"><b>Почему так:</b> <span class="pt">estão</span> — это <span class="pt">está</span> во множественном числе, «находятся». Форма из темы 0.8, здесь она нужна раньше своего разбора; пока просто узнавай её. Заметь, кстати, её окончание: <b>-ão</b>, тот самый носовой.<br><br><span class="pt">nos</span> — это <span class="pt">em + os</span>, как <span class="pt">no</span> = <span class="pt">em + o</span>. Слияние тоже показывает число: <span class="pt">nos livros</span> — «в книгах».<br><br>Прочитай текст вслух и послушай, как часто звучит «ш»: это и есть португальское множественное на слух.</p>
+        <p class="ru-translation" data-en="In the living room there are the books and the newspapers. On the table there are the pencils, the keys and the letters. The papers are in the box, together with the flowers. The bread and the eggs are in the kitchen. The lessons are in the books, and the exams are at the university.">В комнате книги и газеты. На столе карандаши, ключи и письма. Бумаги в коробке, вместе с цветами. Хлеб и яйца на кухне. Уроки — в книгах, а экзамены — в университете.</p>
+        <p class="why-note" data-en="&lt;b&gt;Why it works this way:&lt;/b&gt; &lt;span class='pt'&gt;estão&lt;/span&gt; is &lt;span class='pt'&gt;está&lt;/span&gt; in the plural, &lsquo;they are (located)&rsquo;. It belongs to topic 0.8 and is needed here before its own explanation &mdash; for now just recognise it. Notice its ending, by the way: &lt;b&gt;-ão&lt;/b&gt;, that same nasal.&lt;br&gt;&lt;br&gt;&lt;span class='pt'&gt;nos&lt;/span&gt; is &lt;span class='pt'&gt;em + os&lt;/span&gt;, just as &lt;span class='pt'&gt;no&lt;/span&gt; is &lt;span class='pt'&gt;em + o&lt;/span&gt;. The fused form carries the number too: &lt;span class='pt'&gt;nos livros&lt;/span&gt; is &lsquo;in the books&rsquo;.&lt;br&gt;&lt;br&gt;Read the text aloud and listen to how often the sh-sound comes round: that is what a Portuguese plural sounds like."><b>Почему так:</b> <span class="pt">estão</span> — это <span class="pt">está</span> во множественном числе, «находятся». Форма из темы 0.8, здесь она нужна раньше своего разбора; пока просто узнавай её. Заметь, кстати, её окончание: <b>-ão</b>, тот самый носовой.<br><br><span class="pt">nos</span> — это <span class="pt">em + os</span>, как <span class="pt">no</span> = <span class="pt">em + o</span>. Слияние тоже показывает число: <span class="pt">nos livros</span> — «в книгах».<br><br>Прочитай текст вслух и послушай, как часто звучит «ш»: это и есть португальское множественное на слух.</p>
       </div>
     </div>
 
     <div class="reading-block">
-      <div class="text-label">Diálogo · No mercado — на рынке</div>
+      <div class="text-label" data-en="Diálogo · No mercado — at the market">Diálogo · No mercado — на рынке</div>
       <div class="mini-text">
         <div class="dialogue">
           <p class="dline"><span class="speaker">Ana:</span> Bom dia! Dois pães, por favor.</p>
@@ -2474,14 +2474,14 @@
           <p class="dline"><span class="speaker">Ana:</span> Aqui está. Muito obrigada!</p>
         </div>
         <button class="btn btn-translate" type="button">Показать перевод</button>
-        <p class="ru-translation"><b>Ана:</b> Доброе утро! Два хлеба, пожалуйста.<br><b>Продавец:</b> Два хлеба. Ещё?<br><b>Ана:</b> Да, фрукты и яйца.<br><b>Продавец:</b> Фрукты и яйца. Это всё?<br><b>Ана:</b> Всё. Сколько с меня?<br><b>Продавец:</b> Семьдесят центов.<br><b>Ана:</b> Вот, держите. Большое спасибо!</p>
-        <p class="why-note"><b>Почему так:</b> <span class="pt">dois pães</span> — из группы <b>-ães</b>: «дойш пайш». Хлеб в Португалии считают штуками, и просят его именно так.<br><br><span class="pt">São setenta cêntimos</span> — «это семьдесят центов». Глагол стоит во множественном, потому что центов много: португальский согласует число там, где русский говорит просто «семьдесят центов».</p>
+        <p class="ru-translation" data-en="&lt;b&gt;Ana:&lt;/b&gt; Good morning! Two loaves, please.&lt;br&gt;&lt;b&gt;Shopkeeper:&lt;/b&gt; Two loaves. Anything else?&lt;br&gt;&lt;b&gt;Ana:&lt;/b&gt; Yes, the fruit and the eggs.&lt;br&gt;&lt;b&gt;Shopkeeper:&lt;/b&gt; The fruit and the eggs. Is that everything?&lt;br&gt;&lt;b&gt;Ana:&lt;/b&gt; That is everything. How much is it?&lt;br&gt;&lt;b&gt;Shopkeeper:&lt;/b&gt; Seventy cents.&lt;br&gt;&lt;b&gt;Ana:&lt;/b&gt; Here you are. Thank you very much!"><b>Ана:</b> Доброе утро! Два хлеба, пожалуйста.<br><b>Продавец:</b> Два хлеба. Ещё?<br><b>Ана:</b> Да, фрукты и яйца.<br><b>Продавец:</b> Фрукты и яйца. Это всё?<br><b>Ана:</b> Всё. Сколько с меня?<br><b>Продавец:</b> Семьдесят центов.<br><b>Ана:</b> Вот, держите. Большое спасибо!</p>
+        <p class="why-note" data-en="&lt;b&gt;Why it works this way:&lt;/b&gt; &lt;span class='pt'&gt;dois pães&lt;/span&gt; is from the &lt;b&gt;-ães&lt;/b&gt; group: &lsquo;doysh payngsh&rsquo;. Bread in Portugal is counted by the loaf, and that is how you ask for it.&lt;br&gt;&lt;br&gt;&lt;span class='pt'&gt;São setenta cêntimos&lt;/span&gt; is &lsquo;that will be seventy cents&rsquo;. The verb is plural because the cents are many &mdash; where English keeps a singular &lsquo;that&rsquo;s seventy cents&rsquo;, Portuguese agrees with the coins."><b>Почему так:</b> <span class="pt">dois pães</span> — из группы <b>-ães</b>: «дойш пайш». Хлеб в Португалии считают штуками, и просят его именно так.<br><br><span class="pt">São setenta cêntimos</span> — «это семьдесят центов». Глагол стоит во множественном, потому что центов много: португальский согласует число там, где русский говорит просто «семьдесят центов».</p>
       </div>
     </div>
   </div>
 
   <div class="pane pane-quiz" data-topic="plural">
-    <p class="quiz-instruction">Поставь слово во множественное число или выбери верный вариант. Пиши без артикля.</p>
+    <p class="quiz-instruction" data-en="Put the word into the plural or pick the right form. Where you type, type the noun alone, without the article.">Поставь слово во множественное число или выбери верный вариант. Пиши без артикля.</p>
     <div class="qitem"><span class="qnum">1.</span> <span class="pt">livro</span> <span class="ru-hint">→</span> <input class="blank" data-answer="livros" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
     <div class="qitem"><span class="qnum">2.</span> <span class="pt">jornal</span> <span class="ru-hint">→</span> <input class="blank" data-answer="jornais" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
     <div class="qitem"><span class="qnum">3.</span> <span class="pt">lição</span> <span class="ru-hint">→</span>
@@ -2518,7 +2518,7 @@
       </select>
     </div>
     <div class="qitem"><span class="qnum">8.</span> <span class="pt">papel</span> <span class="ru-hint">→</span> <input class="blank" data-answer="papéis|papeis" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
-    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint">Артикль множественного числа женского рода:</span>
+    <div class="qitem"><span class="qnum">9.</span> <span class="ru-hint" data-en="The feminine plural article:">Артикль множественного числа женского рода:</span>
       <select class="mc" data-answer="as">
         <option value="">—</option>
         <option value="as">as</option>
@@ -2527,7 +2527,7 @@
       </select>
     </div>
     <div class="qitem">
-      <span class="qnum">10.</span> <span class="ru-hint">Собери фразу: «Хлеб на кухне» (во множественном).</span>
+      <span class="qnum">10.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;The loaves are in the kitchen.&rsquo;">Собери фразу: «Хлеб на кухне» (во множественном).</span>
       <div class="qbuild" data-answer="Os pães estão na cozinha" data-words="estão|cozinha|Os|na|pães"></div>
     </div>
     <div class="quiz-actions">
@@ -2540,7 +2540,7 @@
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
-        <span class="next-title">Ser — первый глагол курса</span>
+        <span class="next-title" data-en="Ser — the first verb of the course">Ser — первый глагол курса</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -8162,7 +8162,7 @@
   // в EN она гаснет карточкой «coming soon» — обещание английского не
   // должно опережать перевод. Frases и Diálogos сюда не входят: у них
   // свой движок перевода (data-open, а не data-topic), и они уже готовы.
-  var EN_READY_TOPICS = ["alfabeto", "acento", "nasais", "digrafos", "genero"];
+  var EN_READY_TOPICS = ["alfabeto", "acento", "nasais", "digrafos", "genero", "plural"];
 
   // В EN 42 темы из 47 не переведены — по одной «soon»-строке на тему это
   // стена, которая читается как заброшенный проект. Вместо неё запертые
@@ -8254,6 +8254,11 @@
     if(document.getElementById("screen-dialogos").classList.contains("active")) renderDialogos();
     VOCAB_SETS = null;
     if(document.getElementById("screen-vocab").classList.contains("active")) renderVocabScreen();
+    // Conjugador тоже рисуется кодом: подписи времён, чипы и весь разбор.
+    // Перекрашивается всегда, а не только на открытом экране, — иначе в
+    // выпадающем списке останутся подписи языка, на котором его открыли
+    // первый раз (той же породы баг, что был у Dicionário).
+    relabelConjugador();
   }
 
   /* ================= CONJUGADOR ================= */
@@ -8267,11 +8272,11 @@
   var PERSONS = ["eu","tu","ele / ela / você","nós","eles / elas / vocês"];
 
   var TENSES = {
-    presente:    { label:"Presente · настоящее время" },
-    preterito:   { label:"Pretérito perfeito · прошедшее (сделал)" },
-    imperfeito:  { label:"Imperfeito · прошедшее фоном (делал)" },
-    futuro:      { label:"Futuro · будущее (сделаю)" },
-    condicional: { label:"Condicional · «сделал бы»" }
+    presente:    { label:"Presente · настоящее время",            labelEn:"Presente · present" },
+    preterito:   { label:"Pretérito perfeito · прошедшее (сделал)", labelEn:"Pretérito perfeito · past, finished (I did)" },
+    imperfeito:  { label:"Imperfeito · прошедшее фоном (делал)",   labelEn:"Imperfeito · past as background (I was doing, used to do)" },
+    futuro:      { label:"Futuro · будущее (сделаю)",              labelEn:"Futuro · future (I will do)" },
+    condicional: { label:"Condicional · «сделал бы»",              labelEn:"Condicional · ‘I would do’" }
   };
 
   // Окончания правильных глаголов. Ключ — спряжение по инфинитиву.
@@ -8295,44 +8300,60 @@
   // Infopédia, вариант европейский.
   var IRREG = {
     "ser":    { presente:["sou","és","é","somos","são"], preterito:["fui","foste","foi","fomos","foram"], imperfeito:["era","eras","era","éramos","eram"],
-                note:"Самый неправильный глагол языка: у него три разные основы. В прошедшем времени формы полностью совпадают с глаголом ir — «fui» значит и «я был», и «я пошёл», различает только контекст." },
+                note:"Самый неправильный глагол языка: у него три разные основы. В прошедшем времени формы полностью совпадают с глаголом ir — «fui» значит и «я был», и «я пошёл», различает только контекст.",
+                noteEn:"The most irregular verb in the language: it runs on three different stems. In the past its forms coincide completely with the verb ir — ‘fui’ is both ‘I was’ and ‘I went’, and only the context tells them apart." },
     "estar":  { presente:["estou","estás","está","estamos","estão"], preterito:["estive","estiveste","esteve","estivemos","estiveram"],
-                note:"Ломается в настоящем и прошедшем, а imperfeito (estava) строится по правилу." },
+                note:"Ломается в настоящем и прошедшем, а imperfeito (estava) строится по правилу.",
+                noteEn:"Breaks in the present and the past, while the imperfeito (estava) is built by the rule." },
     "ter":    { presente:["tenho","tens","tem","temos","têm"], preterito:["tive","tiveste","teve","tivemos","tiveram"], imperfeito:["tinha","tinhas","tinha","tínhamos","tinham"],
-                note:"Формы «ele tem» и «eles têm» на слух почти одинаковы, различает только шляпка на письме и лёгкая долгота в речи." },
+                note:"Формы «ele tem» и «eles têm» на слух почти одинаковы, различает только шляпка на письме и лёгкая долгота в речи.",
+                noteEn:"‘ele tem’ and ‘eles têm’ are nearly identical to the ear: only the hat in writing and a slight extra length in speech keep singular and plural apart." },
     "ir":     { presente:["vou","vais","vai","vamos","vão"], preterito:["fui","foste","foi","fomos","foram"], imperfeito:["ia","ias","ia","íamos","iam"],
-                note:"В настоящем берёт основу от старого глагола vadere, в прошедшем — целиком от ser." },
+                note:"В настоящем берёт основу от старого глагола vadere, в прошедшем — целиком от ser.",
+                noteEn:"Takes its present from the old verb vadere and its past wholesale from ser — the same trick English plays with go / went." },
     "haver":  { presente:["hei","hás","há","havemos","hão"], preterito:["houve","houveste","houve","houvemos","houveram"],
-                note:"В живом языке встречается почти только формой «há» — «есть, имеется»: há um problema. Остальные формы книжные." },
+                note:"В живом языке встречается почти только формой «há» — «есть, имеется»: há um problema. Остальные формы книжные.",
+                noteEn:"In living speech it turns up almost only as ‘há’ — ‘there is, there are’: há um problema. The other forms are bookish." },
     "fazer":  { presente:["faço","fazes","faz","fazemos","fazem"], preterito:["fiz","fizeste","fez","fizemos","fizeram"],
-                note:"В будущем и условном инфинитив ужимается: farei, faria — не «fazerei»." },
+                note:"В будущем и условном инфинитив ужимается: farei, faria — не «fazerei».",
+                noteEn:"In the future and the conditional the infinitive shrinks: farei, faria — never ‘fazerei’." },
     "poder":  { presente:["posso","podes","pode","podemos","podem"], preterito:["pude","pudeste","pôde","pudemos","puderam"],
-                note:"Шляпка в «ele pôde» отличает прошедшее от настоящего «ele pode» — на письме это разные слова." },
+                note:"Шляпка в «ele pôde» отличает прошедшее от настоящего «ele pode» — на письме это разные слова.",
+                noteEn:"The hat in ‘ele pôde’ is the only thing separating the past from the present ‘ele pode’ — in writing they are two different words." },
     "querer": { presente:["quero","queres","quer","queremos","querem"], preterito:["quis","quiseste","quis","quisemos","quiseram"],
-                note:"Третье лицо «quer» без -e: правильная форма была бы «quere», её нет." },
+                note:"Третье лицо «quer» без -e: правильная форма была бы «quere», её нет.",
+                noteEn:"Third person ‘quer’ with no -e: the regular form would be ‘quere’, and it does not exist." },
     "ver":    { presente:["vejo","vês","vê","vemos","veem"], preterito:["vi","viste","viu","vimos","viram"],
-                note:"«Nós vimos» — это и «мы видим» (от ver в старом написании veem/vemos), и «мы пришли» (от vir). Форма настоящего у ver — vemos, у vir — vimos." },
+                note:"«Nós vimos» — это и «мы увидели» (прошедшее от ver), и «мы приходим» (настоящее от vir). Настоящее у ver — vemos, прошедшее у vir — viemos.",
+                noteEn:"‘Nós vimos’ is two verbs at once: ‘we saw’ (past of ver) and ‘we come’ (present of vir). The present of ver is vemos, and the past of vir is viemos." },
     "vir":    { presente:["venho","vens","vem","vimos","vêm"], preterito:["vim","vieste","veio","viemos","vieram"], imperfeito:["vinha","vinhas","vinha","vínhamos","vinham"],
-                note:"Не путать с ver: «ele vem» — приходит, «ele vê» — видит." },
+                note:"Не путать с ver: «ele vem» — приходит, «ele vê» — видит.",
+                noteEn:"Not to be confused with ver: ‘ele vem’ is he comes, ‘ele vê’ is he sees." },
     "dar":    { presente:["dou","dás","dá","damos","dão"], preterito:["dei","deste","deu","demos","deram"] },
     "saber":  { presente:["sei","sabes","sabe","sabemos","sabem"], preterito:["soube","soubeste","soube","soubemos","souberam"],
-                note:"«Знать факт» — saber, «быть знакомым» — conhecer. Sei que… но conheço o João." },
+                note:"«Знать факт» — saber, «быть знакомым» — conhecer. Sei que… но conheço o João.",
+                noteEn:"English has one ‘know’ and Portuguese has two. saber is knowing a fact, conhecer is being acquainted with a person or a place: Sei que… but conheço o João." },
     "dizer":  { presente:["digo","dizes","diz","dizemos","dizem"], preterito:["disse","disseste","disse","dissemos","disseram"],
-                note:"В будущем и условном: direi, diria." },
+                note:"В будущем и условном: direi, diria.",
+                noteEn:"In the future and the conditional: direi, diria." },
     "trazer": { presente:["trago","trazes","traz","trazemos","trazem"], preterito:["trouxe","trouxeste","trouxe","trouxemos","trouxeram"],
-                note:"Прошедшее пишется через x, а звучит через «с»: trouxe — «трос»." },
+                note:"Прошедшее пишется через x, а звучит через «с»: trouxe — «трос».",
+                noteEn:"The past is spelt with an x but sounds with an s: trouxe is ‘TROH-suh’." },
     "pôr":    { presente:["ponho","pões","põe","pomos","põem"], preterito:["pus","puseste","pôs","pusemos","puseram"], imperfeito:["punha","punhas","punha","púnhamos","punham"],
-                note:"Единственный глагол не на -ar/-er/-ir. Спрягается как -er, но с собственной основой po-/pu-. Его родственники (compor, supor, depor) ломаются так же." },
+                note:"Единственный глагол не на -ar/-er/-ir. Спрягается как -er, но с собственной основой po-/pu-. Его родственники (compor, supor, depor) ломаются так же.",
+                noteEn:"The only verb that ends in neither -ar, -er nor -ir. It conjugates like an -er verb but on a stem of its own, po-/pu-. Its relatives (compor, supor, depor) break in exactly the same way." },
     "ler":    { presente:["leio","lês","lê","lemos","leem"], preterito:["li","leste","leu","lemos","leram"] },
     "crer":   { presente:["creio","crês","crê","cremos","creem"] },
     "ouvir":  { presente:["ouço","ouves","ouve","ouvimos","ouvem"] },
     "pedir":  { presente:["peço","pedes","pede","pedimos","pedem"],
-                note:"Так же ломаются его родственники: impedir, despedir-se." },
+                note:"Так же ломаются его родственники: impedir, despedir-se.",
+                noteEn:"Its relatives break the same way: impedir, despedir-se." },
     "perder": { presente:["perco","perdes","perde","perdemos","perdem"] },
     "sair":   { presente:["saio","sais","sai","saímos","saem"], preterito:["saí","saíste","saiu","saímos","saíram"] },
     "cair":   { presente:["caio","cais","cai","caímos","caem"], preterito:["caí","caíste","caiu","caímos","caíram"] },
     "dormir": { presente:["durmo","dormes","dorme","dormimos","dormem"],
-                note:"Меняется только форма «eu»: o→u. Тот же тип, что subir и seguir." },
+                note:"Меняется только форма «eu»: o→u. Тот же тип, что subir и seguir.",
+                noteEn:"Only the ‘eu’ form changes: o→u. Same type as subir and seguir." },
     "subir":  { presente:["subo","sobes","sobe","subimos","sobem"] },
     "seguir": { presente:["sigo","segues","segue","seguimos","seguem"] },
     "conseguir": { presente:["consigo","consegues","consegue","conseguimos","conseguem"] },
@@ -8353,6 +8374,22 @@
     "gostar":"нравиться","chegar":"приходить, прибывать","ficar":"оставаться; находиться",
     "começar":"начинать","beber":"пить","viver":"жить","escrever":"писать","abrir":"открывать",
     "vestir":"надевать","crer":"верить","cair":"падать","conhecer":"быть знакомым"
+  };
+
+  // Английские значения тех же глаголов. Отдельный объект, а не поле в
+  // VERB_TR: список плоский, и парой строк он читается быстрее, чем парами.
+  var VERB_TR_EN = {
+    "falar":"to speak","comer":"to eat","partir":"to leave; to split","ser":"to be (what a thing is)",
+    "estar":"to be (how or where a thing is)","ter":"to have","ir":"to go","fazer":"to do, to make",
+    "poder":"can, to be able","querer":"to want","ver":"to see","vir":"to come","dar":"to give",
+    "saber":"to know (a fact)","dizer":"to say, to tell","trazer":"to bring","pôr":"to put",
+    "ler":"to read","ouvir":"to hear, to listen","pedir":"to ask for","perder":"to lose",
+    "sair":"to go out","dormir":"to sleep","subir":"to go up","seguir":"to follow",
+    "conseguir":"to manage, to succeed","servir":"to serve","preferir":"to prefer",
+    "haver":"there to be","morar":"to live, to reside","trabalhar":"to work","estudar":"to study",
+    "gostar":"to like","chegar":"to arrive","ficar":"to stay; to be located",
+    "começar":"to begin","beber":"to drink","viver":"to live","escrever":"to write","abrir":"to open",
+    "vestir":"to put on, to wear","crer":"to believe","cair":"to fall","conhecer":"to know (a person, a place)"
   };
 
   function conjKind(inf){
@@ -8396,7 +8433,11 @@
     var w = (inf || "").trim().toLowerCase();
     if(!w) return null;
     var kind = conjKind(w);
-    if(!kind) return { error:"Инфинитив в португальском кончается на -ar, -er или -ir (и только pôr стоит особняком)." };
+    // Движок не знает про язык: проверка 6 вырезает его из файла и исполняет
+    // отдельно, где L() не существует. Поэтому он отдаёт обе версии текста,
+    // а выбирает между ними renderConjugador.
+    if(!kind) return { error:"Инфинитив в португальском кончается на -ar, -er или -ir (и только pôr стоит особняком).",
+                       errorEn:"A Portuguese infinitive ends in -ar, -er or -ir — and only pôr stands apart." };
 
     var irr = IRREG[w] || null;
     var fromInfinitive = (tense === "futuro" || tense === "condicional");
@@ -8427,8 +8468,10 @@
       inf:w, kind:kind, tense:tense, forms:forms, regular:regs, broken:broken,
       futStem: futStem, ortho: ortho,
       isIrregular: broken.length > 0,
-      note: irr && irr.note ? irr.note : null,
-      tr: VERB_TR[w] || null
+      note:   irr && irr.note   ? irr.note   : null,
+      noteEn: irr && irr.noteEn ? irr.noteEn : null,
+      tr:   VERB_TR[w]    || null,
+      trEn: VERB_TR_EN[w] || null
     };
   }
 
@@ -8826,6 +8869,12 @@
     "um":"one; masculine article","uma":"one; feminine article",
     "de":"of, from","do":"of, from (de + o)","da":"of, from (de + a)",
     "na":"in, on (em + a)",
+    // множественное (0.6): без своей статьи os и as уезжают цепочкой в o и a
+    // и показывают единственное число
+    "os":"plural article (masc.)","as":"plural article (fem.)",
+    "uns":"some, a few (masc.)","umas":"some, a few (fem.)",
+    "no":"in, on (em + o)","nos":"in, on (em + os)","mais":"more; else",
+    "estão":"are, are located (from estar)",
     // формы глаголов, которые встречаются раньше своего разбора
     "é":"is (from ser)","são":"are (from ser)","está":"is, is located (from estar)",
     "faz":"does, makes (from fazer)","tu":"you (informal)",
@@ -10573,10 +10622,11 @@
   // он не понимает, с чем тренируется. Подобраны так, чтобы закрыть все три
   // спряжения, обе волны неправильных и орфографические подгонки (ficar).
   var CONJ_SAMPLES = [
-    ["falar","говорить"], ["comer","есть"], ["partir","уезжать"], ["ser","быть"],
-    ["estar","быть где"], ["ter","иметь"], ["ir","идти"], ["fazer","делать"],
-    ["poder","мочь"], ["querer","хотеть"], ["ver","видеть"], ["dizer","сказать"],
-    ["pôr","класть"], ["ficar","оставаться"], ["morar","жить"]
+    ["falar","говорить","to speak"], ["comer","есть","to eat"], ["partir","уезжать","to leave"],
+    ["ser","быть","to be"], ["estar","быть где","to be where"], ["ter","иметь","to have"],
+    ["ir","идти","to go"], ["fazer","делать","to do"], ["poder","мочь","can"],
+    ["querer","хотеть","to want"], ["ver","видеть","to see"], ["dizer","сказать","to say"],
+    ["pôr","класть","to put"], ["ficar","оставаться","to stay"], ["morar","жить","to live"]
   ];
 
   function initConjugador(){
@@ -10587,14 +10637,14 @@
 
     Object.keys(TENSES).forEach(function(k){
       var o = document.createElement("option");
-      o.value = k; o.textContent = TENSES[k].label;
+      o.value = k; o.textContent = L(TENSES[k].label, TENSES[k].labelEn);
       select.appendChild(o);
     });
 
     chips.innerHTML = CONJ_SAMPLES.map(function(pair){
       return '<button type="button" class="chip" data-word="'+pair[0]+'">' +
              '<span class="chip-w">'+pair[0]+'</span>' +
-             '<span class="chip-t">'+pair[1]+'</span></button>';
+             '<span class="chip-t">'+L(pair[1], pair[2])+'</span></button>';
     }).join("");
     chips.addEventListener("click", function(e){
       var c = e.target.closest(".chip");
@@ -10605,6 +10655,23 @@
 
     input.addEventListener("input", renderConjugador);
     select.addEventListener("change", renderConjugador);
+    renderConjugador();
+  }
+
+  // Смена языка на уже построенном экране: подписи времён сидят в option,
+  // переводы — в чипах, разбор — в conjWhy. Выбранное время сохраняется:
+  // переключение языка не должно сбрасывать то, что человек смотрел.
+  function relabelConjugador(){
+    var select = document.getElementById("conjTense");
+    var chips  = document.getElementById("conjChips");
+    if(!select || !chips) return;
+    Array.prototype.forEach.call(select.options, function(o){
+      if(TENSES[o.value]) o.textContent = L(TENSES[o.value].label, TENSES[o.value].labelEn);
+    });
+    CONJ_SAMPLES.forEach(function(pair, i){
+      var t = chips.children[i] && chips.children[i].querySelector(".chip-t");
+      if(t) t.textContent = L(pair[1], pair[2]);
+    });
     renderConjugador();
   }
 
@@ -10639,14 +10706,15 @@
       kindEl.textContent = ""; kindEl.className = "conj-kind";
       trEl.textContent = "";
       tblEl.innerHTML = "";
-      whyEl.textContent = r && r.error ? r.error : "Введи инфинитив: falar, comer, partir…";
+      whyEl.textContent = r && r.error ? L(r.error, r.errorEn)
+        : L("Введи инфинитив: falar, comer, partir…", "Type in an infinitive: falar, comer, partir…");
       return;
     }
 
     infEl.textContent = r.inf;
     kindEl.textContent = r.isIrregular ? "irregular" : "regular";
     kindEl.className = "conj-kind " + (r.isIrregular ? "irr" : "reg");
-    trEl.textContent = r.tr ? "— " + r.tr : "";
+    trEl.textContent = r.tr ? "— " + L(r.tr, r.trEn) : "";
 
     tblEl.innerHTML = r.forms.map(function(f, i){
       // У ужатого инфинитива подсвечиваем ровно основу: markForm сравнивает
@@ -10657,43 +10725,63 @@
         : markForm(f, r.regular[i]);
       return '<span class="conj-p">'+PERSONS[i]+'</span>' +
              '<span class="conj-f">'+shown+
-             (ptVoice ? ' <button type="button" class="speak" data-say="'+escapeHtml(f)+'" title="Прослушать">🔊</button>' : '') +
+             (ptVoice ? ' <button type="button" class="speak" data-say="'+escapeHtml(f)+'" title="'+L("Прослушать","Listen")+'">🔊</button>' : '') +
              '</span>';
     }).join("");
 
-    var groupName = { ar:"первое (-ar)", er:"второе (-er)", ir:"третье (-ir)", "pôr":"особое (pôr)" }[r.kind];
-    var html = '<span class="step"><b>1.</b> Спряжение ' + groupName + ', основа <b>' +
+    var groupName = L({ ar:"первое (-ar)", er:"второе (-er)", ir:"третье (-ir)", "pôr":"особое (pôr)" }[r.kind],
+                      { ar:"first (-ar)", er:"second (-er)", ir:"third (-ir)", "pôr":"a class of its own (pôr)" }[r.kind]);
+    var html = '<span class="step"><b>1.</b> ' +
+               L("Спряжение " + groupName + ", основа", "The " + groupName + " conjugation, stem") + ' <b>' +
                escapeHtml(r.kind === "pôr" ? "po-" : r.inf.slice(0,-2) + "-") + '</b>.</span>';
 
     if(tense === "futuro" || tense === "condicional"){
-      html += '<span class="step"><b>2.</b> Это время строится не от основы, а от <b>целого инфинитива</b>: ' +
+      html += '<span class="step"><b>2.</b> ' +
+              L("Это время строится не от основы, а от <b>целого инфинитива</b>: ",
+                "This tense is built not on the stem but on the <b>whole infinitive</b>: ") +
               escapeHtml(r.inf) + ' + ' + TAIL[tense].join(", ") + '.</span>';
     } else {
       var kindKey = r.kind === "pôr" ? "er" : r.kind;
-      html += '<span class="step"><b>2.</b> Окончания по правилу: ' + REG[tense][kindKey].join(", ") + '.</span>';
+      html += '<span class="step"><b>2.</b> ' +
+              L("Окончания по правилу: ", "Endings by the rule: ") + REG[tense][kindKey].join(", ") + '.</span>';
     }
 
     if(r.futStem){
-      html += '<span class="step" style="margin-top:7px;"><b>Ломает правило во всех пяти лицах:</b> инфинитив ужимается — <b>' +
-              escapeHtml(r.inf) + ' → ' + escapeHtml(r.futStem) + '</b>, дальше окончания обычные (по правилу вышло бы «' +
-              escapeHtml(r.regular[0]) + '», такой формы нет). Так делают только dizer, fazer, trazer и pôr со своими родственниками.</span>';
+      html += '<span class="step" style="margin-top:7px;"><b>' +
+              L("Ломает правило во всех пяти лицах:</b> инфинитив ужимается — <b>",
+                "Breaks the rule in all five persons:</b> the infinitive shrinks — <b>") +
+              escapeHtml(r.inf) + ' → ' + escapeHtml(r.futStem) + '</b>' +
+              L(", дальше окончания обычные (по правилу вышло бы «" + escapeHtml(r.regular[0]) +
+                  "», такой формы нет). Так делают только dizer, fazer, trazer и pôr со своими родственниками.",
+                ", and from there the endings are the usual ones (the rule would give ‘" + escapeHtml(r.regular[0]) +
+                  "’, which does not exist). Only dizer, fazer, trazer and pôr with their relatives do this.") +
+              '</span>';
     } else if(r.broken.length){
       var list = r.broken.map(function(i){
-        return PERSONS[i] + " — <b>" + escapeHtml(r.forms[i]) + "</b> (по правилу было бы " + escapeHtml(r.regular[i]) + ")";
+        return PERSONS[i] + " — <b>" + escapeHtml(r.forms[i]) + "</b> (" +
+               L("по правилу было бы ", "the rule would give ") + escapeHtml(r.regular[i]) + ")";
       }).join("; ");
-      html += '<span class="step" style="margin-top:7px;"><b>Ломает правило:</b> ' + list + '.</span>';
+      html += '<span class="step" style="margin-top:7px;"><b>' +
+              L("Ломает правило:</b> ", "Breaks the rule:</b> ") + list + '.</span>';
     } else {
-      html += '<span class="step" style="margin-top:7px;"><b>Правило не ломается нигде</b> — все пять форм выводятся, запоминать нечего.</span>';
+      html += '<span class="step" style="margin-top:7px;">' +
+              L("<b>Правило не ломается нигде</b> — все пять форм выводятся, запоминать нечего.",
+                "<b>The rule holds everywhere</b> — all five forms follow from it, and there is nothing to memorise.") +
+              '</span>';
     }
 
     if(r.ortho){
-      html += '<span class="step" style="margin-top:7px;"><b>Подгонка написания:</b> ' +
-              escapeHtml(r.ortho.from) + ' пишется как <b>' + escapeHtml(r.ortho.to) +
-              '</b>. Звук основы не меняется — буква меняется, чтобы он не изменился. ' +
-              'Зубрить нечего: то же самое произойдёт с любым глаголом на -car, -gar, -çar, -cer, -ger, -gir.</span>';
+      html += '<span class="step" style="margin-top:7px;"><b>' +
+              L("Подгонка написания:</b> ", "Spelling adjustment:</b> ") +
+              escapeHtml(r.ortho.from) + L(" пишется как <b>", " is written <b>") + escapeHtml(r.ortho.to) + '</b>. ' +
+              L("Звук основы не меняется — буква меняется, чтобы он не изменился. " +
+                  "Зубрить нечего: то же самое произойдёт с любым глаголом на -car, -gar, -çar, -cer, -ger, -gir.",
+                "The sound of the stem does not change — the letter changes precisely so that it will not. " +
+                  "Nothing to cram: the same thing happens to any verb in -car, -gar, -çar, -cer, -ger, -gir.") +
+              '</span>';
     }
 
-    if(r.note) html += '<span class="step" style="margin-top:7px;">' + r.note + '</span>';
+    if(r.note) html += '<span class="step" style="margin-top:7px;">' + L(r.note, r.noteEn) + '</span>';
     whyEl.innerHTML = html;
   }
 
