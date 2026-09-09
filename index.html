@@ -6,9 +6,22 @@
 <title>Португальская грамматика с нуля · правила, тексты, задания</title>
 <meta name="author" content="Stanislav Sidorovich">
 <meta name="description" content="Курс европейского португальского для начинающих: чтение и ударение, ser и estar, спряжение глаголов. В каждой теме правило, тексты для чтения и задания с проверкой. Офлайн, без рекламы, без регистрации.">
-<meta property="og:title" content="Португальская грамматика с нуля · правила, тексты, задания">
-<meta property="og:description" content="Европейский португальский с нуля: чтение, ser и estar, глагол. Правило, тексты и задания в каждой теме. Работает офлайн.">
+<!-- Карточку ссылки рисует краулер, а он не исполняет JS: og:* статичны и
+     живут ровно в одном языке. Здесь он английский, потому что по ссылке
+     приложение попадает к тем, кто русского не знает, — свои открывают его
+     из закладки, а не из превью в мессенджере. Тег <title> при этом остаётся
+     русским (в превью его всё равно перебивает og:title) и переключается на
+     лету в applyLang(). -->
+<meta property="og:title" content="Português do zero · European Portuguese, free and offline">
+<meta property="og:description" content="Reading rules, phrases for cafés and shops, seven dialogues and a conjugator for any verb. No signup, no ads, works offline. Built by a student in Lisbon.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://stanislavsidorovich.github.io/Portuguese/">
+<!-- Абсолютный URL обязателен: WhatsApp относительный путь не разрешает.
+     Меняется вместе с доменом, если приложение переедет с GitHub Pages. -->
+<meta property="og:image" content="https://stanislavsidorovich.github.io/Portuguese/assets/icons/icon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta name="twitter:card" content="summary">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#14523F">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
@@ -244,12 +257,19 @@
   .row-pct{font-family:var(--font-lat); font-size:0.72rem; font-weight:800; color:var(--muted);}
   .row-minutes{font-family:var(--font-lat); font-size:0.72rem; color:var(--muted); flex:none;}
   .row-soon{font-size:0.68rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em;}
-  .row-hidden-en{display:none !important;}
-  .topic-collapsed{
-    font-family:var(--font-ru); font-size:0.82rem; color:var(--muted); text-align:center;
-    padding:11px 14px; border:1.5px dashed #D2DBD7; border-radius:12px;
-  }
-  body.dark .topic-collapsed{border-color:#2F3A36;}
+  /* Непереведённая тема в EN не прячется, а гаснет: название темы
+     португальское, подпись под ним английская у всех 47 строк, так что
+     список читается и запертым — и по нему видно, из чего состоит курс.
+     Спрятанные строки этого не показывали, а показывали пустоту. Гасим
+     мягче, чем обычный [disabled]: строку должно быть легко прочитать. */
+  /* Блоки, которые существуют только в английском режиме. */
+  .en-only{display:none;}
+  body.lang-en .en-only{display:block;}
+  .topic-row.row-locked-en{opacity:0.72;}
+  .topic-row.row-locked-en .row-arrow{visibility:hidden;}
+  /* Бейдж повторяется двадцать четыре раза подряд, поэтому он тише
+     соседнего «soon»: без капса и без разрядки, иначе список кричит. */
+  .row-ru-badge{white-space:nowrap; text-transform:none; letter-spacing:0; font-weight:600; font-size:0.7rem;}
   .row-arrow{color:#BFC9C5; font-size:1.1rem;}
 
   .tool-row{
@@ -823,6 +843,11 @@
   <p class="hero-note" data-en="A course in European Portuguese — the kind spoken in Lisbon. Brazilian differences are flagged with an &lsquo;in Brazil&rsquo; aside, but the base is local throughout: &lt;span class='pt'&gt;tu&lt;/span&gt;, &lt;span class='pt'&gt;estar a fazer&lt;/span&gt;, &lt;span class='pt'&gt;disse-me&lt;/span&gt;, &lt;span class='pt'&gt;autocarro&lt;/span&gt;.">Курс европейского португальского — того, на котором говорят в Лиссабоне. Бразильские отличия отмечаются врезкой «а в Бразилии», но основа везде местная: <span class="pt">tu</span>, <span class="pt">estar a fazer</span>, <span class="pt">disse-me</span>, <span class="pt">autocarro</span>.</p>
   <p class="hero-note" data-en="No prior vocabulary needed: words are introduced in small batches, and texts only use words already covered — you can start reading from day one.">Словарного запаса не требуется: слова вводятся порциями, и в текстах встречаются только те, что уже были — читать можно с первого дня.</p>
   <p class="hero-note" id="totalTimeNote"></p>
+  <!-- Виден только в EN: по-русски спрашивать «что перевести дальше»
+       не у кого, а порядок перевода решается ровно этим ответом. Блок
+       стоит после строки про покрытие — сначала честная цифра, потом
+       вопрос, который из неё следует. -->
+  <p class="hero-note en-only">Which topic would you want in English next? That is what decides the order &mdash; tell me, or <a href="https://github.com/StanislavSidorovich/Portuguese/issues" target="_blank" rel="noopener">open an issue on GitHub</a>.</p>
   <button type="button" class="about-link" data-open="about" data-en="About this app: what&rsquo;s inside and how to study →">О приложении: что внутри и как заниматься →</button>
 
   <div class="progress-wrap">
@@ -8153,8 +8178,25 @@
      сцены диалогов — данные, и там работает L(ru, en). Русский оригинал при
      первом переключении сташится в dataset.ruHtml: обратный ход должен
      возвращать то, что было, а не второй перевод. */
+  // Три источника языка, в порядке убывания права голоса:
+  //   1) ?lang=en в адресе — так ссылку дают конкретному человеку, и она
+  //      обязана открыться на обещанном языке, даже если он уже заходил;
+  //   2) сохранённый выбор — то, что человек нажал сам;
+  //   3) язык браузера — единственная догадка, и только для первого захода.
+  // Без первого пункта ссылка, посланная англоговорящему, открывалась
+  // по-русски, и переключатель ещё надо было найти.
   var LANG = "ru";
-  try{ if(localStorage.getItem(LANG_KEY) === "en") LANG = "en"; }catch(e){}
+  try{
+    var urlLang = (location.search.match(/[?&]lang=(ru|en)\b/) || [])[1];
+    if(urlLang){
+      LANG = urlLang;
+      localStorage.setItem(LANG_KEY, LANG);
+    } else {
+      var saved = localStorage.getItem(LANG_KEY);
+      if(saved === "en" || saved === "ru") LANG = saved;
+      else if(!/^ru\b/i.test(navigator.language || "")) LANG = "en";
+    }
+  }catch(e){}
 
   function L(ru, en){ return (LANG === "en" && en) ? en : ru; }
 
@@ -8164,44 +8206,39 @@
   // свой движок перевода (data-open, а не data-topic), и они уже готовы.
   var EN_READY_TOPICS = ["alfabeto", "acento", "nasais", "digrafos", "genero", "plural"];
 
-  // В EN 42 темы из 47 не переведены — по одной «soon»-строке на тему это
-  // стена, которая читается как заброшенный проект. Вместо неё запертые
-  // строки блока (и уже недостроенные, со своим статичным «скоро», и ещё
-  // не переведённые) прячутся, а на их месте встаёт одна строка со счётом.
+  // В EN переведены шесть тем из 47. Раньше остальные прятались, а вместо
+  // них стояла строка со счётом («10 more topics») — и англоговорящий видел
+  // шесть тем фонетики, по которым нельзя судить ни об объёме курса, ни о
+  // его уровне. Теперь запертая тема остаётся в списке приглушённой: её
+  // португальское название и английская подпись читаются у всех 47 строк,
+  // поэтому список сам показывает, из чего курс состоит и куда доходит.
+  // Это же и вопрос к читателю: увидев конкретную строку, он может сказать,
+  // какую тему переводить следующей, — ради этого ответа ветка и живёт.
+  //
+  // Различать две причины запертости («написана, но по-русски» и «ещё не
+  // написана») обязательно: у первой перевод — вопрос спроса, у второй нет
+  // и русского текста. Вторые несут свой статичный «soon» из разметки,
+  // первым бейдж «in Russian» ставится здесь.
   function updateTopicEnLock(){
-    document.querySelectorAll(".topic-group").forEach(function(group){
-      var list = group.querySelector(".topic-list");
-      if(!list) return;
-      var lockedCount = 0;
+    document.querySelectorAll(".topic-row[data-open]").forEach(function(btn){
+      var ready  = EN_READY_TOPICS.indexOf(btn.dataset.open) !== -1;
+      var locked = (LANG === "en") && !ready;
+      btn.disabled = locked;
+      btn.classList.toggle("row-locked-en", locked);
 
-      list.querySelectorAll(".topic-row[data-open]").forEach(function(btn){
-        var ready = EN_READY_TOPICS.indexOf(btn.dataset.open) !== -1;
-        var locked = (LANG === "en") && !ready;
-        btn.disabled = locked;
-        btn.classList.toggle("row-hidden-en", locked);
-        if(locked) lockedCount++;
-      });
-      // Темы совсем без экрана — то же «скоро», но по другой причине
-      // (не сделана, а не «не переведена»); в EN это та же стена, и второй
-      // рядом не нужно.
-      list.querySelectorAll(".topic-row:not([data-open])").forEach(function(btn){
-        var locked = LANG === "en";
-        btn.classList.toggle("row-hidden-en", locked);
-        if(locked) lockedCount++;
-      });
-
-      var summary = list.querySelector(".topic-collapsed");
-      if(LANG === "en" && lockedCount){
-        if(!summary){
-          summary = document.createElement("div");
-          summary.className = "topic-collapsed";
-          list.appendChild(summary);
-        }
-        summary.textContent = lockedCount + (lockedCount === 1 ? " more topic" : " more topics") + " — being translated";
-      } else if(summary){
-        summary.remove();
+      var badge = btn.querySelector(".row-ru-badge");
+      if(locked && !badge){
+        badge = document.createElement("span");
+        badge.className = "row-soon row-ru-badge";
+        badge.textContent = "in Russian";
+        btn.insertBefore(badge, btn.querySelector(".row-arrow"));
+      } else if(!locked && badge){
+        badge.remove();
       }
     });
+    // Остаток прежней версии: строка со счётом могла быть создана до
+    // перезагрузки страницы с новой разметкой.
+    document.querySelectorAll(".topic-collapsed").forEach(function(el){ el.remove(); });
   }
 
   function updateThemeToggleText(){
@@ -8213,6 +8250,13 @@
 
   function applyLang(){
     document.body.classList.toggle("lang-en", LANG === "en");
+    // Статический <title> и lang="ru" в <html> остаются русскими ради
+    // краулеров (те JS не исполняют, и в превью ссылки всё равно выигрывает
+    // og:title). Живому человеку заголовок вкладки и язык документа —
+    // последнее переносится в озвучку скринридером — правим здесь.
+    document.documentElement.lang = LANG;
+    document.title = L("Португальская грамматика с нуля · правила, тексты, задания",
+                       "Portuguese grammar from scratch · rules, texts, exercises");
     document.querySelectorAll("[data-en]").forEach(function(el){
       if(el.dataset.ruHtml === undefined) el.dataset.ruHtml = el.innerHTML;
       el.innerHTML = (LANG === "en") ? el.dataset.en : el.dataset.ruHtml;
@@ -8506,7 +8550,11 @@
     var fill = document.getElementById("progressFill");
     var text = document.getElementById("progressText");
     if(fill) fill.style.width = (plannedTotal ? done/plannedTotal*100 : 0) + "%";
-    if(text) text.textContent = done + " / " + plannedTotal + L(" тем пройдено · ", " topics done · ") + TOPICS.length + L(" открыто", " unlocked");
+    // «Открыто» в EN считает переведённые, а не написанные: строка стоит
+    // под метром прогресса, и обещание в ней должно совпадать с тем, что
+    // человек может открыть (та же поправка, что в renderTotalTime).
+    var open = (LANG === "en") ? EN_READY_TOPICS.length : TOPICS.length;
+    if(text) text.textContent = done + " / " + plannedTotal + L(" тем пройдено · ", " topics done · ") + open + L(" открыто", " in English");
 
     document.querySelectorAll("[data-check]").forEach(function(el){
       var v = p[el.dataset.check];
@@ -8622,6 +8670,12 @@
     try{ last = localStorage.getItem(LAST_TOPIC_KEY); }catch(e){}
     var title = last ? topicTitleMap()[last] : null;
     if(!last || !title){ box.style.display = "none"; return; }
+    // Тот, кто листал курс по-русски, а потом переключился на EN, получал
+    // «Continue → 0.7 Ser» — то есть кнопку в тему, которой по-английски
+    // нет: строка в списке для неё заперта, а эта открывала русский экран.
+    // В EN продолжаем только по переведённым; иначе место отдаём
+    // приглашению начать (renderStartBlock ниже проверяет тот же ключ).
+    if(LANG === "en" && EN_READY_TOPICS.indexOf(last) === -1){ box.style.display = "none"; return; }
     box.innerHTML = '<button type="button" class="review-item" data-open="'+last+'" style="border-color:#DAE1DE;margin:0;">' +
                     '<span class="review-why">'+L("Продолжить", "Continue")+'</span>' +
                     '<span class="review-title">'+title+'</span></button>';
@@ -8645,7 +8699,11 @@
     if(!box) return;
     var last;
     try{ last = localStorage.getItem(LAST_TOPIC_KEY); }catch(e){}
-    if(last){ box.style.display = "none"; return; }
+    // Условие зеркалит renderContinueBlock: место занято ровно тогда, когда
+    // «продолжить» есть чем. В EN незаконченная русская тема таковой не
+    // считается, и приглашение возвращается вместо пустоты.
+    var hasContinue = last && (LANG !== "en" || EN_READY_TOPICS.indexOf(last) !== -1);
+    if(hasContinue){ box.style.display = "none"; return; }
     var first = (LANG === "en") ? "dialogos" : TOPICS[0];
     var title = topicTitleMap()[first];
     if(!title){ box.style.display = "none"; return; }
@@ -8675,9 +8733,18 @@
     var n = TOPICS.length;
     var mins = TOPICS.reduce(function(s,t){ return s + (TOPIC_MINUTES[t] || 0); }, 0);
     var hours = Math.round(mins/60*10)/10;
+    // По-английски считать все открытые темы нельзя: их 30, а прочитать
+    // из них можно шесть. Строка «30 topics — 11.8 hours» тогда обещает
+    // то, чего в EN нет, и человек это замечает через минуту. Считаем
+    // английские, а русские называем отдельно — заодно видно, что курс
+    // не заброшен, а просто написан не на том языке.
     if(LANG === "en"){
-      el.textContent = n + " " + (n === 1 ? "topic" : "topics") + " unlocked so far — about " +
-                        hours + " " + (hours === 1 ? "hour" : "hours") + " of study.";
+      var enMins = EN_READY_TOPICS.reduce(function(s,t){ return s + (TOPIC_MINUTES[t] || 0); }, 0);
+      var enHours = Math.round(enMins/60*10)/10;
+      var enN = EN_READY_TOPICS.length;
+      el.textContent = enN + " " + (enN === 1 ? "topic" : "topics") + " in English so far — about " +
+                        enHours + " " + (enHours === 1 ? "hour" : "hours") + " of study, plus the phrasebook, " +
+                        "the dialogues and the conjugator. " + (n - enN) + " more topics are written in Russian.";
       return;
     }
     // У дробного числа форма всегда «часа» (12,2 часа), у целого — склоняется.
