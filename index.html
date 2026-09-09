@@ -36,6 +36,9 @@
     --ink:#16211C;
     --ink-fixed:#16211C;
     --muted:#5A6A63;
+    /* Пара к --ink-fixed: приглушённый текст на светлых плашках, которые
+       остаются светлыми и в тёмной теме. Не переворачивается. */
+    --muted-fixed:#5A6A63;
 
     /* Блоки курса */
     --base:#1F7A5A;      --base-tint:#E3F3EC;      --base-deep:#14523F;
@@ -544,6 +547,7 @@
   }
   .qbuild-line.ok{border-color:var(--ok); border-style:solid; background:var(--ok-tint);}
   .qbuild-line.bad{border-color:var(--bad); border-style:solid; background:var(--bad-tint);}
+  .qbuild-line.ok .qbuild-empty, .qbuild-line.bad .qbuild-empty{color:var(--muted-fixed);}
   .qbuild-bank{display:flex; flex-wrap:wrap; gap:6px;}
   .qword{
     padding:6px 12px; border-radius:9px; border:1.5px solid #DAE1DE; background:var(--card);
@@ -714,7 +718,12 @@
     background:var(--bg); border:1px solid #E3E9E6;
   }
   body.dark .dg-bubble{background:#1B211E; border-color:#27312D;}
-  .dg-turn.me .dg-bubble{background:var(--ok-tint); border-color:transparent;}
+  /* Светлая плашка в обеих темах, как .trap и .tip: без приколоченной
+     краски --ink и --muted переворачиваются, и своя реплика пропадает. */
+  .dg-turn.me .dg-bubble{background:var(--ok-tint); border-color:transparent; color:var(--ink-fixed);}
+  /* .dg-who сюда не входит: подпись «ты» стоит НАД пузырём, на фоне
+     страницы, и приколоченная краска сделала бы её нечитаемой в тёмной теме. */
+  .dg-turn.me .dg-bubble .dg-say, .dg-turn.me .dg-bubble .dg-ru{color:var(--muted-fixed);}
   .dg-who{
     font-size:0.66rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em;
     color:var(--muted); margin-bottom:2px;
@@ -726,6 +735,12 @@
   .dg-ru{font-size:0.86rem; color:var(--muted); margin-top:3px;}
   .dg-turn.now .dg-bubble{border-color:var(--tint-color,var(--base));}
 
+  /* Пока сцена идёт, сразу под её кнопкой начинается текст экрана
+     (Armadilha, подсказка). Без отбивки «Дальше» читается как заголовок
+     розовой врезки, а не как кнопка следующей реплики. */
+  #dgStage:not(:empty){display:block; margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid #E3E9E6;}
+  body.dark #dgStage:not(:empty){border-bottom-color:#27312D;}
+
   .dg-goal{
     font-size:0.9rem; margin:12px 0 10px; padding-left:10px;
     border-left:3px solid var(--tint-color,var(--base));
@@ -733,6 +748,7 @@
   .dg-opts{display:grid; gap:8px;}
   .dg-answer-note{font-size:0.86rem; color:var(--muted); margin-top:12px;}
   .dg-answer-note b{color:var(--ink);}
+  .dg-answer-ru{display:block; margin-top:3px;}
   .dg-why{
     font-size:0.86rem; margin-top:12px; padding:10px 12px; border-radius:10px;
     background:var(--bad-tint); color:var(--ink-fixed);
@@ -9483,6 +9499,8 @@
           goalEn: "Say hello and order one coffee.",
           answer: "Bom dia. Um café, se faz favor.",
           say: "бо~ ди́а. у~ кафэ́, сы фаш фаво́р",
+          answerRu: "Доброе утро. Один кофе, пожалуйста.",
+          answerEn: "Good morning. One coffee, please.",
           wrong: [
             { t:"Bom dia. Quero um café.", why:"«Quero» — «хочу»: сказано верно, но звучит требовательно. В кафе просят через se faz favor, а не сообщают о своём желании.", whyEn:"«Quero» means «I want»: grammatical, but it lands as a demand. In a café you ask with se faz favor instead of announcing your wishes." },
             { t:"Bom dia. Tem café?", why:"«У вас есть кофе?» спрашивают о том, чего может не быть. В кафе вопрос повиснет, и заказ придётся делать заново.", whyEn:"«Do you have coffee?» asks about something that might be missing. In a café the question hangs in the air and you have to order all over again." }
@@ -9496,6 +9514,8 @@
           goalEn: "Add one custard tart.",
           answer: "Um pastel de nata, se faz favor.",
           say: "у~ паштэ́л ды нáта, сы фаш фаво́р",
+          answerRu: "Одно пирожное с кремом, пожалуйста.",
+          answerEn: "One custard tart, please.",
           wrong: [
             { t:"Mais nada, obrigado.", why:"«Больше ничего» — фраза верная и нужная, но не здесь: пирожное так и не заказано.", whyEn:"«Nothing else» is a correct and useful phrase, but not here: the tart never got ordered." },
             { t:"Um pastéis de nata, se faz favor.", why:"«Pastéis» — множественное число, с «um» не сочетается. Одно — um pastel, два — dois pastéis.", whyEn:"«Pastéis» is plural and does not go with «um». One is um pastel, two are dois pastéis." }
@@ -9509,6 +9529,8 @@
           goalEn: "You are staying at the counter.",
           answer: "É para aqui, se faz favor.",
           say: "э́ пара аки́, сы фаш фаво́р",
+          answerRu: "Здесь, пожалуйста.",
+          answerEn: "To have here, please.",
           wrong: [
             { t:"Sim, se faz favor.", why:"Вопрос с «или»: «да» на него не отвечает ничего. Нужно повторить ту половину, которую выбираешь.", whyEn:"An either/or question: «yes» answers none of it. You repeat the half you are choosing." },
             { t:"É para levar.", why:"Это «с собой» — ровно противоположный ответ: кофе нальют в картонный стакан и попрощаются.", whyEn:"That is «to take away» — the exact opposite: the coffee goes into a paper cup and they say goodbye." }
@@ -9522,6 +9544,8 @@
           goalEn: "You did not catch the total. Ask them to repeat it.",
           answer: "Pode repetir, se faz favor?",
           say: "под рыпыти́р, сы фаш фаво́р",
+          answerRu: "Можете повторить, пожалуйста?",
+          answerEn: "Could you repeat that, please?",
           wrong: [
             { t:"Não percebi.", why:"Это признание, а не просьба: собеседник не знает, что делать — повторить, написать или перейти на английский. Перед просьбой её ставить можно, вместо просьбы — нет.", whyEn:"That is an admission, not a request: the other person does not know whether to repeat, write it down or switch to English. Fine before a request, not instead of one." },
             { t:"Fala inglês?", why:"Запасной выход, а не первый ход: в Лиссабоне ответят «да», и практика на этом закончится.", whyEn:"An emergency exit, not an opening move: in Lisbon they will say yes, and your practice ends there." }
@@ -9535,6 +9559,8 @@
           goalEn: "Ask whether they take card.",
           answer: "Aceita multibanco?",
           say: "асэ́йта мултибáнку",
+          answerRu: "Карту принимаете?",
+          answerEn: "Do you take cards?",
           wrong: [
             { t:"Tem multibanco?", why:"Словом multibanco называют и банкомат — с ter вопрос уезжает в «а где у вас банкомат?».", whyEn:"Multibanco is also the word for a cash machine — with ter the question turns into «do you have an ATM?»." },
             { t:"Posso pagar?", why:"«Могу заплатить?» — вопрос ни о чём: платить никто не запрещает. Спрашивают именно про способ оплаты.", whyEn:"«May I pay?» asks nothing: nobody is stopping you. The question is about the method of payment." }
@@ -9548,6 +9574,8 @@
           goalEn: "You have paid. Say goodbye the way locals do: wish them a good rest of the day.",
           answer: "Obrigado. Boa continuação!",
           say: "убригáду. бо́а континуасáу~",
+          answerRu: "Спасибо. Хорошего продолжения!",
+          answerEn: "Thank you. Have a good one!",
           wrong: [
             { t:"De nada. Até logo!", why:"«De nada» — ответ на чужое спасибо, а благодаришь здесь ты.", whyEn:"«De nada» answers somebody else's thanks, and here the one saying thank you is you." },
             { t:"Adeus!", why:"«Прощай» звучит окончательнее, чем нужно: с кафе, куда зайдёшь завтра, прощаются мягче.", whyEn:"«Farewell» is more final than the moment needs: you leave a café you will walk into tomorrow more softly than that." }
@@ -9571,6 +9599,8 @@
           goalEn: "You are just browsing.",
           answer: "Estou só a ver, obrigado.",
           say: "ышто́у со́ а ве́р, убригáду",
+          answerRu: "Я просто смотрю, спасибо.",
+          answerEn: "I'm just looking, thank you.",
           wrong: [
             { t:"Estou só vendo, obrigado.", why:"Бразильская форма. В Португалии длящееся действие — estar a + инфинитив: estou a ver.", whyEn:"The Brazilian form. In Portugal an action in progress is estar a + infinitive: estou a ver." },
             { t:"Não percebi.", why:"Фраза-щит здесь сообщает о проблеме, которой нет: вопрос ты понял.", whyEn:"The shield phrase reports a problem that does not exist: you understood the question fine." }
@@ -9584,6 +9614,8 @@
           goalEn: "Yes, that is everything.",
           answer: "Só isso, obrigado.",
           say: "со́ и́су, убригáду",
+          answerRu: "Только это, спасибо.",
+          answerEn: "That's all, thank you.",
           wrong: [
             { t:"Sim, tudo bem.", why:"«Tudo bem» — «как дела» и «всё в порядке», но не «это всё». Кассир решит, что ты ответил на другой вопрос.", whyEn:"«Tudo bem» means «how are you» and «all good», but not «that is all». The cashier will think you answered a different question." },
             { t:"Mais alguma coisa?", why:"Это реплика продавца, а не покупателя: «что-нибудь ещё?».", whyEn:"That is the cashier's line, not the customer's: «anything else?»." }
@@ -9597,6 +9629,8 @@
           goalEn: "You do not have one.",
           answer: "Não, obrigado.",
           say: "нау~, убригáду",
+          answerRu: "Нет, спасибо.",
+          answerEn: "No, thank you.",
           wrong: [
             { t:"Sim, se faz favor.", why:"«Да, пожалуйста» — и кассир замрёт в ожидании девяти цифр, которых у тебя нет.", whyEn:"«Yes, please» — and the cashier waits for nine digits you do not have." },
             { t:"Quanto custa?", why:"Про цену здесь не спрашивают: вопрос был про NIF, налоговый номер для чека.", whyEn:"Price is not the subject here: the question was about your NIF, the tax number printed on the receipt." }
@@ -9610,6 +9644,8 @@
           goalEn: "You do need a bag.",
           answer: "Sim, se faz favor.",
           say: "си~, сы фаш фаво́р",
+          answerRu: "Да, пожалуйста.",
+          answerEn: "Yes, please.",
           wrong: [
             { t:"Não, obrigado.", why:"Отказ — а пакет тебе нужен. Три вопроса кассира подряд ждут разных ответов, и автоматическое «нет, спасибо» на всё подряд как раз здесь оставляет покупки в руках.", whyEn:"A refusal — and you wanted the bag. Three questions in a row want different answers, and an automatic «no, thanks» to all of them leaves your shopping in your arms right here." },
             { t:"Sim, de nada.", why:"«De nada» — «не за что», ответ на спасибо. К согласию оно не цепляется.", whyEn:"«De nada» means «you're welcome», an answer to thanks. It does not attach to a yes." }
@@ -9623,6 +9659,8 @@
           goalEn: "You did not catch the total. Ask for the price again.",
           answer: "Pode repetir o preço?",
           say: "под рыпыти́р у пре́су",
+          answerRu: "Можете повторить цену?",
+          answerEn: "Could you repeat the price?",
           wrong: [
             { t:"Pode escrever, se faz favor?", why:"Просьба написать выручает со словом, но не с суммой: цена и так горит на экране терминала.", whyEn:"Asking someone to write it down saves you on a word, not on a total: the price is already lit up on the terminal." },
             { t:"Quanto custa?", why:"«Сколько стоит?» — про товар на полке. Итог на кассе переспрашивают через preço.", whyEn:"«How much is it?» is about an item on the shelf. The total at the till is asked again with preço." }
@@ -9636,6 +9674,8 @@
           goalEn: "You are paying by card.",
           answer: "Com multibanco, se faz favor.",
           say: "ко~ мултибáнку, сы фаш фаво́р",
+          answerRu: "Картой, пожалуйста.",
+          answerEn: "By card, please.",
           wrong: [
             { t:"Sim, se faz favor.", why:"Снова вопрос с «или»: «да» не выбирает ничего, и кассир переспросит на той же скорости.", whyEn:"Another either/or question: «yes» chooses nothing, and the cashier will ask again at the same speed." },
             { t:"Com cartão de cliente.", why:"Cartão de cliente — карта магазина со скидками, а не платёжная. Про неё спрашивают отдельно.", whyEn:"Cartão de cliente is the shop's loyalty card, not a payment card. That one gets asked about separately." }
@@ -9649,6 +9689,8 @@
           goalEn: "Wish them the same back.",
           answer: "Igualmente. Boa tarde!",
           say: "игуалме́нт. бо́а тáрд",
+          answerRu: "И вам того же. Добрый день!",
+          answerEn: "You too. Good afternoon!",
           wrong: [
             { t:"Também. Boa tarde!", why:"«Também» — «тоже», но в ответ на пожелание говорят igualmente.", whyEn:"«Também» means «also», but the reply to a good wish is igualmente." },
             { t:"Igualmente. Bom dia!", why:"После полудня — boa tarde. Bom dia живёт только до обеда, и ошибка слышна сразу.", whyEn:"After midday it is boa tarde. Bom dia only lives until noon, and the slip is audible straight away." }
@@ -9672,6 +9714,8 @@
           goalEn: "You said Desculpe and the person turned round. Ask where the metro station is.",
           answer: "Onde é a estação de metro, se faz favor?",
           say: "о́нд э́ а ыштасáу~ ды мэ́тру, сы фаш фаво́р",
+          answerRu: "Где станция метро, пожалуйста?",
+          answerEn: "Where is the metro station, please?",
           wrong: [
             { t:"Onde está a estação de metro?", why:"Станция стоит на своём месте всегда, а это <b>ser</b>: onde é. Estar спрашивает о том, где что-то оказалось сейчас (тема 0.9).", whyEn:"A station is always where it is, and that calls for <b>ser</b>: onde é. Estar asks where something happens to be right now (topic 0.9)." },
             { t:"Quero a estação de metro.", why:"«Хочу станцию метро» — не вопрос. Слова человек поймёт, а чего от него хотят — нет.", whyEn:"«I want the metro station» is not a question. The words land; what you need from the person does not." }
@@ -9685,6 +9729,8 @@
           goalEn: "You missed one word — semáforos. Ask what it means.",
           answer: "O que significa semáforos?",
           say: "у кы сигнифи́ка сымáфоруш",
+          answerRu: "Что значит semáforos?",
+          answerEn: "What does semáforos mean?",
           wrong: [
             { t:"Não percebi.", why:"Щит уместен, когда не понял ничего. Здесь ты понял почти всё — и получишь весь маршрут заново, с тем же незнакомым словом внутри.", whyEn:"The shield phrase is for when nothing landed. Here almost everything did — and you will get the whole route again, with the same unknown word inside it." },
             { t:"Pode escrever, se faz favor?", why:"Написать просят адрес или название. На «поверните направо» это лишний ход.", whyEn:"You ask for writing when it is an address or a name. For «turn right» it is a wasted move." }
@@ -9698,6 +9744,8 @@
           goalEn: "Got it. Ask whether it is far.",
           answer: "É longe?",
           say: "э́ ло́нж",
+          answerRu: "Это далеко?",
+          answerEn: "Is it far?",
           wrong: [
             { t:"Está longe?", why:"Снова estar вместо ser: расстояние до места — его постоянное свойство, а не сегодняшнее состояние.", whyEn:"Estar instead of ser again: the distance to a place is a property of it, not today's state." },
             { t:"Quanto tempo é?", why:"Так о времени не спрашивают. «Сколько идти» — <b>Quanto tempo demora?</b>, а «É longe?» короче и работает всегда.", whyEn:"That is not how you ask about time. «How long does it take» is <b>Quanto tempo demora?</b>, and «É longe?» is shorter and always works." }
@@ -9711,6 +9759,8 @@
           goalEn: "Check that you got it: say the route back in your own words.",
           answer: "À direita nos semáforos, certo?",
           say: "а дире́йта нуш сымáфоруш, се́рту",
+          answerRu: "Направо у светофора, верно?",
+          answerEn: "Right at the lights, correct?",
           wrong: [
             { t:"À esquerda nos semáforos, certo?", why:"<b>Esquerda</b> — налево, а сказали направо. Проверочный вопрос имеет смысл только с той половиной, которую ты услышал.", whyEn:"<b>Esquerda</b> is left, and they said right. A check-back question is only worth asking with the half you actually heard." },
             { t:"Está bem, obrigado.", why:"Согласие закрывает разговор, а маршрут остался непроверенным. Проверять понимание надо, пока человек ещё рядом.", whyEn:"Agreement closes the conversation with the route still unchecked. You verify while the person is still standing there." }
@@ -9724,6 +9774,8 @@
           goalEn: "Thank them and say goodbye.",
           answer: "Muito obrigado. Boa tarde!",
           say: "му́йту убригáду. бо́а тáрд",
+          answerRu: "Большое спасибо. Добрый день!",
+          answerEn: "Thank you very much. Good afternoon!",
           wrong: [
             { t:"De nada. Boa tarde!", why:"«De nada» — ответ на чужое спасибо, а благодаришь здесь ты.", whyEn:"«De nada» answers somebody else's thanks, and here the one saying thank you is you." },
             { t:"Muito obrigado. Bom dia!", why:"После полудня — boa tarde. Ошибка во времени суток слышна сразу.", whyEn:"After midday it is boa tarde. Getting the time of day wrong is audible immediately." }
@@ -9747,6 +9799,8 @@
           goalEn: "Ask for a Navegante card with five euros on it.",
           answer: "Um cartão Navegante com cinco euros, se faz favor.",
           say: "у~ картáу~ навыгáнт ко~ си́нку э́урош, сы фаш фаво́р",
+          answerRu: "Карту Navegante и пять евро на неё, пожалуйста.",
+          answerEn: "A Navegante card with five euros on it, please.",
           wrong: [
             { t:"Um bilhete para o metro, se faz favor.", why:"Бумажных билетов в лиссабонском метро нет: поездку записывают на карту <b>Navegante</b>, и её сначала покупают.", whyEn:"There are no paper tickets on the Lisbon metro: a journey is loaded onto a <b>Navegante</b> card, and the card is bought first." },
             { t:"Quero cinco euros.", why:"«Хочу пять евро» — просьба о деньгах, а не о поездке.", whyEn:"«I want five euros» asks for money, not for travel." }
@@ -9760,6 +9814,8 @@
           goalEn: "Go with zapping — money on the card for several journeys.",
           answer: "Zapping, se faz favor.",
           say: "зáпин, сы фаш фаво́р",
+          answerRu: "Zapping, пожалуйста.",
+          answerEn: "Zapping, please.",
           wrong: [
             { t:"Sim, se faz favor.", why:"Снова вопрос с «или»: «да» не выбирает ничего, и кассир переспросит.", whyEn:"Another either/or question: «yes» chooses nothing, and the clerk will ask again." },
             { t:"Uma viagem.", why:"Это одна поездка: карта опустеет сразу после первой, и на обратный путь придётся вставать в очередь снова.", whyEn:"That is a single journey: the card empties after the first ride and you queue again for the way back." }
@@ -9773,6 +9829,8 @@
           goalEn: "You are at the bus door. Ask whether it goes to Belém.",
           answer: "Este autocarro vai para Belém?",
           say: "е́шт аутокáрру вáй пара быле́й~",
+          answerRu: "Этот автобус идёт до Белена?",
+          answerEn: "Does this bus go to Belém?",
           wrong: [
             { t:"Este ônibus vai para Belém?", why:"<b>Ônibus</b> — бразильское слово. В Португалии автобус — <b>autocarro</b>, и это одна из самых заметных разниц между вариантами.", whyEn:"<b>Ônibus</b> is the Brazilian word. In Portugal a bus is an <b>autocarro</b> — one of the loudest differences between the two variants." },
             { t:"Este autocarro é Belém?", why:"Направление — глагол движения <b>ir</b>: vai para. С ser фраза значит «этот автобус — Белен».", whyEn:"Direction takes the verb <b>ir</b>: vai para. With ser the sentence says «this bus is Belém»." }
@@ -9786,6 +9844,8 @@
           goalEn: "Ask them to give you a shout when it is your stop.",
           answer: "Pode avisar-me, se faz favor?",
           say: "под авизáр-мы, сы фаш фаво́р",
+          answerRu: "Можете меня предупредить, пожалуйста?",
+          answerEn: "Could you let me know, please?",
           wrong: [
             { t:"Pode me avisar?", why:"Бразильский порядок: местоимение перед глаголом. В Португалии оно цепляется дефисом сзади — <b>avisar-me</b> (тема 1.5).", whyEn:"Brazilian word order: the pronoun before the verb. In Portugal it hooks on behind with a hyphen — <b>avisar-me</b> (topic 1.5)." },
             { t:"Onde é a paragem?", why:"«Где остановка?» — вопрос с тротуара, а ты уже в автобусе. Тебе нужно, чтобы предупредили.", whyEn:"«Where is the stop?» is a question from the pavement, and you are already on the bus. What you need is to be told." }
@@ -9799,6 +9859,8 @@
           goalEn: "Thank them.",
           answer: "Muito obrigado, é muito simpático.",
           say: "му́йту убригáду, э́ му́йту симпáтику",
+          answerRu: "Большое спасибо, вы очень любезны.",
+          answerEn: "Thank you very much, that is very kind.",
           wrong: [
             { t:"Igualmente, obrigado.", why:"«И вам того же» отвечают на пожелание, а не на согласие помочь.", whyEn:"«Same to you» answers a good wish, not an offer of help." },
             { t:"De nada, obrigado.", why:"Две несовместимые реплики подряд: «не за что» и «спасибо». Благодаришь здесь ты.", whyEn:"Two incompatible lines in a row: «you're welcome» and «thank you». Here the one thanking is you." }
@@ -9822,6 +9884,8 @@
           goalEn: "Introduce yourself back. You are Nuno.",
           answer: "Olá, muito prazer. Sou o Nuno.",
           say: "олá, му́йту празе́р. со́у у ну́ну",
+          answerRu: "Привет, очень приятно. Я Нуну.",
+          answerEn: "Hi, nice to meet you. I'm Nuno.",
           wrong: [
             { t:"Olá, muito prazer. Eu sou Nuno.", why:"В Португалии перед именем ставят артикль: <b>sou o Nuno</b>, <b>é a Ana</b>. Без артикля звучит по-книжному.", whyEn:"In Portugal the name takes an article: <b>sou o Nuno</b>, <b>é a Ana</b>. Without it the sentence sounds like a textbook." },
             { t:"Olá, muito prazer. Eu chamo Nuno.", why:"Глагол возвратный: <b>chamo-me</b> Nuno. «Eu chamo Nuno» значит «я зову Нуну».", whyEn:"The verb is reflexive: <b>chamo-me</b> Nuno. «Eu chamo Nuno» means «I am calling Nuno over»." }
@@ -9835,6 +9899,8 @@
           goalEn: "Say you are not from here and have been living in Lisbon for a year.",
           answer: "Não sou daqui, vivo em Lisboa há um ano.",
           say: "нау~ со́у даки́, ви́ву э~ лижбо́а á у~ áну",
+          answerRu: "Я не отсюда, живу в Лиссабоне год.",
+          answerEn: "I'm not from here, I've lived in Lisbon for a year.",
           wrong: [
             { t:"Não sou daqui, vivo em Lisboa por um ano.", why:"<b>Por um ano</b> — «на год», про срок вперёд. Сколько уже длится — <b>há um ano</b> (тема 1.10).", whyEn:"<b>Por um ano</b> means «for a year» looking forward. How long something has already lasted is <b>há um ano</b> (topic 1.10)." },
             { t:"Não sou aqui, vivo em Lisboa há um ano.", why:"«Отсюда» — <b>daqui</b>, слияние de + aqui. Без предлога фраза значит «я не здесь».", whyEn:"«From here» is <b>daqui</b>, de + aqui merged. Without the preposition the sentence says «I am not here»." }
@@ -9848,6 +9914,8 @@
           goalEn: "Say that you study at the university.",
           answer: "Estudo na universidade.",
           say: "ышту́ду на унивырсидáд",
+          answerRu: "Я учусь в университете.",
+          answerEn: "I study at the university.",
           wrong: [
             { t:"Estou a estudar na universidade.", why:"<b>Estar a + infinitivo</b> — это «прямо сейчас, в эту минуту». На вопрос «чем занимаешься вообще» отвечают простым настоящим (тема 1.7).", whyEn:"<b>Estar a + infinitivo</b> means «right now, this minute». A question about what you do in general takes the plain present (topic 1.7)." },
             { t:"Sou estudo na universidade.", why:"После <b>ser</b> идёт существительное: <b>sou estudante</b>. С глаголом estudo оно не сочетается.", whyEn:"After <b>ser</b> comes a noun: <b>sou estudante</b>. It does not combine with the verb estudo." }
@@ -9861,6 +9929,8 @@
           goalEn: "Say you like it a lot, but the summer is hard.",
           answer: "Gosto muito, mas o verão é difícil.",
           say: "го́шту му́йту, маш у вырáу~ э́ дифи́сил",
+          answerRu: "Очень нравится, но лето тяжёлое.",
+          answerEn: "I like it a lot, but the summer is hard.",
           wrong: [
             { t:"Eu gosto Lisboa, mas o verão é difícil.", why:"Глагол <b>gostar</b> требует предлога <b>de</b>: gosto de Lisboa. Без него фраза разваливается.", whyEn:"The verb <b>gostar</b> needs the preposition <b>de</b>: gosto de Lisboa. Without it the sentence falls apart." },
             { t:"Gosto-me muito, mas o verão é difícil.", why:"<b>Gostar</b> не возвратный — местоимение здесь лишнее.", whyEn:"<b>Gostar</b> is not reflexive — the pronoun has no business here." }
@@ -9874,6 +9944,8 @@
           goalEn: "Say the same back and give a soft goodbye.",
           answer: "Igualmente. Até à próxima!",
           say: "игуалме́нт. атэ́ а про́сима",
+          answerRu: "Взаимно. До следующего раза!",
+          answerEn: "Likewise. Until next time!",
           wrong: [
             { t:"Igualmente. Adeus!", why:"<b>Adeus</b> окончательнее, чем нужно: с новым знакомым прощаются мягче — <b>até à próxima</b>, <b>até logo</b>.", whyEn:"<b>Adeus</b> is more final than the moment needs: with someone you have just met you close softer — <b>até à próxima</b>, <b>até logo</b>." },
             { t:"De nada. Até à próxima!", why:"«De nada» — ответ на спасибо, а тебе сказали не спасибо, а «было приятно».", whyEn:"«De nada» answers thanks, and what you got was not thanks but «it was a pleasure»." }
@@ -9897,6 +9969,8 @@
           goalEn: "Say that you have a headache.",
           answer: "Boa tarde. Tenho dores de cabeça.",
           say: "бо́а тáрд. тэ́ню до́рыш ды кабэ́са",
+          answerRu: "Добрый день. У меня болит голова.",
+          answerEn: "Good afternoon. I have a headache.",
           wrong: [
             { t:"Boa tarde. Estou dores de cabeça.", why:"Боль — это то, что у тебя <b>есть</b>: ter (тема 0.12). Estar сюда не ставится.", whyEn:"Pain is something you <b>have</b>: ter (topic 0.12). Estar does not go here." },
             { t:"Boa tarde. Minha cabeça dói.", why:"Понять поймут, но перед притяжательным нужен артикль: <b>a minha cabeça</b> (тема 1.8). В аптеке к тому же привычнее <b>tenho dores de cabeça</b>.", whyEn:"They will understand, but a possessive needs its article: <b>a minha cabeça</b> (topic 1.8). And in a pharmacy <b>tenho dores de cabeça</b> is the usual line anyway." }
@@ -9910,6 +9984,8 @@
           goalEn: "Two days.",
           answer: "Há dois dias.",
           say: "á до́йш ди́аш",
+          answerRu: "Уже два дня.",
+          answerEn: "For two days now.",
           wrong: [
             { t:"Por dois dias.", why:"<b>Por</b> — про срок вперёд, «на два дня». Сколько уже длится — <b>há</b> (тема 1.10).", whyEn:"<b>Por</b> looks forward, «for the next two days». How long it has already lasted is <b>há</b> (topic 1.10)." },
             { t:"São dois dias.", why:"Так называют сумму или время на часах, но не длительность. Длительность вводится словом <b>há</b>.", whyEn:"That shape is for totals and clock time, not duration. Duration is introduced with <b>há</b>." }
@@ -9923,6 +9999,8 @@
           goalEn: "You have none.",
           answer: "Não, não tenho.",
           say: "нау~, нау~ тэ́ню",
+          answerRu: "Нет, нету.",
+          answerEn: "No, I don't.",
           wrong: [
             { t:"Não, obrigado.", why:"«Нет, спасибо» — вежливый отказ, а спросили о факте. В аптеке это ответ не на тот вопрос.", whyEn:"«No, thank you» is a polite refusal, and what was asked was a fact. In a pharmacy that answers the wrong question." },
             { t:"Sim, não tenho.", why:"«Да, у меня нет» — противоречие в одной фразе. Отрицательный ответ начинается с <b>não</b>.", whyEn:"«Yes, I don't» contradicts itself. A negative answer opens with <b>não</b>." }
@@ -9936,6 +10014,8 @@
           goalEn: "You did not catch how often. Ask about the frequency.",
           answer: "Quantas vezes por dia?",
           say: "куáнташ ве́зыш пур ди́а",
+          answerRu: "Сколько раз в день?",
+          answerEn: "How many times a day?",
           wrong: [
             { t:"Pode repetir, se faz favor?", why:"Повторят той же фразой и на той же скорости. Точный вопрос дешевле: непонятна именно частота.", whyEn:"They will repeat the same sentence at the same speed. A precise question costs less: what is unclear is the frequency." },
             { t:"Quanto custa?", why:"Про цену спросишь потом. Сейчас неясно главное — сколько раз в день пить.", whyEn:"Price can wait. Right now the thing you do not know is how many times a day to take it." }
@@ -9949,6 +10029,8 @@
           goalEn: "Ask whether you need a prescription.",
           answer: "Preciso de receita?",
           say: "прыси́зу ды рысэ́йта",
+          answerRu: "Мне нужен рецепт?",
+          answerEn: "Do I need a prescription?",
           wrong: [
             { t:"Preciso receita?", why:"<b>Precisar</b> идёт с предлогом <b>de</b>: preciso de receita — как в кассовом <b>precisa de saco?</b>", whyEn:"<b>Precisar</b> comes with <b>de</b>: preciso de receita — same as the checkout's <b>precisa de saco?</b>" },
             { t:"Tem receita?", why:"Так ты спрашиваешь, есть ли рецепт у самого фармацевта.", whyEn:"That asks whether the pharmacist has a prescription." }
@@ -9962,6 +10044,8 @@
           goalEn: "Thank them for the help.",
           answer: "Muito obrigado pela ajuda.",
           say: "му́йту убригáду пе́ла ажу́да",
+          answerRu: "Большое спасибо за помощь.",
+          answerEn: "Thank you very much for your help.",
           wrong: [
             { t:"Muito obrigado para a ajuda.", why:"Благодарят через <b>por</b>: obrigado pela ajuda. <b>Para</b> смотрит вперёд, к цели (тема 1.10).", whyEn:"Thanks go through <b>por</b>: obrigado pela ajuda. <b>Para</b> looks forward, at a goal (topic 1.10)." },
             { t:"Muito obrigado de ajuda.", why:"Предлог не тот. Нужное слияние — <b>por + a = pela</b>.", whyEn:"Wrong preposition. The merge you need is <b>por + a = pela</b>." }
@@ -9985,6 +10069,8 @@
           goalEn: "There are two of you.",
           answer: "Somos dois, se faz favor.",
           say: "со́муш до́йш, сы фаш фаво́р",
+          answerRu: "Нас двое, пожалуйста.",
+          answerEn: "Two of us, please.",
           wrong: [
             { t:"Estamos dois, se faz favor.", why:"Количество — это <b>ser</b>: somos dois. Estar говорит о состоянии, а не о том, кто вы (тема 0.9).", whyEn:"A count takes <b>ser</b>: somos dois. Estar speaks about a state, not about who you are (topic 0.9)." },
             { t:"Dois pessoas, se faz favor.", why:"<b>Pessoa</b> — женского рода: duas pessoas. И на «сколько вас» отвечают глаголом: somos dois.", whyEn:"<b>Pessoa</b> is feminine: duas pessoas. And «how many of you» is answered with a verb: somos dois." }
@@ -9998,6 +10084,8 @@
           goalEn: "Ask for a jug of tap water.",
           answer: "Um jarro de água da torneira, se faz favor.",
           say: "у~ жáрру ды áгуа да турнэ́йра, сы фаш фаво́р",
+          answerRu: "Кувшин воды из-под крана, пожалуйста.",
+          answerEn: "A jug of tap water, please.",
           wrong: [
             { t:"Uma água natural, se faz favor.", why:"Это бутилированная вода без газа — её принесут и посчитают. Бесплатная из-под крана — <b>água da torneira</b>.", whyEn:"That is still water in a bottle — it arrives and it goes on the bill. The free one from the tap is <b>água da torneira</b>." },
             { t:"Água, se faz favor.", why:"Слишком общо: принесут бутылку на выбор официанта, с газом или без, и она окажется в счёте.", whyEn:"Too vague: a bottle arrives, sparkling or still at the waiter's discretion, and it lands on the bill." }
@@ -10011,6 +10099,8 @@
           goalEn: "Ask what that dish is.",
           answer: "O que é bacalhau à Brás?",
           say: "у кы э́ бакалья́у а брáш",
+          answerRu: "Что такое bacalhau à Brás?",
+          answerEn: "What is bacalhau à Brás?",
           wrong: [
             { t:"O que significa bacalhau à Brás?", why:"<b>Significa</b> — про значение слова. Про блюдо спрашивают <b>o que é</b>: тебе нужен состав, а не перевод.", whyEn:"<b>Significa</b> is about what a word means. A dish is asked about with <b>o que é</b>: you want the ingredients, not a translation." },
             { t:"Bacalhau à Brás é bom?", why:"«Вкусно ли?» — вопрос вежливости: официант ответит «sim», и ты так и не узнаешь, что это.", whyEn:"«Is it good?» is a politeness question: the waiter says «sim» and you still do not know what it is." }
@@ -10024,6 +10114,8 @@
           goalEn: "Order one.",
           answer: "Então um bacalhau à Brás, se faz favor.",
           say: "энтáу~ у~ бакалья́у а брáш, сы фаш фаво́р",
+          answerRu: "Тогда один bacalhau à Brás, пожалуйста.",
+          answerEn: "Then one bacalhau à Brás, please.",
           wrong: [
             { t:"Então quero bacalhau à Brás.", why:"«Quero» звучит требовательно — заказ идёт через <b>se faz favor</b>, как и в кафе.", whyEn:"«Quero» lands as a demand — an order goes through <b>se faz favor</b>, same as in a café." },
             { t:"Então uma bacalhau à Brás, se faz favor.", why:"<b>Bacalhau</b> — мужского рода: um bacalhau.", whyEn:"<b>Bacalhau</b> is masculine: um bacalhau." }
@@ -10037,6 +10129,8 @@
           goalEn: "The couvert is not free. Turn it down.",
           answer: "Não, obrigado. Só a água.",
           say: "нау~, убригáду. со́ а áгуа",
+          answerRu: "Нет, спасибо. Только вода.",
+          answerEn: "No, thank you. Just the water.",
           wrong: [
             { t:"Sim, se faz favor.", why:"Согласие — и хлеб с оливками появятся в счёте отдельной строкой. Это не бесплатное угощение.", whyEn:"Say yes and the bread and olives show up as their own line on the bill. It is not a free welcome snack." },
             { t:"Não percebi.", why:"Щит уместен, когда не понял; вопрос здесь ясен, а уклончивый ответ оставит couvert на столе — и в счёте.", whyEn:"The shield phrase is for when you did not understand; here the question is clear, and a vague answer leaves the couvert on the table — and on the bill." }
@@ -10050,6 +10144,8 @@
           goalEn: "Lunch is over. Ask for the bill.",
           answer: "A conta, se faz favor.",
           say: "а ко́нта, сы фаш фаво́р",
+          answerRu: "Счёт, пожалуйста.",
+          answerEn: "The bill, please.",
           wrong: [
             { t:"O preço, se faz favor.", why:"<b>Preço</b> — цена одной вещи. Счёт целиком — <b>a conta</b>.", whyEn:"<b>Preço</b> is the price of one thing. The whole bill is <b>a conta</b>." },
             { t:"Quanto custa, se faz favor?", why:"Так спрашивают о цене блюда до заказа, а не об итоге в конце обеда.", whyEn:"That asks the price of a dish before ordering, not the total at the end of the meal." }
@@ -10144,7 +10240,7 @@
     if(dgRun.i > 0){
       var prev = sc.steps[dgRun.i - 1];
       log += dgBubble(THEM(), "", prev.npc.pt, "", L(prev.npc.ru, prev.npc.en), false);
-      log += dgBubble(YOU(), "me", prev.answer, "", "", false);
+      log += dgBubble(YOU(), "me", prev.answer, "", L(prev.answerRu, prev.answerEn), false);
     }
     log += dgBubble(THEM(), "now", step.npc.pt, step.npc.say, L(step.npc.ru, step.npc.en), true);
 
@@ -10176,7 +10272,7 @@
   function renderDgFinish(box, sc){
     var lines = sc.steps.map(function(s){
       return dgBubble(THEM(), "", s.npc.pt, "", L(s.npc.ru, s.npc.en), true) +
-             dgBubble(YOU(), "me", s.answer, "", "", true);
+             dgBubble(YOU(), "me", s.answer, "", L(s.answerRu, s.answerEn), true);
     }).join("");
     var other = dgRun.mode === "mc" ? "build" : "mc";
     box.innerHTML = '<div class="dg-bar"><span class="dg-scene-title">'+escapeHtml(L(sc.title, sc.titleEn))+'</span>' +
@@ -10247,7 +10343,8 @@
     var f = document.getElementById("dgFeed");
     if(f) f.insertAdjacentHTML("beforeend",
       '<div class="dg-answer-note">'+L("Твоя реплика","Your line")+': <b>'+escapeHtml(step.answer)+'</b>'+dgSay(step.answer)+
-      ' <span class="dg-say">'+escapeHtml(step.say)+'</span></div>');
+      ' <span class="dg-say">'+escapeHtml(step.say)+'</span>' +
+      '<span class="dg-answer-ru">'+escapeHtml(L(step.answerRu, step.answerEn))+'</span></div>');
     dgNextBtn();
   }
 
