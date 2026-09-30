@@ -653,8 +653,11 @@
     display:flex; align-items:baseline; gap:8px; background:var(--card);
     border-radius:10px; padding:8px 12px; margin-bottom:5px;
   }
-  .vocab-row .vw{font-family:var(--font-pt); font-weight:700; flex:0 0 auto;}
-  .vocab-row .vt{color:var(--muted); font-size:0.86rem; flex:1;}
+  /* Сочетания пакетов Situações длиннее слова: при крупном шрифте перевод
+     рядом с ними не помещается и уходит на строку ниже, а не за экран. */
+  .vocab-row{flex-wrap:wrap;}
+  .vocab-row .vw{font-family:var(--font-pt); font-weight:700; flex:0 1 auto; min-width:0;}
+  .vocab-row .vt{color:var(--muted); font-size:0.86rem; flex:1 1 9em; min-width:0;}
   .vocab-box{display:flex; gap:2px; flex:0 0 auto;}
   .vocab-box i{width:5px; height:5px; border-radius:50%; background:#D6DEDA; display:block;}
   body.dark .vocab-box i{background:#313B37;}
@@ -902,12 +905,12 @@
       </button>
       <button type="button" class="tool-row" data-open="dialogos">
         <span class="tool-icon">🗣</span>
-        <span class="row-title" data-en="Diálogos · a full conversation&lt;span class='row-title-ru'&gt;eight scenes: caf&eacute;, checkout, street, transport, meeting someone, pharmacy, restaurant, butcher&rsquo;s counter&lt;/span&gt;">Diálogos · разговор целиком<span class="row-title-ru">восемь сцен: кафе, касса, улица, транспорт, знакомство, аптека, ресторан, мясной прилавок</span></span>
+        <span class="row-title" data-en="Diálogos · a full conversation&lt;span class='row-title-ru'&gt;nine scenes: caf&eacute;, checkout, street, transport, meeting someone, pharmacy, restaurant, butcher&rsquo;s counter, tasca&lt;/span&gt;">Diálogos · разговор целиком<span class="row-title-ru">девять сцен: кафе, касса, улица, транспорт, знакомство, аптека, ресторан, мясной прилавок, таска</span></span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="tool-row" data-open="situacoes">
         <span class="tool-icon">🧺</span>
-        <span class="row-title" data-en="Situações · vocabulary for real life&lt;span class='row-title-ru'&gt;words, chunks, a scene and a text for each everyday situation &mdash; starting with groceries&lt;/span&gt;">Situações · словарь по ситуациям<span class="row-title-ru">слова, сочетания, сцена и текст на каждую бытовую ситуацию — начиная с продуктов</span></span>
+        <span class="row-title" data-en="Situações · vocabulary for real life&lt;span class='row-title-ru'&gt;words, chunks, a scene and a text for each everyday situation &mdash; groceries, caf&eacute;s and restaurants so far&lt;/span&gt;">Situações · словарь по ситуациям<span class="row-title-ru">слова, сочетания, сцена и текст на каждую бытовую ситуацию — пока продукты, кафе и ресторан</span></span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="tool-row" data-open="tool-conjugador">
@@ -8964,7 +8967,9 @@
     "punhas":"ты клал (от pôr)","púnhamos":"мы клали (от pôr)","punham":"они клали (от pôr)",
     // 2.4: «comida» цепочка [ida → er] уводит в «comer», то есть в глагол
     // вместо еды; «estava» без своей статьи переводится «быть (сейчас)».
-    "comida":"еда","estava":"был, находился (от estar)","gente":"народ, люди; a gente — мы (разговорное)"
+    "comida":"еда","estava":"был, находился (от estar)","gente":"народ, люди; a gente — мы (разговорное)",
+    // пакет S2: pedir ломается в eu, цепочки до «pedir» из «peço» не доходят
+    "peço":"прошу, заказываю (от pedir)"
   };
 
   // Английский оверлей словаря. Не копия VOCAB, а заплатка на те слова, до
@@ -9005,7 +9010,9 @@
     "açúcar":"sugar","sopa":"soup","quanto":"how much","cêntimos":"cents",
     "dois":"two","setenta":"seventy",
     // люди
-    "homem":"man; person","ana":"Ana (a woman's name)","joão":"João (a man's name)"
+    "homem":"man; person","ana":"Ana (a woman's name)","joão":"João (a man's name)",
+    // пакет S2 Situações
+    "peço":"I ask for, I order (from pedir)"
   };
 
   // Слова в тексте стоят в формах, а словарь — в словарной форме. Отрезаем
@@ -10267,7 +10274,7 @@
           answerRu: "Кувшин воды из-под крана, пожалуйста.",
           answerEn: "A jug of tap water, please.",
           wrong: [
-            { t:"Uma água natural, se faz favor.", why:"Это бутилированная вода без газа — её принесут и посчитают. Бесплатная из-под крана — <b>água da torneira</b>.", whyEn:"That is still water in a bottle — it arrives and it goes on the bill. The free one from the tap is <b>água da torneira</b>." },
+            { t:"Uma água natural, se faz favor.", why:"Это бутылка воды комнатной температуры: <b>natural</b> здесь про температуру, а не про газ. Её принесут и посчитают. Бесплатная из-под крана — <b>água da torneira</b>.", whyEn:"That is a bottle of water at room temperature: <b>natural</b> here is about temperature, not bubbles. It arrives and it goes on the bill. The free one from the tap is <b>água da torneira</b>." },
             { t:"Água, se faz favor.", why:"Слишком общо: принесут бутылку на выбор официанта, с газом или без, и она окажется в счёте.", whyEn:"Too vague: a bottle arrives, sparkling or still at the waiter's discretion, and it lands on the bill." }
           ],
           note: "<b>Torneira</b> — кран. Воду из-под крана в Португалии подают спокойно, но просить надо явно, иначе принесут бутылку.",
@@ -10432,6 +10439,136 @@
           ],
           note: "<b>Igualmente</b> — «и вам того же»: отвечают на любое пожелание. Пакет с наклейкой отдают в руки, а платят за всё вместе на общей кассе.",
           noteEn: "<b>Igualmente</b> — «same to you»: the answer to any good wish. The package with its price sticker is handed to you, and you pay for everything together at the main till."
+        }
+      ]
+    },
+    {
+      id: "tasca",
+      icon: "🍲",
+      title: "Tasca · блюдо дня",
+      titleEn: "Tasca · the dish of the day",
+      sub: "Обед в простой таске: блюдо дня, полпорции, вода «natural или fresca», раздельный счёт и сдача вместо чаевых.",
+      subEn: "Lunch at a simple tasca: the dish of the day, a half portion, «natural or fresca» water, a split bill, and the change as a tip.",
+      steps: [
+        {
+          npc: { pt:"Boa tarde! Já escolheram?", say:"бо́а тард! жа ышкулье́рау~", ru:"Добрый день! Уже выбрали?", en:"Good afternoon! Have you decided?" },
+          goal: "Вы ещё не выбрали. Скажи, что вы пока смотрите.",
+          goalEn: "You haven't decided yet. Say you're still looking.",
+          answer: "Ainda estamos a ver.",
+          say: "аи́нда ыштáмуш а вер",
+          answerRu: "Мы ещё выбираем.",
+          answerEn: "We're still looking.",
+          wrong: [
+            { t:"Ainda estamos vendo.", why:"Так говорят в Бразилии. В Португалии «делаю сейчас» — <b>estar a + инфинитив</b>: estamos a ver.", whyEn:"That is how Brazil says it. In Portugal «doing right now» is <b>estar a + infinitive</b>: estamos a ver." },
+            { t:"Não, obrigado.", why:"«Нет, спасибо» звучит как отказ от обеда: официант решит, что вы зашли только выпить.", whyEn:"«No, thank you» sounds like turning down lunch: the waiter will decide you only came in for a drink." }
+          ],
+          note: "<b>Escolheram</b> — perfeito от escolher, «выбрали». Официант вернётся через пару минут, торопиться не надо.",
+          noteEn: "<b>Escolheram</b> is the perfeito of escolher, «have you chosen». The waiter will be back in a couple of minutes; there is no rush."
+        },
+        {
+          npc: { pt:"Então? Já sabem?", say:"энтáу~? жа сáбай~", ru:"Ну что? Уже знаете?", en:"So? Do you know?" },
+          goal: "Спроси, какое сегодня блюдо дня.",
+          goalEn: "Ask what the dish of the day is.",
+          answer: "Qual é o prato do dia?",
+          say: "куал э́ у прáту ду ди́а",
+          answerRu: "Какое сегодня блюдо дня?",
+          answerEn: "What's the dish of the day?",
+          wrong: [
+            { t:"Quanto é o prato do dia?", why:"Это вопрос о цене: назовут сумму, а что за блюдо, так и не скажут.", whyEn:"That asks the price: you will hear a number and still not know what the dish is." },
+            { t:"Qual é o prato de dia?", why:"<b>De + o = do</b>: prato <b>do</b> dia. Без слияния предлога с артиклем фраза звучит ломано.", whyEn:"<b>De + o = do</b>: prato <b>do</b> dia. Without the preposition fused into the article the phrase sounds broken." }
+          ],
+          note: "Блюдо дня — самое дешёвое в обед и самое свежее: его готовят с утра на весь обед. Часто оно написано мелом на доске у входа.",
+          noteEn: "The dish of the day is the cheapest thing at lunch and the freshest: it is cooked in the morning for the whole service. It is often chalked on a board by the door."
+        },
+        {
+          npc: { pt:"Hoje há polvo grelhado ou bifanas. O polvo está muito bom.", say:"о́ж а по́лву грылья́ду о бифáнаш. у по́лву ыштá му́йту бо~", ru:"Сегодня осьминог на гриле или бифаны. Осьминог сегодня очень хороший.", en:"Today there's grilled octopus or bifanas. The octopus is very good today." },
+          goal: "Ты не очень голоден. Спроси, бывает ли полпорции.",
+          goalEn: "You are not very hungry. Ask whether they do half portions.",
+          answer: "Há meia dose?",
+          say: "а мэ́йа до́з",
+          answerRu: "Можно половину порции?",
+          answerEn: "Do you do half portions?",
+          wrong: [
+            { t:"Há meio dose?", why:"<b>Dose</b> женского рода — значит <b>meia</b>. <b>Meio</b> ставят к мужскому: meio quilo.", whyEn:"<b>Dose</b> is feminine, so it is <b>meia</b>. <b>Meio</b> goes with masculine words: meio quilo." },
+            { t:"O polvo é grande?", why:"Официант ответит «sim», и заказ не сдвинется. Про размер спрашивают готовым словом: meia dose.", whyEn:"The waiter says «sim» and the order goes nowhere. Size is asked about with the ready-made term: meia dose." }
+          ],
+          note: "Порции в таске большие: <b>meia dose</b> обычно хватает одному. Стоит она чуть больше половины полной, и есть не на всё — поэтому спрашивают.",
+          noteEn: "Tasca portions are big: a <b>meia dose</b> is usually enough for one. It costs a little more than half the full price and is not offered for everything — so you ask."
+        },
+        {
+          npc: { pt:"Há, sim. Meia dose de polvo?", say:"а, си~. мэ́йа до́з ды по́лву", ru:"Есть. Полпорции осьминога?", en:"Yes, we do. Half a portion of octopus?" },
+          goal: "Согласись коротко, как местные.",
+          goalEn: "Agree briefly, the way locals do.",
+          answer: "Pode ser.",
+          say: "под сэр",
+          answerRu: "Давайте.",
+          answerEn: "Sure, that'll do.",
+          wrong: [
+            { t:"Posso ser.", why:"<b>Posso</b> — «я могу»: получилось «я могу быть». Устойчивая фраза стоит в третьем лице: <b>pode ser</b>, «так может быть».", whyEn:"<b>Posso</b> is «I can»: it came out as «I can be». The fixed phrase is in the third person: <b>pode ser</b>, «that can be»." },
+            { t:"Quero.", why:"«Хочу» — верно по смыслу, но звучит требованием, как <b>quero</b> в кафе и у прилавка.", whyEn:"«I want» is right in meaning but lands as a demand, just like <b>quero</b> in the café and at the counter." }
+          ],
+          note: "<b>Pode ser</b> — «пойдёт, давайте»: мягкое согласие на любое предложение. Звучит на каждом шагу, от таски до банка.",
+          noteEn: "<b>Pode ser</b> — «that works, sure»: a soft yes to any offer. You hear it everywhere, from the tasca to the bank."
+        },
+        {
+          npc: { pt:"E para beber? Água natural ou fresca?", say:"и пара быбе́р? áгуа натурáл о фрэ́шка", ru:"А пить? Воду комнатной температуры или холодную?", en:"And to drink? Water at room temperature or chilled?" },
+          goal: "Ты хочешь холодную воду.",
+          goalEn: "You want cold water.",
+          answer: "Fresca, se faz favor.",
+          say: "фрэ́шка, сы фаш фаво́р",
+          answerRu: "Холодную, пожалуйста.",
+          answerEn: "Chilled, please.",
+          wrong: [
+            { t:"Natural, se faz favor.", why:"Ловушка: <b>natural</b> здесь — «комнатной температуры», а не «без газа». Принесут тёплую бутылку.", whyEn:"A trap: <b>natural</b> here means «room temperature», not «still». A warm bottle arrives." },
+            { t:"Sim, se faz favor.", why:"Снова вопрос с «или»: «да» не выбирает ничего. Повтори ту половину, которую выбираешь.", whyEn:"An either/or question again: «yes» chooses nothing. Repeat the half you are choosing." }
+          ],
+          note: "Без газа — <b>sem gás</b> или <b>lisa</b>, с газом — <b>com gás</b>. <b>Natural</b> и <b>fresca</b> — только про температуру.",
+          noteEn: "Still is <b>sem gás</b> or <b>lisa</b>, sparkling is <b>com gás</b>. <b>Natural</b> and <b>fresca</b> are only about temperature."
+        },
+        {
+          npc: { pt:"Estava tudo bem?", say:"ыштáва ту́ду бай~", ru:"Всё было хорошо?", en:"Was everything all right?" },
+          goal: "Обед закончен, было очень вкусно. Скажи это.",
+          goalEn: "Lunch is over and it was delicious. Say so.",
+          answer: "Estava ótimo, obrigado.",
+          say: "ыштáва о́тиму, убригáду",
+          answerRu: "Было отлично, спасибо.",
+          answerEn: "It was great, thank you.",
+          wrong: [
+            { t:"Tudo bem, e o senhor?", why:"Это ответ на «как дела?». Официант спросил не о тебе, а об обеде — и в прошедшем времени.", whyEn:"That answers «how are you?». The waiter asked about the meal, not about you — and in the past tense." },
+            { t:"Está ótimo, obrigado.", why:"<b>Está</b> — «сейчас отлично»: так говорят над полной тарелкой. Обед закончен, и вопрос задан имперфектом — отвечают им же: <b>estava</b>.", whyEn:"<b>Está</b> means «it's great right now» — what you say over a full plate. The meal is over and the question came in the imperfect, so the answer does too: <b>estava</b>." }
+          ],
+          note: "Вопрос задают, забирая тарелки. <b>Estava</b> — имперфект от estar (тема 2.4): так описывают, каким что-то было, а не что произошло.",
+          noteEn: "The question comes as the plates are cleared. <b>Estava</b> is the imperfect of estar (topic 2.4): it describes what something was like, not what happened."
+        },
+        {
+          npc: { pt:"Ainda bem! É tudo junto?", say:"аи́нда бай~! э́ ту́ду жу́нту", ru:"Вот и хорошо! Всё вместе?", en:"Glad to hear it! All together?" },
+          goal: "Вы платите каждый за себя.",
+          goalEn: "You are each paying for yourselves.",
+          answer: "Não, pagamos em separado.",
+          say: "нáу~, пагáмуш ай~ сыпарáду",
+          answerRu: "Нет, мы платим каждый за себя.",
+          answerEn: "No, we'll pay separately.",
+          wrong: [
+            { t:"Sim, se faz favor.", why:"«Да» — это «всё вместе»: принесут один счёт на двоих.", whyEn:"«Yes» means «all together»: one bill for the two of you arrives." },
+            { t:"Não, obrigado.", why:"«Нет, спасибо» не говорит, как делить: официанту придётся переспрашивать.", whyEn:"«No, thank you» does not say how to split it: the waiter will have to ask again." }
+          ],
+          note: "<b>Ainda bem</b> — «вот и хорошо, слава богу»: с «ещё» ничего общего. Делить счёт нормально и в маленькой таске — называют, кто что ел.",
+          noteEn: "<b>Ainda bem</b> — «good, thank goodness»: nothing to do with «still». Splitting the bill is normal even in a small tasca — you just say who had what."
+        },
+        {
+          npc: { pt:"São sete e oitenta.", say:"сáу~ сэт и ойтэ́нта", ru:"С вас семь восемьдесят.", en:"That's seven eighty." },
+          goal: "Ты даёшь восемь евро. Оставь сдачу на чай.",
+          goalEn: "You hand over eight euros. Leave the change as a tip.",
+          answer: "Fique com o troco.",
+          say: "фик ко~ у тро́ку",
+          answerRu: "Сдачи не надо.",
+          answerEn: "Keep the change.",
+          wrong: [
+            { t:"Tem troco?", why:"«У вас есть сдача?» — вопрос, который просит сдачу, а не оставляет её.", whyEn:"«Do you have change?» asks for the change instead of leaving it." },
+            { t:"De nada.", why:"«Не за что» отвечают на чужое спасибо, а тебя пока никто не благодарил.", whyEn:"«You're welcome» answers someone's thanks, and nobody has thanked you yet." }
+          ],
+          note: "Чаевые в таске — мелочь сдачи, а не процент. <b>Ficar com</b> — «оставить себе», тот же оборот, что <b>fico com o talão</b> в прошлом пакете.",
+          noteEn: "A tip in a tasca is the loose change, not a percentage. <b>Ficar com</b> means «to keep», the same pattern as <b>fico com o talão</b> in the previous pack."
         }
       ]
     }
@@ -11347,6 +11484,88 @@
       ],
       missao: "Сходи к прилавку с номерками — talho, peixaria или charcutaria. Возьми номерок, закажи на вес по-португальски (<b>Queria meio quilo de…</b>) и ответь на <b>Mais alguma coisa?</b> и <b>É tudo?</b>, не переходя на английский. Бонус: у полки с жёлтым ценником спроси <b>Está em promoção?</b>",
       missaoEn: "Go to a ticket counter — talho, peixaria or charcutaria. Take a ticket, order by weight in Portuguese (<b>Queria meio quilo de…</b>) and answer <b>Mais alguma coisa?</b> and <b>É tudo?</b> without switching to English. Bonus: at a shelf with a yellow price tag, ask <b>Está em promoção?</b>"
+    },
+    {
+      id: "comer",
+      icon: "☕",
+      title: "Café e restaurante · поесть вне дома",
+      titleEn: "Café e restaurante · eating out",
+      sub: "Завтрак у стойки, обед в таске по блюду дня, полдник на террасе, раздельный счёт и чаевые.",
+      subEn: "Breakfast at the counter, lunch at a tasca from the dish of the day, an afternoon snack on a terrace, a split bill and the tip.",
+      words: [
+        { w:"o pequeno-almoço", say:"у пыкэ́ну-алмо́су", ru:"завтрак", en:"breakfast", note:"В Бразилии — <b>café da manhã</b>. В Португалии <b>café</b> — только кофе и кафе, завтраком его не называют.", noteEn:"In Brazil it is <b>café da manhã</b>. In Portugal <b>café</b> is only the coffee and the café, never breakfast." },
+        { w:"o lanche", say:"у лáнш", ru:"полдник, перекус (часов в пять)", en:"afternoon snack (around five)", note:"Для англоговорящих ложный друг: <b>lanche</b> — не lunch. Обед — <b>almoço</b>, а lanche — кофе с чем-нибудь между обедом и ужином.", noteEn:"A false friend: <b>lanche</b> is not lunch. Lunch is <b>almoço</b>; lanche is coffee and a bite between lunch and dinner." },
+        { w:"a ementa", say:"а имэ́нта", ru:"меню", en:"menu", note:"В Бразилии — <b>cardápio</b>. А слово <b>menu</b> здесь чаще значит комплекс: суп, блюдо, напиток и кофе за одну цену.", noteEn:"In Brazil it is <b>cardápio</b>. And the word <b>menu</b> here usually means a set meal: soup, main, drink and coffee for one price." },
+        { w:"a tasca", say:"а тáшка", ru:"таска: простая закусочная с домашней едой", en:"tasca: a simple eatery with home cooking" },
+        { w:"o balcão", say:"у балкáу~", ru:"стойка, прилавок", en:"counter, bar", note:"Не балкон — балкон у дома называется <b>varanda</b>. Кофе <b>ao balcão</b>, стоя у стойки, обычно дешевле, чем за столиком.", noteEn:"Not a balcony — the balcony of a house is a <b>varanda</b>. Coffee <b>ao balcão</b>, standing at the counter, is usually cheaper than at a table." },
+        { w:"a esplanada", say:"а ышпланáда", ru:"уличная терраса кафе", en:"café terrace, outdoor tables", note:"Не набережная, а столики кафе на улице. Там же обычно и самые высокие цены.", noteEn:"Not a promenade: the café's tables out on the street. Usually the most expensive place to sit, too." },
+        { w:"a bica", say:"а би́ка", ru:"эспрессо (по-лиссабонски)", en:"espresso (the Lisbon word)", note:"<b>Bica</b> говорят в Лиссабоне, в Порту — <b>cimbalino</b>. По всей стране поймут просто <b>um café</b>.", noteEn:"<b>Bica</b> is the Lisbon word; in Porto it is <b>cimbalino</b>. Anywhere in the country plain <b>um café</b> works." },
+        { w:"o galão", say:"у галáу~", ru:"кофе с молоком в высоком стакане", en:"milky coffee in a tall glass", note:"Молока больше, чем кофе. Похожий кофе в чашке — <b>meia de leite</b>.", noteEn:"More milk than coffee. Something similar in a cup is a <b>meia de leite</b>." },
+        { w:"a torrada", say:"а турáда", ru:"тост с маслом (толстый ломоть)", en:"buttered toast (a thick slice)", note:"Не сухой тост: толстый ломоть хлеба, щедро намазанный маслом и нарезанный полосками. Классический завтрак вместе с galão.", noteEn:"Not a dry piece of toast: a thick slice of bread, generously buttered and cut into strips. The classic breakfast, together with a galão." },
+        { w:"a tosta", say:"а то́шта", ru:"горячий бутерброд из тостера", en:"toasted sandwich", note:"<b>Tosta mista</b> — с ветчиной и сыром, самая частая. Не путать с <b>torrada</b>: там просто хлеб с маслом.", noteEn:"<b>Tosta mista</b> — ham and cheese, the most common one. Not to be confused with <b>torrada</b>, which is just bread and butter." },
+        { w:"o sumo", say:"у су́му", ru:"сок", en:"juice", note:"В Бразилии — <b>suco</b>. <b>Sumo natural</b> — свежевыжатый, остальное из коробки.", noteEn:"In Brazil it is <b>suco</b>. <b>Sumo natural</b> is freshly squeezed; anything else comes from a carton." },
+        { w:"a imperial", say:"а импыриáл", ru:"маленькое разливное пиво (0,2 л)", en:"small draught beer (0.2 l)", note:"Так в Лиссабоне; в Порту тот же бокал — <b>um fino</b>. Большая кружка — <b>uma caneca</b>.", noteEn:"That is the Lisbon word; in Porto the same glass is <b>um fino</b>. A large mug is <b>uma caneca</b>." },
+        { w:"a garrafa", say:"а гарáфа", ru:"бутылка", en:"bottle" },
+        { w:"a dose", say:"а до́з", ru:"порция", en:"portion", note:"Порции в таске большие: <b>meia dose</b>, половины, часто хватает одному.", noteEn:"Tasca portions are big: a <b>meia dose</b>, a half, is often enough for one." },
+        { w:"grelhado", say:"грылья́ду", ru:"на гриле", en:"grilled" },
+        { w:"a salada", say:"а салáда", ru:"салат", en:"salad" },
+        { w:"o bacalhau", say:"у бакалья́у", ru:"треска (солёная, сушёная)", en:"salt cod", note:"Главная рыба страны — и почти всегда привозная: сушёную солёную треску вымачивают день-два перед готовкой.", noteEn:"The national fish — and almost always imported: the dried salt cod is soaked for a day or two before cooking." },
+        { w:"o prego", say:"у прэ́гу", ru:"булка со стейком; гвоздь", en:"steak sandwich; nail", note:"Буквально «гвоздь». <b>Prego no pão</b> — тонкий стейк с чесноком в булке, <b>prego no prato</b> — он же на тарелке, с яйцом и картошкой.", noteEn:"Literally «nail». <b>Prego no pão</b> is a thin garlicky steak in a roll; <b>prego no prato</b> is the same on a plate, with an egg and chips." },
+        { w:"a bifana", say:"а бифáна", ru:"булка со свининой в соусе", en:"marinated pork sandwich", note:"Свинина, тушённая в вине с чесноком, в мягкой булке. Дешёвый обед на ходу.", noteEn:"Pork stewed in wine and garlic, in a soft roll. A cheap lunch on the go." },
+        { w:"picante", say:"пикáнт", ru:"острый (о еде)", en:"spicy, hot", note:"Острого в португальской кухне мало: <b>piri-piri</b> приносят отдельно, в бутылочке.", noteEn:"Portuguese food is rarely hot: <b>piri-piri</b> comes separately, in a little bottle." },
+        { w:"vegetariano", say:"выжытариáну", ru:"вегетарианский; вегетарианец", en:"vegetarian", note:"В таске вегетарианского может не быть вовсе: суп часто на мясном бульоне, а salada бывает с тунцом. Спрашивай прямо: <b>Tem alguma coisa vegetariana?</b>", noteEn:"A tasca may have nothing vegetarian at all: the soup is often made on meat stock, and a salada may come with tuna. Ask straight out: <b>Tem alguma coisa vegetariana?</b>" },
+        { w:"pedir", say:"пыди́р", ru:"просить (что-то), заказывать", en:"to ask for, to order", note:"Ломается в eu: <b>peço</b>, дальше обычно — pedes, pede. И не путать с <b>perguntar</b>: pedir — просить вещь, perguntar — задавать вопрос.", noteEn:"Irregular in the eu form: <b>peço</b>, then regular — pedes, pede. And not the same as <b>perguntar</b>: pedir is asking for a thing, perguntar is asking a question." },
+        { w:"levar", say:"лывáр", ru:"уносить, брать с собой", en:"to take (away), to carry", note:"<b>Para levar</b> — «с собой». Пара к <b>trazer</b>: trazer — нести сюда, levar — нести отсюда.", noteEn:"<b>Para levar</b> — «to take away». The partner of <b>trazer</b>: trazer is bringing here, levar is taking away from here." },
+        { w:"separado", say:"сыпарáду", ru:"отдельный, раздельный", en:"separate", note:"<b>Em separado</b> — «по отдельности»: так платят каждый за себя.", noteEn:"<b>Em separado</b> — «separately»: that is how each person pays for their own." },
+        { w:"a gorjeta", say:"а гуржэ́та", ru:"чаевые", en:"tip", note:"Чаевые не обязательны и небольшие: в кафе оставляют мелочь сдачи, в ресторане — до 5–10 %, если понравилось. В счёт их не включают.", noteEn:"Tipping is optional and modest: in a café you leave the small change, in a restaurant up to 5–10 % if you liked it. It is never added to the bill." }
+      ],
+      chunks: [
+        { pt:"Para levar, se faz favor.", say:"пара лывáр, сы фаш фаво́р", ru:"С собой, пожалуйста.", en:"To take away, please.", note:"Ответ на <b>É para levar ou para aqui?</b> из сцены в кафе. Кофе с собой здесь берут редко: его выпивают у стойки за минуту.", noteEn:"The answer to <b>É para levar ou para aqui?</b> from the café scene. Coffee to go is rare here: people drink it at the counter in a minute." },
+        { pt:"Qual é o prato do dia?", say:"куал э́ у прáту ду ди́а", ru:"Какое сегодня блюдо дня?", en:"What's the dish of the day?", note:"В обед это самое дешёвое и самое свежее. Его пишут мелом на доске или говорят вслух.", noteEn:"At lunchtime it is the cheapest and freshest option. It is chalked on a board or simply told to you." },
+        { pt:"Há meia dose?", say:"а мэ́йа до́з", ru:"Можно половину порции?", en:"Do you do half portions?", note:"<b>Meia</b>, а не meio: <b>dose</b> женского рода — сравни <b>meio quilo</b> из прошлого пакета.", noteEn:"<b>Meia</b>, not meio: <b>dose</b> is feminine — compare <b>meio quilo</b> in the previous pack." },
+        { pt:"Ainda estamos a ver.", say:"аи́нда ыштáмуш а вер", ru:"Мы ещё выбираем.", en:"We're still looking.", note:"<b>Estar a + инфинитив</b> — европейское «делаю сейчас». В Бразилии скажут <b>estamos vendo</b>.", noteEn:"<b>Estar a + infinitive</b> is the European «doing right now». In Brazil they would say <b>estamos vendo</b>." },
+        { pt:"Natural ou fresca?", say:"натурáл о фрэ́шка", ru:"Комнатной температуры или холодную?", en:"Room temperature or chilled?", note:"Ловушка: у воды <b>natural</b> — «не из холодильника», а не «без газа». Без газа — <b>sem gás</b>.", noteEn:"A trap: for water, <b>natural</b> means «not from the fridge», not «still». Still is <b>sem gás</b>." },
+        { pt:"Pode ser.", say:"под сэр", ru:"Давайте. / Подойдёт.", en:"Sure. / That'll do.", note:"Согласие на предложение: <b>Meia dose de polvo? — Pode ser.</b> Мягче, чем sim, и звучит на каждом шагу.", noteEn:"A yes to an offer: <b>Meia dose de polvo? — Pode ser.</b> Softer than sim, and you hear it everywhere." },
+        { pt:"Bom proveito!", say:"бо~ пруве́йту", ru:"Приятного аппетита!", en:"Enjoy your meal!", note:"Говорят тому, кто ест, когда сам за стол не садишься: проходя мимо, уходя из таски. За общим столом — <b>bom apetite</b>.", noteEn:"Said to someone eating when you are not sitting down yourself: walking past, leaving the tasca. At a shared table it is <b>bom apetite</b>." },
+        { pt:"Estava tudo bem?", say:"ыштáва ту́ду бай~", ru:"Всё было хорошо?", en:"Was everything all right?", note:"Официант спрашивает в конце, имперфектом. Отвечают в том же времени: <b>Estava ótimo!</b>", noteEn:"The waiter asks at the end, in the imperfect. You answer in the same tense: <b>Estava ótimo!</b>" },
+        { pt:"Pagamos em separado.", say:"пагáмуш ай~ сыпарáду", ru:"Мы платим каждый за себя.", en:"We'll pay separately.", note:"Официант может спросить первым: <b>É tudo junto?</b> — «всё вместе?».", noteEn:"The waiter may ask first: <b>É tudo junto?</b> — «all together?»." },
+        { pt:"Fique com o troco.", say:"фик ко~ у тро́ку", ru:"Сдачи не надо.", en:"Keep the change.", note:"Буквально «оставьте себе сдачу» — тот же <b>ficar com</b>, что в <b>fico com o talão</b>. Так и оставляют чаевые в кафе.", noteEn:"Literally «stay with the change» — the same <b>ficar com</b> as in <b>fico com o talão</b>. That is how a tip is left in a café." }
+      ],
+      dialog: "tasca",
+      text: {
+        title: "Um dia a comer fora",
+        titleRu: "день на еде вне дома",
+        titleEn: "A day of eating out",
+        pt: [
+          "Em Lisboa o pequeno-almoço é pequeno. De manhã vou à pastelaria da esquina e peço ao balcão uma bica e uma torrada. Ao balcão é mais barato do que na esplanada. Bebo o café em dois minutos e vou para a universidade.",
+          "Ao almoço como numa tasca perto da universidade. Não há ementa: o empregado diz o prato do dia. Hoje há bacalhau ou polvo grelhado com salada. A dose é muito grande, por isso peço meia dose. O senhor da tasca já sabe: «Meia dose e água fresca, não é?»",
+          "À tarde, depois das aulas, o lanche é com colegas numa esplanada: um galão e uma tosta, ou um sumo de laranja. A Ana é vegetariana e nunca pede prego nem bifana. À sexta-feira pedimos uma imperial.",
+          "No fim pagamos em separado. Gorjeta? Aqui é pouca: o troco fica na mesa, e o empregado diz: «Obrigado, boa tarde!»"
+        ],
+        ru: [
+          "В Лиссабоне завтрак маленький. Утром я иду в кондитерскую на углу и прошу у стойки эспрессо и тост с маслом. У стойки дешевле, чем на террасе. Кофе выпиваю за две минуты и иду в университет.",
+          "Обедаю в таске рядом с университетом. Меню нет: официант говорит, какое сегодня блюдо дня. Сегодня треска или осьминог на гриле с салатом. Порция очень большая, поэтому прошу половину. Хозяин таски уже знает: «Полпорции и холодной воды, да?»",
+          "Днём, после занятий, перекусываем с однокурсниками на террасе: кофе с молоком и горячий бутерброд или апельсиновый сок. Ана вегетарианка и никогда не берёт ни прегу, ни бифану. По пятницам заказываем по маленькому пиву.",
+          "В конце платим каждый за себя. Чаевые? Здесь они маленькие: сдача остаётся на столе, и официант говорит: «Спасибо, хорошего дня!»"
+        ],
+        en: [
+          "In Lisbon breakfast is small. In the morning I go to the pastelaria on the corner and ask at the counter for an espresso and a slice of buttered toast. At the counter it's cheaper than on the terrace. I drink the coffee in two minutes and go to the university.",
+          "I have lunch at a tasca near the university. There's no menu: the waiter tells you the dish of the day. Today it's salt cod or grilled octopus with salad. The portion is huge, so I ask for half. The man at the tasca already knows: «Half a portion and cold water, right?»",
+          "In the afternoon, after classes, we have a snack with classmates on a terrace: a milky coffee and a toasted sandwich, or an orange juice. Ana is a vegetarian and never orders a prego or a bifana. On Fridays we order a small beer.",
+          "At the end we pay separately. A tip? Here it's small: the change stays on the table, and the waiter says: «Thank you, have a good afternoon!»"
+        ],
+        why: "<b>Peço</b> — от <b>pedir</b>. Глагол ломается только в eu, как <b>digo</b> и <b>ponho</b>: дальше обычные <b>pede</b>, <b>pedimos</b>.<br><br><b>Ao almoço</b> — «в обед», <b>à sexta-feira</b> — «по пятницам»: предлог <b>a</b> с приёмом пищи или днём недели говорит о привычке, как <b>ao sábado</b> в прошлом пакете.<br><br><b>O pequeno-almoço é pequeno</b> — игра слов: буквально «маленький обед маленький». Тап переведёт половинки по отдельности; целое слово лежит в словах пакета.<br><br><b>…, não é?</b> в конце фразы — «да?», «правда же?»: так ждут подтверждения, не задавая настоящего вопроса.",
+        whyEn: "<b>Peço</b> comes from <b>pedir</b>. The verb breaks only in the eu form, like <b>digo</b> and <b>ponho</b>: after that it is regular — <b>pede</b>, <b>pedimos</b>.<br><br><b>Ao almoço</b> — «at lunch», <b>à sexta-feira</b> — «on Fridays»: the preposition <b>a</b> with a meal or a weekday marks a habit, like <b>ao sábado</b> in the previous pack.<br><br><b>O pequeno-almoço é pequeno</b> is a pun: literally «the small lunch is small». Tapping translates the two halves separately; the whole word is in the pack's word list.<br><br><b>…, não é?</b> at the end of a sentence — «right?», «isn't it?»: a way of asking for agreement without asking a real question."
+      },
+      eu: [
+        { pt:"Ao pequeno-almoço como …", ru:"Что ты ешь на завтрак?", en:"What do you have for breakfast?", ex:"Ao pequeno-almoço como uma torrada e bebo um galão." },
+        { pt:"Perto de casa há um café onde …", ru:"Какое кафе у тебя рядом с домом и что ты там берёшь?", en:"What café is near your home, and what do you have there?", ex:"Perto de casa há um café onde bebo uma bica de manhã." },
+        { pt:"Ao almoço peço …", ru:"Что ты заказываешь в обед?", en:"What do you order for lunch?", ex:"Ao almoço peço o prato do dia, porque é mais barato." },
+        { pt:"Não como … porque …", ru:"Чего ты не ешь и почему?", en:"What don't you eat, and why?", ex:"Não como nada picante, porque não gosto." },
+        { pt:"Na esplanada bebo …", ru:"Что ты пьёшь на террасе?", en:"What do you drink on a terrace?", ex:"Na esplanada bebo um sumo de laranja com os meus amigos." }
+      ],
+      missao: "Зайди в обед в таску или кафе с доской «prato do dia». Спроси <b>Qual é o prato do dia?</b>, попроси <b>meia dose</b>, на <b>Natural ou fresca?</b> выбери воду сам и расплатись, не переходя на английский. Бонус: на <b>Estava tudo bem?</b> ответь <b>Estava ótimo!</b>",
+      missaoEn: "Go at lunchtime to a tasca or a café with a «prato do dia» board. Ask <b>Qual é o prato do dia?</b>, ask for a <b>meia dose</b>, choose your water yourself when you hear <b>Natural ou fresca?</b>, and pay without switching to English. Bonus: answer <b>Estava tudo bem?</b> with <b>Estava ótimo!</b>"
     }
   ];
 
@@ -11400,8 +11619,8 @@
             (n ? L("Продолжить", "Continue") : L("Начать", "Start")) + '</button></div>' +
         '</div>';
       }).join("") +
-      '<p class="sit-soon">'+L("Следующие ситуации — кафе и ресторан, транспорт, квартира, университет, врач, бюрократия — появятся по одной, в порядке срочности.",
-                                 "More situations — café and restaurant, transport, the flat, university, the doctor, paperwork — will be added one at a time, most urgent first.")+'</p>';
+      '<p class="sit-soon">'+L("Следующие ситуации — транспорт, квартира, университет, врач, бюрократия — появятся по одной, в порядке срочности.",
+                                 "More situations — transport, the flat, university, the doctor, paperwork — will be added one at a time, most urgent first.")+'</p>';
       return;
     }
 
