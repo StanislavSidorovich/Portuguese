@@ -716,6 +716,21 @@
   .dg-modes{display:flex; gap:8px; flex-wrap:wrap;}
   .dg-modes .btn{flex:1 1 130px;}
   .dg-done{color:var(--ok); font-weight:800; margin-left:4px;}
+  /* Situações: пакет — лесенка из шести шагов на одном экране. */
+  .sit-meta{font-size:0.78rem; color:var(--muted); margin:-4px 0 10px;}
+  .sit-soon{font-size:0.84rem; color:var(--muted); margin:4px 0 18px;}
+  .sit-step-head{display:flex; align-items:center; gap:10px; margin:26px 0 8px; scroll-margin-top:70px;}
+  .sit-num{flex:0 0 auto; width:26px; height:26px; border-radius:50%; background:var(--base); color:#fff; font-weight:800; font-size:0.85rem; display:flex; align-items:center; justify-content:center;}
+  .sit-step-title{flex:1; font-weight:800; font-size:1.02rem;}
+  .sit-mark{flex:0 0 auto; font:inherit; font-size:0.78rem; padding:5px 10px; border-radius:999px; border:1px solid #CBD5D0; background:transparent; color:var(--muted); cursor:pointer;}
+  .sit-mark.on{border-color:var(--ok); color:var(--ok); font-weight:700;}
+  body.dark .sit-mark{border-color:#3A4641;}
+  .sit-lead{font-size:0.88rem; color:var(--muted); margin:0 0 10px;}
+  .sit-go{width:100%; margin:0 0 6px;}
+  .sit-text{font-family:var(--font-pt); font-size:1.04rem; line-height:1.75; margin:0 0 10px;}
+  .sit-ex{margin-top:6px; font-size:0.9rem;}
+  .sit-ex summary{cursor:pointer; color:var(--muted); font-size:0.8rem;}
+  .sit-ex .pt{font-family:var(--font-pt); font-weight:600;}
 
   .dg-stage{background:var(--card); border-radius:14px; padding:14px; margin:0 0 16px;}
   .dg-bar{display:flex; align-items:baseline; gap:8px; margin-bottom:10px;}
@@ -887,7 +902,12 @@
       </button>
       <button type="button" class="tool-row" data-open="dialogos">
         <span class="tool-icon">🗣</span>
-        <span class="row-title" data-en="Diálogos · a full conversation&lt;span class='row-title-ru'&gt;seven scenes: caf&eacute;, checkout, street, transport, meeting someone, pharmacy, restaurant&lt;/span&gt;">Diálogos · разговор целиком<span class="row-title-ru">семь сцен: кафе, касса, улица, транспорт, знакомство, аптека, ресторан</span></span>
+        <span class="row-title" data-en="Diálogos · a full conversation&lt;span class='row-title-ru'&gt;eight scenes: caf&eacute;, checkout, street, transport, meeting someone, pharmacy, restaurant, butcher&rsquo;s counter&lt;/span&gt;">Diálogos · разговор целиком<span class="row-title-ru">восемь сцен: кафе, касса, улица, транспорт, знакомство, аптека, ресторан, мясной прилавок</span></span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+      <button type="button" class="tool-row" data-open="situacoes">
+        <span class="tool-icon">🧺</span>
+        <span class="row-title" data-en="Situações · vocabulary for real life&lt;span class='row-title-ru'&gt;words, chunks, a scene and a text for each everyday situation &mdash; starting with groceries&lt;/span&gt;">Situações · словарь по ситуациям<span class="row-title-ru">слова, сочетания, сцена и текст на каждую бытовую ситуацию — начиная с продуктов</span></span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="tool-row" data-open="tool-conjugador">
@@ -8113,6 +8133,40 @@
   </div>
 </div>
 
+<!-- ============ SITUAÇÕES ============
+     Экран без data-topic — как Frases и Diálogos, он вне словарного
+     правила разметки: пакеты рисуются кодом из SITUACOES, поэтому ни
+     collectVocabSets() по разметке, ни проверка 3 сюда не дотягиваются.
+     Словарное правило для текстов пакета держит проверка 10. -->
+<div class="screen topic-screen" id="screen-situacoes" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back data-en="← All topics">← Все темы</button><div class="lang-switch"><button type="button" data-lang="ru">РУ</button><button type="button" data-lang="en">EN</button></div></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2 data-en="Situações · vocabulary for real life">Situações · словарь по ситуациям</h2>
+  </div>
+  <div class="topic-subtitle" data-en="The course topics grow your vocabulary alongside the grammar. Here it is the other way round: vocabulary is the goal, and each everyday situation gets its own set of words, chunks, a scene, a text and a task out in the city.">Темы курса наращивают словарь попутно с грамматикой. Здесь наоборот: словарь — главная цель, и на каждую бытовую ситуацию приходится свой набор слов, сочетаний, сцена, текст и задание в городе.</div>
+  <div class="pane active">
+
+    <div class="lang-note">Only <b>Frases</b>, <b>Diálogos</b> and <b>Situações</b> are translated: the course topics themselves are in Russian. The pronunciation hints of this course are written in Cyrillic, so they are hidden here — tap 🔊 to hear the words instead.</div>
+
+    <div id="sitIntro">
+      <div class="tip" data-en="&lt;b&gt;Six steps, each one bringing back the last.&lt;/b&gt; Words → chunks → a scene → a text → about you → a task out in the city. A word sticks after ten or fifteen encounters in different settings, not after one look at a list — so the same twenty-five words come back in every step: first on their own, then in chunks, then in a conversation, then in a story, then in your own sentences."><b>Шесть шагов, и каждый возвращает предыдущий.</b> Слова → сочетания → сцена → текст → о себе → задание в городе. Слово держится после десяти-пятнадцати встреч в разных обстановках, а не после одного взгляда на список, — поэтому одни и те же двадцать пять слов проходят через все шаги: сначала сами по себе, потом в сочетаниях, в разговоре, в рассказе и, наконец, в твоих собственных фразах.</div>
+      <div class="dg-intro" data-en="A reasonable pace is one situation a week: words and chunks on the first day, the scene and the text over the next two, the task on the weekend. The Dicionário reviews keep going every day on their own.">Разумный темп — одна ситуация в неделю: слова и сочетания в первый день, сцена и текст — в следующие два, задание — на выходных. Повторения в Dicionário идут каждый день сами по себе.</div>
+    </div>
+    <div id="sitPack"></div>
+    <div id="sitList"></div>
+
+    <button type="button" class="next-card" data-open="vocab">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
+        <span class="next-title" data-en="Dicionário — drill the words of the course">Dicionário — закрепить слова курса</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
 <!-- ============ DICIONÁRIO ============ -->
 <div class="screen topic-screen" id="screen-vocab" style="--tint-color:var(--base)">
   <div class="topic-topbar"><button type="button" class="back-btn" data-back data-en="← All topics">← Все темы</button></div>
@@ -8296,6 +8350,7 @@
     // кэш снят строкой ниже, иначе он навсегда останется на языке той
     // темы, что открылась первой.
     if(document.getElementById("screen-dialogos").classList.contains("active")) renderDialogos();
+    if(document.getElementById("screen-situacoes").classList.contains("active")) renderSituacoes();
     VOCAB_SETS = null;
     if(document.getElementById("screen-vocab").classList.contains("active")) renderVocabScreen();
     // Conjugador тоже рисуется кодом: подписи времён, чипы и весь разбор.
@@ -9064,6 +9119,13 @@
       put(VOCAB, key, ru);
       put(VOCAB_EN, key, en);
     });
+    SITUACOES.forEach(function(sc){
+      sc.words.forEach(function(x){
+        var key = x.w.toLowerCase();
+        put(VOCAB, key, x.ru);
+        put(VOCAB_EN, key, x.en);
+      });
+    });
   }
 
   // Латиница с португальскими диакритиками. Кириллица сюда не попадает,
@@ -9253,7 +9315,9 @@
         });
       });
     });
-    return sets;
+    // Пакеты Situações идут после тем: в фильтре тренажёра они стоят
+    // в конце списка, а в очереди «вперемешку» — наравне со всеми.
+    return sets.concat(sitVocabSets());
   }
 
   var VOCAB_SETS = null;
@@ -10270,6 +10334,106 @@
           noteEn: "The scribble-in-the-air gesture works everywhere, but the phrase is shorter. <b>Bom apetite</b> is said by everyone here, neighbouring tables included."
         }
       ]
+    },
+    {
+      id: "talho",
+      icon: "🥩",
+      title: "Talho · прилавок с номерками",
+      titleEn: "Talho · the ticket counter",
+      sub: "Суббота, мясной прилавок в супермаркете. Номерок, заказ на вес, «целиком или разрезать» и прощание.",
+      subEn: "Saturday, the butcher's counter in a supermarket. A ticket, ordering by weight, «whole or cut up», and the goodbye.",
+      steps: [
+        {
+          npc: { pt:"Trinta e sete! Senha trinta e sete!", say:"три́нта и сэт! сэ́нья три́нта и сэт", ru:"Тридцать семь! Номерок тридцать семь!", en:"Thirty-seven! Ticket thirty-seven!" },
+          goal: "На твоём номерке — 37. Отзовись и поздоровайся.",
+          goalEn: "Your ticket says 37. Speak up and say hello.",
+          answer: "Sou eu. Bom dia.",
+          say: "со́у е́у. бо~ ди́а",
+          answerRu: "Это я. Доброе утро.",
+          answerEn: "That's me. Good morning.",
+          wrong: [
+            { t:"Trinta e sete euros?", why:"Номер на слух принят за цену. У прилавка с номерками сначала вызывают, а платить будешь на кассе.", whyEn:"The number was heard as a price. At a ticket counter they call you first; you pay at the till later." },
+            { t:"Obrigado.", why:"Благодарить пока не за что. Продавец ищет глазами, чей номер, и если никто не отзовётся — вызовет следующий.", whyEn:"There is nothing to thank them for yet. The assistant is looking for whose number it is, and if nobody answers they call the next one." }
+          ],
+          note: "Номерок берут из автомата у прилавка: <b>tirar senha</b>. Числа вызывают быстро и по два раза — второй раз обычно со словом <b>senha</b>.",
+          noteEn: "You take the ticket from a machine by the counter: <b>tirar senha</b>. Numbers are called fast and twice — the second time usually with the word <b>senha</b>."
+        },
+        {
+          npc: { pt:"Bom dia. O que vai ser?", say:"бо~ ди́а. у кы вай сэр", ru:"Доброе утро. Что будем брать?", en:"Good morning. What'll it be?" },
+          goal: "Попроси полкило фарша.",
+          goalEn: "Ask for half a kilo of minced meat.",
+          answer: "Queria meio quilo de carne picada, se faz favor.",
+          say: "кыри́а мэ́йу ки́лу ды кáрн пикáда, сы фаш фаво́р",
+          answerRu: "Мне полкило фарша, пожалуйста.",
+          answerEn: "I'd like half a kilo of minced meat, please.",
+          wrong: [
+            { t:"Queria meia quilo de carne picada.", why:"<b>Quilo</b> мужского рода — значит <b>meio quilo</b>. <b>Meia</b> ставят к женскому: meia dúzia, meia hora.", whyEn:"<b>Quilo</b> is masculine, so it is <b>meio quilo</b>. <b>Meia</b> goes with feminine words: meia dúzia, meia hora." },
+            { t:"Quero carne.", why:"Ни вида, ни веса — продавец переспросит и то и другое. И <b>quero</b> у прилавка звучит требованием: просят через <b>queria</b>.", whyEn:"Neither the kind nor the weight — the assistant will have to ask about both. And <b>quero</b> sounds like a demand at a counter: you ask with <b>queria</b>." }
+          ],
+          note: "<b>O que vai ser?</b> — «что будет?»: так у прилавка и в кафе спрашивают заказ. <b>Queria</b> — имперфект из темы 2.3, здесь он работает как вежливая просьба, а не как прошлое.",
+          noteEn: "<b>O que vai ser?</b> — «what's it going to be?»: that is how a counter or a café asks for your order. <b>Queria</b> is the imperfect from topic 2.3; here it works as a polite request, not as the past."
+        },
+        {
+          npc: { pt:"Mais alguma coisa?", say:"майш алгу́ма ко́йза", ru:"Что-нибудь ещё?", en:"Anything else?" },
+          goal: "Возьми ещё одну курицу.",
+          goalEn: "Add one chicken.",
+          answer: "Um frango, se faz favor.",
+          say: "у~ фрáнгу, сы фаш фаво́р",
+          answerRu: "Курицу, пожалуйста.",
+          answerEn: "A chicken, please.",
+          wrong: [
+            { t:"Uma frango, se faz favor.", why:"<b>Frango</b> — мужского рода: <b>um frango</b>. Русская «курица» тянет к женскому, но слово другое.", whyEn:"<b>Frango</b> is masculine: <b>um frango</b>. The feminine-sounding «chicken» of other languages is misleading here." },
+            { t:"Mais nada, obrigado.", why:"«Больше ничего» — фраза нужная, но курица так и осталась на прилавке.", whyEn:"«Nothing else» is a useful phrase, but the chicken stays on the counter." }
+          ],
+          note: "<b>Frango</b> — курица как мясо. <b>Galinha</b> — птица во дворе и курица для супа: <b>canja de galinha</b>.",
+          noteEn: "<b>Frango</b> is chicken as meat. <b>Galinha</b> is the bird in the yard, and the hen for soup: <b>canja de galinha</b>."
+        },
+        {
+          npc: { pt:"Inteiro ou cortado?", say:"интэ́йру о куртáду", ru:"Целиком или разрезать?", en:"Whole or cut up?" },
+          goal: "Попроси разрезать.",
+          goalEn: "Ask for it cut up.",
+          answer: "Cortado, se faz favor.",
+          say: "куртáду, сы фаш фаво́р",
+          answerRu: "Разрезать, пожалуйста.",
+          answerEn: "Cut up, please.",
+          wrong: [
+            { t:"Sim, se faz favor.", why:"Снова вопрос с «или», как в кафе: «да» не выбирает ничего. Повтори ту половину, которую выбираешь.", whyEn:"An either/or question again, as in the café: «yes» chooses nothing. Repeat the half you are choosing." },
+            { t:"Inteiro, se faz favor.", why:"Это «целиком» — курицу отдадут одной тушкой.", whyEn:"That is «whole» — you get the bird in one piece." }
+          ],
+          note: "Разрежут прямо при тебе, на весу. Если хочешь без кожи — <b>sem pele</b>.",
+          noteEn: "They cut it in front of you, right there. If you want it without the skin — <b>sem pele</b>."
+        },
+        {
+          npc: { pt:"Pronto. É tudo?", say:"про́нту. э́ ту́ду", ru:"Готово. Это всё?", en:"There you go. Is that everything?" },
+          goal: "Больше ничего не нужно.",
+          goalEn: "You don't need anything else.",
+          answer: "É tudo, obrigado.",
+          say: "э́ ту́ду, убригáду",
+          answerRu: "Это всё, спасибо.",
+          answerEn: "That's all, thanks.",
+          wrong: [
+            { t:"Não, obrigado.", why:"На вопрос «это всё?» «нет» значит «нет, не всё» — продавец будет ждать следующего заказа.", whyEn:"To «is that everything?», «no» means «no, not everything» — the assistant will wait for your next order." },
+            { t:"De nada.", why:"«Не за что» — ответ на чужое спасибо, а тут тебя спросили.", whyEn:"«You're welcome» answers someone else's thanks, and here you were asked a question." }
+          ],
+          note: "<b>Pronto</b> — «готово, вот»: самое частое слово у прилавка. Им закрывают любое действие — взвесил, завернул, отдал.",
+          noteEn: "<b>Pronto</b> — «done, there you go»: the most common word at any counter. It closes every action — weighed, wrapped, handed over."
+        },
+        {
+          npc: { pt:"Então paga na caixa. Bom fim de semana!", say:"энтáу~ пáга на кáйша. бо~ фи~ ды сымáна", ru:"Тогда оплата на кассе. Хороших выходных!", en:"Then you pay at the till. Have a nice weekend!" },
+          goal: "Поблагодари и пожелай того же в ответ.",
+          goalEn: "Thank them and wish them the same.",
+          answer: "Obrigado, igualmente!",
+          say: "убригáду, игуалме́нт",
+          answerRu: "Спасибо, и вам того же!",
+          answerEn: "Thanks, same to you!",
+          wrong: [
+            { t:"De nada, bom fim de semana.", why:"<b>De nada</b> — ответ на чужое спасибо, а благодаришь здесь ты.", whyEn:"<b>De nada</b> answers someone else's thanks, and here the one saying thank you is you." },
+            { t:"Sim, obrigado.", why:"«Хороших выходных» — пожелание, а не вопрос: «да» на него не отвечает.", whyEn:"«Have a nice weekend» is a wish, not a question: «yes» does not answer it." }
+          ],
+          note: "<b>Igualmente</b> — «и вам того же»: отвечают на любое пожелание. Пакет с наклейкой отдают в руки, а платят за всё вместе на общей кассе.",
+          noteEn: "<b>Igualmente</b> — «same to you»: the answer to any good wish. The package with its price sticker is handed to you, and you pay for everything together at the main till."
+        }
+      ]
     }
   ];
 
@@ -10921,6 +11085,9 @@
     if(el.dataset.topic){ try{ localStorage.setItem(LAST_TOPIC_KEY, id); }catch(e){} }
     if(id === "vocab"){ session = null; renderVocabScreen(); }
     if(id === "dialogos"){ dgRun = null; renderDialogos(); }
+    // Открытый пакет не сбрасывается: из него уходят в Dicionário и в сцену
+    // и возвращаются «назад» — на тот же шаг, а не на список пакетов.
+    if(id === "situacoes"){ renderSituacoes(); }
     prepareScreen(el);
     window.scrollTo(0,0);
     updateFloatBack();
@@ -11069,6 +11236,288 @@
     armHomeGuard();
   });
 
+  /* ================= SITUAÇÕES: СЛОВАРЬ ПО ЖИЗНЕННЫМ СИТУАЦИЯМ =================
+     Третья ветка рядом с темами курса и разговорным слоем. Темы наращивают
+     словарь попутно с грамматикой, Frases и Diálogos дают готовые куски, а
+     здесь словарь — главная цель: одна бытовая ситуация проходится лесенкой
+     из шести шагов (слова → сочетания → сцена → текст → о себе → задание в
+     городе), и каждый следующий шаг возвращает слова предыдущего.
+
+     Слова пакета — новые для курса (проверка 10 требует, чтобы их не было
+     ни в VOCAB, ни в наборах тем, ни в прошлых пакетах). В текст пакета
+     допускаются только слова курса и пакетов до него включительно — то же
+     правило 2, что и в темах, только сверяется оно по данным, а не по
+     разметке. Сочетания (chunks) в тексте не считаются: тап переводит по
+     одному слову, и каждое слово сочетания обязано переводиться само.
+
+     Слова и сочетания пакета уходят в Dicionário отдельным набором
+     (collectVocabSets), с фильтром «Ситуации · …». Отдельного тренажёра у
+     ветки нет и быть не должно — коробки Лейтнера одни на весь курс. */
+
+  var SIT_KEY = "ptSitV1";
+
+  var SIT_STEPS = [
+    { id:"palavras",  ru:"Слова",          en:"Words" },
+    { id:"chunks",    ru:"Сочетания",      en:"Chunks" },
+    { id:"dialogo",   ru:"Сцена",          en:"Scene" },
+    { id:"texto",     ru:"Текст",          en:"Text" },
+    { id:"eu",        ru:"О себе",         en:"About you" },
+    { id:"missao",    ru:"Задание в городе", en:"Out in the city" }
+  ];
+
+  var SITUACOES = [
+    {
+      id: "mercado",
+      icon: "🛒",
+      title: "Supermercado e mercado · продукты",
+      titleEn: "Supermercado e mercado · groceries",
+      sub: "Рынок в своём районе, прилавки с номерками в супермаркете, заказ на вес и касса.",
+      subEn: "The neighbourhood market, the ticket counters in a supermarket, ordering by weight, and the till.",
+      words: [
+        { w:"o talho", say:"у тáлю", ru:"мясной отдел, мясная лавка", en:"butcher's (counter or shop)", note:"В Бразилии — <b>açougue</b>. В Португалии это слово не поймут.", noteEn:"In Brazil it is <b>açougue</b>. In Portugal nobody will understand that word." },
+        { w:"a peixaria", say:"а пэйшари́а", ru:"рыбный отдел, рыбная лавка", en:"fishmonger's (counter or shop)" },
+        { w:"a charcutaria", say:"а шаркутари́а", ru:"прилавок нарезки: колбасы, сыры", en:"deli counter: cold meats and cheese" },
+        { w:"a senha", say:"а сэ́нья", ru:"номерок очереди", en:"queue ticket (number)", note:"То же слово ждёт тебя в Finanças, в AIMA и в банке: номерок электронной очереди. Здесь ты встречаешь его впервые — и в самой мирной обстановке.", noteEn:"The same word is waiting for you at Finanças, at AIMA and at the bank: the ticket of an electronic queue. You meet it here first, in the calmest possible setting." },
+        { w:"tirar", say:"тирáр", ru:"взять, вытащить (tirar senha — взять номерок)", en:"to take, to pull out (tirar senha — take a ticket)" },
+        { w:"o quilo", say:"у ки́лу", ru:"килограмм", en:"kilo" },
+        { w:"a carne picada", say:"а кáрн пикáда", ru:"фарш", en:"minced meat" },
+        { w:"a carne de vaca", say:"а кáрн ды вáка", ru:"говядина", en:"beef" },
+        { w:"o porco", say:"у по́рку", ru:"свинина; свинья", en:"pork; pig" },
+        { w:"o frango", say:"у фрáнгу", ru:"курица (мясо)", en:"chicken (meat)", note:"<b>Frango</b> — курица на прилавке и на тарелке. <b>Galinha</b> — птица во дворе и курица для супа: <b>canja de galinha</b>.", noteEn:"<b>Frango</b> is chicken on the counter and on the plate. <b>Galinha</b> is the bird in the yard, and the hen for soup: <b>canja de galinha</b>." },
+        { w:"o polvo", say:"у по́лву", ru:"осьминог", en:"octopus" },
+        { w:"os legumes", say:"уж лыгу́мыш", ru:"овощи", en:"vegetables" },
+        { w:"a batata", say:"а батáта", ru:"картофель", en:"potato" },
+        { w:"a cebola", say:"а сыбо́ла", ru:"лук (репчатый)", en:"onion" },
+        { w:"o tomate", say:"у тумáт", ru:"помидор", en:"tomato" },
+        { w:"a laranja", say:"а ларáнжа", ru:"апельсин", en:"orange" },
+        { w:"o azeite", say:"у азэ́йт", ru:"оливковое масло", en:"olive oil" },
+        { w:"o fiambre", say:"у фиáмбр", ru:"ветчина (варёная, нарезкой)", en:"cooked ham (sliced)", note:"Ловушка с Бразилией: там ветчина — <b>presunto</b>, а в Португалии <b>presunto</b> — сыровяленый окорок вроде хамона, и стоит он втрое дороже.", noteEn:"A Brazil trap: over there ham is <b>presunto</b>, while in Portugal <b>presunto</b> is dry-cured ham like jamón, at three times the price." },
+        { w:"o cesto", say:"у сэ́шту", ru:"корзина", en:"basket" },
+        { w:"o talão", say:"у талáу~", ru:"кассовый чек", en:"receipt", note:"<b>Talão</b> — обычный чек. <b>Fatura</b> — чек с твоим налоговым номером: его просят, когда говорят номер на кассе.", noteEn:"<b>Talão</b> is an ordinary receipt. <b>Fatura</b> is a receipt with your tax number on it — that is what you get when you give the number at the till." },
+        { w:"o contribuinte", say:"у контрибуи́нт", ru:"налогоплательщик; налоговый номер (NIF)", en:"taxpayer; tax number (NIF)", note:"На кассе спрашивают одним словом: <b>Contribuinte?</b> — это вопрос про NIF, а не про тебя.", noteEn:"At the till it comes as one word: <b>Contribuinte?</b> — a question about your NIF, not about you." },
+        { w:"o multibanco", say:"у мултибáнку", ru:"оплата картой; банкомат", en:"card payment; cash machine" },
+        { w:"fresco", say:"фрэ́шку", ru:"свежий; прохладный", en:"fresh; cool" },
+        { w:"a promoção", say:"а прумусáу~", ru:"акция, скидка", en:"special offer, discount" },
+        { w:"pesar", say:"пызáр", ru:"взвешивать; весить", en:"to weigh", note:"В части супермаркетов фрукты и овощи взвешивают сами: весы с картинками стоят в отделе, наклейку с ценой — на пакет.", noteEn:"In some supermarkets you weigh fruit and vegetables yourself: the scales with pictures stand in the aisle, and the price sticker goes on the bag." }
+      ],
+      chunks: [
+        { pt:"tirar senha", say:"тирáр сэ́нья", ru:"взять номерок", en:"take a ticket", note:"Автомат с номерками стоит у каждого прилавка с продавцом. Без номерка очередь тебя не увидит.", noteEn:"There is a ticket machine next to every staffed counter. Without a ticket, the queue does not see you." },
+        { pt:"Quem é o último?", say:"кай~ э́ у у́лтиму", ru:"Кто последний?", en:"Who's last in the queue?", note:"Там, где номерков нет: на рынке, в маленькой лавке, в очереди к окошку.", noteEn:"Where there are no tickets: at the market, in a small shop, in the queue for a counter." },
+        { pt:"Queria meio quilo de…", say:"кыри́а мэ́йу ки́лу ды", ru:"Мне полкило…", en:"I'd like half a kilo of…", note:"<b>Meio</b>, а не meia: quilo мужского рода. <b>Meia</b> — с женским: meia dúzia, meia hora.", noteEn:"<b>Meio</b>, not meia: quilo is masculine. <b>Meia</b> goes with feminine words: meia dúzia, meia hora." },
+        { pt:"seis fatias de fiambre", say:"сэйш фати́аш ды фиáмбр", ru:"шесть ломтиков ветчины", en:"six slices of ham", note:"На прилавке нарезки заказывают ломтиками, а не граммами.", noteEn:"At the deli counter you order in slices rather than grams." },
+        { pt:"Está em promoção?", say:"ыштá э~ прумусáу~", ru:"Это по акции?", en:"Is this on offer?" },
+        { pt:"Inteiro ou cortado?", say:"интэ́йру о куртáду", ru:"Целиком или разрезать?", en:"Whole or cut up?", note:"Вопрос с «или»: отвечают той половиной, которую выбирают, — <b>Cortado, se faz favor.</b>", noteEn:"An either/or question: you answer with the half you choose — <b>Cortado, se faz favor.</b>" },
+        { pt:"Pode arranjar o peixe?", say:"под аранжáр у пэ́йш", ru:"Почистите рыбу?", en:"Could you clean the fish?", note:"<b>Arranjar</b> — «привести в порядок»: у рыбы это почистить и выпотрошить. Обычно спрашивают сами: <b>Quer o peixe arranjado?</b>", noteEn:"<b>Arranjar</b> means «to sort out»: for a fish, that is scaling and gutting it. Usually they ask you first: <b>Quer o peixe arranjado?</b>" },
+        { pt:"É tudo, obrigado.", say:"э́ ту́ду, убригáду", ru:"Это всё, спасибо.", en:"That's all, thanks." },
+        { pt:"Tem cartão Continente?", say:"тай~ картáу~ контине́нт", ru:"У вас есть карта Continente?", en:"Do you have a Continente card?", note:"Вопрос про карту лояльности сети. У каждой сети своя, ответ — <b>Não tenho</b>, и касса идёт дальше.", noteEn:"A question about the chain's loyalty card. Every chain has its own; the answer <b>Não tenho</b> moves the till along." },
+        { pt:"Igualmente!", say:"игуалме́нт", ru:"И вам того же!", en:"Same to you!", note:"Ответ на любое пожелание: хороших выходных, приятного аппетита, хорошего дня.", noteEn:"The answer to any good wish: have a nice weekend, enjoy your meal, have a good day." }
+      ],
+      dialog: "talho",
+      text: {
+        title: "As compras de sábado",
+        titleRu: "субботние покупки",
+        titleEn: "Saturday shopping",
+        pt: [
+          "Ao sábado de manhã vou às compras. Primeiro vou ao mercado do bairro, porque lá a fruta e os legumes são mais frescos e mais baratos. Compro batatas, cebolas, tomates e um quilo de laranjas.",
+          "Depois vou ao supermercado. No talho tiro uma senha e espero. Quando chamam o meu número, digo: «Queria meio quilo de carne picada e um frango, se faz favor.» Na peixaria o peixe é fresco, mas o polvo está caro. Hoje não compro.",
+          "No fim ponho no cesto azeite, arroz, ovos e fiambre. Na caixa, a senhora pergunta: «Contribuinte?» Dou o meu número, pago com multibanco e fico com o talão.",
+          "Em casa, a minha colega de casa abre o saco e diz: «Esqueceste o pão!» É sempre assim."
+        ],
+        ru: [
+          "По субботам утром я хожу за покупками. Сначала иду на рынок в своём районе, потому что там фрукты и овощи свежее и дешевле. Покупаю картошку, лук, помидоры и килограмм апельсинов.",
+          "Потом иду в супермаркет. В мясном отделе беру номерок и жду. Когда вызывают мой номер, говорю: «Мне полкило фарша и курицу, пожалуйста». В рыбном отделе рыба свежая, но осьминог дорогой. Сегодня не беру.",
+          "Под конец кладу в корзину оливковое масло, рис, яйца и ветчину. На кассе женщина спрашивает: «Налоговый номер?» Называю свой номер, плачу картой и забираю чек.",
+          "Дома соседка по квартире открывает пакет и говорит: «Ты забыл хлеб!» Всегда так."
+        ],
+        en: [
+          "On Saturday mornings I go shopping. First I go to the neighbourhood market, because the fruit and vegetables there are fresher and cheaper. I buy potatoes, onions, tomatoes and a kilo of oranges.",
+          "Then I go to the supermarket. At the butcher's counter I take a ticket and wait. When they call my number, I say: «I'd like half a kilo of minced meat and a chicken, please.» At the fish counter the fish is fresh, but the octopus is expensive. Not today.",
+          "Finally I put olive oil, rice, eggs and ham in the basket. At the till the woman asks: «Tax number?» I give my number, pay by card and keep the receipt.",
+          "At home my flatmate opens the bag and says: «You forgot the bread!» It's always like that."
+        ],
+        why: "<b>Ao sábado</b> — «по субботам», привычка, а не одна суббота. Одна конкретная была бы <b>no sábado</b>.<br><br><b>Queria</b> — имперфект из темы 2.3, но здесь он не про прошлое: это вежливая просьба. У прилавка и в кафе просят им, а не <b>quero</b>.<br><br><b>Chamam o meu número</b> — «вызывают мой номер»: глагол без подлежащего в форме «они» — так говорят о действии, когда неважно, кто его делает.<br><br><b>Fico com o talão</b> — «оставляю чек себе». <b>Ficar com</b> — оставить себе, забрать; тот же оборот в <b>Fico com este</b> — «беру вот этот».",
+        whyEn: "<b>Ao sábado</b> means «on Saturdays» — a habit, not one particular Saturday. A single one would be <b>no sábado</b>.<br><br><b>Queria</b> is the imperfect from topic 2.3, but here it is not about the past: it is a polite request. At a counter or in a café you ask with it, not with <b>quero</b>.<br><br><b>Chamam o meu número</b> — «they call my number»: a verb with no subject in the «they» form is how you talk about an action when it does not matter who does it.<br><br><b>Fico com o talão</b> — «I keep the receipt». <b>Ficar com</b> means to keep or take; the same pattern gives <b>Fico com este</b> — «I'll take this one»."
+      },
+      eu: [
+        { pt:"Compro a comida no …", ru:"Где ты обычно покупаешь продукты?", en:"Where do you usually buy groceries?", ex:"Compro a comida no supermercado, perto de casa." },
+        { pt:"Vou às compras …", ru:"Когда ты ходишь за покупками?", en:"When do you go shopping?", ex:"Vou às compras ao domingo à tarde." },
+        { pt:"No talho compro …", ru:"Что берёшь в мясном отделе?", en:"What do you buy at the butcher's?", ex:"No talho compro frango e carne picada." },
+        { pt:"Não compro … porque …", ru:"Что не покупаешь и почему?", en:"What don't you buy, and why?", ex:"Não compro polvo, porque é muito caro." },
+        { pt:"No mercado do meu bairro há …", ru:"Что есть на рынке в твоём районе?", en:"What is there at your neighbourhood market?", ex:"No mercado do meu bairro há fruta muito fresca." }
+      ],
+      missao: "Сходи к прилавку с номерками — talho, peixaria или charcutaria. Возьми номерок, закажи на вес по-португальски (<b>Queria meio quilo de…</b>) и ответь на <b>Mais alguma coisa?</b> и <b>É tudo?</b>, не переходя на английский. Бонус: у полки с жёлтым ценником спроси <b>Está em promoção?</b>",
+      missaoEn: "Go to a ticket counter — talho, peixaria or charcutaria. Take a ticket, order by weight in Portuguese (<b>Queria meio quilo de…</b>) and answer <b>Mais alguma coisa?</b> and <b>É tudo?</b> without switching to English. Bonus: at a shelf with a yellow price tag, ask <b>Está em promoção?</b>"
+    }
+  ];
+
+  // {mercado:{palavras:1, texto:1}} — какие шаги пакета отмечены.
+  function loadSitProgress(){
+    try{ return JSON.parse(localStorage.getItem(SIT_KEY) || "{}") || {}; }catch(e){ return {}; }
+  }
+  function saveSitProgress(p){
+    try{ localStorage.setItem(SIT_KEY, JSON.stringify(p)); }catch(e){}
+  }
+  function sitById(id){
+    for(var i = 0; i < SITUACOES.length; i++){ if(SITUACOES[i].id === id) return SITUACOES[i]; }
+    return null;
+  }
+  function sitDoneCount(done){
+    var n = 0;
+    SIT_STEPS.forEach(function(s){ if(done && done[s.id]) n++; });
+    return n;
+  }
+
+  // Набор для Dicionário: слова и сочетания пакета вместе. Сочетание в
+  // тренажёре — такая же карточка, как слово: вспоминать его надо целиком.
+  function sitVocabSets(){
+    return SITUACOES.map(function(sc){
+      var items = sc.words.map(function(x){ return { w:x.w, t:L(x.ru, x.en) }; })
+        .concat(sc.chunks.map(function(x){ return { w:x.pt, t:L(x.ru, x.en) }; }));
+      return { topic:"sit-" + sc.id, title:L("Ситуации · ", "Situations · ") + sc.title.split(" · ")[0], label:"", words:items };
+    });
+  }
+
+  var sitOpen = null;  // id открытого пакета или null — список пакетов
+
+  function renderSituacoes(){
+    var list = document.getElementById("sitList");
+    var pack = document.getElementById("sitPack");
+    var intro = document.getElementById("sitIntro");
+    if(!list || !pack) return;
+    var done = loadSitProgress();
+    if(!sitOpen){
+      pack.innerHTML = "";
+      if(intro) intro.style.display = "";
+      list.innerHTML = SITUACOES.map(function(sc){
+        var n = sitDoneCount(done[sc.id]);
+        return '<div class="dg-scene">' +
+          '<div class="dg-scene-head"><span class="dg-scene-icon">'+sc.icon+'</span>' +
+            '<span class="dg-scene-title">'+escapeHtml(L(sc.title, sc.titleEn))+'</span>' +
+            '<span class="dg-step">'+n+' / '+SIT_STEPS.length+'</span></div>' +
+          '<div class="dg-scene-sub">'+escapeHtml(L(sc.sub, sc.subEn))+'</div>' +
+          '<div class="sit-meta">'+sc.words.length+L(' слов · ', ' words · ')+sc.chunks.length+L(' сочетаний', ' chunks')+'</div>' +
+          '<div class="dg-modes"><button type="button" class="btn btn-check" data-sit="open" data-pack="'+sc.id+'">' +
+            (n ? L("Продолжить", "Continue") : L("Начать", "Start")) + '</button></div>' +
+        '</div>';
+      }).join("") +
+      '<p class="sit-soon">'+L("Следующие ситуации — кафе и ресторан, транспорт, квартира, университет, врач, бюрократия — появятся по одной, в порядке срочности.",
+                                 "More situations — café and restaurant, transport, the flat, university, the doctor, paperwork — will be added one at a time, most urgent first.")+'</p>';
+      return;
+    }
+
+    var sc = sitById(sitOpen);
+    var d = done[sc.id] || {};
+    list.innerHTML = "";
+    if(intro) intro.style.display = "none";
+
+    function stepHead(i){
+      var s = SIT_STEPS[i];
+      return '<div class="sit-step-head" id="sit-'+s.id+'"><span class="sit-num">'+(i+1)+'</span>' +
+        '<span class="sit-step-title">'+L(s.ru, s.en)+'</span>' +
+        '<button type="button" class="sit-mark'+(d[s.id] ? ' on' : '')+'" data-sit="mark" data-step="'+s.id+'">' +
+          (d[s.id] ? '✓ '+L("сделано","done") : L("отметить","mark done")) + '</button></div>';
+    }
+
+    var words = '<div class="fr-list">' + sc.words.map(function(x){
+      return '<div class="fr-row"><div class="fr-pt">'+escapeHtml(x.w)+dgSay(x.w)+'</div>' +
+        '<div class="fr-say">'+escapeHtml(x.say)+'</div>' +
+        '<div class="fr-ru">'+escapeHtml(L(x.ru, x.en))+'</div>' +
+        (x.note ? '<div class="fr-when">'+L(x.note, x.noteEn)+'</div>' : "") + '</div>';
+    }).join("") + '</div>';
+
+    var chunks = '<div class="fr-list">' + sc.chunks.map(function(x){
+      return '<div class="fr-row"><div class="fr-pt">'+escapeHtml(x.pt)+dgSay(x.pt)+'</div>' +
+        '<div class="fr-say">'+escapeHtml(x.say)+'</div>' +
+        '<div class="fr-ru">'+escapeHtml(L(x.ru, x.en))+'</div>' +
+        (x.note ? '<div class="fr-when">'+L(x.note, x.noteEn)+'</div>' : "") + '</div>';
+    }).join("") + '</div>';
+
+    var scene = dialogById(sc.dialog);
+    var t = sc.text;
+    var text = '<div class="mini-text">' +
+      t.pt.map(function(p){ return '<p class="sit-text">'+escapeHtml(p)+dgSay(p)+'</p>'; }).join("") +
+      '<button class="btn btn-translate" type="button">'+L("Показать перевод", "Show translation")+'</button>' +
+      '<p class="ru-translation">'+L(t.ru, t.en).map(escapeHtml).join("<br><br>")+'</p>' +
+      '<p class="why-note">'+L(t.why, t.whyEn)+'</p></div>';
+
+    var eu = '<div class="fr-list">' + sc.eu.map(function(x){
+      return '<div class="fr-row"><div class="fr-ru">'+escapeHtml(L(x.ru, x.en))+'</div>' +
+        '<div class="fr-pt">'+escapeHtml(x.pt)+'</div>' +
+        '<details class="sit-ex"><summary>'+L("пример","example")+'</summary><span class="pt">'+escapeHtml(x.ex)+'</span>'+dgSay(x.ex)+'</details></div>';
+    }).join("") + '</div>';
+
+    pack.innerHTML =
+      '<div class="dg-bar"><span class="dg-scene-icon">'+sc.icon+'</span>' +
+        '<span class="dg-scene-title">'+escapeHtml(L(sc.title, sc.titleEn))+'</span>' +
+        '<span class="dg-step">'+sitDoneCount(d)+' / '+SIT_STEPS.length+'</span></div>' +
+      '<div class="fr-jump">' + SIT_STEPS.map(function(s){
+        return '<button type="button" data-scroll="sit-'+s.id+'">'+L(s.ru, s.en)+(d[s.id] ? ' ✓' : '')+'</button>';
+      }).join("") + '</div>' +
+
+      stepHead(0) +
+      '<p class="sit-lead">'+L("Прочитай вслух каждое слово дважды, потом закрой перевод и вспомни. Сами карточки — в Dicionário, набором этой ситуации: там их повторения разложены по дням.",
+                               "Read each word aloud twice, then cover the translation and recall it. The cards themselves are in Dicionário, as this situation's set, where their reviews are spread over days.")+'</p>' +
+      words +
+      '<button type="button" class="btn btn-check sit-go" data-sit="drill">'+L("Учить эти слова в Dicionário →", "Drill these words in Dicionário →")+'</button>' +
+
+      stepHead(1) +
+      '<p class="sit-lead">'+L("Сочетание учат куском, а не по словам: знать tirar и senha по отдельности ещё не значит сказать tirar senha. Они тоже лежат в наборе Dicionário.",
+                               "A chunk is learned whole, not word by word: knowing tirar and senha separately is not the same as saying tirar senha. They are in the Dicionário set too.")+'</p>' +
+      chunks +
+
+      stepHead(2) +
+      '<p class="sit-lead">'+(scene ? L("Сцена «"+scene.title+"» в Diálogos: тот же прилавок, собеседник говорит первым. Пройди её выбором, а через день — сборкой.",
+                                        "The scene «"+scene.titleEn+"» in Diálogos: the same counter, and the other person speaks first. Do it in choice mode, then in build mode a day later.") : "")+'</p>' +
+      '<button type="button" class="btn btn-check sit-go" data-sit="scene">'+L("Открыть сцену →", "Open the scene →")+'</button>' +
+
+      stepHead(3) +
+      '<div class="text-label">Texto · '+escapeHtml(t.title)+' — '+escapeHtml(L(t.titleRu, t.titleEn))+'</div>' +
+      '<p class="sit-lead">'+L("В тексте только слова курса и этой ситуации — любое слово переводится тапом. Прочитай его, потом прослушай и повтори вслед за голосом по абзацу.",
+                               "The text uses only words from the course and this situation — tap any of them for a translation. Read it, then listen and repeat after the voice, paragraph by paragraph.")+'</p>' +
+      text +
+
+      stepHead(4) +
+      '<p class="sit-lead">'+L("Скажи вслух про свою жизнь, дописав начало фразы. Пример открывай только после своей попытки: слово, сказанное о себе, держится в памяти дольше.",
+                               "Say it aloud about your own life by finishing the sentence. Open the example only after you have tried: a word you said about yourself stays longer.")+'</p>' +
+      eu +
+
+      stepHead(5) +
+      '<div class="tip">'+L(sc.missao, sc.missaoEn)+'</div>' +
+
+      '<div class="dg-actions"><button type="button" class="btn btn-reveal" data-sit="close">'+L("К ситуациям", "Back to situations")+'</button></div>';
+
+    pack.querySelectorAll(".sit-text").forEach(wrapTapWords);
+  }
+
+  function handleSitAction(btn){
+    var a = btn.dataset.sit;
+    if(a === "open"){ sitOpen = btn.dataset.pack; renderSituacoes(); window.scrollTo(0,0); return; }
+    if(a === "close"){ sitOpen = null; renderSituacoes(); window.scrollTo(0,0); return; }
+    var sc = sitById(sitOpen);
+    if(!sc) return;
+    if(a === "mark"){
+      var p = loadSitProgress();
+      if(!p[sc.id]) p[sc.id] = {};
+      if(p[sc.id][btn.dataset.step]) delete p[sc.id][btn.dataset.step]; else p[sc.id][btn.dataset.step] = 1;
+      saveSitProgress(p);
+      var y = window.scrollY;
+      renderSituacoes();
+      window.scrollTo(0, y);
+      return;
+    }
+    if(a === "drill"){
+      vocabPrefs.topic = "sit-" + sc.id;
+      saveVocabPrefs(vocabPrefs);
+      goTopic("vocab");
+      return;
+    }
+    if(a === "scene"){
+      goTopic("dialogos");
+      dgStart(sc.dialog, "mc");
+      return;
+    }
+  }
+
   /* ================= СОБЫТИЯ ================= */
 
   document.addEventListener("click", function(e){
@@ -11093,6 +11542,9 @@
       renderVocabTrainer();
       return;
     }
+
+    var sitBtn = e.target.closest("[data-sit]");
+    if(sitBtn){ handleSitAction(sitBtn); return; }
 
     var dgBtn = e.target.closest("[data-dg]");
     if(dgBtn){ handleDgAction(dgBtn); return; }
@@ -11175,6 +11627,7 @@
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem(LAST_TOPIC_KEY);
       localStorage.removeItem(VOCAB_KEY);
+      localStorage.removeItem(SIT_KEY);
     }catch(e){}
     document.querySelectorAll("input.blank, select.mc").forEach(function(i){
       i.value = ""; i.classList.remove("ok","bad");

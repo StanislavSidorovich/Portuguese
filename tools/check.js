@@ -8,7 +8,7 @@
  * тихие: забытый регистр не роняет страницу, а просто выключает тему; слово
  * без словарной статьи не переводится по тапу, но выглядит как обычное;
  * пропущенная форма в таблице спряжения даёт «undefined» на экране.
- * Глазами это не ловится, поэтому шесть проверок ниже.
+ * Глазами это не ловится, поэтому десять проверок ниже.
  *
  * Отдельно стоит tools/prevocab.js — та же сверка словаря, но по черновику
  * темы, до вставки в index.html. Поймать там дешевле.
@@ -484,6 +484,74 @@ function checkConjugadorEn() {
   }
 }
 
+/* ============ 10. Situações ============ */
+
+// Пакеты ветки Situações живут данными в SITUACOES, а не разметкой, —
+// проверка 3 их не видит. Здесь держится то же правило 2, что и у тем:
+//   · слово пакета — новое: его нет ни в курсе, ни в прошлых пакетах;
+//   · текст пакета и примеры «о себе» собраны только из слов курса и
+//     пакетов до этого включительно — каждое слово переводится тапом;
+//   · у каждого русского поля есть английская пара, у пакета — сцена.
+function loadSituacoes() {
+  const start = html.indexOf('var SITUACOES = [');
+  const end   = html.indexOf('\n  ];', start);
+  if (start < 0 || end < 0) throw new Error('не нашёл SITUACOES в index.html');
+  return new Function('return ' + html.slice(start + 'var SITUACOES = '.length, end) + '\n  ];')();
+}
+
+function checkSituacoes() {
+  head('10. Situações');
+  const packs = loadSituacoes();
+  const dStart = html.indexOf('var DIALOGS = [');
+  const dialogIds = new Set([...html.slice(dStart, html.indexOf('\n  ];', dStart)).matchAll(/\n      id: "([^"]+)"/g)].map((m) => m[1]));
+  const vocab = new Set(VOCAB);
+  const look = makeLookup(vocab, STRIP);
+  const stripArt = (k) => k.toLowerCase().replace(/^(o|a|os|as)\s+/, '');
+  const ids = new Set();
+  let problems = 0, nWords = 0, nText = 0;
+  const fail = (msg) => { problems++; bad(msg); };
+
+  for (const p of packs) {
+    const where = `пакет ${p.id}`;
+    if (ids.has(p.id)) fail(`${where}: id повторяется`);
+    ids.add(p.id);
+    for (const f of ['icon', 'title', 'titleEn', 'sub', 'subEn', 'missao', 'missaoEn']) if (!p[f]) fail(`${where}: нет поля ${f}`);
+    if (!dialogIds.has(p.dialog)) fail(`${where}: сцены «${p.dialog}» нет в DIALOGS`);
+    if (!p.words || p.words.length < 15) fail(`${where}: слов меньше 15`);
+
+    // Новизна проверяется до того, как слова пакета попадут в словарь.
+    for (const x of p.words || []) {
+      if (!x.w || !x.say || !x.ru || !x.en) fail(`${where}: у слова «${x.w}» не все поля`);
+      if (!!x.note !== !!x.noteEn) fail(`${where}: у «${x.w}» note без пары`);
+      const parts = stripArt(x.w).split(/\s+/);
+      if (parts.every((w) => look(w))) fail(`${where}: «${x.w}» уже есть в курсе — это не новое слово`);
+    }
+    for (const x of p.chunks || []) {
+      if (!x.pt || !x.say || !x.ru || !x.en) fail(`${where}: у сочетания «${x.pt}» не все поля`);
+      if (!!x.note !== !!x.noteEn) fail(`${where}: у «${x.pt}» note без пары`);
+    }
+    for (const x of p.words || []) {
+      const k = x.w.toLowerCase();
+      vocab.add(k);
+      for (const part of k.split(/\s+/)) if (part.length > 1) vocab.add(part);
+      nWords++;
+    }
+
+    const t = p.text || {};
+    if (!t.pt || !t.ru || !t.en || t.pt.length !== t.ru.length || t.pt.length !== t.en.length) fail(`${where}: у текста абзацы pt/ru/en не совпадают по числу`);
+    if (!t.why || !t.whyEn) fail(`${where}: у текста нет why/whyEn`);
+    for (const e of p.eu || []) if (!e.pt || !e.ru || !e.en || !e.ex) fail(`${where}: у «о себе» «${e.pt}» не все поля`);
+
+    const missing = new Set();
+    for (const s of [...(t.pt || []), ...(p.eu || []).map((e) => e.ex)]) {
+      for (const m of s.matchAll(PT_WORD)) { nText++; if (!look(m[0])) missing.add(m[0].toLowerCase()); }
+    }
+    if (missing.size) fail(`${where}: в тексте слова вне курса и пакета — ${[...missing].sort().join(', ')}`);
+  }
+
+  if (!problems) ok(`${packs.length} пакет(ов), ${nWords} новых слов, ${nText} слов в текстах — всё из курса и пакетов`);
+}
+
 /* ============ ============ */
 
 console.log('Проверка index.html');
@@ -496,6 +564,7 @@ checkConjTables();
 checkEnQuizData();
 checkVocabEn();
 checkConjugadorEn();
+checkSituacoes();
 
 console.log('');
 if (failed) {
