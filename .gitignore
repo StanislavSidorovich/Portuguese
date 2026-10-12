@@ -3,3 +3,6 @@ node_modules/
 Thumbs.db
 desktop.ini
 .DS_Store
+tools/audiolesson/.venv/
+tools/audiolesson/cache/
+tools/audiolesson/out/

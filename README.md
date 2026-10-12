@@ -222,6 +222,44 @@ node tools/make-icons.js
    в городе, выполнимое за один выход из дома.
 5. `node tools/check.js` — десятая проверка сверит всё выше.
 
+## Как сделать аудиоурок
+
+Аудиоурок — mp3 для прослушивания вне приложения: рассказчик по-русски,
+португальские фразы — европейскими голосами, паузы на ответ вслух. Сценарий
+лежит в `tools/audiolesson/lessons/<пакет>.txt`, разметка описана в шапке
+`comer.txt`. Формат урока и его правила — `ROADMAP.md`, раздел 3д.
+
+Окружение ставится один раз (нужен Python 3.12+):
+
+```bash
+py -3 -m venv tools/audiolesson/.venv
+tools/audiolesson/.venv/Scripts/python.exe -m pip install truststore edge-tts imageio-ffmpeg
+```
+
+Если `pip` падает на `CERTIFICATE_VERIFY_FAILED` (Kaspersky подменяет
+HTTPS), выгрузить хранилище сертификатов Windows и поставить с ним —
+проверка остаётся включённой:
+
+```bash
+tools/audiolesson/.venv/Scripts/python.exe -c "import ssl;open('tools/audiolesson/.venv/winroots.pem','w').write(''.join(ssl.DER_cert_to_PEM_cert(c) for s in ('ROOT','CA') for c,e,_ in ssl.enum_certificates(s) if e=='x509_asn'))"
+```
+
+```bash
+tools/audiolesson/.venv/Scripts/python.exe -m pip install --cert tools/audiolesson/.venv/winroots.pem truststore edge-tts imageio-ffmpeg
+```
+
+Сборка:
+
+```bash
+node tools/audiolesson/check-lesson.js tools/audiolesson/lessons/comer.txt
+tools/audiolesson/.venv/Scripts/python.exe tools/audiolesson/build.py lessons/comer.txt
+```
+
+`build.py` сам запускает проверку и без неё не озвучивает. Результат —
+`tools/audiolesson/out/comer.mp3` и оглавление `comer.txt` рядом. Реплики
+кэшируются в `cache/`, так что правка одной фразы переозвучивает одну фразу.
+`out/`, `cache/` и `.venv/` в git не идут.
+
 ## Что дальше
 
 Следующие батчи, модели и усилие под каждую тему — в [ROADMAP.md](ROADMAP.md).
