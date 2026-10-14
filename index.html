@@ -181,6 +181,27 @@
   .hero h1{font-size:1.6rem; line-height:1.25; margin:8px 0 10px; font-weight:700;}
   .hero p{margin:0 0 10px; color:var(--muted); font-size:0.95rem;}
   .hero-note{font-size:0.85rem !important;}
+  [hidden]{display:none !important;}
+  .hero p.hero-facts{font-family:var(--font-lat); font-size:0.8rem; font-weight:700; color:var(--ink); margin:0 0 4px;}
+  .hero-facts b{color:var(--base); font-weight:800;}
+  .hero-sample{margin:12px 0 0;}
+  .sample-tab{
+    display:inline-block; font-family:var(--font-lat); font-size:0.72rem; font-weight:700;
+    color:var(--muted); background:var(--card); border-radius:8px 8px 0 0; padding:6px 12px 3px;
+  }
+  .sample-win{background:var(--card); border-radius:0 var(--radius) var(--radius) var(--radius); padding:10px 14px 12px;}
+  .hero .sample-win .dline{color:var(--ink); font-size:1rem; margin:0 0 3px;}
+  .sample-gloss{
+    display:inline-block; margin-top:8px; padding:6px 11px; border-radius:9px;
+    background:var(--base-tint); color:var(--base-deep); font-family:var(--font-ru); font-size:0.84rem;
+  }
+  .sample-gloss:empty{display:none;}
+  .hero-sample figcaption{font-size:0.78rem; color:var(--muted); margin:6px 2px 0;}
+  .install-note{font-size:0.82rem; color:var(--muted); margin:-8px 0 14px;}
+  .install-note button{
+    background:none; border:1.5px solid var(--base); color:var(--base); border-radius:10px;
+    padding:7px 12px; font-family:var(--font-ru); font-size:0.85rem; font-weight:600; cursor:pointer;
+  }
   .about-link{
     display:block; width:100%; text-align:left; margin:6px 0 16px; padding:0;
     background:none; border:none; color:var(--base); font-family:var(--font-ru);
@@ -884,8 +905,29 @@
   <div class="eyebrow" data-en="Português europeu · grammar · offline">Português europeu · грамматика · офлайн</div>
   <h1 data-en="Portuguese grammar from scratch">Португальская грамматика с нуля</h1>
 
-  <div class="start-block" id="startBlock" style="display:none;"></div>
+  <p class="hero-facts" id="heroFacts"></p>
+
   <div class="continue-block" id="continueBlock" style="display:none;"></div>
+
+  <!-- U11. Ссылку из чата открывают с телефона, и первый экран должен
+       показывать сам курс, а не рассказ о нём. Реплики — дословно из
+       диалога темы 0.1, перевод — из того же словаря, что в темах
+       (initHeroSample). Одна подсказка открыта сразу: иначе не видно,
+       что слова вообще нажимаются. Вернувшемуся образец не нужен —
+       renderContinueBlock его прячет. -->
+  <figure class="hero-sample" id="heroSample">
+    <div class="sample-tab">0.1 · Na pastelaria</div>
+    <div class="sample-win">
+      <p class="dline"><span class="speaker">Empregado:</span> <span class="sample-pt">Bom dia! Faz favor?</span></p>
+      <p class="dline"><span class="speaker">Ana:</span> <span class="sample-pt">Um café, por favor.</span></p>
+      <p class="dline"><span class="speaker">Empregado:</span> <span class="sample-pt">Com açúcar?</span></p>
+      <p class="dline"><span class="speaker">Ana:</span> <span class="sample-pt">Não, obrigada.</span></p>
+      <div class="sample-gloss" id="sampleGloss"></div>
+    </div>
+    <figcaption data-en="Tap any word — every text in the course reads like this, and its words all come from topics you have already done.">Нажми на любое слово — так читаются все тексты курса, и слова в них только из пройденных тем.</figcaption>
+  </figure>
+
+  <div class="start-block" id="startBlock" style="display:none;"></div>
 
   <p data-en="Reading, ser and estar, verb conjugation and tenses — every topic has a rule, texts to read, and checked exercises.">Чтение, ser и estar, спряжение глаголов и времена — в каждой теме правило, тексты для чтения и задания с проверкой.</p>
   <p class="hero-note" data-en="A course in European Portuguese — the kind spoken in Lisbon. Brazilian differences are flagged with an &lsquo;in Brazil&rsquo; aside, but the base is local throughout: &lt;span class='pt'&gt;tu&lt;/span&gt;, &lt;span class='pt'&gt;estar a fazer&lt;/span&gt;, &lt;span class='pt'&gt;disse-me&lt;/span&gt;, &lt;span class='pt'&gt;autocarro&lt;/span&gt;.">Курс европейского португальского — того, на котором говорят в Лиссабоне. Бразильские отличия отмечаются врезкой «а в Бразилии», но основа везде местная: <span class="pt">tu</span>, <span class="pt">estar a fazer</span>, <span class="pt">disse-me</span>, <span class="pt">autocarro</span>.</p>
@@ -897,6 +939,11 @@
        вопрос, который из неё следует. -->
   <p class="hero-note en-only">Which topic would you want in English next? That is what decides the order &mdash; tell me, or <a href="https://github.com/StanislavSidorovich/Portuguese/issues" target="_blank" rel="noopener">open an issue on GitHub</a>.</p>
   <button type="button" class="about-link" data-open="about" data-en="About this app: what&rsquo;s inside and how to study →">О приложении: что внутри и как заниматься →</button>
+  <!-- Курс работает без сети (sw.js), значит его место — на главном экране
+       телефона. Строку рисует renderInstallNote, и только когда поставить
+       действительно можно: Chrome прислал beforeinstallprompt или это
+       Safari на iPhone не из уже установленного значка. -->
+  <div class="install-note" id="installNote" hidden></div>
 
   <div class="progress-wrap">
     <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
@@ -8405,6 +8452,8 @@
     });
     if(typeof renderProgress === "function") renderProgress();
     if(typeof renderTotalTime === "function") renderTotalTime();
+    if(typeof renderSampleGloss === "function") renderSampleGloss();
+    if(typeof renderInstallNote === "function") renderInstallNote();
   }
 
   function setLang(v){
@@ -8797,6 +8846,8 @@
     var last;
     try{ last = localStorage.getItem(LAST_TOPIC_KEY); }catch(e){}
     var title = last ? topicTitleMap()[last] : null;
+    var sample = document.getElementById("heroSample");
+    if(sample) sample.hidden = !!(last && title && (LANG !== "en" || EN_READY_TOPICS.indexOf(last) !== -1));
     if(!last || !title){ box.style.display = "none"; return; }
     // Тот, кто листал курс по-русски, а потом переключился на EN, получал
     // «Continue → 0.7 Ser» — то есть кнопку в тему, которой по-английски
@@ -8855,7 +8906,26 @@
     return many;
   }
 
+  // Подзаголовок числами (U11): курс в одну строку, которую успевают
+  // прочитать до прокрутки. Числа считаются, а не пишутся руками —
+  // иначе после следующей темы строка начнёт врать. В EN тем столько,
+  // сколько переведено, по той же причине, что в renderTotalTime.
+  function renderHeroFacts(){
+    var el = document.getElementById("heroFacts");
+    if(!el) return;
+    var d = DIALOGS.length;
+    if(LANG === "en"){
+      var en = EN_READY_TOPICS.length;
+      el.innerHTML = "<b>" + en + "</b> topics in English · <b>" + d + "</b> dialogues · conjugator · no signup · offline";
+      return;
+    }
+    var n = TOPICS.length;
+    el.innerHTML = "<b>" + n + "</b> " + plural(n, "тема", "темы", "тем") + " · <b>" + d + "</b> " +
+                   plural(d, "диалог", "диалога", "диалогов") + " · спрягатель · без регистрации · офлайн";
+  }
+
   function renderTotalTime(){
+    renderHeroFacts();
     var el = document.getElementById("totalTimeNote");
     if(!el) return;
     var n = TOPICS.length;
@@ -9282,6 +9352,77 @@
     hideTapPopup();
   });
   window.addEventListener("scroll", hideTapPopup, {passive:true});
+
+  // Образец на главной (U11). Подсказка здесь не всплывает над словом, а
+  // стоит строкой под репликами: всплывашка закрывается при прокрутке,
+  // а эта должна быть видна сразу, без нажатия, и не прыгать.
+  var sampleWord = null;
+  function renderSampleGloss(){
+    var g = document.getElementById("sampleGloss");
+    if(!g || !sampleWord) return;
+    var tr = (LANG === "en" && sampleWord.dataset.trEn) ? sampleWord.dataset.trEn : sampleWord.dataset.tr;
+    g.innerHTML = "";
+    var b = document.createElement("b");
+    b.textContent = sampleWord.textContent;
+    g.appendChild(b);
+    g.appendChild(document.createTextNode(" — " + tr));
+  }
+  function initHeroSample(){
+    var box = document.getElementById("heroSample");
+    if(!box) return;
+    box.querySelectorAll(".sample-pt").forEach(wrapTapWords);
+    function pick(w){
+      if(sampleWord) sampleWord.classList.remove("on");
+      sampleWord = w;
+      w.classList.add("on");
+      renderSampleGloss();
+    }
+    var first = [].filter.call(box.querySelectorAll(".tap-word"), function(w){ return w.textContent === "café"; })[0];
+    if(first) pick(first);
+    // Своё нажатие не отдаём общему обработчику: тот открыл бы вторую,
+    // всплывающую подсказку поверх строчной.
+    box.addEventListener("click", function(e){
+      var w = e.target.closest && e.target.closest(".tap-word");
+      if(!w) return;
+      e.stopPropagation();
+      hideTapPopup();
+      pick(w);
+    });
+  }
+
+  // Предложение поставить курс на главный экран. Chrome на Android сам
+  // присылает beforeinstallprompt, когда установка возможна; Safari на
+  // iPhone не присылает ничего, там ставят руками через «Поделиться».
+  var installEvt = null;
+  window.addEventListener("beforeinstallprompt", function(e){
+    e.preventDefault();
+    installEvt = e;
+    renderInstallNote();
+  });
+  window.addEventListener("appinstalled", function(){ installEvt = null; renderInstallNote(); });
+  function isStandalone(){
+    return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
+  }
+  function renderInstallNote(){
+    var el = document.getElementById("installNote");
+    if(!el) return;
+    var ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
+    if(isStandalone() || (!installEvt && !ios)){ el.hidden = true; return; }
+    if(installEvt){
+      el.innerHTML = '<button type="button">' + L("Поставить на главный экран", "Add to home screen") + '</button> ' +
+                     L("— откроется и без интернета", "— works without internet");
+      el.querySelector("button").addEventListener("click", function(){
+        var e = installEvt;
+        if(!e) return;
+        e.prompt();
+        e.userChoice.then(function(){ installEvt = null; renderInstallNote(); }, function(){});
+      });
+    } else {
+      el.textContent = L("Курс работает без интернета. Чтобы он был под рукой: «Поделиться» → «На экран „Домой“».",
+                         "The course works offline. To keep it handy: Share → Add to Home Screen.");
+    }
+    el.hidden = false;
+  }
 
   /* ================= ЗВУК =================
      Необязательный слой. Голоса pt-* есть не везде (в Linux-браузерах часто
@@ -12575,6 +12716,8 @@
 
     applyLang();
     seedVocabFromWordsets();
+    initHeroSample();
+    renderInstallNote();
     initAudio();
     initConjugador();
     renderTotalTime();
