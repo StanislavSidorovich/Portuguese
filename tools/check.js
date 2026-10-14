@@ -8,7 +8,7 @@
  * тихие: забытый регистр не роняет страницу, а просто выключает тему; слово
  * без словарной статьи не переводится по тапу, но выглядит как обычное;
  * пропущенная форма в таблице спряжения даёт «undefined» на экране.
- * Глазами это не ловится, поэтому десять проверок ниже.
+ * Глазами это не ловится, поэтому одиннадцать проверок ниже.
  *
  * Отдельно стоит tools/prevocab.js — та же сверка словаря, но по черновику
  * темы, до вставки в index.html. Поймать там дешевле.
@@ -552,6 +552,133 @@ function checkSituacoes() {
   if (!problems) ok(`${packs.length} пакет(ов), ${nWords} новых слов, ${nText} слов в текстах — всё из курса и пакетов`);
 }
 
+/* ============ 11. Leituras ============ */
+
+// Эпизод читает тот, кто прошёл его ворота, а не весь курс. Поэтому «известные
+// слова» здесь — не весь VOCAB, а слова, встретившиеся в темах по порядку
+// прохождения до ворот включительно (весь текст экрана темы: правила,
+// таблицы, тексты, задания). Правило Нейшна: 95–98% слов текста известны,
+// остальные — со сноской (gloss), и их не больше пяти.
+function loadLeituras() {
+  const start = html.indexOf('var LEITURAS = [');
+  const end   = html.indexOf('\n  ];', start);
+  if (start < 0 || end < 0) throw new Error('не нашёл LEITURAS в index.html');
+  return new Function('return ' + html.slice(start + 'var LEITURAS = '.length, end) + '\n  ];')();
+}
+
+function topicOrder() {
+  const order = [];
+  for (const name of ['BASE', 'PRESENTE', 'PASSADO', 'EXPANSAO']) {
+    const m = html.match(new RegExp('var ' + name + '_TOPICS\\s*=\\s*\\[([^\\]]*)\\]'));
+    if (m) for (const x of m[1].matchAll(/"([^"]+)"/g)) order.push(x[1]);
+  }
+  return order;
+}
+
+// Слова, встреченные в темах до ворот включительно.
+function wordsSeenUpTo(gate, order) {
+  const seen = new Set();
+  const upto = order.slice(0, order.indexOf(gate) + 1);
+  for (const id of upto) {
+    const at = html.search(new RegExp('<div class="screen topic-screen"[^>]*data-topic="' + id + '"'));
+    if (at < 0) continue;
+    const next = html.indexOf('<div class="screen', at + 10);
+    const chunk = html.slice(at, next < 0 ? html.length : next)
+      .replace(/<!--[\s\S]*?-->/g, ' ')
+      .replace(/<script[\s\S]*?<\/script>/g, ' ')
+      .replace(/<[^>]+>/g, ' ');
+    for (const m of chunk.matchAll(PT_WORD)) seen.add(m[0].toLowerCase());
+  }
+  return seen;
+}
+
+function checkLeituras() {
+  head('11. Leituras');
+  const eps = loadLeituras();
+  const order = topicOrder();
+  const ids = new Set();
+  let problems = 0, nWords = 0, lastGate = -1;
+  const fail = (msg) => { problems++; bad(msg); };
+  const words = (s) => [...String(s).matchAll(PT_WORD)].map((m) => m[0].toLowerCase());
+
+  for (const ep of eps) {
+    const where = `эпизод ${ep.id}`;
+    const need = (cond, msg) => { if (!cond) fail(`${where}: ${msg}`); };
+    if (ids.has(ep.id)) fail(`${where}: id повторяется`);
+    ids.add(ep.id);
+    for (const f of ['n', 'level', 'gate', 'icon', 'title', 'titleRu', 'titleEn', 'sub', 'subEn']) need(ep[f], `нет поля ${f}`);
+    const gi = order.indexOf(ep.gate);
+    if (gi < 0) { fail(`${where}: ворот «${ep.gate}» нет среди тем курса`); continue; }
+    need(gi >= lastGate, 'ворота раньше, чем у предыдущего эпизода');
+    lastGate = gi;
+
+    const t = ep.text || {};
+    need(t.pt && t.ru && t.en && t.pt.length === t.ru.length && t.pt.length === t.en.length, 'абзацы pt/ru/en не совпадают по числу');
+
+    const seen = wordsSeenUpTo(ep.gate, order);
+    const look = makeLookup(seen, STRIP);
+    const gloss = new Set();
+    need((ep.gloss || []).length <= 5, `в сноске ${(ep.gloss || []).length} слов, допустимо не больше пяти`);
+    for (const g of ep.gloss || []) {
+      need(g.w && g.ru && g.en, `у сноски «${g.w}» не все поля`);
+      for (const w of words(g.w)) {
+        if (look(w)) fail(`${where}: «${g.w}» уже известно к воротам «${ep.gate}» — это не новое слово`);
+        gloss.add(w);
+      }
+    }
+
+    // Доля знакомых считается без сноски: 95% — про то, что читается без
+    // словаря, а сноска и есть словарь.
+    let total = 0, known = 0;
+    const unknown = new Set(), used = new Set();
+    for (const p of t.pt || []) {
+      for (const w of words(p)) {
+        total++; used.add(w);
+        if (look(w)) known++;
+        else if (!gloss.has(w)) unknown.add(w);
+      }
+    }
+    nWords += total;
+    if (unknown.size) fail(`${where}: слова текста вне ворот «${ep.gate}» и вне сноски — ${[...unknown].sort().join(', ')}`);
+    const share = total ? known / total : 0;
+    need(share >= 0.95, `знакомых слов ${(share * 100).toFixed(1)}% при пороге 95%`);
+
+    // Вопросы: слова из того же словаря — знакомые к воротам, сноска или
+    // слова самого текста.
+    const strings = [];
+    const q = (s) => { if (s) strings.push(s); };
+
+    need(ep.predict && ep.predict.pt && ep.predict.opts && ep.predict.opts.length >= 2 && ep.predict.ans >= 0 && ep.predict.ans < ep.predict.opts.length && ep.predict.ru && ep.predict.en, 'нет догадки (predict) или поля неполные');
+    if (ep.predict) { q(ep.predict.pt); (ep.predict.opts || []).forEach(q); }
+
+    need((ep.tf || []).length === 5, 'Verdadeiro/Falso — ровно 5 утверждений');
+    for (const x of ep.tf || []) {
+      need(x.pt && typeof x.a === 'boolean' && x.ru && x.en, `у «${x.pt}» не все поля`);
+      q(x.pt);
+    }
+    need((ep.mc || []).length >= 3 && (ep.mc || []).length <= 4, 'Escolha múltipla — 3–4 вопроса');
+    for (const x of ep.mc || []) {
+      need(x.pt && x.opts && x.opts.length >= 3 && x.a >= 0 && x.a < x.opts.length && x.ru && x.en, `у «${x.pt}» не все поля или ответ вне вариантов`);
+      q(x.pt); (x.opts || []).forEach(q);
+    }
+    need(ep.order && ep.order.events && ep.order.events.length >= 4 && ep.order.events.length <= 5 && ep.order.pt && ep.order.ru && ep.order.en, 'Ordenar — 4–5 событий и подсказки');
+    if (ep.order) { q(ep.order.pt); (ep.order.events || []).forEach(q); }
+    need(ep.who && ep.who.chars && ep.who.chars.length >= 2 && ep.who.items && ep.who.items.length >= 2, 'Quem disse? — минимум два героя и две реплики');
+    for (const x of (ep.who && ep.who.items) || []) {
+      need(x.pt && x.a >= 0 && x.a < ep.who.chars.length && x.ru && x.en, `у реплики «${x.pt}» не все поля или герой вне списка`);
+      q(x.pt);
+    }
+    need(ep.infer && ep.infer.pt && ep.infer.opts && ep.infer.opts.length >= 3 && ep.infer.a >= 0 && ep.infer.a < ep.infer.opts.length && ep.infer.ru && ep.infer.en && ep.infer.why && ep.infer.whyEn, 'нет вопроса «между строк» (infer) или поля неполные');
+    if (ep.infer) { q(ep.infer.pt); (ep.infer.opts || []).forEach(q); }
+
+    const qUnknown = new Set();
+    for (const s of strings) for (const w of words(s)) if (!look(w) && !gloss.has(w) && !used.has(w)) qUnknown.add(w);
+    if (qUnknown.size) fail(`${where}: в вопросах слова вне ворот, сноски и текста — ${[...qUnknown].sort().join(', ')}`);
+  }
+
+  if (!problems) ok(`${eps.length} эпизод(ов), ${nWords} слов в текстах — знакомых по воротам ≥95%, сноски ≤5, вопросы из словаря ворот`);
+}
+
 /* ============ ============ */
 
 console.log('Проверка index.html');
@@ -565,6 +692,7 @@ checkEnQuizData();
 checkVocabEn();
 checkConjugadorEn();
 checkSituacoes();
+checkLeituras();
 
 console.log('');
 if (failed) {

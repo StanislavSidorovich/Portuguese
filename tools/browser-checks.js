@@ -194,3 +194,91 @@ function checkConjugador() {
   console.log(problems.length ? 'CONJUGADOR:\n' + problems.join('\n') : `Conjugador: ${verbs.length} глаголов × 5 времён, все формы на месте.`);
   return problems;
 }
+
+/* ---------------------------------------------------------------------------
+ * 4. LEITURAS
+ *
+ * Проходит каждый открытый эпизод экрана Leituras с правильными ответами —
+ * догадка, текст, вопросы — и ждёт «N / N · ★ N». Ответы берутся из самого
+ * index.html (страница скачивается заново, как это делает check.js), потому
+ * что движок живёт в замыкании. Ловит то, чего не видит check.js: вариант,
+ * который не нажимается, порядок событий, который не собирается, текст, не
+ * спрятавшийся перед вопросами (тогда ★ ничего не значит), и «пик» в текст,
+ * который должен снимать звёздочку.
+ *
+ * Страницу открывать с ?draft=1, иначе черновики не показываются, а ворота
+ * закрыты. Вызов: await checkLeituras()
+ * -------------------------------------------------------------------------*/
+async function checkLeituras() {
+  const out = [];
+  const src = await (await fetch(location.pathname)).text();
+  const a = src.indexOf('var LEITURAS = [');
+  const b = src.indexOf('\n  ];', a);
+  const data = new Function('return ' + src.slice(a + 'var LEITURAS = '.length, b) + '\n  ];')();
+
+  const row = document.querySelector('.tool-row[data-open="leituras"]');
+  if (!row) { console.log('нет строки Leituras на главной'); return; }
+  row.click();
+  const body = document.getElementById('ltBody');
+  const q$ = (sel) => body.querySelector(sel);
+  const locked = body.querySelectorAll('.lt-card.locked').length;
+  const opens = [...body.querySelectorAll('[data-lt="open"]')].map((x) => x.dataset.ep);
+  out.push(`эпизодов открыто: ${opens.length}, заперто: ${locked}`);
+  if (!opens.length) { console.log(out.join('\n') + '\nнет открытых эпизодов (нужен ?draft=1)'); return out; }
+
+  for (const id of opens) {
+    const ep = data.find((e) => e.id === id);
+    q$(`[data-lt="open"][data-ep="${id}"]`).click();
+
+    q$(`[data-lt="predict"][data-i="${ep.predict.ans}"]`).click();
+    if (!q$('.lt-text')) out.push(`${id}: после догадки нет текста`);
+    if (!q$('.lt-text .tap-word')) out.push(`${id}: слова текста не переводятся по тапу`);
+    const nNew = body.querySelectorAll('.lt-new').length;
+    if ((ep.gloss || []).length && !nNew) out.push(`${id}: слова сноски не подсвечены`);
+    q$('[data-lt="ask"]').click();
+    if (q$('.lt-text')) out.push(`${id}: текст не спрятался перед вопросами`);
+
+    // Один вопрос отвечаем с открытым текстом — он не должен дать ★.
+    q$('[data-lt="peek"]').click();
+    if (!q$('.lt-text')) out.push(`${id}: «подсмотреть» не открыл текст`);
+
+    let qi = 0, peeked = false;
+    const answerPick = (k, i) => { body.querySelector(`[data-lt="pick"][data-q="${k}"][data-i="${i}"]`).click(); };
+    for (const x of ep.tf) { answerPick(qi, x.a ? 0 : 1); qi++; if (!peeked) { peeked = true; q$('[data-lt="peek"]').click(); } }
+    for (const x of ep.mc) { answerPick(qi, x.a); qi++; }
+
+    // порядок событий: события в данных уже стоят верно, на экране — вперемешку
+    const events = ep.order.events;
+    for (const ev of events) {
+      const btn = [...body.querySelectorAll('[data-lt="otok"]')].find((x) => x.textContent === ev);
+      if (!btn) { out.push(`${id}: события «${ev}» нет в банке`); break; }
+      btn.click();
+    }
+    const chk = q$('[data-lt="ocheck"]');
+    if (chk && !chk.disabled) chk.click(); else out.push(`${id}: «Проверить» порядок недоступен после сборки`);
+    qi++;
+
+    for (const x of ep.who.items) { answerPick(qi, x.a); qi++; }
+    answerPick(qi, ep.infer.a); qi++;
+
+    const res = q$('.lt-result');
+    const stars = body.querySelectorAll('.lt-star').length;
+    const total = qi;
+    const txt = res ? res.textContent.replace(/\s+/g, ' ').trim() : '';
+    if (!res) out.push(`${id}: итога нет — не все вопросы получили ответ`);
+    else if (!txt.startsWith(`${total} / ${total}`)) out.push(`${id}: итог «${txt}» вместо ${total} / ${total}`);
+    // Первые пять ответов (tf) идут после «подсмотреть», затем текст снова
+    // открыт — звёзд не может быть больше, чем ответов без пика.
+    out.push(`${id}: ${txt} · звёзд на экране ${stars} из ${total}`);
+
+    try { if (JSON.parse(localStorage.getItem('ptLeiturasV1'))[id].done !== true) out.push(`${id}: эпизод не засчитан при ${total} / ${total}`); }
+    catch (e) { out.push(`${id}: прогресс не записан`); }
+
+    q$('[data-lt="close"]').click();
+  }
+
+  const back = document.querySelector('#screen-leituras [data-back]');
+  if (back) back.click();
+  console.log(out.join('\n'));
+  return out;
+}

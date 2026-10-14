@@ -735,6 +735,33 @@
   .sit-ex summary{cursor:pointer; color:var(--muted); font-size:0.8rem;}
   .sit-ex .pt{font-family:var(--font-pt); font-weight:600;}
 
+  /* Leituras: эпизод — предсказание, текст, вопросы. Варианты ответа берут
+     оформление у .dg-opt (там же разобрана тёмная тема); здесь только то,
+     чего у диалогов нет. */
+  .lt-card{background:var(--card); border-radius:14px; padding:14px; margin:0 0 12px;}
+  .lt-card.locked{opacity:0.72;}
+  .lt-meta{font-size:0.78rem; color:var(--muted); margin:-4px 0 10px;}
+  .lt-lock{font-size:0.84rem; color:var(--muted);}
+  .lt-tag{font-family:var(--font-lat); font-size:0.7rem; font-weight:800; color:var(--muted); letter-spacing:0.05em; flex:0 0 auto;}
+  .lt-section{font-family:var(--font-pt); font-weight:800; font-size:1.0rem; margin:26px 0 4px;}
+  .lt-q{margin:0 0 16px;}
+  .lt-q-pt{font-family:var(--font-pt); font-size:1.04rem; font-weight:600; line-height:1.5; margin:0 0 8px;}
+  .lt-hint{font-size:0.82rem; color:var(--muted); margin:0 0 8px;}
+  .lt-hint summary{cursor:pointer; font-size:0.78rem;}
+  .lt-text{font-family:var(--font-pt); font-size:1.04rem; line-height:1.75; margin:0 0 10px;}
+  .lt-new{border-bottom:2px solid var(--base); font-weight:700;}
+  .lt-gloss{font-size:0.86rem; margin:8px 0 12px; padding:10px 12px; border-radius:10px; background:var(--bg); border:1px solid #E3E9E6;}
+  body.dark .lt-gloss{background:#1B211E; border-color:#27312D;}
+  .lt-gloss b{font-family:var(--font-pt);}
+  .lt-star{color:var(--ok); font-weight:800; margin-left:4px;}
+  /* Догадка до чтения не бывает верной или неверной, поэтому выбранный
+     вариант красится в цвет курса, а не в зелёный «верно». */
+  .dg-opt.lt-picked{border-color:var(--base); background:var(--base-tint); color:var(--ink-fixed);}
+  .lt-peek{width:100%; margin:0 0 12px;}
+  .lt-events{display:grid; gap:8px; margin-top:8px;}
+  .lt-result{font-size:0.95rem; margin:18px 0 8px;}
+  .lt-result b{font-size:1.1rem;}
+
   .dg-stage{background:var(--card); border-radius:14px; padding:14px; margin:0 0 16px;}
   .dg-bar{display:flex; align-items:baseline; gap:8px; margin-bottom:10px;}
   .dg-bar .dg-scene-title{font-size:0.92rem;}
@@ -911,6 +938,12 @@
       <button type="button" class="tool-row" data-open="situacoes">
         <span class="tool-icon">🧺</span>
         <span class="row-title" data-en="Situações · vocabulary for real life&lt;span class='row-title-ru'&gt;words, chunks, a scene and a text for each everyday situation &mdash; groceries, caf&eacute;s and restaurants so far&lt;/span&gt;">Situações · словарь по ситуациям<span class="row-title-ru">слова, сочетания, сцена и текст на каждую бытовую ситуацию — пока продукты, кафе и ресторан</span></span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+      <button type="button" class="tool-row" data-open="leituras">
+        <span class="tool-icon">📖</span>
+        <span class="row-title" data-en="Leituras · reading with questions&lt;span class='row-title-ru'&gt;one story in episodes, with comprehension questions after each; an episode opens once you pass its gate topic&lt;/span&gt;">Leituras · чтение с вопросами<span class="row-title-ru">одна история по эпизодам и вопросы на понимание; эпизод открывается после темы-ворот</span></span>
+        <span class="row-vocab-due" id="ltBadge"></span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="tool-row" data-open="tool-conjugador">
@@ -8170,6 +8203,35 @@
   </div>
 </div>
 
+<!-- ============ LEITURAS ============
+     Экран без data-topic, как Situações: эпизоды рисуются кодом из
+     LEITURAS. Словарное правило держит проверка 11 в tools/check.js —
+     по воротам эпизода, а не по последней теме курса. -->
+<div class="screen topic-screen" id="screen-leituras" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back data-en="← All topics">← Все темы</button><div class="lang-switch"><button type="button" data-lang="ru">РУ</button><button type="button" data-lang="en">EN</button></div></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2 data-en="Leituras · reading with questions">Leituras · чтение с вопросами</h2>
+  </div>
+  <div class="topic-subtitle" data-en="One story in episodes. The grammar topics check forms; here you check that you understood. Each episode uses only words you have already met, plus a few new ones with a footnote.">Одна история по эпизодам. Темы курса проверяют формы, а здесь проверяется, что ты понял прочитанное. В каждом эпизоде только пройденные слова и несколько новых со сноской.</div>
+  <div class="pane active">
+    <div class="lang-note">Only <b>Frases</b>, <b>Diálogos</b>, <b>Situações</b> and <b>Leituras</b> are translated: the course topics themselves are in Russian. An episode opens after its gate topic, and the gate topics are in Russian.</div>
+    <div id="ltIntro">
+      <div class="tip" data-en="&lt;b&gt;Answer first, look second.&lt;/b&gt; Read the text, then it hides while you answer. You may peek, but an answer given with the text open earns no star: remembering what you read is what makes it stay."><b>Сначала ответь, потом смотри.</b> Прочитай текст — дальше он прячется, пока ты отвечаешь. Подсмотреть можно, но ответ с открытым текстом остаётся без звёздочки: запоминается то, что ты вспомнил сам.</div>
+    </div>
+    <div id="ltBody"></div>
+
+    <button type="button" class="next-card" data-open="situacoes">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
+        <span class="next-title" data-en="Situações — vocabulary by everyday situation">Situações — словарь по ситуациям</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
 <!-- ============ DICIONÁRIO ============ -->
 <div class="screen topic-screen" id="screen-vocab" style="--tint-color:var(--base)">
   <div class="topic-topbar"><button type="button" class="back-btn" data-back data-en="← All topics">← Все темы</button></div>
@@ -8354,6 +8416,8 @@
     // темы, что открылась первой.
     if(document.getElementById("screen-dialogos").classList.contains("active")) renderDialogos();
     if(document.getElementById("screen-situacoes").classList.contains("active")) renderSituacoes();
+    if(document.getElementById("screen-leituras").classList.contains("active")) renderLeituras();
+    renderLtBadge();
     VOCAB_SETS = null;
     if(document.getElementById("screen-vocab").classList.contains("active")) renderVocabScreen();
     // Conjugador тоже рисуется кодом: подписи времён, чипы и весь разбор.
@@ -8601,6 +8665,9 @@
   }
 
   function renderProgress(){
+    // Ворота эпизода Leituras — обычные темы: пройдена тема, и бейдж на
+    // главной должен обновиться тут же, а не при следующем заходе.
+    renderLtBadge();
     var p = loadProgress();
     var done = TOPICS.filter(function(t){ return isDone(p[t]); }).length;
     var plannedTotal = Object.keys(BLOCKS).reduce(function(s,k){ return s + BLOCKS[k].planned; }, 0);
@@ -9128,6 +9195,14 @@
     });
     SITUACOES.forEach(function(sc){
       sc.words.forEach(function(x){
+        var key = x.w.toLowerCase();
+        put(VOCAB, key, x.ru);
+        put(VOCAB_EN, key, x.en);
+      });
+    });
+    // Сноски эпизодов Leituras: новое слово обязано переводиться тапом.
+    LEITURAS.forEach(function(ep){
+      (ep.gloss || []).forEach(function(x){
         var key = x.w.toLowerCase();
         put(VOCAB, key, x.ru);
         put(VOCAB_EN, key, x.en);
@@ -11225,6 +11300,7 @@
     // Открытый пакет не сбрасывается: из него уходят в Dicionário и в сцену
     // и возвращаются «назад» — на тот же шаг, а не на список пакетов.
     if(id === "situacoes"){ renderSituacoes(); }
+    if(id === "leituras"){ renderLeituras(); }
     prepareScreen(el);
     window.scrollTo(0,0);
     updateFloatBack();
@@ -11737,6 +11813,443 @@
     }
   }
 
+  /* ================= LEITURAS: ЧТЕНИЕ С ВОПРОСАМИ ================= */
+  /* Эпизод — три шага: догадка по заголовку, текст, вопросы на смысл.
+     Текст прячется, пока отвечаешь, — это и есть активное вспоминание;
+     ответ, данный с открытым текстом, засчитывается, но без звёздочки.
+     Эпизод открывается после темы-ворот (gate) — проверка 11 в
+     tools/check.js сверяет слова текста именно с воротами, а не с курсом
+     целиком. ?draft=1 — режим автора: показывает черновики и снимает
+     ворота, нужен, чтобы гонять движок до того, как эпизод написан;
+     ?draft=gated показывает черновики, но оставляет ворота — так
+     проверяется запертое состояние. */
+
+  var LT_KEY = "ptLeiturasV1";
+  var LT_DRAFT  = /[?&]draft=(1|gated)\b/.test(location.search);
+  var LT_AUTHOR = /[?&]draft=1\b/.test(location.search);
+  var LT_PASS = 0.8;   // порог U4: тот же, что у заданий тем
+
+  var LEITURAS = [
+    {
+      // ЧЕРНОВИК ДВИЖКА. Текст — заглушка, чтобы гонять экран и проверку 11
+      // до R1; настоящий L1 пишется на Opus и заменяет эту запись целиком.
+      id: "l1", n: 1, level: "A0", gate: "ter", icon: "🐈‍⬛", draft: true,
+      title: "O gato preto", titleRu: "Чёрный кот", titleEn: "The black cat",
+      sub: "Ана ищет кота. Только слова до темы «Ter».",
+      subEn: "Ana is looking for her cat. Only words up to the topic «Ter».",
+      text: {
+        pt: [
+          "Hoje a Ana está em casa. O gato preto não está na cozinha. Não está na sala e não está no quarto. Não há gato na cama.",
+          "A Ana tem um problema. O João está na rua, perto da casa. Ela não tem tempo, e o gato tem fome.",
+          "Ana: Tens o meu gato? João: Não, não tenho. Há um gato na rua, mas é branco. Ana: Não é o meu gato."
+        ],
+        ru: [
+          "Сегодня Ана дома. Чёрного кота нет ни на кухне, ни в гостиной, ни в комнате. На кровати кота нет.",
+          "У Аны проблема. Жуан на улице, рядом с домом. У неё нет времени, а кот голоден.",
+          "Ана: У тебя мой кот? Жуан: Нет, нету. На улице есть кот, но он белый. Ана: Это не мой кот."
+        ],
+        en: [
+          "Today Ana is at home. The black cat is not in the kitchen. It is not in the living room and not in the bedroom. There is no cat on the bed.",
+          "Ana has a problem. João is in the street, near the house. She has no time, and the cat is hungry.",
+          "Ana: Do you have my cat? João: No, I don't. There is a cat in the street, but it is white. Ana: It is not my cat."
+        ]
+      },
+      gloss: [],
+      predict: {
+        pt: "O gato preto: a Ana tem o gato?", ru: "Чёрный кот: есть ли кот у Аны?", en: "The black cat: does Ana have the cat?",
+        opts: ["Sim, o gato está em casa.", "Não, o gato não está em casa.", "Não há gato."], ans: 1
+      },
+      tf: [
+        { pt: "O gato está na cozinha.", a: false, ru: "Кот на кухне.", en: "The cat is in the kitchen.", why: "Не на кухне: «não está na cozinha».", whyEn: "Not in the kitchen: «não está na cozinha»." },
+        { pt: "A Ana está em casa.", a: true, ru: "Ана дома.", en: "Ana is at home.", why: "«Hoje a Ana está em casa».", whyEn: "«Hoje a Ana está em casa»." },
+        { pt: "O João está na rua.", a: true, ru: "Жуан на улице.", en: "João is in the street.", why: "«O João está na rua».", whyEn: "«O João está na rua»." },
+        { pt: "O gato da Ana é branco.", a: false, ru: "Кот Аны белый.", en: "Ana's cat is white.", why: "Белый — чужой кот с улицы, а её кот чёрный.", whyEn: "The white one is a stranger's cat from the street; hers is black." },
+        { pt: "O João tem o gato.", a: false, ru: "Кот у Жуана.", en: "João has the cat.", why: "«Não, não tenho».", whyEn: "«Não, não tenho»." }
+      ],
+      mc: [
+        { pt: "Onde há um gato branco?", opts: ["Na cama", "Na rua", "Na cozinha"], a: 1, ru: "Где есть белый кот?", en: "Where is there a white cat?", why: "«Há um gato na rua».", whyEn: "«Há um gato na rua»." },
+        { pt: "O que é que a Ana não tem?", opts: ["Casa", "Tempo", "Um problema"], a: 1, ru: "Чего нет у Аны?", en: "What does Ana not have?", why: "«Ela não tem tempo».", whyEn: "«Ela não tem tempo»." },
+        { pt: "Como é o gato da Ana?", opts: ["Branco", "Preto", "Novo"], a: 1, ru: "Какой кот у Аны?", en: "What is Ana's cat like?", why: "«O gato preto».", whyEn: "«O gato preto»." }
+      ],
+      order: {
+        pt: "O que é o um? E o dois?", ru: "Расставь события по порядку: сначала, потом…", en: "Put the events in order: first, then…",
+        events: ["O gato não está em casa.", "A Ana tem um problema.", "A Ana fala com o João.", "O João não tem o gato."]
+      },
+      who: {
+        chars: ["Ana", "João"],
+        items: [
+          { pt: "Tens o meu gato?", a: 0, ru: "У тебя мой кот?", en: "Do you have my cat?", why: "Ищет кота Ана.", whyEn: "It is Ana who is looking for the cat." },
+          { pt: "Não, não tenho.", a: 1, ru: "Нет, нету.", en: "No, I don't.", why: "Ей отвечает Жуан.", whyEn: "João is the one answering her." }
+        ]
+      },
+      infer: {
+        pt: "O gato tem fome. A Ana tem pressa?", opts: ["Sim, tem pressa.", "Não, tem tempo.", "Não, não tem gato."], a: 0,
+        ru: "Кот голоден. Торопится ли Ана?", en: "The cat is hungry. Is Ana in a hurry?",
+        why: "Слова «pressa» в тексте нет: из «não tem tempo» и «o gato tem fome» вывод делаешь сам.", whyEn: "The word «pressa» is not in the text: you draw the conclusion from «não tem tempo» and «o gato tem fome»."
+      }
+    }
+  ];
+
+  function loadLtProgress(){
+    try{ return JSON.parse(localStorage.getItem(LT_KEY) || "{}") || {}; }catch(e){ return {}; }
+  }
+  function saveLtProgress(p){
+    try{ localStorage.setItem(LT_KEY, JSON.stringify(p)); }catch(e){}
+  }
+  function ltById(id){
+    for(var i = 0; i < LEITURAS.length; i++){ if(LEITURAS[i].id === id) return LEITURAS[i]; }
+    return null;
+  }
+  function ltShown(ep){ return !ep.draft || LT_DRAFT; }
+  function ltUnlocked(ep){ return LT_AUTHOR || isDone(loadProgress()[ep.gate]); }
+
+  // Плоский список вопросов в порядке показа. Тип задаёт разметку; всё, что
+  // про верность, лежит в a и opts.
+  function ltQuestions(ep){
+    var qs = [];
+    (ep.tf || []).forEach(function(x){
+      qs.push({ kind:"tf", pt:x.pt, opts:["Verdadeiro","Falso"], a:(x.a ? 0 : 1), ru:x.ru, en:x.en, why:x.why, whyEn:x.whyEn });
+    });
+    (ep.mc || []).forEach(function(x){
+      qs.push({ kind:"mc", pt:x.pt, opts:x.opts, a:x.a, ru:x.ru, en:x.en, why:x.why, whyEn:x.whyEn });
+    });
+    if(ep.order) qs.push({ kind:"order", pt:ep.order.pt, ru:ep.order.ru, en:ep.order.en, events:ep.order.events });
+    if(ep.who){
+      ep.who.items.forEach(function(x){
+        qs.push({ kind:"who", pt:"«"+x.pt+"»", opts:ep.who.chars, a:x.a, ru:x.ru, en:x.en, why:x.why, whyEn:x.whyEn });
+      });
+    }
+    if(ep.infer) qs.push({ kind:"inf", pt:ep.infer.pt, opts:ep.infer.opts, a:ep.infer.a, ru:ep.infer.ru, en:ep.infer.en, why:ep.infer.why, whyEn:ep.infer.whyEn });
+    return qs;
+  }
+
+  var LT_SECTIONS = {
+    tf:    { pt:"Verdadeiro ou falso?", ru:"Верно или нет?",         en:"True or false?" },
+    mc:    { pt:"Escolha múltipla",     ru:"Выбери ответ",            en:"Multiple choice" },
+    order: { pt:"Ordenar",              ru:"Расставь по порядку",     en:"Put in order" },
+    who:   { pt:"Quem disse?",          ru:"Чья реплика?",            en:"Who said it?" },
+    inf:   { pt:"Entre as linhas",      ru:"Между строк",             en:"Between the lines" }
+  };
+
+  var ltCur = null;   // id открытого эпизода или null — список
+  var ltRun = null;   // {id, stage, pick, peek, ans:{q:{ok,recalled,pick}}, ord, saved, result}
+
+  function ltShuffled(n){
+    var a = [], i, j, t;
+    for(i = 0; i < n; i++) a.push(i);
+    for(var tries = 0; tries < 8; tries++){
+      for(i = n - 1; i > 0; i--){ j = Math.floor(Math.random()*(i+1)); t = a[i]; a[i] = a[j]; a[j] = t; }
+      var same = a.every(function(v, k){ return v === k; });
+      if(!same || n < 2) break;
+    }
+    return a;
+  }
+
+  function ltStart(id){
+    var ep = ltById(id);
+    ltCur = id;
+    ltRun = { id:id, stage:"predict", pick:null, peek:false, ans:{}, ord:null, saved:false, result:null };
+    if(ep && ep.order){
+      ltRun.ord = { bank:ltShuffled(ep.order.events.length), line:[], bad:false, missed:false };
+    }
+  }
+
+  function ltWordCount(ep){
+    var n = 0;
+    ep.text.pt.forEach(function(p){ n += (p.match(PT_WORD_RE) || []).length; });
+    return n;
+  }
+
+  function ltHint(q){
+    var h = L(q.ru, q.en);
+    return h ? '<details class="lt-hint"><summary>'+L("подсказка","hint")+'</summary>'+escapeHtml(h)+'</details>' : "";
+  }
+
+  function ltTextBlock(ep){
+    var gl = (ep.gloss || []).map(function(g){
+      return '<b>'+escapeHtml(g.w)+'</b> — '+escapeHtml(L(g.ru, g.en));
+    }).join(" · ");
+    var tr = L(ep.text.ru, ep.text.en);
+    return '<div class="mini-text">' +
+      ep.text.pt.map(function(p){ return '<p class="lt-text">'+escapeHtml(p)+dgSay(p)+'</p>'; }).join("") +
+      (gl ? '<div class="lt-gloss"><b>'+L("Новые слова", "New words")+':</b> '+gl+'</div>' : "") +
+      '<button class="btn btn-translate" type="button">'+L("Показать перевод", "Show translation")+'</button>' +
+      '<p class="ru-translation">'+tr.map(escapeHtml).join("<br><br>")+'</p></div>';
+  }
+
+  function ltOptButtons(qi, q, a){
+    return '<div class="dg-opts">' + q.opts.map(function(o, i){
+      var cls = "dg-opt";
+      if(a){
+        if(i === q.a) cls += " mc-correct";
+        else if(i === a.pick) cls += " mc-wrong";
+      }
+      return '<button type="button" class="'+cls+'" data-lt="pick" data-q="'+qi+'" data-i="'+i+'"'+(a ? ' disabled' : '')+'>'+escapeHtml(o)+'</button>';
+    }).join("") + '</div>';
+  }
+
+  function ltWhy(q, a){
+    var why = L(q.why, q.whyEn);
+    var head = a.ok ? L("Верно.", "Right.") : L("Не так.", "Not quite.");
+    var star = (a.ok && a.recalled) ? ' <span class="lt-star">★</span>' : "";
+    return '<div class="dg-why'+(a.ok ? ' ok' : '')+'"><b>'+head+'</b>'+star+(why ? ' '+why : '')+'</div>';
+  }
+
+  function ltOrderBlock(qi, q, a){
+    var ord = ltRun.ord;
+    var left = ord.bank.map(function(ei){
+      return '<button type="button" class="dg-opt" data-lt="otok" data-i="'+ei+'"'+(a ? ' disabled' : '')+'>'+escapeHtml(q.events[ei])+'</button>';
+    }).join("");
+    var line = ord.line.length ? ord.line.map(function(ei){
+      return '<button type="button" class="dg-opt" data-lt="oback" data-i="'+ei+'"'+(a ? ' disabled' : '')+'>'+escapeHtml(q.events[ei])+'</button>';
+    }).join("") : '<span class="qbuild-empty">'+L("Нажимай на события ниже — по порядку", "Tap the events below, in order")+'</span>';
+    var lineCls = "qbuild-line" + (a ? (a.ok ? " ok" : " bad") : (ord.bad ? " bad" : ""));
+    var out = '<div class="'+lineCls+'">'+line+'</div>' +
+      '<div class="lt-events">'+left+'</div>';
+    if(!a){
+      out += '<div class="dg-actions"><button type="button" class="btn btn-check" data-lt="ocheck"'+(ord.bank.length ? ' disabled' : '')+'>'+L("Проверить","Check")+'</button>' +
+             '<button type="button" class="btn btn-reveal" data-lt="oreveal">'+L("Показать ответ","Show the answer")+'</button></div>';
+      if(ord.bad) out += '<div class="dg-why">'+L("<b>Не тот порядок.</b> Нажми на событие в строке, чтобы убрать его.", "<b>Not that order.</b> Tap an event in the line to remove it.")+'</div>';
+    } else {
+      out += ltWhy({ why:"", whyEn:"" }, a);
+    }
+    return out;
+  }
+
+  function ltQuestionBlock(qi, q){
+    var a = ltRun.ans[qi];
+    var body;
+    if(q.kind === "order") body = ltOrderBlock(qi, q, a);
+    else body = ltOptButtons(qi, q, a) + (a ? ltWhy(q, a) : "");
+    return '<div class="lt-q" id="lt-q'+qi+'"><p class="lt-q-pt">'+escapeHtml(q.pt)+'</p>' +
+      ltHint(q) + body + '</div>';
+  }
+
+  function ltFinishIfDone(ep, qs){
+    if(ltRun.saved) return;
+    for(var i = 0; i < qs.length; i++){ if(!ltRun.ans[i]) return; }
+    ltRun.saved = true;
+    var ok = 0, stars = 0;
+    qs.forEach(function(q, i){
+      var a = ltRun.ans[i];
+      if(a.ok){ ok++; if(a.recalled) stars++; }
+    });
+    var share = ok / qs.length;
+    var p = loadLtProgress(), prev = p[ep.id];
+    p[ep.id] = {
+      done: share >= LT_PASS || isDone(prev),
+      pct: Math.round(share*100),
+      stars: stars,
+      total: qs.length,
+      attempts: ((prev && prev.attempts) || 0) + 1,
+      ts: Date.now()
+    };
+    saveLtProgress(p);
+    ltRun.result = { ok:ok, stars:stars, total:qs.length, share:share };
+    renderLtBadge();
+  }
+
+  function renderLtBadge(){
+    var b = document.getElementById("ltBadge");
+    if(!b) return;
+    // Пока ни один эпизод не написан набело, строка на главной не нужна:
+    // она вела бы на пустой экран.
+    var row = document.querySelector('.tool-row[data-open="leituras"]');
+    if(row) row.style.display = LEITURAS.some(ltShown) ? "" : "none";
+    var p = loadLtProgress(), n = 0;
+    LEITURAS.forEach(function(ep){
+      if(ltShown(ep) && ltUnlocked(ep) && !isDone(p[ep.id])) n++;
+    });
+    b.textContent = n ? (n + L(" новых", " new")) : "";
+  }
+
+  function renderLeituras(){
+    var body = document.getElementById("ltBody");
+    var intro = document.getElementById("ltIntro");
+    if(!body) return;
+    var prog = loadLtProgress();
+    var ep = ltCur ? ltById(ltCur) : null;
+
+    if(!ep){
+      if(intro) intro.style.display = "";
+      var titles = topicTitleMap();
+      body.innerHTML = LEITURAS.filter(ltShown).map(function(e){
+        var open = ltUnlocked(e), pr = prog[e.id];
+        var head = '<div class="dg-scene-head"><span class="dg-scene-icon">'+e.icon+'</span>' +
+          '<span class="dg-scene-title">'+escapeHtml(e.title)+' — '+escapeHtml(L(e.titleRu, e.titleEn))+'</span>' +
+          '<span class="lt-tag">L'+e.n+' · '+e.level+'</span></div>';
+        if(!open){
+          var gt = titles[e.gate] || e.gate;
+          return '<div class="lt-card locked">'+head+
+            '<div class="dg-scene-sub">'+escapeHtml(L(e.sub, e.subEn))+'</div>' +
+            '<div class="lt-lock">🔒 '+L("Откроется после темы «"+gt+"»", "Opens after the topic «"+gt+"»")+'</div></div>';
+        }
+        var meta = ltWordCount(e)+L(" слов · "," words · ")+ltQuestions(e).length+L(" вопросов"," questions") +
+          (pr ? ' · '+pr.pct+'%' + (pr.stars ? ' · ★ '+pr.stars : "") + (isDone(pr) ? ' · ✓' : "") : "");
+        return '<div class="lt-card">'+head+
+          '<div class="dg-scene-sub">'+escapeHtml(L(e.sub, e.subEn))+'</div>' +
+          '<div class="lt-meta">'+meta+'</div>' +
+          '<div class="dg-modes"><button type="button" class="btn btn-check" data-lt="open" data-ep="'+e.id+'">' +
+            (pr ? L("Прочитать ещё раз","Read again") : L("Читать","Read")) + '</button></div></div>';
+      }).join("") +
+      '<p class="sit-soon">'+L("Эпизоды открываются по одному, после тем-ворот: история продолжается по мере того, как растёт курс.",
+                                 "Episodes open one at a time, after their gate topics: the story continues as the course grows.")+'</p>';
+      return;
+    }
+
+    if(intro) intro.style.display = "none";
+    var qs = ltQuestions(ep);
+    ltFinishIfDone(ep, qs);   // до разметки: итог рисуется в этом же проходе
+    var h = '<div class="dg-bar"><span class="dg-scene-icon">'+ep.icon+'</span>' +
+      '<span class="dg-scene-title">'+escapeHtml(ep.title)+'</span>' +
+      '<span class="lt-tag">L'+ep.n+' · '+ep.level+'</span></div>';
+
+    // 1. До чтения
+    var pr0 = ep.predict;
+    h += '<div class="lt-section">'+L("1 · До чтения","1 · Before reading")+'</div>';
+    h += '<div class="lt-q"><p class="lt-q-pt">'+escapeHtml(pr0.pt)+'</p>' + ltHint(pr0);
+    h += '<div class="dg-opts">' + pr0.opts.map(function(o, i){
+      var cls = "dg-opt" + (ltRun.pick === i ? " lt-picked" : "");
+      return '<button type="button" class="'+cls+'" data-lt="predict" data-i="'+i+'"'+(ltRun.stage !== "predict" ? ' disabled' : '')+'>'+escapeHtml(o)+'</button>';
+    }).join("") + '</div></div>';
+
+    // 2. Текст
+    if(ltRun.stage !== "predict"){
+      h += '<div class="lt-section">'+L("2 · Текст","2 · Text")+' · '+escapeHtml(L(ep.titleRu, ep.titleEn))+'</div>';
+      if(ltRun.stage === "read"){
+        h += ltTextBlock(ep) +
+          '<button type="button" class="btn btn-check lt-peek" data-lt="ask">'+L("Прочитал — к вопросам →","Done reading — to the questions →")+'</button>';
+      } else {
+        h += '<button type="button" class="btn btn-reveal lt-peek" data-lt="peek">' +
+          (ltRun.peek ? L("Спрятать текст","Hide the text") : L("Подсмотреть в текст (ответ будет без ★)","Peek at the text (no ★ for answers given with it open)")) + '</button>';
+        if(ltRun.peek) h += ltTextBlock(ep);
+      }
+    }
+
+    // 3. Вопросы
+    if(ltRun.stage === "ask"){
+      h += '<div class="lt-section">'+L("3 · Вопросы","3 · Questions")+'</div>';
+      var lastKind = null;
+      qs.forEach(function(q, qi){
+        if(q.kind !== lastKind){
+          var sec = LT_SECTIONS[q.kind];
+          h += '<div class="lt-section" style="font-size:0.9rem; margin-top:18px">'+sec.pt+' <span class="lt-hint">· '+L(sec.ru, sec.en)+'</span></div>';
+          lastKind = q.kind;
+        }
+        h += ltQuestionBlock(qi, q);
+      });
+
+      if(ltRun.result){
+        var r = ltRun.result, passed = r.share >= LT_PASS;
+        var guess = "";
+        if(ltRun.pick !== null){
+          guess = '<p class="dg-answer-note"><b>'+L("Твоя догадка", "Your guess")+':</b> '+escapeHtml(pr0.opts[ltRun.pick])+' — ' +
+            (ltRun.pick === pr0.ans ? L("угадал.", "right.") : L("не угадал; в тексте было другое.", "not this time; the text had something else."))+'</p>';
+        }
+        h += '<p class="lt-result"><b>'+r.ok+' / '+r.total+'</b> · ★ '+r.stars+' · ' +
+          (passed ? L("эпизод засчитан", "episode passed") : L("нужно 80% — прочитай ещё раз и попробуй снова", "80% needed — read it again and try once more")) + '</p>' + guess;
+      }
+    }
+
+    h += '<div class="dg-actions"><button type="button" class="btn btn-reveal" data-lt="close">'+L("К эпизодам","Back to episodes")+'</button>' +
+      (ltRun.result ? '<button type="button" class="btn btn-check" data-lt="again">'+L("Ещё раз","Again")+'</button>' : "") + '</div>';
+    body.innerHTML = h;
+
+    var glossSet = {};
+    (ep.gloss || []).forEach(function(g){ glossSet[g.w.toLowerCase()] = 1; });
+    body.querySelectorAll(".lt-text").forEach(function(p){
+      wrapTapWords(p);
+      p.querySelectorAll(".tap-word").forEach(function(w){
+        if(glossSet[w.textContent.toLowerCase()]) w.classList.add("lt-new");
+      });
+    });
+  }
+
+  // Ответ меняет только свой блок, но экран перерисовывается целиком, как
+  // в Situações: дешевле, чем держать узлы. Прокрутку возвращаем.
+  function ltRerender(){
+    var y = window.scrollY;
+    renderLeituras();
+    window.scrollTo(0, y);
+  }
+
+  function ltAnswer(qi, pick, ok){
+    ltRun.ans[qi] = { pick:pick, ok:ok, recalled:!ltRun.peek };
+  }
+
+  function handleLtAction(btn){
+    var a = btn.dataset.lt;
+    if(a === "open"){ ltStart(btn.dataset.ep); renderLeituras(); window.scrollTo(0,0); return; }
+    if(a === "close"){ ltCur = null; ltRun = null; renderLeituras(); window.scrollTo(0,0); return; }
+    var ep = ltCur ? ltById(ltCur) : null;
+    if(!ep || !ltRun) return;
+    var qs = ltQuestions(ep);
+
+    if(a === "predict"){
+      ltRun.pick = Number(btn.dataset.i);
+      ltRun.stage = "read";
+      renderLeituras();
+      return;
+    }
+    if(a === "ask"){
+      ltRun.stage = "ask"; ltRun.peek = false;
+      renderLeituras();
+      window.scrollTo(0,0);
+      return;
+    }
+    if(a === "peek"){ ltRun.peek = !ltRun.peek; ltRerender(); return; }
+    if(a === "again"){
+      ltStart(ep.id);
+      renderLeituras();
+      window.scrollTo(0,0);
+      return;
+    }
+    if(a === "pick"){
+      var qi = Number(btn.dataset.q), q = qs[qi];
+      if(!q || ltRun.ans[qi]) return;
+      var i = Number(btn.dataset.i);
+      ltAnswer(qi, i, i === q.a);
+      ltRerender();
+      return;
+    }
+
+    // Порядок событий: фишки — целые предложения, поэтому свой разбор, а не
+    // initBuild: тому нужны слова, склеенные пробелом.
+    var oi = -1;
+    qs.forEach(function(q, k){ if(q.kind === "order") oi = k; });
+    if(oi < 0 || !ltRun.ord || ltRun.ans[oi]) return;
+    var ord = ltRun.ord;
+    if(a === "otok"){
+      var ei = Number(btn.dataset.i);
+      ord.bank = ord.bank.filter(function(x){ return x !== ei; });
+      ord.line.push(ei);
+      ord.bad = false;
+      ltRerender();
+      return;
+    }
+    if(a === "oback"){
+      var ej = Number(btn.dataset.i);
+      ord.line = ord.line.filter(function(x){ return x !== ej; });
+      ord.bank.push(ej);
+      ord.bad = false;
+      ltRerender();
+      return;
+    }
+    if(a === "ocheck"){
+      var good = ord.line.every(function(v, k){ return v === k; });
+      if(good){ ltAnswer(oi, null, !ord.missed); ltRerender(); return; }
+      ord.bad = true; ord.missed = true;
+      ltRerender();
+      return;
+    }
+    if(a === "oreveal"){
+      ord.bank = []; ord.line = qs[oi].events.map(function(_, k){ return k; });
+      ltAnswer(oi, null, false);
+      ltRerender();
+      return;
+    }
+  }
+
   /* ================= СОБЫТИЯ ================= */
 
   document.addEventListener("click", function(e){
@@ -11764,6 +12277,9 @@
 
     var sitBtn = e.target.closest("[data-sit]");
     if(sitBtn){ handleSitAction(sitBtn); return; }
+
+    var ltBtn = e.target.closest("[data-lt]");
+    if(ltBtn && !ltBtn.disabled){ handleLtAction(ltBtn); return; }
 
     var dgBtn = e.target.closest("[data-dg]");
     if(dgBtn){ handleDgAction(dgBtn); return; }
@@ -11847,11 +12363,14 @@
       localStorage.removeItem(LAST_TOPIC_KEY);
       localStorage.removeItem(VOCAB_KEY);
       localStorage.removeItem(SIT_KEY);
+      localStorage.removeItem(LT_KEY);
     }catch(e){}
     document.querySelectorAll("input.blank, select.mc").forEach(function(i){
       i.value = ""; i.classList.remove("ok","bad");
     });
     document.querySelectorAll(".quiz-result").forEach(function(r){ r.textContent = ""; });
+    ltCur = null; ltRun = null;
+    renderLtBadge();
     session = null;
     renderVocabDueBadge();
     if(document.getElementById("screen-vocab").classList.contains("active")) renderVocabScreen();
@@ -11880,6 +12399,7 @@
     initConjugador();
     renderTotalTime();
     renderVocabDueBadge();
+    renderLtBadge();
     renderProgress();
     replaceView({ view:"home", i:0 });
     armHomeGuard();
