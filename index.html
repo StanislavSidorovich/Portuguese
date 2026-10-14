@@ -11831,10 +11831,156 @@
 
   var LEITURAS = [
     {
+      // Первая ступень лестницы. Только ser / estar: há и ter — 0.12, preto и
+      // minha — после 0.8. Крючок для эпизода 3: кот у открытого окна.
+      id: "casa", n: 1, level: "A0", gate: "estar", icon: "🏠",
+      title: "A Ana e o gato", titleRu: "Ана и кот", titleEn: "Ana and the cat",
+      sub: "Ана дома, кот у окна. Только ser и estar.",
+      subEn: "Ana at home, the cat at the window. Only ser and estar.",
+      text: {
+        pt: [
+          "A Ana é estudante. É de Moscovo, mas a casa é aqui, em Lisboa. Hoje a Ana está em casa. Está cansada.",
+          "O gato da Ana está no quarto, na janela. A janela está aberta. O gato não está cansado: está muito contente.",
+          "O João está ao telefone.",
+          "João: Olá, Ana! Estás em casa?",
+          "Ana: Estou, mas estou cansada.",
+          "João: E o gato? Está bem?",
+          "Ana: Está muito bem. Está na janela, e na rua está o cão do vizinho."
+        ],
+        ru: [
+          "Ана — студентка. Она из Москвы, но дом у неё здесь, в Лиссабоне. Сегодня Ана дома. Она устала.",
+          "Кот Аны в спальне, на окне. Окно открыто. Кот не устал: он очень доволен.",
+          "Жуан звонит по телефону.",
+          "Жуан: Привет, Ана! Ты дома?",
+          "Ана: Дома, но я устала.",
+          "Жуан: А кот? Он в порядке?",
+          "Ана: В полном порядке. Сидит на окне, а на улице — собака соседа."
+        ],
+        en: [
+          "Ana is a student. She is from Moscow, but her home is here, in Lisbon. Today Ana is at home. She is tired.",
+          "Ana's cat is in the bedroom, at the window. The window is open. The cat is not tired: it is very happy.",
+          "João is on the phone.",
+          "João: Hi, Ana! Are you at home?",
+          "Ana: I am, but I am tired.",
+          "João: And the cat? Is it OK?",
+          "Ana: It is very well. It is at the window, and in the street there is the neighbour's dog."
+        ]
+      },
+      gloss: [],
+      predict: {
+        pt: "Onde está a Ana hoje?", ru: "Заголовок — «Ана и кот». Где сегодня Ана?", en: "The title is «Ana and the cat». Where is Ana today?",
+        opts: ["Em casa.", "Na universidade.", "Em Moscovo."], ans: 0
+      },
+      tf: [
+        { pt: "A Ana é de Lisboa.", a: false, ru: "Ана из Лиссабона.", en: "Ana is from Lisbon.", why: "«É de Moscovo» — дом у неё в Лиссабоне, а сама она из Москвы.", whyEn: "«É de Moscovo» — her home is in Lisbon, but she is from Moscow." },
+        { pt: "A Ana está cansada.", a: true, ru: "Ана устала.", en: "Ana is tired.", why: "«Está cansada» — и она повторяет это Жуану.", whyEn: "«Está cansada» — and she says it again to João." },
+        { pt: "O gato está cansado.", a: false, ru: "Кот устал.", en: "The cat is tired.", why: "«O gato não está cansado: está muito contente».", whyEn: "«O gato não está cansado: está muito contente»." },
+        { pt: "A janela do quarto está aberta.", a: true, ru: "Окно в спальне открыто.", en: "The bedroom window is open.", why: "«A janela está aberta».", whyEn: "«A janela está aberta»." },
+        { pt: "O cão está em casa da Ana.", a: false, ru: "Собака у Аны дома.", en: "The dog is at Ana's.", why: "Собака соседа на улице: «na rua está o cão do vizinho».", whyEn: "The neighbour's dog is in the street: «na rua está o cão do vizinho»." }
+      ],
+      mc: [
+        { pt: "Onde está o gato?", opts: ["Na cama.", "Na janela.", "Na rua."], a: 1, ru: "Где кот?", en: "Where is the cat?", why: "«No quarto, na janela». На улице — собака.", whyEn: "«No quarto, na janela». It is the dog that is in the street." },
+        { pt: "Como está a Ana?", opts: ["Contente.", "Cansada.", "Doente."], a: 1, ru: "Как Ана себя чувствует?", en: "How is Ana?", why: "Доволен кот, а Ана — «cansada».", whyEn: "The cat is the happy one; Ana is «cansada»." },
+        { pt: "De quem é o cão?", opts: ["Da Ana.", "Do João.", "Do vizinho."], a: 2, ru: "Чья собака?", en: "Whose dog is it?", why: "«O cão do vizinho».", whyEn: "«O cão do vizinho»." }
+      ],
+      order: {
+        pt: "Um, dois…", ru: "Расставь по порядку текста.", en: "Put these in the order of the text.",
+        events: ["A Ana está em casa, cansada.", "O gato está na janela.", "O João está ao telefone.", "O cão do vizinho está na rua."]
+      },
+      who: {
+        chars: ["Ana", "João"],
+        items: [
+          { pt: "Estás em casa?", a: 1, ru: "Ты дома?", en: "Are you at home?", why: "Звонит Жуан — он и спрашивает.", whyEn: "João is the one calling, so he asks." },
+          { pt: "Estou, mas estou cansada.", a: 0, ru: "Дома, но я устала.", en: "I am, but I am tired.", why: "«Cansada» — женская форма, говорит Ана.", whyEn: "«Cansada» is the feminine form: Ana is speaking." },
+          { pt: "E o gato? Está bem?", a: 1, ru: "А кот? Он в порядке?", en: "And the cat? Is it OK?", why: "Жуан спрашивает про кота Аны.", whyEn: "João is asking about Ana's cat." }
+        ]
+      },
+      infer: {
+        pt: "O João está em casa da Ana?",
+        opts: ["Não: está ao telefone.", "Sim: está no quarto.", "Sim: está na janela."], a: 0,
+        ru: "Жуан у Аны дома?", en: "Is João at Ana's place?",
+        why: "Прямо не сказано. Но он звонит и спрашивает «Estás em casa?» — значит, сам он не там.",
+        whyEn: "It is not said directly. But he is calling and asks «Estás em casa?» — so he is not there himself."
+      }
+    },
+    {
+      // Вторая ступень. Прилагательные с согласованием, minha / teu; всё ещё
+      // без há и ter. Сад сеньоры Марии с жёлтыми цветами — ключ к фото в 3.
+      id: "vizinha", n: 2, level: "A0", gate: "adjetivos", icon: "🌼",
+      title: "O jardim da vizinha", titleRu: "Сад соседки", titleEn: "The neighbour's garden",
+      sub: "Кот Аны в чужом саду. Слова до темы «Adjetivos».",
+      subEn: "Ana's cat in someone else's garden. Words up to the topic «Adjetivos».",
+      text: {
+        pt: [
+          "O gato da Ana é preto, grande e gordo. É um gato velho, mas é muito bonito. Não é calmo: hoje não está em casa, está no jardim da vizinha.",
+          "A vizinha é a senhora Maria. É uma mulher alegre e trabalhadora. O jardim da senhora Maria é grande e muito bonito. As flores do jardim são amarelas. E o gato preto está lá.",
+          "Senhora Maria: Ana! O gato preto é teu?",
+          "Ana: É, sim. É o meu gato.",
+          "Senhora Maria: É bonito, mas é muito gordo! E as flores são minhas!",
+          "Ana: Desculpe, senhora Maria!",
+          "O gato não está cansado e não está triste. O gato está muito contente."
+        ],
+        ru: [
+          "Кот Аны чёрный, большой и толстый. Кот старый, но очень красивый. Спокойным его не назовёшь: сегодня он не дома, а в саду у соседки.",
+          "Соседка — сеньора Мария. Она весёлая и работящая. Сад у сеньоры Марии большой и очень красивый. Цветы в саду жёлтые. И чёрный кот — там.",
+          "Сеньора Мария: Ана! Чёрный кот твой?",
+          "Ана: Да, мой. Это мой кот.",
+          "Сеньора Мария: Красивый, но очень толстый! И цветы — мои!",
+          "Ана: Простите, сеньора Мария!",
+          "Кот не устал и не грустит. Кот очень доволен."
+        ],
+        en: [
+          "Ana's cat is black, big and fat. It is an old cat, but very handsome. It is not a calm cat: today it is not at home, it is in the neighbour's garden.",
+          "The neighbour is Senhora Maria. She is a cheerful, hard-working woman. Senhora Maria's garden is big and very pretty. The flowers in the garden are yellow. And the black cat is there.",
+          "Senhora Maria: Ana! Is the black cat yours?",
+          "Ana: Yes, it is. It is my cat.",
+          "Senhora Maria: It is handsome, but very fat! And the flowers are mine!",
+          "Ana: Sorry, Senhora Maria!",
+          "The cat is not tired and not sad. The cat is very happy."
+        ]
+      },
+      gloss: [],
+      predict: {
+        pt: "O jardim da vizinha: onde está o gato?", ru: "Заголовок — «Сад соседки». Где кот?", en: "The title is «The neighbour's garden». Where is the cat?",
+        opts: ["Em casa, na cama.", "No jardim da vizinha.", "Na rua, com o cão."], ans: 1
+      },
+      tf: [
+        { pt: "O gato da Ana é pequeno.", a: false, ru: "Кот Аны маленький.", en: "Ana's cat is small.", why: "«Preto, grande e gordo».", whyEn: "«Preto, grande e gordo»." },
+        { pt: "O gato é velho.", a: true, ru: "Кот старый.", en: "The cat is old.", why: "«É um gato velho, mas é muito bonito».", whyEn: "«É um gato velho, mas é muito bonito»." },
+        { pt: "A senhora Maria é a vizinha da Ana.", a: true, ru: "Сеньора Мария — соседка Аны.", en: "Senhora Maria is Ana's neighbour.", why: "«A vizinha é a senhora Maria».", whyEn: "«A vizinha é a senhora Maria»." },
+        { pt: "As flores do jardim são vermelhas.", a: false, ru: "Цветы в саду красные.", en: "The flowers in the garden are red.", why: "Жёлтые: «são amarelas». Запомни их — они ещё появятся.", whyEn: "Yellow: «são amarelas». Remember them — they will come back." },
+        { pt: "O gato está triste.", a: false, ru: "Кот грустит.", en: "The cat is sad.", why: "«O gato está muito contente».", whyEn: "«O gato está muito contente»." }
+      ],
+      mc: [
+        { pt: "Como é a senhora Maria?", opts: ["Alegre e trabalhadora.", "Triste e cansada.", "Velha e calma."], a: 0, ru: "Какая сеньора Мария?", en: "What is Senhora Maria like?", why: "«Uma mulher alegre e trabalhadora».", whyEn: "«Uma mulher alegre e trabalhadora»." },
+        { pt: "Como é o jardim?", opts: ["Pequeno e velho.", "Grande e muito bonito.", "Grande, mas feio."], a: 1, ru: "Какой сад?", en: "What is the garden like?", why: "«Grande e muito bonito».", whyEn: "«Grande e muito bonito»." },
+        { pt: "De quem são as flores?", opts: ["Da Ana.", "Da senhora Maria.", "Do João."], a: 1, ru: "Чьи цветы?", en: "Whose flowers are they?", why: "Сеньора Мария: «as flores são minhas!»", whyEn: "Senhora Maria: «as flores são minhas!»" }
+      ],
+      order: {
+        pt: "Um, dois…", ru: "Расставь по порядку текста.", en: "Put these in the order of the text.",
+        events: ["O gato não está em casa.", "O gato está no jardim da senhora Maria.", "A senhora Maria: «O gato preto é teu?»", "A Ana: «Desculpe!»"]
+      },
+      who: {
+        chars: ["Ana", "Senhora Maria"],
+        items: [
+          { pt: "O gato preto é teu?", a: 1, ru: "Чёрный кот твой?", en: "Is the black cat yours?", why: "Спрашивает хозяйка сада — сеньора Мария.", whyEn: "The owner of the garden, Senhora Maria, is asking." },
+          { pt: "É o meu gato.", a: 0, ru: "Это мой кот.", en: "It is my cat.", why: "Кот Анин — «o meu gato» говорит она.", whyEn: "It is Ana's cat, so «o meu gato» is hers to say." },
+          { pt: "E as flores são minhas!", a: 1, ru: "И цветы — мои!", en: "And the flowers are mine!", why: "Сад и цветы — сеньоры Марии.", whyEn: "The garden and the flowers belong to Senhora Maria." }
+        ]
+      },
+      infer: {
+        pt: "A senhora Maria está contente com o gato?",
+        opts: ["Não: o gato está no jardim, e as flores são da senhora Maria.", "Sim: o gato é muito bonito.", "Sim: o gato é da senhora Maria."], a: 0,
+        ru: "Сеньора Мария рада коту?", en: "Is Senhora Maria happy with the cat?",
+        why: "Она говорит «é bonito», но тут же «mas… as flores são minhas!», а Ана извиняется. Доволен здесь только кот.",
+        whyEn: "She says «é bonito», but then «mas… as flores são minhas!», and Ana apologises. The only happy one here is the cat."
+      }
+    },
+    {
       // R1. Глаголы — только ser / estar / ter / há: ворота 0.12, а спряжение
       // -ar приходит в блоке 1. Стяжения em + um (num) — 0.14, после ворот.
       // Ложный след (маленький кот у аптеки) и фото держат вопрос на вывод.
-      id: "l1", n: 1, level: "A0", gate: "ter", icon: "🐈‍⬛",
+      id: "gato", n: 3, level: "A0", gate: "ter", icon: "🐈‍⬛",
       title: "Onde está o gato?", titleRu: "Где кот?", titleEn: "Where is the cat?",
       sub: "Ужин у Аны, а чёрного кота нет дома. Только слова до темы «Ter».",
       subEn: "Dinner at Ana's, and the black cat is not at home. Only words up to the topic «Ter».",
@@ -11849,7 +11995,7 @@
           "Ana: É grande?",
           "João: Não, é pequeno.",
           "Ana: Então não é o meu gato. O meu gato é grande e gordo.",
-          "Mas o telemóvel da Ana tem uma mensagem nova. Não é do João e não é da Maria. Na mensagem há uma foto: um gato preto, grande e gordo, e flores amarelas. Onde está o gato? E de quem é a mensagem?"
+          "Mas o telemóvel da Ana tem uma mensagem nova. Não é do João e não é da senhora Maria. Na mensagem há uma foto: um gato preto, grande e gordo, e flores amarelas. Onde está o gato? E de quem é a mensagem?"
         ],
         ru: [
           "Вечер. Ана дома, на кухне. Сегодня ужин у Аны, с Жуаном. На столе рыба, хлеб и вино. Но есть проблема: чёрного кота нет дома.",
@@ -11861,7 +12007,7 @@
           "Ана: Большой?",
           "Жуан: Нет, маленький.",
           "Ана: Тогда это не мой кот. Мой кот большой и толстый.",
-          "Но на телефоне у Аны новое сообщение. Не от Жуана и не от Марии. В сообщении фото: чёрный кот, большой и толстый, и жёлтые цветы. Где же кот? И от кого сообщение?"
+          "Но на телефоне у Аны новое сообщение. Не от Жуана и не от сеньоры Марии. В сообщении фото: чёрный кот, большой и толстый, и жёлтые цветы. Где же кот? И от кого сообщение?"
         ],
         en: [
           "It is evening. Ana is at home, in the kitchen. Tonight dinner is at Ana's, with João. On the table there is fish, bread and wine. But there is a problem: the black cat is not at home.",
@@ -11873,7 +12019,7 @@
           "Ana: Is it big?",
           "João: No, it is small.",
           "Ana: Then it is not my cat. My cat is big and fat.",
-          "But Ana's phone has a new message. It is not from João and not from Maria. In the message there is a photo: a black cat, big and fat, and yellow flowers. Where is the cat? And who is the message from?"
+          "But Ana's phone has a new message. It is not from João and not from Senhora Maria. In the message there is a photo: a black cat, big and fat, and yellow flowers. Where is the cat? And who is the message from?"
         ]
       },
       gloss: [
@@ -11890,7 +12036,7 @@
         { pt: "O gato não está debaixo da mesa.", a: true, ru: "Кота нет под столом.", en: "The cat is not under the table.", why: "«Não está na sala, debaixo da mesa».", whyEn: "«Não está na sala, debaixo da mesa»." },
         { pt: "A janela da cozinha está aberta.", a: true, ru: "Окно на кухне открыто.", en: "The kitchen window is open.", why: "Это сказано дважды: в тексте и в реплике Аны.", whyEn: "It is said twice: in the text and again by Ana." },
         { pt: "O gato da rua é pequeno.", a: true, ru: "Кот с улицы маленький.", en: "The cat in the street is small.", why: "Жуан: «Não, é pequeno».", whyEn: "João: «Não, é pequeno»." },
-        { pt: "A mensagem é da Maria.", a: false, ru: "Сообщение от Марии.", en: "The message is from Maria.", why: "«Não é do João e não é da Maria» — от кого, неизвестно.", whyEn: "«Não é do João e não é da Maria» — nobody knows who sent it." }
+        { pt: "A mensagem é da senhora Maria.", a: false, ru: "Сообщение от сеньоры Марии.", en: "The message is from Senhora Maria.", why: "«Não é do João e não é da senhora Maria» — от кого, неизвестно.", whyEn: "«Não é do João e não é da senhora Maria» — nobody knows who sent it." }
       ],
       mc: [
         { pt: "O que há na mesa?", opts: ["Peixe, pão e vinho.", "Leite e pão.", "Flores amarelas."], a: 0, ru: "Что на столе?", en: "What is on the table?", why: "«Na mesa há peixe, pão e vinho». Молоко — кошачье, и оно на кухне.", whyEn: "«Na mesa há peixe, pão e vinho». The milk is the cat's, and it is in the kitchen." },
@@ -11915,8 +12061,8 @@
         pt: "O gato da foto é o gato da Ana?",
         opts: ["Sim: é preto, grande e gordo, como o gato da Ana.", "Não: o gato da Ana é pequeno.", "Não: é o gato da rua, perto da farmácia."], a: 0,
         ru: "Кот на фото — кот Аны?", en: "Is the cat in the photo Ana's cat?",
-        why: "Прямо текст этого не говорит. Но кот у аптеки маленький — и Ана сама отвечает «não é o meu gato». А на фото кот чёрный, большой и толстый — ровно как её. Значит, её кот у кого-то, у кого жёлтые цветы.",
-        whyEn: "The text never says so directly. But the cat near the pharmacy is small — Ana herself says «não é o meu gato». The one in the photo is black, big and fat, exactly like hers. So her cat is with someone who has yellow flowers."
+        why: "Прямо текст этого не говорит. Но кот у аптеки маленький — и Ана сама отвечает «não é o meu gato». А на фото кот чёрный, большой и толстый — ровно как её. Значит, кот её. А жёлтые цветы уже были — в саду сеньоры Марии, только сообщение не от неё.",
+        whyEn: "The text never says so directly. But the cat near the pharmacy is small — Ana herself says «não é o meu gato». The one in the photo is black, big and fat, exactly like hers. So it is her cat. And the yellow flowers have come up before — in Senhora Maria's garden, yet the message is not from her."
       }
     }
   ];

@@ -600,6 +600,13 @@ function checkLeituras() {
   let problems = 0, nWords = 0, lastGate = -1;
   const fail = (msg) => { problems++; bad(msg); };
   const words = (s) => [...String(s).matchAll(PT_WORD)].map((m) => m[0].toLowerCase());
+  const ladder = [];
+
+  // Лестница сложности: кроме ворот и сноски, растёт длина предложения.
+  // Потолок средней длины по уровню; имя говорящего («João: …») не считается.
+  const SENT_MAX = { 'A0': 9, 'A0+': 10, 'A1': 12, 'A1+': 14 };
+  const sentences = (p) => p.replace(/^[A-ZÀ-Ý][\wÀ-ÿ ]{0,20}:\s/, '')
+    .split(/[.!?…]+/).map(words).filter((s) => s.length);
 
   for (const ep of eps) {
     const where = `эпизод ${ep.id}`;
@@ -643,6 +650,13 @@ function checkLeituras() {
     const share = total ? known / total : 0;
     need(share >= 0.95, `знакомых слов ${(share * 100).toFixed(1)}% при пороге 95%`);
 
+    const sents = (t.pt || []).flatMap(sentences);
+    const avg = sents.length ? sents.reduce((n, s) => n + s.length, 0) / sents.length : 0;
+    const longest = Math.max(0, ...sents.map((s) => s.length));
+    need(SENT_MAX[ep.level], `уровень «${ep.level}» не из ${Object.keys(SENT_MAX).join(' / ')}`);
+    if (SENT_MAX[ep.level]) need(avg <= SENT_MAX[ep.level], `средняя длина предложения ${avg.toFixed(1)} слов при потолке ${SENT_MAX[ep.level]} для ${ep.level}`);
+    ladder.push(`${ep.n}. ${ep.id} · ${ep.gate} · ${ep.level}: ${total} слов, сноска ${(ep.gloss || []).length}, предложение ${avg.toFixed(1)} в среднем / ${longest} самое длинное`);
+
     // Вопросы: слова из того же словаря — знакомые к воротам, сноска или
     // слова самого текста.
     const strings = [];
@@ -676,7 +690,8 @@ function checkLeituras() {
     if (qUnknown.size) fail(`${where}: в вопросах слова вне ворот, сноски и текста — ${[...qUnknown].sort().join(', ')}`);
   }
 
-  if (!problems) ok(`${eps.length} эпизод(ов), ${nWords} слов в текстах — знакомых по воротам ≥95%, сноски ≤5, вопросы из словаря ворот`);
+  if (!problems) ok(`${eps.length} эпизод(ов), ${nWords} слов в текстах — знакомых по воротам ≥95%, сноски ≤5, предложения в потолке уровня, вопросы из словаря ворот`);
+  for (const s of ladder) console.log('       ' + s);
 }
 
 /* ============ ============ */
