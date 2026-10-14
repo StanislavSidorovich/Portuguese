@@ -6,3 +6,6 @@ desktop.ini
 tools/audiolesson/.venv/
 tools/audiolesson/cache/
 tools/audiolesson/out/
+
+# снимки Playwright MCP
+.playwright-mcp/
