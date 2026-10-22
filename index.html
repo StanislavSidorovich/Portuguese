@@ -760,6 +760,9 @@
   }
   body.dark .dg-claude textarea{border-color:#27312D;}
   .dg-claude-ok{color:var(--ok); font-weight:700;}
+  .dg-claude-tr{display:flex; gap:8px; align-items:center; margin-bottom:8px; cursor:pointer;}
+  .dg-claude-go{display:block; text-align:center; text-decoration:none;}
+  .dg-claude-status{margin-top:8px;}
   /* Situações: пакет — лесенка из шести шагов на одном экране. */
   .sit-meta{font-size:0.78rem; color:var(--muted); margin:-4px 0 10px;}
   .sit-soon{font-size:0.84rem; color:var(--muted); margin:4px 0 18px;}
@@ -10957,7 +10960,11 @@
       '<div class="dg-claude"></div>';
   }
 
-  function dgClaudePrompt(sc){
+  // opt.tr — перевод каждой реплики собеседника. Это опора первого прохода,
+  // и снимается она так же, как выбор сменяется сборкой: по умолчанию
+  // выключена, а на непонятное есть лесенка «Pode repetir?» → «перевод».
+  function dgClaudePrompt(sc, opt){
+    opt = opt || {};
     var first = sc.steps[0].npc.pt;
     var npc = sc.steps.map(function(s){ return "— " + s.npc.pt; }).join("\n");
     // Цели — тире, не номерами: номера уже заняты правилами рамки.
@@ -10974,12 +10981,14 @@
       "4. По ходу сцены мне надо успеть:\n" + goals + "\n" +
       "5. Мои реплики-образцы — так я должен уметь сказать:\n" + mine + "\n" +
       "6. Ошибки посреди сцены не исправляй. Если не понял меня — переспроси по-португальски, как сделал бы живой человек.\n" +
-      "7. Если я пишу «?» или перехожу на русский — одна строка подсказки по-русски, и сразу обратно в сцену.\n" +
-      "8. Через 8–12 обменов закончи сцену естественно, выйди из роли и дай разбор по-русски:\n" +
+      "7. Если я не понял тебя, лесенка такая. Я говорю «Pode repetir?» или «Mais devagar» — повтори медленнее и проще, по-португальски. Если я говорю «перевод» — переведи свою последнюю реплику на русский и повтори её по-португальски.\n" +
+      "8. Если я говорю «подскажи» — дай по-португальски только начало моей реплики, не всю, и жди.\n" +
+      (opt.tr ? "9. Режим с переводом: после каждой своей реплики сразу давай её перевод на русский в скобках.\n" : "") +
+      (opt.tr ? "10. " : "9. ") + "Через 8–12 обменов закончи сцену естественно, выйди из роли и дай разбор по-русски:\n" +
       "— что получилось (одна строка);\n" +
       "— до трёх ошибок в формате «моя реплика → как правильно — правило в одну строку»;\n" +
       "— одна фраза, которую стоит повторить завтра.\n" +
-      "Потом спроси, играем ли сцену ещё раз с другими деталями.\n\n" +
+      "Потом предложи на выбор: ещё раз с другими деталями или поменяться ролями — тогда вопросы задаю я, ты отвечаешь как второй участник, а в разборе смотришь мои вопросы.\n\n" +
       "Начинай ты: «" + first + "»",
       "Let's play a scene in European Portuguese (pt-PT, Lisbon). I am learning the language at A1–A2 level and practising speaking aloud.\n\n" +
       "Scene: " + sc.titleEn + ". " + sc.subEn + "\n" +
@@ -10991,12 +11000,14 @@
       "4. During the scene I need to:\n" + goals + "\n" +
       "5. My model lines — this is how I should be able to say it:\n" + mine + "\n" +
       "6. Do not correct mistakes mid-scene. If you do not understand me, ask again in Portuguese, the way a real person would.\n" +
-      "7. If I type «?» or switch to English, give a one-line hint in English and go straight back into the scene.\n" +
-      "8. After 8–12 exchanges, end the scene naturally, step out of the role and give a debrief in English:\n" +
+      "7. If I do not understand you, this is the ladder. I say «Pode repetir?» or «Mais devagar» — repeat slower and simpler, in Portuguese. I say «translate» — translate your last line into English and repeat it in Portuguese.\n" +
+      "8. If I say «hint», give me only the start of my line in Portuguese, not the whole of it, and wait.\n" +
+      (opt.tr ? "9. Translation mode: after each of your lines, give its English translation in brackets straight away.\n" : "") +
+      (opt.tr ? "10. " : "9. ") + "After 8–12 exchanges, end the scene naturally, step out of the role and give a debrief in English:\n" +
       "— what went well (one line);\n" +
       "— up to three mistakes as «my line → the right way — the rule in one line»;\n" +
       "— one phrase worth repeating tomorrow.\n" +
-      "Then ask whether we play the scene again with different details.\n\n" +
+      "Then offer a choice: again with different details, or swap roles — then I ask the questions, you answer as the second participant, and the debrief looks at my questions.\n\n" +
       "You start: «" + first + "»"
     );
   }
@@ -11008,18 +11019,22 @@
     var box = btn.nextElementSibling;
     if(!sc || !box) return;
     if(box.innerHTML){ box.innerHTML = ""; return; }
-    var text = dgClaudePrompt(sc);
     box.innerHTML =
-      '<div class="dg-claude-status">'+L("Копирую рамку сцены…","Copying the scene frame…")+'</div>' +
+      '<label class="dg-claude-tr"><input type="checkbox"> '+L("С переводом каждой реплики — для первого раза","With every line translated — for the first run")+'</label>' +
+      '<a class="btn btn-check dg-claude-go" target="_blank" rel="noopener">'+L("Открыть в Claude","Open in Claude")+'</a>' +
+      '<div class="dg-claude-status"></div>' +
       '<ol>' +
-        '<li>'+L('Открой <a href="https://claude.ai/new" target="_blank" rel="noopener">новый чат Claude</a> — на каждую сцену новый: длинный чат начинает путаться.',
-                 'Open <a href="https://claude.ai/new" target="_blank" rel="noopener">a new Claude chat</a> — a fresh one for every scene: a long chat starts to drift.')+'</li>' +
-        '<li>'+L("Вставь рамку и отправь.","Paste the frame and send it.")+'</li>' +
-        '<li>'+L("Включи голосовой режим и отвечай вслух. Не знаешь, как сказать, — «?».","Switch on voice mode and answer aloud. Stuck — say «?».")+'</li>' +
+        '<li>'+L("Кнопка открывает новый чат Claude с уже вставленной рамкой — отправь её. На каждую сцену новый чат: длинный начинает путаться.",
+                 "The button opens a new Claude chat with the frame already in it — send it. A new chat for every scene: a long one starts to drift.")+'</li>' +
+        '<li>'+L("Если поле ввода пустое — рамка уже в буфере, просто вставь.","If the input box is empty, the frame is already copied — just paste it.")+'</li>' +
+        '<li>'+L("Включи голосовой режим и отвечай вслух.","Switch on voice mode and answer aloud.")+'</li>' +
       '</ol>' +
+      '<div>'+L("Не понял собеседника — «<b>Pode repetir?</b>», потом «<b>перевод</b>». Не знаешь, как сказать, — «<b>подскажи</b>». После разбора можно поменяться ролями.",
+                "Did not catch it — «<b>Pode repetir?</b>», then «<b>translate</b>». Do not know how to say it — «<b>hint</b>». After the debrief you can swap roles.")+'</div>' +
       '<textarea readonly></textarea>';
     var ta = box.querySelector("textarea");
-    ta.value = text;
+    var tr = box.querySelector(".dg-claude-tr input");
+    var go = box.querySelector(".dg-claude-go");
     var status = box.querySelector(".dg-claude-status");
     function failed(){
       status.textContent = L("Скопируй рамку из поля ниже.","Copy the frame from the box below.");
@@ -11028,9 +11043,22 @@
     function copied(){
       status.innerHTML = '<span class="dg-claude-ok">'+L("Рамка скопирована.","Frame copied.")+'</span>';
     }
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(copied, failed);
-    } else failed();
+    // Галочка пересобирает рамку и копирует её заново: вставлять надо ту,
+    // что видна в поле, а не ту, что ушла в буфер до щелчка.
+    // claude.ai/new?q= открывает новый чат с текстом в поле ввода. Если
+    // приложение Claude на телефоне перехватит ссылку без текста — рамка
+    // всё равно уже в буфере.
+    function fill(){
+      var text = dgClaudePrompt(sc, { tr: tr.checked });
+      ta.value = text;
+      go.href = "https://claude.ai/new?q=" + encodeURIComponent(text);
+      status.textContent = L("Копирую рамку сцены…","Copying the scene frame…");
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(copied, failed);
+      } else failed();
+    }
+    tr.addEventListener("change", fill);
+    fill();
   }
 
   function dgStart(id, mode){
