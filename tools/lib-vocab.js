@@ -57,6 +57,14 @@ function buildStrip(html) {
 // слова надо заводить в VOCAB своей статьёй — она перебивает цепочку,
 // потому что lookupWord сначала смотрит VOCAB[w].
 function makeLookup(vocab, strip) {
+  const resolve = makeResolve(vocab, strip);
+  return (raw) => resolve(raw) !== null;
+}
+
+// То же самое, но возвращает статью, до которой дошло слово (или null).
+// Нужна там, где мало знать «переводится ли», а надо знать перевод:
+// планы уроков в tools/build-aulas.js.
+function makeResolve(vocab, strip) {
   const stripOnce = (w) => {
     const out = [];
     for (const [from, to] of strip) {
@@ -67,9 +75,9 @@ function makeLookup(vocab, strip) {
     return out;
   };
 
-  return function lookup(raw) {
+  return function resolve(raw) {
     const w = raw.toLowerCase();
-    if (vocab.has(w)) return true;
+    if (vocab.has(w)) return w;
     let frontier = [w];
     const seen = new Set();
     for (let depth = 0; depth < 2; depth++) {
@@ -78,14 +86,14 @@ function makeLookup(vocab, strip) {
         for (const cand of stripOnce(word)) {
           if (seen.has(cand)) continue;
           seen.add(cand);
-          if (vocab.has(cand)) return true;
+          if (vocab.has(cand)) return cand;
           next.push(cand);
         }
       }
       if (!next.length) break;
       frontier = next;
     }
-    return false;
+    return null;
   };
 }
 
@@ -104,4 +112,4 @@ function readableZones(src) {
 // Латиница с португальскими диакритиками — та же, что PT_WORD_RE в приложении.
 const PT_WORD = /[A-Za-zÀ-ÖØ-öø-ÿ]+/g;
 
-module.exports = { buildVocab, addWordsets, buildStrip, makeLookup, readableZones, PT_WORD };
+module.exports = { buildVocab, addWordsets, buildStrip, makeLookup, makeResolve, readableZones, PT_WORD };
