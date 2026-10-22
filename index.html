@@ -855,6 +855,16 @@
     border-left:3px solid var(--tint-color,var(--base));
   }
   .dg-opts{display:grid; gap:8px;}
+  /* «На слух»: варианты — переводы, а не португальские реплики, поэтому
+     шрифт обычный, а не «португальский». Кнопки прослушивания крупнее
+     обычного .speak: здесь это главное действие шага, а не украшение. */
+  .dg-opt.dg-tr{font-family:var(--font-ru); font-weight:600;}
+  .dg-ear-listen{display:flex; flex-wrap:wrap; gap:8px; align-items:center;}
+  .dg-ear-listen .speak{
+    font-size:0.95rem; opacity:1; padding:9px 14px; border-radius:10px;
+    border:1.5px solid var(--tint-color,var(--base)); font-family:var(--font-ru); font-weight:700;
+  }
+  .dg-ear-hidden{color:var(--muted); letter-spacing:0.2em;}
   .dg-answer-note{font-size:0.86rem; color:var(--muted); margin-top:12px;}
   .dg-answer-note b{color:var(--ink);}
   .dg-answer-ru{display:block; margin-top:3px;}
@@ -8221,7 +8231,7 @@
 
     <div class="lang-note">Only <b>Frases</b> and <b>Diálogos</b> are translated: the course topics themselves are in Russian. The pronunciation hints of this course are written in Cyrillic, so they are hidden here — tap 🔊 to hear the phrase instead.</div>
 
-    <div class="tip" data-en="&lt;b&gt;Why you walk through a scene twice.&lt;/b&gt; The first pass is &lt;b&gt;multiple choice&lt;/b&gt;: you only have to recognise the line. The second is &lt;b&gt;building it from words&lt;/b&gt;: you have to recall it whole. This is called &lt;b&gt;fading the support&lt;/b&gt;: recognition comes easily and creates the feeling that the material is learned, but in a café you need recall. The same scene in two modes closes the gap between «I understand» and «I can say it»."><b>Почему сцену проходят дважды.</b> Первый проход — <b>выбор из вариантов</b>: реплику достаточно узнать. Второй — <b>сборка из слов</b>: её приходится вспомнить целиком. Это называется <b>снятием опоры</b>: узнавание даётся легко и создаёт ощущение, что материал усвоен, а в кафе нужно именно припоминание. Одна и та же сцена в двух режимах закрывает разрыв между «понимаю» и «могу сказать».</div>
+    <div class="tip" data-en="&lt;b&gt;Why a scene has three passes.&lt;/b&gt; The first is &lt;b&gt;by ear&lt;/b&gt;: the line is only heard, the text is hidden, and you pick what it means — a conversation breaks on the other person's line, so this comes first. The second is &lt;b&gt;multiple choice&lt;/b&gt;: you recognise your own line. The third is &lt;b&gt;building it from words&lt;/b&gt;: you recall it whole. This is called &lt;b&gt;fading the support&lt;/b&gt;: recognition comes easily and creates the feeling that the material is learned, but in a café you need recall. The same scene in three modes closes the gap between «I understand» and «I can say it». «By ear» needs a Portuguese voice on the device; if there is none, the button is not shown."><b>Почему у сцены три прохода.</b> Первый — <b>на слух</b>: реплика только звучит, текста нет, ты выбираешь, что она значит: разговор рвётся на чужой фразе, поэтому начинать надо с неё. Второй — <b>выбор из вариантов</b>: свою реплику достаточно узнать. Третий — <b>сборка из слов</b>: её приходится вспомнить целиком. Это называется <b>снятием опоры</b>: узнавание даётся легко и создаёт ощущение, что материал усвоен, а в кафе нужно именно припоминание. Одна и та же сцена в трёх режимах закрывает разрыв между «понимаю» и «могу сказать». «На слух» работает, если в системе есть португальский голос; без него кнопки нет.</div>
     <div class="dg-intro" data-en="The lines of the other person are the same ones listed under &lt;b&gt;Frases&lt;/b&gt;: they repeat word for word and are worth learning whole. Listen to them with the 🔊 button before you answer — a conversation breaks on the other person's line, not on yours.">Реплики собеседника — те самые, что стоят в разделе <b>Frases</b>: они повторяются дословно и заучиваются целиком. Слушай их кнопкой 🔊 до того, как отвечать: разговор рвётся не на своей фразе, а на чужой.</div>
     <div id="dgStage"></div>
     <div id="dgScenes"></div>
@@ -9467,16 +9477,21 @@
     ptVoice = pickVoice();
     voiceChecked = true;
     if(ptVoice) document.querySelectorAll(".topic-screen[data-prepared]").forEach(addSpeakButtons);
+    // Голоса приходят позже первой отрисовки сцен: без перерисовки кнопка
+    // «На слух» не появилась бы до смены экрана.
+    if(typeof renderDgScenes === "function") renderDgScenes();
   }
 
-  function speak(text){
+  // rate нужен только проходу «На слух» (кнопка «медленнее»): везде
+  // остальное звучит на обычных 0.9.
+  function speak(text, rate){
     if(!ptVoice || !text) return;
     try{
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(text);
       u.voice = ptVoice;
       u.lang = ptVoice.lang;
-      u.rate = 0.9;
+      u.rate = Number(rate) || 0.9;
       window.speechSynthesis.speak(u);
     }catch(e){}
   }
@@ -10870,6 +10885,8 @@
           '<span class="dg-step">'+n+L(' реплик', ' lines')+'</span></div>' +
         '<div class="dg-scene-sub">'+escapeHtml(L(sc.sub, sc.subEn))+'</div>' +
         '<div class="dg-modes">' +
+          // Без pt-голоса слушать нечего, поэтому кнопки нет совсем.
+          (ptVoice ? '<button type="button" class="btn btn-reveal" data-dg="start" data-scene="'+sc.id+'" data-mode="ear">'+L("На слух","By ear")+(d.ear ? '<span class="dg-done">✓</span>' : "")+'</button>' : "") +
           '<button type="button" class="btn btn-reveal" data-dg="start" data-scene="'+sc.id+'" data-mode="mc">'+L("Выбор","Choice")+(d.mc ? '<span class="dg-done">✓</span>' : "")+'</button>' +
           '<button type="button" class="btn btn-check" data-dg="start" data-scene="'+sc.id+'" data-mode="build">'+L("Сборка","Build")+(d.build ? '<span class="dg-done">✓</span>' : "")+'</button>' +
         '</div>' + dgClaudeBlock(sc) + '</div>';
@@ -10887,7 +10904,7 @@
     var step = sc.steps[dgRun.i];
     var head = '<div class="dg-bar">' +
       '<span class="dg-scene-title">'+escapeHtml(L(sc.title, sc.titleEn))+'</span>' +
-      '<span class="dg-mode-tag">'+(dgRun.mode === "mc" ? L("выбор","choice") : L("сборка","build"))+'</span>' +
+      '<span class="dg-mode-tag">'+(dgRun.mode === "ear" ? L("на слух","by ear") : dgRun.mode === "mc" ? L("выбор","choice") : L("сборка","build"))+'</span>' +
       '<span class="dg-step">'+(dgRun.i+1)+' / '+sc.steps.length+'</span></div>';
 
     // В логе — только предыдущий обмен репликами: контекст «что было сейчас»
@@ -10898,6 +10915,7 @@
       log += dgBubble(THEM(), "", prev.npc.pt, "", L(prev.npc.ru, prev.npc.en), false);
       log += dgBubble(YOU(), "me", prev.answer, "", L(prev.answerRu, prev.answerEn), false);
     }
+    if(dgRun.mode === "ear"){ renderDgEar(box, sc, step, head, log); return; }
     log += dgBubble(THEM(), "now", step.npc.pt, step.npc.say, L(step.npc.ru, step.npc.en), true);
 
     var answer = dgRun.mode === "mc"
@@ -10925,11 +10943,50 @@
     }
   }
 
+  // «На слух»: текст реплики скрыт, пока ученик не ответил. Цель шага
+  // (goal) тоже скрыта — «Поздоровайся и закажи кофе» выдаёт, что спросили.
+  // Состояние после ответа (dgRun.pick) рисуется целиком из dgRun, поэтому
+  // смена РУ/EN посреди шага не теряет разбор.
+  function renderDgEar(box, sc, step, head, log){
+    var done = dgRun.answered;
+    var now = done
+      ? dgBubble(THEM(), "now", step.npc.pt, step.npc.say, L(step.npc.ru, step.npc.en), true)
+      : '<div class="dg-turn now"><div class="dg-who">'+THEM()+'</div><div class="dg-bubble">' +
+          '<div class="dg-pt dg-ear-hidden">• • •</div>' +
+          '<div class="dg-ear-listen">' +
+            '<button type="button" class="speak" data-say="'+escapeHtml(step.npc.pt)+'">🔊 '+L("Послушать","Listen")+'</button>' +
+            '<button type="button" class="speak" data-say="'+escapeHtml(step.npc.pt)+'" data-rate="0.75">🐢 '+L("Медленнее","Slower")+'</button>' +
+          '</div></div></div>';
+    var opts = '<div class="dg-opts">' + dgRun.opts.map(function(o, idx){
+      var cls = "dg-opt dg-tr";
+      if(done){
+        if(o.ok) cls += " mc-correct"; else if(idx === dgRun.pick) cls += " mc-wrong";
+      }
+      var s = sc.steps[o.si].npc;
+      return '<button type="button" class="'+cls+'" data-dgpick="'+idx+'"'+(done ? " disabled" : "")+'>'+escapeHtml(L(s.ru, s.en))+'</button>';
+    }).join("") + '</div>';
+    box.innerHTML = head +
+      '<div class="dg-log">'+log+'<div id="dgNow">'+now+'</div></div>' +
+      (done ? '<div class="dg-goal">'+escapeHtml(L(step.goal, step.goalEn))+'</div>' : "") +
+      '<div id="dgAnswer">'+opts+'</div>' +
+      '<div id="dgFeed"></div>' +
+      '<div class="dg-actions" id="dgActs"></div>';
+    if(done){
+      var picked = dgRun.opts[dgRun.pick];
+      dgFeed(picked.ok ? L("Верно.","Right.")
+                       : "<b>"+escapeHtml(L(sc.steps[picked.si].npc.ru, sc.steps[picked.si].npc.en))+"</b> — "+
+                         L("это перевод другой реплики. Что прозвучало — смотри в пузыре выше.","that is the translation of another line. What was actually said is in the bubble above."), picked.ok);
+      dgNextBtn();
+    }
+  }
+
   function renderDgFinish(box, sc){
     var lines = sc.steps.map(function(s){
       return dgBubble(THEM(), "", s.npc.pt, "", L(s.npc.ru, s.npc.en), true) +
              dgBubble(YOU(), "me", s.answer, "", L(s.answerRu, s.answerEn), true);
     }).join("");
+    // После «На слух» дальше по лесенке — выбор: реплику теперь надо
+    // узнать глазами, потом собрать.
     var other = dgRun.mode === "mc" ? "build" : "mc";
     box.innerHTML = '<div class="dg-bar"><span class="dg-scene-title">'+escapeHtml(L(sc.title, sc.titleEn))+'</span>' +
         '<span class="dg-mode-tag">'+L("пройдено","done")+'</span></div>' +
@@ -11064,7 +11121,9 @@
   function dgStart(id, mode){
     var sc = dialogById(id);
     if(!sc) return;
-    dgRun = { id:id, mode:(mode === "build" ? "build" : "mc"), i:0, wrong:0, missed:false, answered:false, opts:null };
+    // «На слух» без голоса невозможен — откатываемся на выбор.
+    var m = mode === "build" ? "build" : (mode === "ear" && ptVoice) ? "ear" : "mc";
+    dgRun = { id:id, mode:m, i:0, wrong:0, missed:false, answered:false, opts:null, pick:-1 };
     dgPrepareStep();
     renderDialogos();
     dgScroll();
@@ -11086,6 +11145,23 @@
     dgRun.answered = false;
     dgRun.missed = false;
     dgRun.opts = null;
+    dgRun.pick = -1;
+    if(step && dgRun.mode === "ear"){
+      // Отвлекающие — переводы других реплик собеседника в этой сцене.
+      // Храним номер шага, а не текст: язык может смениться посреди шага.
+      // Одинаковые переводы (повтор реплики) отсеиваем, чтобы верных
+      // вариантов не вышло два.
+      var rightTr = step.npc.ru, seen = {};
+      seen[rightTr] = 1;
+      var others = [];
+      sc.steps.forEach(function(s, si){
+        if(si === dgRun.i || seen[s.npc.ru]) return;
+        seen[s.npc.ru] = 1;
+        others.push({ si:si, ok:false });
+      });
+      dgRun.opts = shuffle([{ si:dgRun.i, ok:true }].concat(shuffle(others).slice(0, 2)));
+      return;
+    }
     if(!step || dgRun.mode !== "mc") return;
     var opts = [{ t:step.answer, ok:true }].concat(step.wrong.map(function(w){
       return { t:w.t, why:w.why, whyEn:w.whyEn, ok:false };
@@ -11121,9 +11197,17 @@
   }
 
   function handleDgPick(idx){
-    if(!dgRun || dgRun.mode !== "mc" || dgRun.answered) return;
+    if(!dgRun || dgRun.mode === "build" || dgRun.answered) return;
     var sc = dialogById(dgRun.id), step = sc.steps[dgRun.i];
     var picked = dgRun.opts[idx];
+    if(dgRun.mode === "ear"){
+      // Промах считается так же, как в выборе: один шаг — один ответ.
+      if(!picked.ok) dgRun.wrong++;
+      dgRun.answered = true;
+      dgRun.pick = idx;
+      renderDgStage();
+      return;
+    }
     var ok = !!picked.ok;
     if(!ok) dgRun.wrong++;
     document.querySelectorAll("#dgAnswer .dg-opt").forEach(function(b, i){
@@ -12714,7 +12798,7 @@
     // Кнопки звука и тренажёра слов перерисовывают экран целиком, поэтому
     // ловим их раньше остальных — своих постоянных узлов у них нет.
     var say = e.target.closest("[data-say]");
-    if(say){ speak(say.dataset.say); return; }
+    if(say){ speak(say.dataset.say, say.dataset.rate); return; }
 
     var lang = e.target.closest("[data-lang]");
     if(lang){ setLang(lang.dataset.lang); return; }
