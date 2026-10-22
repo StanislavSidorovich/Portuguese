@@ -743,6 +743,23 @@
   .dg-modes{display:flex; gap:8px; flex-wrap:wrap;}
   .dg-modes .btn{flex:1 1 130px;}
   .dg-done{color:var(--ok); font-weight:800; margin-left:4px;}
+  /* Сцена вслух с Claude (A0): третья кнопка тише двух проходов — это выход
+     из приложения, а не ещё один режим. Панель раскрывается под кнопкой. */
+  .dg-claude-btn{
+    display:block; width:100%; margin-top:8px; padding:9px 12px; border-radius:10px;
+    border:1px dashed var(--muted); background:transparent; color:var(--ink);
+    font:inherit; font-size:0.88rem; cursor:pointer;
+  }
+  .dg-claude:not(:empty){margin-top:10px; font-size:0.86rem;}
+  .dg-claude ol{margin:6px 0 8px; padding-left:20px;}
+  .dg-claude li{margin-bottom:3px;}
+  .dg-claude textarea{
+    width:100%; box-sizing:border-box; height:140px; margin-top:6px; padding:8px;
+    border:1px solid #E3E9E6; border-radius:8px; background:var(--card); color:var(--ink);
+    font:0.78rem/1.4 ui-monospace, Consolas, monospace; resize:vertical;
+  }
+  body.dark .dg-claude textarea{border-color:#27312D;}
+  .dg-claude-ok{color:var(--ok); font-weight:700;}
   /* Situações: пакет — лесенка из шести шагов на одном экране. */
   .sit-meta{font-size:0.78rem; color:var(--muted); margin:-4px 0 10px;}
   .sit-soon{font-size:0.84rem; color:var(--muted); margin:4px 0 18px;}
@@ -10852,7 +10869,7 @@
         '<div class="dg-modes">' +
           '<button type="button" class="btn btn-reveal" data-dg="start" data-scene="'+sc.id+'" data-mode="mc">'+L("Выбор","Choice")+(d.mc ? '<span class="dg-done">✓</span>' : "")+'</button>' +
           '<button type="button" class="btn btn-check" data-dg="start" data-scene="'+sc.id+'" data-mode="build">'+L("Сборка","Build")+(d.build ? '<span class="dg-done">✓</span>' : "")+'</button>' +
-        '</div></div>';
+        '</div>' + dgClaudeBlock(sc) + '</div>';
     }).join("");
   }
 
@@ -10922,7 +10939,98 @@
         '<button type="button" class="btn btn-reveal" data-dg="close">'+L("К сценам","Back to scenes")+'</button>' +
         '<button type="button" class="btn btn-check" data-dg="start" data-scene="'+sc.id+'" data-mode="'+other+'">' +
           (other === "build" ? L("Пройти сборкой","Now in build mode") : L("Пройти выбором","Now in choice mode")) + '</button>' +
-      '</div>';
+      '</div>' + dgClaudeBlock(sc);
+  }
+
+  /* Сцена вслух с Claude (A0, ветка Aulas). В приложении реплика собеседника
+     одна и та же каждый раз; живой разговор начинается там, где детали
+     меняются. Кнопка копирует рамку сцены — роль, цели, реплики-образцы,
+     правила разбора — и её вставляют в новый чат Claude.
+
+     Рамка нужна, чтобы разговор не расплывался: без неё модель через пару
+     минут уходит из сцены, подбрасывает непройденные слова и путает варианты
+     языка. Поэтому сцена ограничена 8–12 обменами, а в конце обязательный
+     разбор: ошибки названы, а не только отмечены (как в .dg-why). */
+  function dgClaudeBlock(sc){
+    return '<button type="button" class="dg-claude-btn" data-dg="claude" data-scene="'+sc.id+'">' +
+        L("🎙 Сыграть сцену вслух с Claude","🎙 Play the scene aloud with Claude")+'</button>' +
+      '<div class="dg-claude"></div>';
+  }
+
+  function dgClaudePrompt(sc){
+    var first = sc.steps[0].npc.pt;
+    var npc = sc.steps.map(function(s){ return "— " + s.npc.pt; }).join("\n");
+    // Цели — тире, не номерами: номера уже заняты правилами рамки.
+    var goals = sc.steps.map(function(s){ return "— " + L(s.goal, s.goalEn); }).join("\n");
+    var mine = sc.steps.map(function(s){ return "— " + s.answer; }).join("\n");
+    return L(
+      "Сыграем сцену на европейском португальском (pt-PT, Лиссабон). Я учу язык, уровень A1–A2, и тренирую разговор вслух.\n\n" +
+      "Сцена: " + sc.title + ". " + sc.sub + "\n" +
+      "Ты — собеседник (кто именно, видно по репликам ниже), я — второй участник.\n\n" +
+      "Правила:\n" +
+      "1. Говори только по-португальски, в европейском варианте, без бразильских слов и форм (autocarro, а не ônibus; pequeno-almoço, а не café da manhã).\n" +
+      "2. Одна короткая реплика за раз: одно предложение, простые слова. Потом жди моего ответа.\n" +
+      "3. Держись этой сцены. Твои реплики — эти или близкие к ним; меняй детали (цену, номер, время, чего нет в наличии), чтобы я не отвечал заученно:\n" + npc + "\n" +
+      "4. По ходу сцены мне надо успеть:\n" + goals + "\n" +
+      "5. Мои реплики-образцы — так я должен уметь сказать:\n" + mine + "\n" +
+      "6. Ошибки посреди сцены не исправляй. Если не понял меня — переспроси по-португальски, как сделал бы живой человек.\n" +
+      "7. Если я пишу «?» или перехожу на русский — одна строка подсказки по-русски, и сразу обратно в сцену.\n" +
+      "8. Через 8–12 обменов закончи сцену естественно, выйди из роли и дай разбор по-русски:\n" +
+      "— что получилось (одна строка);\n" +
+      "— до трёх ошибок в формате «моя реплика → как правильно — правило в одну строку»;\n" +
+      "— одна фраза, которую стоит повторить завтра.\n" +
+      "Потом спроси, играем ли сцену ещё раз с другими деталями.\n\n" +
+      "Начинай ты: «" + first + "»",
+      "Let's play a scene in European Portuguese (pt-PT, Lisbon). I am learning the language at A1–A2 level and practising speaking aloud.\n\n" +
+      "Scene: " + sc.titleEn + ". " + sc.subEn + "\n" +
+      "You are the other person (who exactly is clear from the lines below); I am the second participant.\n\n" +
+      "Rules:\n" +
+      "1. Speak only Portuguese, the European variety, with no Brazilian words or forms (autocarro, not ônibus; pequeno-almoço, not café da manhã).\n" +
+      "2. One short line at a time: one sentence, simple words. Then wait for my answer.\n" +
+      "3. Stay in this scene. Your lines are these or close to them; change the details (price, number, time, what is out of stock) so I cannot answer by rote:\n" + npc + "\n" +
+      "4. During the scene I need to:\n" + goals + "\n" +
+      "5. My model lines — this is how I should be able to say it:\n" + mine + "\n" +
+      "6. Do not correct mistakes mid-scene. If you do not understand me, ask again in Portuguese, the way a real person would.\n" +
+      "7. If I type «?» or switch to English, give a one-line hint in English and go straight back into the scene.\n" +
+      "8. After 8–12 exchanges, end the scene naturally, step out of the role and give a debrief in English:\n" +
+      "— what went well (one line);\n" +
+      "— up to three mistakes as «my line → the right way — the rule in one line»;\n" +
+      "— one phrase worth repeating tomorrow.\n" +
+      "Then ask whether we play the scene again with different details.\n\n" +
+      "You start: «" + first + "»"
+    );
+  }
+
+  // Буфер обмена есть не везде (старый браузер, страница не по https), поэтому
+  // текст рамки всегда лежит в поле под кнопкой: скопировать можно и руками.
+  function dgClaudeOpen(btn){
+    var sc = dialogById(btn.dataset.scene);
+    var box = btn.nextElementSibling;
+    if(!sc || !box) return;
+    if(box.innerHTML){ box.innerHTML = ""; return; }
+    var text = dgClaudePrompt(sc);
+    box.innerHTML =
+      '<div class="dg-claude-status">'+L("Копирую рамку сцены…","Copying the scene frame…")+'</div>' +
+      '<ol>' +
+        '<li>'+L('Открой <a href="https://claude.ai/new" target="_blank" rel="noopener">новый чат Claude</a> — на каждую сцену новый: длинный чат начинает путаться.',
+                 'Open <a href="https://claude.ai/new" target="_blank" rel="noopener">a new Claude chat</a> — a fresh one for every scene: a long chat starts to drift.')+'</li>' +
+        '<li>'+L("Вставь рамку и отправь.","Paste the frame and send it.")+'</li>' +
+        '<li>'+L("Включи голосовой режим и отвечай вслух. Не знаешь, как сказать, — «?».","Switch on voice mode and answer aloud. Stuck — say «?».")+'</li>' +
+      '</ol>' +
+      '<textarea readonly></textarea>';
+    var ta = box.querySelector("textarea");
+    ta.value = text;
+    var status = box.querySelector(".dg-claude-status");
+    function failed(){
+      status.textContent = L("Скопируй рамку из поля ниже.","Copy the frame from the box below.");
+      ta.focus(); ta.select();
+    }
+    function copied(){
+      status.innerHTML = '<span class="dg-claude-ok">'+L("Рамка скопирована.","Frame copied.")+'</span>';
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(copied, failed);
+    } else failed();
   }
 
   function dgStart(id, mode){
@@ -11001,6 +11109,7 @@
   function handleDgAction(btn){
     var action = btn.dataset.dg;
     if(action === "start"){ dgStart(btn.dataset.scene, btn.dataset.mode); return; }
+    if(action === "claude"){ dgClaudeOpen(btn); return; }
     if(!dgRun) return;
     var sc = dialogById(dgRun.id), step = sc.steps[dgRun.i];
 
