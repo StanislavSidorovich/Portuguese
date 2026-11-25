@@ -278,6 +278,13 @@
   .row-title-ru{display:block; font-family:var(--font-ru); font-weight:400; font-size:0.8rem; color:var(--muted); margin-top:1px;}
   .row-check{color:var(--ok); font-weight:800; opacity:0; font-size:0.95rem;}
   .row-check.on{opacity:1;}
+  /* Ступень темы: три точки — Узнаю / Собираю / Пишу. Без очков и цветов
+     тревоги: пустая точка — просто «ещё не здесь». */
+  .row-stage{display:inline-flex; gap:3px; align-items:center; flex:none;}
+  .row-stage i{width:7px; height:7px; border-radius:50%; border:1.5px solid #BFC9C5; box-sizing:border-box;}
+  .row-stage i.on{background:var(--ok); border-color:var(--ok);}
+  body.dark .row-stage i{border-color:#4A5953;}
+  body.dark .row-stage i.on{border-color:var(--ok);}
   .row-pct{font-family:var(--font-lat); font-size:0.72rem; font-weight:800; color:var(--muted);}
   .row-minutes{font-family:var(--font-lat); font-size:0.72rem; color:var(--muted); flex:none;}
   .row-soon{font-size:0.68rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em;}
@@ -599,6 +606,18 @@
   }
   .qbuild-line .qword{background:var(--base); border-color:var(--base); color:#fff;}
   .qbuild-empty{font-family:var(--font-ru); font-size:0.82rem; color:var(--muted);}
+
+  /* ---------- СТУПЕНИ ТЕМЫ (Z2) ---------- */
+  .stage-card{background:var(--card); border-radius:12px; padding:11px 13px; margin:0 0 14px;}
+  .stage-steps{display:flex; gap:6px; flex-wrap:wrap;}
+  .stage-step{font-family:var(--font-ru); font-size:0.78rem; font-weight:700; padding:4px 11px; border-radius:20px;
+    border:1.5px solid #DAE1DE; color:var(--muted);}
+  body.dark .stage-step{border-color:#2F3A36;}
+  .stage-step.on{background:var(--ok-tint); border-color:transparent; color:var(--ink-fixed);}
+  .stage-hint{font-family:var(--font-ru); font-size:0.84rem; color:var(--muted); margin:8px 0 0;}
+  .stage-card .part-btn{margin-top:9px;}
+  .stage-card.just-up{box-shadow:0 0 0 2px var(--ok);}
+  .part-rise{font-family:var(--font-ru); font-size:0.9rem; font-weight:700; margin:0 0 8px;}
 
   /* ---------- УЧАСТВОВАТЬ В ДИАЛОГЕ (Z1) ----------
      Режим рисуется кодом поверх готовой разметки .dialogue. Реплики ученика
@@ -8775,6 +8794,81 @@
   }
   function isDone(v){ return !!(v === true || (v && typeof v === "object" && v.done)); }
 
+  /* ---------- Ступени темы (Z2) ----------
+     1 Узнаю   — Exercícios ≥80% (прежний done);
+     2 Собираю — плюс диалог (все диалоги темы) пройден в «Участвовать»
+                 целиком, без «Показать ответ»; банк слов допускается;
+     3 Пишу    — плюс все реплики написаны самому, без «Не помню».
+     «Пройдено» (галочка, метр, бейдж) теперь значит ступень 2. Сам done
+     никуда не делся: им по-прежнему открываются ворота Leituras, и у
+     тех, кто прошёл темы раньше, он остаётся — они просто видят «Узнаю». */
+  var PART_KEY = "ptPartV1";
+  var STAGE_NAMES = [["—","—"], ["Узнаю","Recognise"], ["Собираю","Build"], ["Пишу","Write"]];
+  function stageName(n){ return L(STAGE_NAMES[n][0], STAGE_NAMES[n][1]); }
+  function loadPart(){
+    try{ return JSON.parse(localStorage.getItem(PART_KEY) || "{}") || {}; }catch(e){ return {}; }
+  }
+  // Лучший уровень реплик в записи прохода; старые записи (Z1) без lvl
+  // выводятся из счётчиков.
+  function partRecLvl(r){
+    if(!r) return 0;
+    if(r.lvl) return r.lvl;
+    if(!r.n) return 0;
+    return r.shown ? 1 : (r.bank ? 2 : 3);
+  }
+  function topicStage(t, p, pp){
+    p = p || loadProgress();
+    if(!isDone(p[t])) return 0;
+    pp = pp || loadPart();
+    var n = document.querySelectorAll("#screen-" + t + " .dialogue").length;
+    if(!n) return 2;
+    var rec = pp[t] || {}, m = 3;
+    for(var i = 0; i < n; i++) m = Math.min(m, partRecLvl(rec[i]));
+    return m >= 3 ? 3 : (m >= 2 ? 2 : 1);
+  }
+  function isPassed(t, p, pp){ return topicStage(t, p, pp) >= 2; }
+  function stageHint(n){
+    if(n === 0) return L("Первая ступень — задания на вкладке Exercícios: от 80% верных.",
+                         "First step: the Exercícios tab — 80% correct or more.");
+    if(n === 1) return L("Следующая ступень — Участвовать в диалоге.",
+                         "Next step: take part in the dialogue.");
+    if(n === 2) return L("Следующая ступень — написать все реплики самому, без «Не помню».",
+                         "Next step: write every line yourself, without “I don't remember”.");
+    return L("Все три ступени пройдены.", "All three steps done.");
+  }
+  function goDialog(id){
+    if(activeTopicId() !== id){ if(!openTopic(id)) return; pushView({ view:"topic", id:id, pane:"rule" }); }
+    var screen = document.getElementById("screen-" + id);
+    goPane(screen, "texts");
+    var need = topicStage(id) >= 2 ? 3 : 2, rec = loadPart()[id] || {}, target = null;
+    screen.querySelectorAll(".dialogue").forEach(function(d, i){
+      if(!target && partRecLvl(rec[i]) < need) target = d;
+    });
+    target = target || screen.querySelector(".dialogue");
+    var mini = target && target.closest(".mini-text");
+    if(mini) setTimeout(function(){ mini.scrollIntoView({block:"start", behavior:"smooth"}); }, 60);
+  }
+  // Карточка ступени под подзаголовком темы: где ученик и какой шаг следующий.
+  function renderTopicStages(p, pp, rose){
+    document.querySelectorAll(".topic-screen[data-topic]").forEach(function(s){
+      var id = s.dataset.topic, st = topicStage(id, p, pp);
+      var card = s.querySelector(":scope > .stage-card");
+      if(!card){
+        var sub = s.querySelector(":scope > .topic-subtitle");
+        if(!sub) return;
+        card = document.createElement("div");
+        card.className = "stage-card";
+        sub.insertAdjacentElement("afterend", card);
+      }
+      var html = '<div class="stage-steps">';
+      for(var k = 1; k <= 3; k++) html += '<span class="stage-step' + (st >= k ? ' on' : '') + '">' + (st >= k ? '✓ ' : '') + stageName(k) + '</span>';
+      html += '</div><p class="stage-hint">' + stageHint(st) + '</p>';
+      if(st === 1 || st === 2) html += '<button type="button" class="part-btn go" data-dlg="' + id + '">' + L("К диалогу →", "To the dialogue →") + '</button>';
+      card.innerHTML = html;
+      card.classList.toggle("just-up", rose === id);
+    });
+  }
+
   function topicTitleMap(){
     var map = {};
     document.querySelectorAll("#home [data-open]").forEach(function(el){
@@ -8788,12 +8882,14 @@
     return map;
   }
 
+  var stageRose = null;   // тема, ступень которой только что поднялась
   function renderProgress(){
     // Ворота эпизода Leituras — обычные темы: пройдена тема, и бейдж на
     // главной должен обновиться тут же, а не при следующем заходе.
     renderLtBadge();
     var p = loadProgress();
-    var done = TOPICS.filter(function(t){ return isDone(p[t]); }).length;
+    var pp = loadPart();
+    var done = TOPICS.filter(function(t){ return isPassed(t, p, pp); }).length;
     var plannedTotal = Object.keys(BLOCKS).reduce(function(s,k){ return s + BLOCKS[k].planned; }, 0);
 
     var fill = document.getElementById("progressFill");
@@ -8807,8 +8903,23 @@
 
     document.querySelectorAll("[data-check]").forEach(function(el){
       var v = p[el.dataset.check];
-      el.classList.toggle("on", isDone(v));
+      var stg = topicStage(el.dataset.check, p, pp);
+      el.classList.toggle("on", stg >= 2);
       var row = el.parentElement;
+
+      var dots = row.querySelector(".row-stage");
+      if(stg >= 1){
+        if(!dots){
+          dots = document.createElement("span");
+          dots.className = "row-stage";
+          dots.setAttribute("role", "img");
+          dots.innerHTML = "<i></i><i></i><i></i>";
+          row.insertBefore(dots, el);
+        }
+        dots.setAttribute("aria-label", stageName(stg));
+        dots.title = stageName(stg);
+        Array.prototype.forEach.call(dots.children, function(d, k){ d.classList.toggle("on", k < stg); });
+      } else if(dots){ dots.remove(); }
 
       var mins = TOPIC_MINUTES[el.dataset.check];
       var minEl = row.querySelector(".row-minutes");
@@ -8838,9 +8949,10 @@
     });
 
     document.querySelectorAll("[data-badge]").forEach(function(el){
-      el.classList.toggle("on", isDone(p[el.dataset.badge]));
+      el.classList.toggle("on", isPassed(el.dataset.badge, p, pp));
     });
 
+    renderTopicStages(p, pp, stageRose);
     renderMeter(p);
     renderReviewBlock(p);
     renderContinueBlock();
@@ -8852,12 +8964,13 @@
     var legend = document.getElementById("meterLegend");
     if(!track || !legend) return;
 
+    var pp = loadPart();
     var plannedTotal = 0, doneAll = 0, segHtml = "", legHtml = "";
     Object.keys(BLOCKS).forEach(function(k){ plannedTotal += BLOCKS[k].planned; });
 
     Object.keys(BLOCKS).forEach(function(k){
       var b = BLOCKS[k];
-      var done = b.topics.filter(function(t){ return isDone(p[t]); }).length;
+      var done = b.topics.filter(function(t){ return isPassed(t, p, pp); }).length;
       doneAll += done;
       var fillPct  = b.planned ? (done/b.planned*100) : 0;
       // flex-grow пропорционально числу тем, а не фиксированный процент:
@@ -8930,6 +9043,14 @@
     box.innerHTML = '<button type="button" class="review-item" data-open="'+last+'" style="border-color:#DAE1DE;margin:0;">' +
                     '<span class="review-why">'+L("Продолжить", "Continue")+'</span>' +
                     '<span class="review-title">'+title+'</span></button>';
+    // Тема на «Узнаю» или «Собираю» ждёт диалога — ссылка ведёт прямо в него.
+    var lastStage = topicStage(last);
+    if(lastStage === 1 || lastStage === 2){
+      box.innerHTML += '<button type="button" class="review-item" data-dlg="'+last+'" style="border-color:#DAE1DE;margin:8px 0 0;">' +
+                       '<span class="review-why">'+L("Следующая ступень", "Next step")+'</span>' +
+                       '<span class="review-title">'+(lastStage === 1 ? L("Участвовать в диалоге", "Take part in the dialogue")
+                                                                     : L("Написать диалог самому", "Write the dialogue yourself"))+'</span></button>';
+    }
     box.style.display = "block";
   }
 
@@ -11403,12 +11524,8 @@
      Нового португальского текста нет: ответ сверяется с самой репликой.
      Результат — в localStorage: {тема: {номер диалога: счётчики}}. */
 
-  var PART_KEY = "ptPartV1";
   var PART = new WeakMap();
 
-  function loadPart(){
-    try{ return JSON.parse(localStorage.getItem(PART_KEY) || "{}") || {}; }catch(e){ return {}; }
-  }
   function savePart(p){
     try{ localStorage.setItem(PART_KEY, JSON.stringify(p)); }catch(e){}
   }
@@ -11536,10 +11653,18 @@
     var p = loadPart();
     if(!p[topic]) p[topic] = {};
     var s = st.stats, prev = p[topic][idx];
+    // lvl — лучший проход за всё время (3 — всё написано, 2 — банк слов
+    // допускался, 1 — были показанные ответы): худший повторный проход
+    // ступень не отбирает.
+    var now = s.shown ? 1 : (s.bank ? 2 : 3);
     p[topic][idx] = {ts: Date.now(), role: st.me, n: s.typed + s.accent + s.bank + s.shown,
                      typed: s.typed, accent: s.accent, bank: s.bank, shown: s.shown,
+                     lvl: Math.max(now, partRecLvl(prev)),
                      runs: (prev && prev.runs ? prev.runs : 0) + 1};
     savePart(p);
+    st.stageAfter = topicStage(topic);
+    stageRose = (st.stageAfter > st.stageBefore) ? topic : null;
+    renderProgress();
   }
 
   function partStartRun(st, who){
@@ -11548,6 +11673,9 @@
     st.stats = partStats();
     st.i = -1;
     st.tr = partTranslations(st.mini);
+    var scr = st.dlg.closest(".topic-screen");
+    st.stageBefore = scr && scr.dataset.topic ? topicStage(scr.dataset.topic) : 0;
+    st.stageAfter = st.stageBefore;
     partAdvance(st);
   }
 
@@ -11666,6 +11794,15 @@
         ul.appendChild(li);
       });
       sum.appendChild(ul);
+      if(st.stageAfter > st.stageBefore){
+        sum.appendChild(partEl("p", "part-rise", L("↑ Ступень темы поднялась: ","↑ Topic step went up: ") +
+          (st.stageBefore ? stageName(st.stageBefore) + " → " : "") + stageName(st.stageAfter)));
+      } else if(st.stageAfter === 0){
+        sum.appendChild(partEl("p", "part-cue", L("Диалог засчитан. Ступень «Узнаю» даст вкладка Exercícios: от 80% верных.",
+                                                  "Dialogue counted. The “Recognise” step comes from the Exercícios tab: 80% correct or more.")));
+      } else {
+        sum.appendChild(partEl("p", "part-cue", L("Ступень темы — ","Topic step: ") + stageName(st.stageAfter) + ". " + stageHint(st.stageAfter)));
+      }
       var a3 = partEl("div", "part-acts");
       a3.appendChild(partBtn(L("Ещё раз","Again"), "again", "go"));
       a3.appendChild(partBtn(L("Другая роль","Other role"), "start", "quiet"));
@@ -13229,6 +13366,9 @@
 
     var dgOpt = e.target.closest("[data-dgpick]");
     if(dgOpt && !dgOpt.disabled){ handleDgPick(Number(dgOpt.dataset.dgpick)); return; }
+
+    var dlgLink = e.target.closest("[data-dlg]");
+    if(dlgLink){ goDialog(dlgLink.dataset.dlg); return; }
 
     var open = e.target.closest("[data-open]");
     if(open && !open.disabled){ goTopic(open.dataset.open); return; }
