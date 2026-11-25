@@ -619,6 +619,31 @@
   .stage-card.just-up{box-shadow:0 0 0 2px var(--ok);}
   .part-rise{font-family:var(--font-ru); font-size:0.9rem; font-weight:700; margin:0 0 8px;}
 
+  /* ---------- СВОДНЫЕ ГЛАВЫ REVISÃO (Z3) ----------
+     Глава стоит в списке тем, но темой не является: строка без минут и без
+     ступеней, маркер пунктиром, а не сплошной — «привал на знакомом», а не
+     ещё один подъём. Финиш главы — плашка «Глава N закрыта», без очков. */
+  .rev-row{background:transparent; border:1.5px solid var(--card); padding:11px 14px;}
+  body.dark .rev-row{border-color:#2F3A36;}
+  .rev-marker{background:repeating-linear-gradient(to bottom, var(--base) 0 4px, transparent 4px 7px) !important;}
+  .rev-row .topic-num{color:var(--base-deep);}
+  body.dark .rev-row .topic-num{color:var(--base);}
+  .rev-flag{font-family:var(--font-ru); font-size:0.7rem; font-weight:800; color:var(--ink-fixed); background:var(--ok-tint);
+    padding:3px 8px; border-radius:20px; white-space:nowrap;}
+  .rev-card .stage-step{font-size:0.76rem;}
+  .rev-finish{background:var(--ok-tint); color:var(--ink-fixed); border-radius:12px; padding:12px 14px; margin:0 0 14px;
+    font-family:var(--font-ru);}
+  .rev-finish b{display:block; font-size:1.02rem;}
+  .rev-finish span{display:block; font-size:0.84rem; margin-top:3px;}
+  .rev-slot .rev-finish{margin:14px 0 0;}
+  .rev-slot .rev-left{font-family:var(--font-ru); font-size:0.84rem; color:var(--muted); margin:12px 0 0;}
+  .rev-listen{margin:0 0 12px; background:var(--tint-color,var(--base)); color:#fff; border:none; font-weight:700;}
+  .rev-listen[hidden]{display:none;}
+  .rev-screen .storytext + .storytext{margin-top:10px;}
+  /* .tip светлый в обеих темах — ser/estar на нём только парой -ink-fixed. */
+  .rev-screen .tip .se{color:var(--ser-ink-fixed);}
+  .rev-screen .tip .es{color:var(--estar-ink-fixed);}
+
   /* ---------- УЧАСТВОВАТЬ В ДИАЛОГЕ (Z1) ----------
      Режим рисуется кодом поверх готовой разметки .dialogue. Реплики ученика
      и итог стоят на светлых плашках (--ok-tint), которые остаются светлыми и
@@ -1128,6 +1153,12 @@
         <span class="row-check" data-check="digrafos" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
+      <button type="button" class="topic-row rev-row" data-open="rev04">
+        <span class="marker rev-marker"></span>
+        <span class="row-title"><span class="topic-num">Revisão</span> 0.1–0.4<span class="row-title-ru" data-en="chapter 1 · review: a text to read aloud and by ear, a dialogue, mixed exercises">глава 1 · сводная: текст вслух и на слух, диалог, задания вперемешку</span></span>
+        <span class="row-check" data-rev-check="rev04" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
       <button type="button" class="topic-row" data-open="genero">
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.5</span> Género e artigos<span class="row-title-ru" data-en="gender and articles: o, a, um, uma">род и артикли: o, a, um, uma</span></span>
@@ -1150,6 +1181,12 @@
         <span class="marker" style="background:var(--base)"></span>
         <span class="row-title"><span class="topic-num">0.8</span> Estar<span class="row-title-ru" data-en="to be: state and location">быть: состояние и место</span></span>
         <span class="row-check" data-check="estar" aria-hidden="true">✓</span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
+      <button type="button" class="topic-row rev-row" data-open="rev08">
+        <span class="marker rev-marker"></span>
+        <span class="row-title"><span class="topic-num">Revisão</span> 0.5–0.8<span class="row-title-ru" data-en="chapter 2 · review: gender, plural, ser and estar in one story">глава 2 · сводная: род, множественное, ser и estar в одной истории</span></span>
+        <span class="row-check" data-rev-check="rev08" aria-hidden="true">✓</span>
         <span class="row-arrow" aria-hidden="true">›</span>
       </button>
       <button type="button" class="topic-row" data-open="servsestar">
@@ -2320,6 +2357,128 @@
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="rev04">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
+        <span class="next-title" data-en="Revisão 0.1–0.4 — chapter 1, a review of the sounds">Revisão 0.1–0.4 — глава 1, сводная по звукам</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ REVISÃO 1 · 0.1–0.4 (сводная глава, Z3) ============ -->
+<div class="screen topic-screen rev-screen" id="screen-rev04" data-rev="rev04" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back data-en="← All topics">← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker rev-marker"></span>
+    <h2><span class="topic-num">Revisão</span> 0.1–0.4</h2>
+    <span class="done-badge" data-rev-badge="rev04" data-en="✓ closed">✓ закрыта</span>
+  </div>
+  <div class="topic-subtitle" data-en="Chapter 1, a review. Nothing new here: a text, a dialogue and exercises made only from topics 0.1&ndash;0.4. The focus is reading aloud and listening.">Глава 1 — сводная. Нового здесь нет: текст, диалог и задания только из тем 0.1–0.4. Главное — читать вслух и слушать.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Texto</b><i data-en="text">текст</i></button>
+    <button type="button" class="subnav-btn" data-pane="dlg"><b>Diálogo</b><i data-en="dialogue">диалог</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i data-en="exercises">задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <div class="tip" data-en="&lt;b&gt;How to read this text.&lt;/b&gt; 1) Listen to it all the way through without reading along. 2) Read it aloud yourself, one sentence at a time &mdash; with the 🔊 next to the paragraph if you get stuck. 3) Listen again and check the sounds of 0.1&ndash;0.4: &lt;span class='pt'&gt;ch&lt;/span&gt;, &lt;span class='pt'&gt;nh&lt;/span&gt;, &lt;span class='pt'&gt;lh&lt;/span&gt;, &lt;span class='pt'&gt;ç&lt;/span&gt;, &lt;span class='pt'&gt;rr&lt;/span&gt;, the nasals and the swallowed unstressed vowels."><b>Как читать этот текст.</b> 1) Послушай целиком, не глядя в текст. 2) Прочитай вслух сам, по предложению — если споткнулся, 🔊 у абзаца. 3) Послушай ещё раз и сверь звуки тем 0.1–0.4: <span class="pt">ch</span>, <span class="pt">nh</span>, <span class="pt">lh</span>, <span class="pt">ç</span>, <span class="pt">rr</span>, носовые и съеденные безударные.</div>
+    <p class="tap-hint" data-en="Tap any Portuguese word to see its translation.">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label" data-en="Texto · Um dia da Ana — a day in Ana&rsquo;s life">Texto · Um dia da Ana — день Аны</div>
+      <div class="mini-text">
+        <button type="button" class="btn rev-listen" data-listen hidden>▶ Слушать целиком</button>
+        <p class="storytext">Bom dia! A Ana é aluna na universidade. Na cozinha está a mãe, com um chá e pão com manteiga. A mãe é professora, e o trabalho é na escola. O irmão é jovem: é aluno.</p>
+        <p class="storytext">A chave da casa está na mesa. O carro na rua é do irmão. O autocarro é aqui, na praça, com a estação de comboio.</p>
+        <p class="storytext">A aula é na sala dois, com um professor muito bom. Na biblioteca está o livro da lição.</p>
+        <p class="storytext">O almoço é com um amigo: sopa, peixe com arroz e água. E o amigo? Carne e cerveja! Até logo, Ana!</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation" data-en="Good morning! Ana is a student at the university. Mum is in the kitchen, with a tea and bread and butter. Mum is a teacher, and her work is at the school. Ana&rsquo;s brother is young: he&rsquo;s a pupil.&lt;br&gt;&lt;br&gt;The house key is on the table. The car in the street is her brother&rsquo;s. The bus is right here, on the square, by the train station.&lt;br&gt;&lt;br&gt;The class is in room two, with a very good teacher. The book for the lesson is in the library.&lt;br&gt;&lt;br&gt;Lunch is with a friend: soup, fish with rice and water. And the friend? Meat and beer! See you later, Ana!">Доброе утро! Ана — студентка университета. На кухне мама, с чаем и хлебом с маслом. Мама — учительница, работает в школе. Брат молодой: он школьник.<br><br>Ключ от дома на столе. Машина на улице — брата. Автобус здесь, на площади, у вокзала.<br><br>Занятие в аудитории два, с очень хорошим преподавателем. В библиотеке лежит книга к уроку.<br><br>Обед — с другом: суп, рыба с рисом и вода. А друг? Мясо и пиво! До скорого, Ана!</p>
+        <p class="why-note" data-en="&lt;b&gt;What to listen for:&lt;/b&gt; &lt;span class='pt'&gt;cozinha&lt;/span&gt; and &lt;span class='pt'&gt;chá&lt;/span&gt; &mdash; &lt;i&gt;nh&lt;/i&gt; like the ny in canyon and &lt;i&gt;ch&lt;/i&gt; as sh; &lt;span class='pt'&gt;praça&lt;/span&gt; and &lt;span class='pt'&gt;lição&lt;/span&gt; &mdash; ç is always s; &lt;span class='pt'&gt;carro&lt;/span&gt; and &lt;span class='pt'&gt;arroz&lt;/span&gt; &mdash; rr and an initial r come from the throat; &lt;span class='pt'&gt;mãe&lt;/span&gt;, &lt;span class='pt'&gt;pão&lt;/span&gt;, &lt;span class='pt'&gt;estação&lt;/span&gt; &mdash; nasals with no n at the end.&lt;br&gt;&lt;br&gt;&lt;span class='pt'&gt;Professora&lt;/span&gt; and &lt;span class='pt'&gt;escola&lt;/span&gt; lose their first e: &lt;i&gt;prufe-SO-ra&lt;/i&gt;, &lt;i&gt;SHKO-la&lt;/i&gt;. That&rsquo;s topic 0.2 &mdash; and the reason Lisbon speech sounds faster than it is."><b>На что слушать:</b> <span class="pt">cozinha</span> и <span class="pt">chá</span> — «нь» и «ш»; <span class="pt">praça</span> и <span class="pt">lição</span> — ç всегда «с»; <span class="pt">carro</span> и <span class="pt">arroz</span> — rr и начальное r картавые; <span class="pt">mãe</span>, <span class="pt">pão</span>, <span class="pt">estação</span> — носовые без «н» на конце.<br><br><span class="pt">Professora</span> и <span class="pt">escola</span> теряют безударное начало: «пруфесóра», «шкóла». Это тема 0.2 — и причина, по которой лиссабонская речь кажется быстрее, чем она есть.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-dlg">
+    <p class="tap-hint" data-en="Choose a role: the other person&rsquo;s lines are spoken aloud, yours you write yourself.">Выбери роль: реплики собеседника звучат вслух, свои пишешь сам.</p>
+    <div class="reading-block">
+      <div class="text-label" data-en="Diálogo · Ao almoço — at lunch">Diálogo · Ao almoço — за обедом</div>
+      <div class="mini-text">
+        <div class="dialogue" data-part-auto>
+          <p class="dline"><span class="speaker">Empregado:</span> Boa tarde! Faz favor?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Boa tarde. Sopa e peixe com arroz, por favor.</p>
+          <p class="dline"><span class="speaker">Empregado:</span> Com pão?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Sim, com pão e manteiga. E água, por favor.</p>
+          <p class="dline"><span class="speaker">Empregado:</span> E um café?</p>
+          <p class="dline"><span class="speaker">Ana:</span> Não, obrigada. Um chá, por favor.</p>
+          <p class="dline"><span class="speaker">Empregado:</span> Um chá. Muito bem!</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation" data-en="&lt;b&gt;Waiter:&lt;/b&gt; Good afternoon! What can I get you?&lt;br&gt;&lt;b&gt;Ana:&lt;/b&gt; Good afternoon. Soup and fish with rice, please.&lt;br&gt;&lt;b&gt;Waiter:&lt;/b&gt; With bread?&lt;br&gt;&lt;b&gt;Ana:&lt;/b&gt; Yes, with bread and butter. And water, please.&lt;br&gt;&lt;b&gt;Waiter:&lt;/b&gt; And a coffee?&lt;br&gt;&lt;b&gt;Ana:&lt;/b&gt; No, thank you. A tea, please.&lt;br&gt;&lt;b&gt;Waiter:&lt;/b&gt; A tea. Very good!"><b>Официант:</b> Добрый день! Что для вас?<br><b>Ана:</b> Добрый день. Суп и рыбу с рисом, пожалуйста.<br><b>Официант:</b> С хлебом?<br><b>Ана:</b> Да, с хлебом и маслом. И воду, пожалуйста.<br><b>Официант:</b> А кофе?<br><b>Ана:</b> Нет, спасибо. Чай, пожалуйста.<br><b>Официант:</b> Чай. Отлично!</p>
+        <p class="why-note" data-en="&lt;b&gt;Why it&rsquo;s like this:&lt;/b&gt; &lt;span class='pt'&gt;Faz favor?&lt;/span&gt; from topic 0.1 &mdash; the waiter&rsquo;s first line, and you will hear it every day. It doesn&rsquo;t mean &lsquo;please&rsquo; here, it means &lsquo;yes? what will it be?&rsquo;&lt;br&gt;&lt;br&gt;Ana says &lt;span class='pt'&gt;obrigada&lt;/span&gt; with an a because she is a woman. A man says &lt;span class='pt'&gt;obrigado&lt;/span&gt; &mdash; the ending matches the speaker, not the listener."><b>Почему так:</b> <span class="pt">Faz favor?</span> из темы 0.1 — первая реплика официанта, её услышишь каждый день. Здесь это не «пожалуйста», а «слушаю вас».<br><br>Ана говорит <span class="pt">obrigada</span> на -a, потому что она женщина. Мужчина скажет <span class="pt">obrigado</span> — окончание по говорящему, а не по тому, кого благодарят.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-rev="rev04">
+    <p class="quiz-instruction" data-en="Mixed exercises from topics 0.1&ndash;0.4. Build the sentence, type the word or pick an option.">Задания вперемешку из тем 0.1–0.4. Собери фразу, впиши слово или выбери вариант.</p>
+    <div class="qitem">
+      <span class="qnum">1.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;The key is in the kitchen.&rsquo;">Собери фразу: «Ключ на кухне».</span>
+      <div class="qbuild" data-answer="A chave está na cozinha" data-words="cozinha|na|A|está|chave"></div>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint" data-en="Type the word for &lsquo;lesson&rsquo;:">Впиши слово «урок»:</span><input class="blank" data-answer="lição" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint" data-en="Which of these words ends in a sh sound?">Какое из этих слов читается через «ш» на конце?</span>
+      <select class="mc" data-answer="adeus">
+        <option value="">—</option>
+        <option value="casa">casa</option>
+        <option value="adeus">adeus</option>
+        <option value="cidade">cidade</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">4.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;The class is in room two.&rsquo;">Собери фразу: «Занятие в аудитории два».</span>
+      <div class="qbuild" data-answer="A aula é na sala dois" data-words="sala|é|A|dois|na|aula"></div>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint" data-en="From the text. &lsquo;Lunch is with a friend&rsquo;:">Из текста. «Обед — с другом»:</span> <span class="pt">O almoço é com um</span> <input class="blank" data-answer="amigo" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem">
+      <span class="qnum">6.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;The station is on the square.&rsquo;">Собери фразу: «Вокзал на площади».</span>
+      <div class="qbuild" data-answer="A estação é na praça" data-words="praça|é|A|na|estação"></div>
+    </div>
+    <div class="qitem"><span class="qnum">7.</span> <span class="ru-hint" data-en="Which word has the throaty r?">В каком слове «р» картавое?</span>
+      <select class="mc" data-answer="carro">
+        <option value="">—</option>
+        <option value="caro">caro</option>
+        <option value="carro">carro</option>
+        <option value="hora">hora</option>
+      </select>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint" data-en="Type the word that sounds ee-ZAHM (exam):">Впиши слово, которое звучит «изáм» (экзамен):</span><input class="blank" data-answer="exame" style="width:8em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem">
+      <span class="qnum">9.</span> <span class="ru-hint" data-en="From the text. Build: &lsquo;Mum is in the kitchen.&rsquo;">Из текста. Собери: «На кухне — мама».</span>
+      <div class="qbuild" data-answer="Na cozinha está a mãe" data-words="mãe|Na|a|está|cozinha"></div>
+    </div>
+    <div class="qitem"><span class="qnum">10.</span> <span class="ru-hint" data-en="Type the word for &lsquo;key&rsquo;:">Впиши слово «ключ»:</span><input class="blank" data-answer="chave" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">11.</span> <span class="ru-hint" data-en="In which word does the final nasal sound ayng?">В каком слове конечный носовой звучит «айн»?</span>
+      <select class="mc" data-answer="bem">
+        <option value="">—</option>
+        <option value="bem">bem</option>
+        <option value="bom">bom</option>
+        <option value="sim">sim</option>
+      </select>
+    </div>
+    <div class="qitem">
+      <span class="qnum">12.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;One coffee, please.&rsquo;">Собери фразу: «Один кофе, пожалуйста».</span>
+      <div class="qbuild" data-answer="Um café por favor" data-words="café|favor|Um|por"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="To the text">К тексту</button>
+      <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <div class="rev-slot" data-rev-slot="rev04"></div>
     <button type="button" class="next-card" data-open="genero">
       <span class="next-marker"></span>
       <span class="next-text">
@@ -3134,11 +3293,129 @@
       <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
       <span class="quiz-result" aria-live="polite"></span>
     </div>
+    <button type="button" class="next-card" data-open="rev08">
+      <span class="next-marker"></span>
+      <span class="next-text">
+        <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
+        <span class="next-title" data-en="Revisão 0.5–0.8 — chapter 2, a review">Revisão 0.5–0.8 — глава 2, сводная</span>
+      </span>
+      <span class="next-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ REVISÃO 2 · 0.5–0.8 (сводная глава, Z3) ============ -->
+<div class="screen topic-screen rev-screen" id="screen-rev08" data-rev="rev08" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back data-en="← All topics">← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker rev-marker"></span>
+    <h2><span class="topic-num">Revisão</span> 0.5–0.8</h2>
+    <span class="done-badge" data-rev-badge="rev08" data-en="✓ closed">✓ закрыта</span>
+  </div>
+  <div class="topic-subtitle" data-en="Chapter 2, a review. No new words: gender, plural, &lt;span class='se'&gt;ser&lt;/span&gt; and &lt;span class='es'&gt;estar&lt;/span&gt; together in one story &mdash; the way they meet in real speech.">Глава 2 — сводная. Новых слов нет: род, множественное, <span class="se">ser</span> и <span class="es">estar</span> вместе в одной истории — так, как они встречаются в живой речи.</div>
+  <div class="subnav">
+    <button type="button" class="subnav-btn active" data-pane="rule"><b>Texto</b><i data-en="text">текст</i></button>
+    <button type="button" class="subnav-btn" data-pane="dlg"><b>Diálogo</b><i data-en="dialogue">диалог</i></button>
+    <button type="button" class="subnav-btn" data-pane="quiz"><b>Exercícios</b><i data-en="exercises">задания</i></button>
+  </div>
+
+  <div class="pane pane-rule active">
+    <div class="tip" data-en="&lt;b&gt;How to read this text.&lt;/b&gt; Listen to it all the way through first. Then read it yourself and, for every &lt;span class='pt'&gt;é&lt;/span&gt; and &lt;span class='pt'&gt;está&lt;/span&gt;, ask: is this what the thing &lt;i&gt;is&lt;/i&gt; (&lt;span class='se'&gt;ser&lt;/span&gt;), or where it is and what state it&rsquo;s in right now (&lt;span class='es'&gt;estar&lt;/span&gt;)?"><b>Как читать этот текст.</b> Сначала послушай целиком. Потом прочитай сам и у каждого <span class="pt">é</span> и <span class="pt">está</span> спроси себя: это то, что предмет <i>есть</i> (<span class="se">ser</span>), или где он и в каком он состоянии сейчас (<span class="es">estar</span>)?</div>
+    <p class="tap-hint" data-en="Tap any Portuguese word to see its translation.">Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+    <div class="reading-block">
+      <div class="text-label" data-en="Texto · A viagem — the trip">Texto · A viagem — поездка</div>
+      <div class="mini-text">
+        <button type="button" class="btn rev-listen" data-listen hidden>▶ Слушать целиком</button>
+        <p class="storytext">A Ana é russa, de Moscovo. É estudante na universidade, em Lisboa. O João é português e é engenheiro. Hoje não estão em casa: estão de viagem. O hotel está perto da praia.</p>
+        <p class="storytext">O hotel é pequeno e velho, mas o quarto é grande. As camas são novas, e a janela está aberta. Na mesa estão os mapas da cidade, dois jornais e o telefone do João. A porta da casa de banho está fechada.</p>
+        <p class="storytext">A Ana está na cama com um livro. Não está doente: está cansada da viagem. O João não está cansado. Está contente: a praia está perto e não está frio.</p>
+        <p class="storytext">O restaurante do hotel está fechado. Na praça, as lojas estão fechadas, mas os cafés estão abertos até tarde. O João está no café com um amigo. O amigo é português, de Lisboa, e é motorista.</p>
+        <p class="storytext">A Ana está bem. O quarto é bom, a cama é grande e a praia está aqui, perto. Boa noite!</p>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation" data-en="Ana is Russian, from Moscow. She&rsquo;s a student at the university, in Lisbon. João is Portuguese and he&rsquo;s an engineer. Today they aren&rsquo;t at home: they&rsquo;re on a trip. The hotel is near the beach.&lt;br&gt;&lt;br&gt;The hotel is small and old, but the room is big. The beds are new, and the window is open. On the table there are maps of the town, two newspapers and João&rsquo;s phone. The bathroom door is closed.&lt;br&gt;&lt;br&gt;Ana is in bed with a book. She isn&rsquo;t ill: she&rsquo;s tired from the trip. João isn&rsquo;t tired. He&rsquo;s happy: the beach is close and it isn&rsquo;t cold.&lt;br&gt;&lt;br&gt;The hotel restaurant is closed. On the square the shops are closed, but the cafés are open until late. João is in the café with a friend. The friend is Portuguese, from Lisbon, and he&rsquo;s a driver.&lt;br&gt;&lt;br&gt;Ana is fine. The room is good, the bed is big and the beach is right here, close by. Good night!">Ана — русская, из Москвы. Она студентка университета в Лиссабоне. Жуан — португалец, инженер. Сегодня они не дома: они в поездке. Отель рядом с пляжем.<br><br>Отель маленький и старый, но номер большой. Кровати новые, и окно открыто. На столе — карты города, две газеты и телефон Жуана. Дверь в ванную закрыта.<br><br>Ана лежит в кровати с книгой. Она не заболела: устала с дороги. Жуан не устал. Он доволен: пляж близко, и не холодно.<br><br>Ресторан отеля закрыт. На площади магазины закрыты, а кафе открыты допоздна. Жуан в кафе с другом. Друг — португалец, из Лиссабона, водитель.<br><br>У Аны всё хорошо. Номер хороший, кровать большая, а пляж — вот он, рядом. Спокойной ночи!</p>
+        <p class="why-note" data-en="&lt;b&gt;Why it&rsquo;s like this:&lt;/b&gt; one hotel, two verbs. &lt;span class='pt'&gt;O hotel &lt;span class='se'&gt;é&lt;/span&gt; pequeno&lt;/span&gt; &mdash; its size, what it is: &lt;span class='se'&gt;ser&lt;/span&gt;. &lt;span class='pt'&gt;O hotel &lt;span class='es'&gt;está&lt;/span&gt; perto da praia&lt;/span&gt; &mdash; where it is: &lt;span class='es'&gt;estar&lt;/span&gt;. Same with the people: &lt;span class='pt'&gt;é engenheiro&lt;/span&gt;, but &lt;span class='pt'&gt;está cansado&lt;/span&gt;.&lt;br&gt;&lt;br&gt;&lt;span class='pt'&gt;As lojas estão fechadas, os cafés estão abertos&lt;/span&gt; &mdash; the adjective takes both the gender and the plural -s of its noun: &lt;span class='pt'&gt;loja&lt;/span&gt; is feminine, so &lt;i&gt;fechadas&lt;/i&gt;; &lt;span class='pt'&gt;café&lt;/span&gt; is masculine, so &lt;i&gt;abertos&lt;/i&gt;. The full agreement rule is topic 0.11.&lt;br&gt;&lt;br&gt;&lt;span class='pt'&gt;dois jornais&lt;/span&gt; &mdash; l &rarr; is from 0.6. &lt;span class='pt'&gt;cansada da viagem&lt;/span&gt; &mdash; da is de + a, as in &lt;span class='pt'&gt;perto da praia&lt;/span&gt;."><b>Почему так:</b> один отель, два глагола. <span class="pt">O hotel <span class="se">é</span> pequeno</span> — его размер, то, какой он есть: <span class="se">ser</span>. <span class="pt">O hotel <span class="es">está</span> perto da praia</span> — где он находится: <span class="es">estar</span>. С людьми так же: <span class="pt">é engenheiro</span>, но <span class="pt">está cansado</span>.<br><br><span class="pt">As lojas estão fechadas, os cafés estão abertos</span> — прилагательное берёт у слова и род, и -s множественного: <span class="pt">loja</span> женского рода, значит <i>fechadas</i>; <span class="pt">café</span> мужского, значит <i>abertos</i>. Полное правило согласования — тема 0.11.<br><br><span class="pt">dois jornais</span> — l → is из темы 0.6. <span class="pt">cansada da viagem</span> — da = de + a, как в <span class="pt">perto da praia</span>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-dlg">
+    <p class="tap-hint" data-en="Choose a role: the other person&rsquo;s lines are spoken aloud, yours you write yourself.">Выбери роль: реплики собеседника звучат вслух, свои пишешь сам.</p>
+    <div class="reading-block">
+      <div class="text-label" data-en="Diálogo · No hotel — at the hotel">Diálogo · No hotel — в отеле</div>
+      <div class="mini-text">
+        <div class="dialogue" data-part-auto>
+          <p class="dline"><span class="speaker">Empregada:</span> Boa tarde! Faz favor?</p>
+          <p class="dline"><span class="speaker">João:</span> Boa tarde. A chave do quarto dois, por favor.</p>
+          <p class="dline"><span class="speaker">Empregada:</span> Aqui está. O quarto está pronto.</p>
+          <p class="dline"><span class="speaker">João:</span> Obrigado. O restaurante está aberto?</p>
+          <p class="dline"><span class="speaker">Empregada:</span> Hoje não, está fechado. Mas os cafés da praça estão abertos.</p>
+          <p class="dline"><span class="speaker">João:</span> Estão longe?</p>
+          <p class="dline"><span class="speaker">Empregada:</span> Não, estão perto, na rua da praia.</p>
+          <p class="dline"><span class="speaker">João:</span> E os mapas da cidade? Onde estão?</p>
+          <p class="dline"><span class="speaker">Empregada:</span> Estão aqui, na mesa. São novos!</p>
+          <p class="dline"><span class="speaker">João:</span> Muito obrigado. Boa tarde!</p>
+        </div>
+        <button class="btn btn-translate" type="button">Показать перевод</button>
+        <p class="ru-translation" data-en="&lt;b&gt;Receptionist:&lt;/b&gt; Good afternoon! Can I help you?&lt;br&gt;&lt;b&gt;João:&lt;/b&gt; Good afternoon. The key to room two, please.&lt;br&gt;&lt;b&gt;Receptionist:&lt;/b&gt; Here it is. The room is ready.&lt;br&gt;&lt;b&gt;João:&lt;/b&gt; Thank you. Is the restaurant open?&lt;br&gt;&lt;b&gt;Receptionist:&lt;/b&gt; Not today, it&rsquo;s closed. But the cafés on the square are open.&lt;br&gt;&lt;b&gt;João:&lt;/b&gt; Are they far?&lt;br&gt;&lt;b&gt;Receptionist:&lt;/b&gt; No, they&rsquo;re close, on the beach street.&lt;br&gt;&lt;b&gt;João:&lt;/b&gt; And the town maps? Where are they?&lt;br&gt;&lt;b&gt;Receptionist:&lt;/b&gt; Right here, on the table. They&rsquo;re new!&lt;br&gt;&lt;b&gt;João:&lt;/b&gt; Thank you very much. Good afternoon!"><b>Администратор:</b> Добрый день! Слушаю вас.<br><b>Жуан:</b> Добрый день. Ключ от номера два, пожалуйста.<br><b>Администратор:</b> Вот, пожалуйста. Номер готов.<br><b>Жуан:</b> Спасибо. Ресторан открыт?<br><b>Администратор:</b> Сегодня нет, закрыт. Но кафе на площади открыты.<br><b>Жуан:</b> Они далеко?<br><b>Администратор:</b> Нет, близко, на улице у пляжа.<br><b>Жуан:</b> А карты города? Где они?<br><b>Администратор:</b> Вот здесь, на столе. Они новые!<br><b>Жуан:</b> Большое спасибо. Всего доброго!</p>
+        <p class="why-note" data-en="&lt;b&gt;Why it&rsquo;s like this:&lt;/b&gt; &lt;span class='pt'&gt;O quarto está pronto&lt;/span&gt; &mdash; ready now, a state: &lt;span class='es'&gt;estar&lt;/span&gt;. &lt;span class='pt'&gt;São novos&lt;/span&gt; &mdash; what the maps are like: &lt;span class='se'&gt;ser&lt;/span&gt;. In one short scene you hear both, and the choice never depends on the Russian or English.&lt;br&gt;&lt;br&gt;&lt;span class='pt'&gt;Estão longe?&lt;/span&gt; &mdash; no subject: the verb ending already says &lsquo;they&rsquo;. &lt;span class='pt'&gt;Onde estão?&lt;/span&gt; &mdash; &lt;span class='pt'&gt;onde&lt;/span&gt; pulls in &lt;span class='es'&gt;estar&lt;/span&gt;, as in topic 0.8."><b>Почему так:</b> <span class="pt">O quarto está pronto</span> — готов сейчас, состояние: <span class="es">estar</span>. <span class="pt">São novos</span> — какие карты есть: <span class="se">ser</span>. В одной короткой сцене звучат оба глагола, и выбор ни разу не зависит от русского.<br><br><span class="pt">Estão longe?</span> — без подлежащего: окончание глагола уже говорит «они». <span class="pt">Onde estão?</span> — <span class="pt">onde</span> тянет за собой <span class="es">estar</span>, как в теме 0.8.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane pane-quiz" data-rev="rev08">
+    <p class="quiz-instruction" data-en="Mixed exercises from topics 0.5&ndash;0.8. Build the sentence, type the word or pick an option.">Задания вперемешку из тем 0.5–0.8. Собери фразу, впиши слово или выбери вариант.</p>
+    <div class="qitem">
+      <span class="qnum">1.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;The restaurant is near the beach.&rsquo;">Собери фразу: «Ресторан рядом с пляжем».</span>
+      <div class="qbuild" data-answer="O restaurante está perto da praia" data-words="perto|O|praia|está|da|restaurante"></div>
+    </div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint" data-en="Plural:">Во множественном:</span> <span class="pt">papel →</span> <input class="blank" data-answer="papéis|papeis" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint" data-en="&lsquo;The book is on the table&rsquo;:">«Книга на столе»:</span> <span class="pt">O livro</span>
+      <select class="mc" data-answer="está">
+        <option value="">—</option>
+        <option value="está">está</option>
+        <option value="é">é</option>
+      </select> <span class="pt">na mesa.</span>
+    </div>
+    <div class="qitem">
+      <span class="qnum">4.</span> <span class="ru-hint" data-en="From the text. Build: &lsquo;The hotel is small, but the room is big.&rsquo;">Из текста. Собери: «Отель маленький, но номер большой».</span>
+      <div class="qbuild" data-answer="O hotel é pequeno mas o quarto é grande" data-words="hotel|é|pequeno|mas|O|o|quarto|é|grande"></div>
+    </div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint" data-en="&lsquo;I&rsquo;m from Lisbon&rsquo;:">«Я из Лиссабона»:</span> <span class="pt">Sou</span> <input class="blank" data-answer="de" style="width:4em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">Lisboa.</span></div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint" data-en="From the text. &lsquo;Ana is tired&rsquo;:">Из текста. «Ана устала»:</span> <span class="pt">A Ana</span> <input class="blank" data-answer="está|esta" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">cansada.</span></div>
+    <div class="qitem">
+      <span class="qnum">7.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;A map of the city, please.&rsquo;">Собери фразу: «Карту города, пожалуйста».</span>
+      <div class="qbuild" data-answer="Um mapa da cidade por favor" data-words="cidade|favor|Um|da|por|mapa"></div>
+    </div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint" data-en="Type the article:">Впиши артикль:</span> <input class="blank" data-answer="a" style="width:4em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">estação</span></div>
+    <div class="qitem">
+      <span class="qnum">9.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;The loaves are in the kitchen&rsquo; (plural).">Собери фразу: «Хлеб на кухне» (во множественном).</span>
+      <div class="qbuild" data-answer="Os pães estão na cozinha" data-words="cozinha|Os|na|estão|pães"></div>
+    </div>
+    <div class="qitem"><span class="qnum">10.</span> <span class="ru-hint" data-en="From the text. &lsquo;João is an engineer&rsquo;:">Из текста. «Жуан — инженер»:</span> <span class="pt">O João</span>
+      <select class="mc" data-answer="é">
+        <option value="">—</option>
+        <option value="está">está</option>
+        <option value="é">é</option>
+        <option value="são">são</option>
+      </select> <span class="pt">engenheiro.</span>
+    </div>
+    <div class="qitem"><span class="qnum">11.</span> <span class="ru-hint" data-en="From the text. &lsquo;The shops are closed&rsquo;:">Из текста. «Магазины закрыты»:</span> <span class="pt">As lojas estão</span> <input class="blank" data-answer="fechadas" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem">
+      <span class="qnum">12.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;I&rsquo;m a student at the university.&rsquo;">Собери фразу: «Я студентка в университете».</span>
+      <div class="qbuild" data-answer="Sou estudante na universidade" data-words="universidade|Sou|na|estudante"></div>
+    </div>
+    <div class="quiz-actions">
+      <button class="btn btn-check" type="button" data-en="Verificar · Check">Verificar · Проверить</button>
+      <button class="btn btn-hint" type="button" data-en="To the text">К тексту</button>
+      <button class="btn btn-reveal" type="button" data-en="Show answers">Показать ответы</button>
+      <span class="quiz-result" aria-live="polite"></span>
+    </div>
+    <div class="rev-slot" data-rev-slot="rev08"></div>
     <button type="button" class="next-card" data-open="servsestar">
       <span class="next-marker"></span>
       <span class="next-text">
         <span class="next-label" data-en="Seguinte · next">Seguinte · дальше</span>
-        <span class="next-title">Ser vs estar — где какой глагол</span>
+        <span class="next-title" data-en="Ser vs estar — which verb where">Ser vs estar — где какой глагол</span>
       </span>
       <span class="next-arrow">→</span>
     </button>
@@ -8481,7 +8758,8 @@
   // первым бейдж «in Russian» ставится здесь.
   function updateTopicEnLock(){
     document.querySelectorAll(".topic-row[data-open]").forEach(function(btn){
-      var ready  = EN_READY_TOPICS.indexOf(btn.dataset.open) !== -1;
+      var rv     = (typeof revById === "function") ? revById(btn.dataset.open) : null;
+      var ready  = rv ? revEnReady(rv) : EN_READY_TOPICS.indexOf(btn.dataset.open) !== -1;
       var locked = (LANG === "en") && !ready;
       btn.disabled = locked;
       btn.classList.toggle("row-locked-en", locked);
@@ -8537,7 +8815,8 @@
                             : L("Показать перевод", "Show translation");
     });
     document.querySelectorAll(".pane-next-btn").forEach(function(b){
-      var label = b.closest(".pane-rule") ? L("Дальше: тексты для чтения", "Next: texts to read")
+      var label = b.dataset.to === "dlg" ? L("Дальше: диалог", "Next: the dialogue")
+                : b.closest(".pane-rule") ? L("Дальше: тексты для чтения", "Next: texts to read")
                                           : L("Дальше: задания", "Next: exercises");
       b.innerHTML = label + ' <span class="next-arrow">→</span>';
     });
@@ -8568,6 +8847,16 @@
     // выпадающем списке останутся подписи языка, на котором его открыли
     // первый раз (той же породы баг, что был у Dicionário).
     relabelConjugador();
+    // «Участвовать» рисуется кодом. Глава Revisão открывает его сразу на
+    // выборе роли — без перерисовки этот экран остался бы на старом языке.
+    // Посреди хода не трогаем: перерисовка стёрла бы набранную реплику.
+    document.querySelectorAll(".dialogue").forEach(function(d){
+      var st = PART.get(d);
+      if(st && (st.phase === "role" || st.phase === "end")) partRender(st);
+    });
+    document.querySelectorAll(".qbuild-empty").forEach(function(e){
+      e.textContent = L("Нажимай на слова ниже", "Tap the words below");
+    });
   }
 
   /* ================= CONJUGADOR ================= */
@@ -8869,6 +9158,140 @@
     });
   }
 
+  /* ---------- Сводные главы Revisão (Z3) ----------
+     Глава — промежуточный финиш через четыре темы: связный текст, диалог
+     сразу в режиме «Участвовать» и задания вперемешку из охваченных тем.
+     Темой она НЕ является: нет data-topic, нет её в <БЛОК>_TOPICS и в
+     TOPIC_MINUTES, она не входит в 47 и не двигает метр. Экран — обычный
+     .topic-screen (навигация, вкладки, тап и звук работают как в темах),
+     но с data-rev; вкладки Texto (pane-rule) · Diálogo (pane-dlg) · Exercícios.
+     Прогресс — свой ключ ptRevV1: {глава: {quiz:{pct, done}, dlg:{lvl, runs}}}.
+     Глава закрыта = задания от 80% + диалог сыгран без «Показать ответ».
+     Словарь главы держит проверка 12 в tools/check.js: только слова тем
+     до последней охваченной включительно. */
+  var REV_KEY = "ptRevV1";
+  var REVISOES = [
+    { id:"rev04", n:1, covers:["alfabeto","acento","nasais","digrafos"],  range:"0.1–0.4", words:[80,120],  next:"genero" },
+    { id:"rev08", n:2, covers:["genero","plural","ser","estar"],         range:"0.5–0.8", words:[150,250], next:"servsestar" }
+  ];
+  function revById(id){
+    for(var i = 0; i < REVISOES.length; i++) if(REVISOES[i].id === id) return REVISOES[i];
+    return null;
+  }
+  function loadRev(){
+    try{ return JSON.parse(localStorage.getItem(REV_KEY) || "{}") || {}; }catch(e){ return {}; }
+  }
+  function saveRev(r){
+    try{ localStorage.setItem(REV_KEY, JSON.stringify(r)); }catch(e){}
+  }
+  function revParts(id, r){
+    var x = (r || loadRev())[id] || {};
+    return { quiz: !!(x.quiz && x.quiz.done), dlg: !!(x.dlg && x.dlg.lvl >= 2) };
+  }
+  function revClosed(id, r){ var s = revParts(id, r); return s.quiz && s.dlg; }
+  function revEnReady(rv){
+    return rv.covers.every(function(t){ return EN_READY_TOPICS.indexOf(t) !== -1; });
+  }
+  // Запись в ptRevV1 и отдача: если глава закрылась именно сейчас — плашка
+  // «Глава N закрыта» подсвечивается там, где ученик стоит.
+  function revRecord(id, part, val){
+    var r = loadRev(), was = revClosed(id, r);
+    if(!r[id]) r[id] = {};
+    var prev = r[id][part] || {};
+    if(part === "quiz") r[id].quiz = { done: val.done || !!prev.done, pct: val.pct, ts: Date.now() };
+    else r[id].dlg = { lvl: Math.max(val.lvl, prev.lvl || 0), runs: (prev.runs || 0) + 1, ts: Date.now() };
+    saveRev(r);
+    revJustClosed = (!was && revClosed(id, r)) ? id : null;
+    renderRevisoes();
+    return revJustClosed === id;
+  }
+  var revJustClosed = null;
+  function revFinishHtml(rv){
+    var nextTitle = "";
+    var nx = document.querySelector('#screen-' + rv.id + ' .next-card .next-title');
+    if(nx) nextTitle = nx.textContent.replace(/\s+/g, " ").trim();
+    return '<div class="rev-finish"><b>🏁 ' + L("Глава " + rv.n + " закрыта", "Chapter " + rv.n + " closed") + '</b>' +
+      '<span>' + L("Темы " + rv.range + " позади: текст, диалог и задания собраны на знакомом.",
+                   "Topics " + rv.range + " are behind you: text, dialogue and exercises, all on familiar ground.") +
+      (nextTitle ? ' ' + L("Дальше — ", "Next: ") + escapeHtml(nextTitle) + '.' : '') + '</span></div>';
+  }
+  function renderRevisoes(){
+    var r = loadRev();
+    REVISOES.forEach(function(rv){
+      var parts = revParts(rv.id, r), closed = parts.quiz && parts.dlg;
+      var row = document.querySelector('#home [data-open="' + rv.id + '"]');
+      if(row){
+        var chk = row.querySelector("[data-rev-check]");
+        if(chk) chk.classList.toggle("on", closed);
+        var flag = row.querySelector(".rev-flag");
+        if(closed){
+          if(!flag){ flag = document.createElement("span"); flag.className = "rev-flag"; row.insertBefore(flag, chk); }
+          flag.textContent = L("глава " + rv.n + " закрыта", "chapter " + rv.n + " closed");
+        } else if(flag){ flag.remove(); }
+      }
+      var scr = document.getElementById("screen-" + rv.id);
+      if(!scr) return;
+      var badge = scr.querySelector("[data-rev-badge]");
+      if(badge) badge.classList.toggle("on", closed);
+      var card = scr.querySelector(":scope > .rev-card");
+      if(!card){
+        var sub = scr.querySelector(":scope > .topic-subtitle");
+        card = document.createElement("div");
+        card.className = "stage-card rev-card";
+        sub.insertAdjacentElement("afterend", card);
+      }
+      if(closed){
+        card.innerHTML = revFinishHtml(rv);
+        card.className = "rev-card";
+      } else {
+        card.className = "stage-card rev-card";
+        card.innerHTML = '<div class="stage-steps">' +
+          '<span class="stage-step' + (parts.dlg ? ' on' : '') + '">' + (parts.dlg ? '✓ ' : '') + L("Диалог", "Dialogue") + '</span>' +
+          '<span class="stage-step' + (parts.quiz ? ' on' : '') + '">' + (parts.quiz ? '✓ ' : '') + L("Задания от 80%", "Exercises 80%+") + '</span>' +
+          '</div><p class="stage-hint">' + L("Глава закрывается, когда сыгран диалог (без «Показать ответ») и задания дают от 80%.",
+                                              "The chapter closes once the dialogue is played (without “Show the answer”) and the exercises reach 80%.") + '</p>';
+      }
+      var slot = scr.querySelector("[data-rev-slot]");
+      if(slot){
+        if(closed) slot.innerHTML = revFinishHtml(rv);
+        else if(parts.quiz) slot.innerHTML = '<p class="rev-left">' + L("Задания засчитаны. Чтобы закрыть главу, осталось сыграть диалог — вкладка Diálogo.",
+                                                                          "Exercises counted. To close the chapter, play the dialogue — the Diálogo tab.") + '</p>';
+        else slot.innerHTML = "";
+      }
+      scr.querySelectorAll("[data-listen]").forEach(function(b){
+        if(!b.classList.contains("playing")) b.textContent = L("▶ Слушать целиком", "▶ Listen to it all");
+      });
+    });
+  }
+  // «Слушать целиком»: весь текст главы очередью по предложению — длинную
+  // реплику одним куском часть голосов в Chrome обрывает секунд через 15.
+  var revListenBtn = null;
+  function revListenReset(){
+    if(revListenBtn){ revListenBtn.classList.remove("playing"); revListenBtn = null; }
+    renderRevisoes();
+  }
+  function revListen(btn){
+    if(!ptVoice) return;
+    var was = btn.classList.contains("playing");
+    try{ window.speechSynthesis.cancel(); }catch(e){}
+    revListenReset();
+    if(was) return;
+    var parts = [];
+    btn.closest(".mini-text").querySelectorAll(".storytext").forEach(function(p){
+      lineText(p).split(/(?<=[.!?])\s+/).forEach(function(s){ if(s.trim()) parts.push(s.trim()); });
+    });
+    if(!parts.length) return;
+    revListenBtn = btn;
+    btn.classList.add("playing");
+    btn.textContent = L("■ Остановить", "■ Stop");
+    parts.forEach(function(s, i){
+      var u = new SpeechSynthesisUtterance(s);
+      u.voice = ptVoice; u.lang = ptVoice.lang; u.rate = 0.9;
+      if(i === parts.length - 1) u.onend = function(){ if(revListenBtn === btn) revListenReset(); };
+      try{ window.speechSynthesis.speak(u); }catch(e){}
+    });
+  }
+
   function topicTitleMap(){
     var map = {};
     document.querySelectorAll("#home [data-open]").forEach(function(el){
@@ -8953,6 +9376,7 @@
     });
 
     renderTopicStages(p, pp, stageRose);
+    renderRevisoes();
     renderMeter(p);
     renderReviewBlock(p);
     renderContinueBlock();
@@ -9649,6 +10073,7 @@
   // остальное звучит на обычных 0.9.
   function speak(text, rate){
     if(!ptVoice || !text) return;
+    if(revListenBtn) revListenReset();
     try{
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(text);
@@ -9679,6 +10104,7 @@
 
   function addSpeakButtons(screen){
     if(!ptVoice) return;
+    screen.querySelectorAll("[data-listen]").forEach(function(b){ b.hidden = false; });
     screen.querySelectorAll(".wordset > div").forEach(function(row){
       var w = row.querySelector(".w");
       if(w) addSpeakButton(row, w.textContent.trim());
@@ -11569,7 +11995,11 @@
   function partExtras(screen, lineWords){
     var have = {}, seen = {}, pool = [];
     lineWords.forEach(function(w){ have[partFlat(w)] = 1; });
-    screen.querySelectorAll(".wordset .w").forEach(function(w){
+    // У главы Revisão своих Palavras нет — лишние слова берутся из наборов
+    // охваченных ею тем.
+    var rv = screen.dataset.rev ? revById(screen.dataset.rev) : null;
+    var sel = rv ? rv.covers.map(function(t){ return "#screen-" + t + " .wordset .w"; }).join(", ") : null;
+    (sel ? document.querySelectorAll(sel) : screen.querySelectorAll(".wordset .w")).forEach(function(w){
       partWords(w.textContent).forEach(function(t){
         var k = partFlat(t);
         if(t.length < 3 || have[k] || seen[k]) return;
@@ -11647,6 +12077,11 @@
 
   function partSave(st){
     var screen = st.dlg.closest(".topic-screen");
+    if(screen && screen.dataset.rev){
+      var sr = st.stats;
+      st.revClosedNow = revRecord(screen.dataset.rev, "dlg", { lvl: sr.shown ? 1 : (sr.bank ? 2 : 3) });
+      return;
+    }
     var topic = screen && screen.dataset.topic;
     if(!topic) return;
     var idx = Array.prototype.indexOf.call(screen.querySelectorAll(".dialogue"), st.dlg);
@@ -11794,7 +12229,21 @@
         ul.appendChild(li);
       });
       sum.appendChild(ul);
-      if(st.stageAfter > st.stageBefore){
+      var revScr = st.dlg.closest(".rev-screen");
+      if(revScr){
+        var rv = revById(revScr.dataset.rev), rp = revParts(rv.id);
+        if(revClosed(rv.id)){
+          var fin = document.createElement("div");
+          fin.innerHTML = revFinishHtml(rv);
+          sum.appendChild(fin.firstChild);
+        } else if(!rp.dlg){
+          sum.appendChild(partEl("p", "part-cue", L("Диалог засчитается в главу, если пройти его без «Показать ответ». Банк слов — можно.",
+                                                    "The dialogue counts for the chapter when played without “Show the answer”. The word bank is fine.")));
+        } else {
+          sum.appendChild(partEl("p", "part-cue", L("Диалог засчитан. Чтобы закрыть главу, осталось сделать задания — от 80%, вкладка Exercícios.",
+                                                    "Dialogue counted. To close the chapter, do the exercises — 80% or more, the Exercícios tab.")));
+        }
+      } else if(st.stageAfter > st.stageBefore){
         sum.appendChild(partEl("p", "part-rise", L("↑ Ступень темы поднялась: ","↑ Topic step went up: ") +
           (st.stageBefore ? stageName(st.stageBefore) + " → " : "") + stageName(st.stageAfter)));
       } else if(st.stageAfter === 0){
@@ -11924,6 +12373,12 @@
     // тема по сути усвоена. Отдельная метка для ровно 10/10 остаётся —
     // это .row-pct рядом с галочкой, см. renderProgress().
     result.style.color = (share >= 0.8) ? "var(--ok)" : "var(--bad)";
+
+    // Глава Revisão пишет в свой ключ: в ptProgressV1 живут только темы.
+    if(pane.dataset.rev && total){
+      revRecord(pane.dataset.rev, "quiz", { done: share >= 0.8, pct: Math.round(share*100) });
+      return;
+    }
 
     var topic = pane.dataset.topic;
     if(topic && total){
@@ -12214,6 +12669,12 @@
       el.querySelectorAll(".storytext, .dialogue, .wordset .w").forEach(wrapTapWords);
       el.querySelectorAll(".qbuild").forEach(initBuild);
       el.querySelectorAll(".dialogue").forEach(initPart);
+      // Диалог главы Revisão открывается сразу в режиме «Участвовать»:
+      // читать его глазами — та самая ступень «Узнаю», от которой глава уводит.
+      el.querySelectorAll(".dialogue[data-part-auto]").forEach(function(d){
+        var st = PART.get(d);
+        if(st){ st.phase = "role"; partRender(st); }
+      });
       el.dataset.prepared = "1";
     }
     addSpeakButtons(el);
@@ -13335,6 +13796,9 @@
     var say = e.target.closest("[data-say]");
     if(say){ speak(say.dataset.say, say.dataset.rate); return; }
 
+    var listen = e.target.closest("[data-listen]");
+    if(listen){ revListen(listen); return; }
+
     var lang = e.target.closest("[data-lang]");
     if(lang){ setLang(lang.dataset.lang); return; }
 
@@ -13455,6 +13919,7 @@
       localStorage.removeItem(SIT_KEY);
       localStorage.removeItem(LT_KEY);
       localStorage.removeItem(PART_KEY);
+      localStorage.removeItem(REV_KEY);
     }catch(e){}
     document.querySelectorAll("input.blank, select.mc").forEach(function(i){
       i.value = ""; i.classList.remove("ok","bad");
@@ -13482,6 +13947,9 @@
       if(!screen.querySelector(".subnav")) return;
       addPaneNext(screen, ".pane-rule",  "texts", L("Дальше: тексты для чтения", "Next: texts to read"));
       addPaneNext(screen, ".pane-texts", "quiz",  L("Дальше: задания", "Next: exercises"));
+      // У главы Revisão вкладки другие: Texto → Diálogo → Exercícios.
+      addPaneNext(screen, ".pane-rule",  "dlg",   L("Дальше: диалог", "Next: the dialogue"));
+      addPaneNext(screen, ".pane-dlg",   "quiz",  L("Дальше: задания", "Next: exercises"));
     });
 
     applyLang();
@@ -13504,6 +13972,7 @@
     var b = document.createElement("button");
     b.type = "button";
     b.className = "pane-next-btn";
+    b.dataset.to = toPane;
     b.innerHTML = label + ' <span class="next-arrow">→</span>';
     b.addEventListener("click", function(){ goPane(screen, toPane); });
     from.appendChild(b);

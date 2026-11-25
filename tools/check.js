@@ -8,7 +8,7 @@
  * тихие: забытый регистр не роняет страницу, а просто выключает тему; слово
  * без словарной статьи не переводится по тапу, но выглядит как обычное;
  * пропущенная форма в таблице спряжения даёт «undefined» на экране.
- * Глазами это не ловится, поэтому одиннадцать проверок ниже.
+ * Глазами это не ловится, поэтому двенадцать проверок ниже.
  *
  * Отдельно стоит tools/prevocab.js — та же сверка словаря, но по черновику
  * темы, до вставки в index.html. Поймать там дешевле.
@@ -694,6 +694,114 @@ function checkLeituras() {
   for (const s of ladder) console.log('       ' + s);
 }
 
+/* ============ 12. сводные главы Revisão ============ */
+
+// Глава Revisão (Z3) — промежуточный финиш через четыре темы. Темой она не
+// является и пять мест регистрации тем не трогает: нет data-topic, нет её в
+// <БЛОК>_TOPICS и TOPIC_MINUTES. Свои места у неё такие: запись в REVISOES,
+// экран с data-rev, строка на главной между последней охваченной темой и
+// следующей, .next-card последней темы ведёт в главу, а глава — дальше.
+//
+// Словарь строже, чем в проверке 3: текст, реплики и португальские ответы
+// заданий — только из слов, встреченных в темах ДО последней охваченной
+// включительно (как ворота Leituras), а не из всего VOCAB. Иначе в сводную
+// по 0.5–0.8 молча просочилось бы слово из блока 1, и тап его даже
+// перевёл бы.
+function loadRevisoes() {
+  const start = html.indexOf('var REVISOES = [');
+  const end   = html.indexOf('\n  ];', start);
+  if (start < 0 || end < 0) throw new Error('не нашёл REVISOES в index.html');
+  return new Function('return ' + html.slice(start + 'var REVISOES = '.length, end) + '\n  ];')();
+}
+
+function checkRevisoes() {
+  head('12. Сводные главы Revisão');
+  let revs;
+  try { revs = loadRevisoes(); } catch (e) { bad(e.message); return; }
+  const order = topicOrder();
+  let problems = 0;
+  const report = [];
+  const fail = (msg) => { problems++; bad(msg); };
+  const words = (s) => [...String(s).matchAll(PT_WORD)].map((m) => m[0].toLowerCase());
+  const decode = (s) => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
+
+  for (const rv of revs) {
+    const where = `глава ${rv.id}`;
+    const at = html.indexOf(`<div class="screen topic-screen rev-screen" id="screen-${rv.id}" data-rev="${rv.id}"`);
+    if (at < 0) { fail(`${where}: нет экрана <div class="screen topic-screen rev-screen" id="screen-${rv.id}" data-rev="${rv.id}">`); continue; }
+    const next = html.indexOf('<div class="screen', at + 10);
+    const scr = html.slice(at, next < 0 ? html.length : next);
+
+    // Не тема: ни одного из мест регистрации тем.
+    if (/data-topic=/.test(scr)) fail(`${where}: у экрана главы есть data-topic — так она станет темой`);
+    if (order.includes(rv.id)) fail(`${where}: глава попала в <БЛОК>_TOPICS — она не тема`);
+    if (new RegExp(`"${rv.id}"\\s*:\\s*\\d+`).test(html)) fail(`${where}: у главы есть минуты в TOPIC_MINUTES`);
+
+    // Охват: темы подряд, в порядке курса.
+    const idx = rv.covers.map((t) => order.indexOf(t));
+    if (idx.some((i) => i < 0)) { fail(`${where}: охвачены темы, которых нет в курсе — ${rv.covers.join(', ')}`); continue; }
+    if (idx.some((v, k) => k && v !== idx[k - 1] + 1)) fail(`${where}: охваченные темы идут не подряд`);
+    const last = rv.covers[rv.covers.length - 1];
+    const after = order[order.indexOf(last) + 1];
+    if (rv.next !== after) fail(`${where}: next «${rv.next}», а следующая тема курса — «${after}»`);
+
+    // Строка на главной — сразу после последней охваченной темы.
+    const rowLast = html.indexOf(`data-check="${last}"`);
+    const rowRev  = html.indexOf(`class="topic-row rev-row" data-open="${rv.id}"`);
+    const rowNext = html.indexOf(`data-open="${after}">`);
+    if (rowRev < 0) fail(`${where}: нет строки на главной (class="topic-row rev-row" data-open="${rv.id}")`);
+    else if (!(rowLast < rowRev && rowRev < rowNext)) fail(`${where}: строка на главной не стоит между «${last}» и «${after}»`);
+    if (!html.includes(`data-rev-check="${rv.id}"`)) fail(`${where}: у строки на главной нет data-rev-check`);
+
+    // Цепочка «дальше»: последняя тема → глава → следующая тема.
+    const lastAt = html.search(new RegExp('<div class="screen topic-screen"[^>]*data-topic="' + last + '"'));
+    const lastScr = html.slice(lastAt, html.indexOf('<div class="screen', lastAt + 10));
+    if (!new RegExp(`class="next-card" data-open="${rv.id}"`).test(lastScr)) fail(`${where}: .next-card темы «${last}» не ведёт в главу`);
+    if (!new RegExp(`class="next-card" data-open="${rv.next}"`).test(scr)) fail(`${where}: .next-card главы не ведёт в «${rv.next}»`);
+
+    // Три вкладки и задания главы.
+    for (const p of ['pane-rule', 'pane-dlg', `pane-quiz" data-rev="${rv.id}"`]) {
+      if (!scr.includes(`class="pane ${p}`)) fail(`${where}: нет вкладки ${p.split('"')[0]}`);
+    }
+    if (!/<div class="dialogue" data-part-auto>/.test(scr)) fail(`${where}: диалог не открывается в режиме «Участвовать» (data-part-auto)`);
+    const nBuild = (scr.match(/class="qbuild"/g) || []).length;
+    const nBlank = (scr.match(/<input class="blank"/g) || []).length;
+    const nMc    = (scr.match(/<select class="mc"/g) || []).length;
+    const nAll   = nBuild + nBlank + nMc;
+    if (nAll < 10 || nAll > 12) fail(`${where}: заданий ${nAll}, нужно 10–12`);
+    if (nMc * 3 > nAll) fail(`${where}: выбор из списка — ${nMc} из ${nAll}, больше трети`);
+
+    // Словарь: только темы до последней охваченной включительно.
+    const seen = wordsSeenUpTo(last, order);
+    const look = makeLookup(seen, STRIP);
+    const zones = readableZones(scr);
+    const answers = [...scr.matchAll(/data-answer="([^"]*)"/g)].map((m) => m[1].split('|')[0]);
+    const unknown = new Set();
+    let nWords = 0;
+    for (const z of zones.concat(answers)) for (const w of words(z)) if (!look(w)) unknown.add(w);
+    if (unknown.size) fail(`${where}: слова вне тем до «${last}» — ${[...unknown].sort().join(', ')}`);
+    const text = [...scr.matchAll(/<p class="storytext">([\s\S]*?)<\/p>/g)].map((m) => m[1].replace(/<[^>]+>/g, ' ')).join(' ');
+    nWords = words(text).length;
+    if (nWords < rv.words[0] || nWords > rv.words[1]) fail(`${where}: в тексте ${nWords} слов, задано ${rv.words[0]}–${rv.words[1]}`);
+    const nLines = (scr.match(/<p class="dline">/g) || []).length;
+
+    // Английская половина: перевод текста и диалога, подсказки заданий.
+    const tr = [...scr.matchAll(/<p class="ru-translation"([^>]*)>/g)];
+    if (tr.length < 2) fail(`${where}: перевод есть не у текста и диалога (${tr.length})`);
+    for (const m of tr) if (!/data-en="[^"]+"/.test(m[1])) fail(`${where}: у .ru-translation нет data-en`);
+    for (const m of scr.matchAll(/<span class="ru-hint"([^>]*)>/g)) if (!/data-en=/.test(m[1])) fail(`${where}: у подсказки задания нет data-en`);
+    for (const m of scr.matchAll(/class="(?:topic-subtitle|why-note|tip|quiz-instruction|tap-hint|text-label)"([^>]*)>/g)) {
+      if (!/data-en=/.test(m[1])) fail(`${where}: у ${m[0].match(/class="([^"]+)"/)[1]} нет data-en`);
+    }
+    for (const m of scr.matchAll(/data-en="([^"]*)"/g)) if (/[Ѐ-ӿ]/.test(decode(m[1]))) fail(`${where}: в data-en кириллица`);
+
+    report.push(`${rv.id} · ${rv.covers[0]}…${last}: текст ${nWords} слов, диалог ${nLines} реплик, заданий ${nAll} (сборка ${nBuild}, поле ${nBlank}, список ${nMc})`);
+  }
+
+  if (!problems) ok(`${revs.length} глав(ы): не темы, стоят на своём месте в списке, словарь — только из охваченных тем и раньше`);
+  for (const s of report) console.log('       ' + s);
+}
+
 /* ============ ============ */
 
 console.log('Проверка index.html');
@@ -708,6 +816,7 @@ checkVocabEn();
 checkConjugadorEn();
 checkSituacoes();
 checkLeituras();
+checkRevisoes();
 
 console.log('');
 if (failed) {
