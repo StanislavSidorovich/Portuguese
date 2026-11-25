@@ -600,6 +600,48 @@
   .qbuild-line .qword{background:var(--base); border-color:var(--base); color:#fff;}
   .qbuild-empty{font-family:var(--font-ru); font-size:0.82rem; color:var(--muted);}
 
+  /* ---------- УЧАСТВОВАТЬ В ДИАЛОГЕ (Z1) ----------
+     Режим рисуется кодом поверх готовой разметки .dialogue. Реплики ученика
+     и итог стоят на светлых плашках (--ok-tint), которые остаются светлыми и
+     в тёмной теме, поэтому текст в них — только -fixed. */
+  .part-bar{margin-top:11px;}
+  .part-btn{
+    font-family:var(--font-ru); font-size:0.8rem; font-weight:700; padding:7px 13px;
+    border-radius:8px; cursor:pointer; background:transparent;
+    border:1.5px solid var(--tint-color,var(--base)); color:var(--ink);
+  }
+  .part-btn.quiet{border-color:#DAE1DE; color:var(--muted); font-weight:600;}
+  .part-btn.go{background:var(--tint-color,var(--base)); color:#fff; border-color:transparent;}
+  body.dark .part-btn.quiet{border-color:#2F3A36;}
+  /* «Почему так» под диалогом разбирает его реплики — на ходу ученика это подсказка. */
+  .mini-text.part-on > .dialogue, .mini-text.part-on > .btn-translate, .mini-text.part-on > .ru-translation, .mini-text.part-on > .why-note{display:none !important;}
+  .part-stage{margin-top:2px;}
+  .part-head{display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px;
+    font-size:0.72rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted);}
+  .part-line{border-radius:10px; padding:8px 11px; margin:0 0 8px; font-family:var(--font-pt); font-size:1.02rem; background:var(--bg);}
+  .part-line .part-tr{display:block; font-family:var(--font-ru); font-size:0.82rem; color:var(--muted); margin-top:2px;}
+  .part-line.part-me{background:var(--ok-tint); color:var(--ink-fixed); margin-left:18px;}
+  .part-line.part-me .speaker{color:#1B6B4E;}
+  body.dark .part-line.part-me .speaker{color:#1B6B4E;}
+  .part-line.part-me .part-tr, .part-line .part-tag, .part-line .part-note{color:var(--muted-fixed);}
+  .part-tag{display:inline-block; font-family:var(--font-ru); font-size:0.7rem; font-weight:800; margin-left:6px;}
+  .part-note{display:block; font-family:var(--font-ru); font-size:0.82rem; margin-top:3px;}
+  .part-card{border:1.5px dashed #D2DBD7; border-radius:12px; padding:11px; margin:0 0 8px;}
+  body.dark .part-card{border-color:#2F3A36;}
+  .part-cue{font-family:var(--font-ru); font-size:0.9rem; margin:0 0 9px;}
+  .part-cue b{font-weight:700;}
+  .part-input{
+    width:100%; box-sizing:border-box; font-family:var(--font-pt); font-size:1rem; font-weight:600;
+    padding:9px 10px; border-radius:8px; border:1.5px solid #DAE1DE; background:var(--bg); color:var(--ink);
+  }
+  body.dark .part-input{border-color:#2F3A36;}
+  .part-input.bad{border-color:var(--bad); background:var(--bad-tint); color:var(--ink-fixed);}
+  .part-msg{font-family:var(--font-ru); font-size:0.84rem; margin:8px 0 0; min-height:1.2em; color:var(--muted);}
+  .part-acts{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+  .part-sum{list-style:none; margin:6px 0 10px; padding:0; font-family:var(--font-ru); font-size:0.92rem;}
+  .part-sum li{padding:3px 0;}
+  .part-sum b{font-size:1.05rem;}
+
   .quiz-actions{display:flex; align-items:center; gap:9px; margin-top:14px; flex-wrap:wrap;}
   .btn{
     font-family:var(--font-ru); font-size:0.88rem; font-weight:700; padding:10px 18px;
@@ -11353,6 +11395,361 @@
     line.classList.add("ok"); line.classList.remove("bad");
   }
 
+  /* ================= УЧАСТВОВАТЬ В ДИАЛОГЕ (Z1) =================
+     Диалог темы превращается в разговор: реплики собеседника звучат и
+     показываются, реплики ученика скрыты. Ход ученика — сначала «напиши
+     сам», при «Не помню» банк слов реплики + 2 лишних из Palavras темы
+     (сборка тем же движком, что у .qbuild: initBuild / buildOk / revealBuild).
+     Нового португальского текста нет: ответ сверяется с самой репликой.
+     Результат — в localStorage: {тема: {номер диалога: счётчики}}. */
+
+  var PART_KEY = "ptPartV1";
+  var PART = new WeakMap();
+
+  function loadPart(){
+    try{ return JSON.parse(localStorage.getItem(PART_KEY) || "{}") || {}; }catch(e){ return {}; }
+  }
+  function savePart(p){
+    try{ localStorage.setItem(PART_KEY, JSON.stringify(p)); }catch(e){}
+  }
+
+  function partEl(tag, cls, text){
+    var n = document.createElement(tag);
+    if(cls) n.className = cls;
+    if(text !== undefined) n.textContent = text;
+    return n;
+  }
+  function partBtn(label, action, cls, extra){
+    var b = partEl("button", "part-btn" + (cls ? " " + cls : ""), label);
+    b.type = "button";
+    b.dataset.part = action;
+    if(extra !== undefined) b.dataset.val = extra;
+    return b;
+  }
+  // Мягкая сверка: регистр, пунктуация, дефис и лишние пробелы не важны.
+  function partNorm(s){
+    return (s || "").normalize("NFC").toLowerCase().replace(/[-–—]/g, " ")
+      .replace(/[^\p{L}\p{N}\s]/gu, "").replace(/\s+/g, " ").trim();
+  }
+  // Та же строка без значков над буквами: разница между partNorm и partFlat
+  // и есть «ошибка в ударении» — слова верные, знаки нет.
+  function partFlat(s){
+    return partNorm(s).normalize("NFD").replace(/[̀-ͯ]/g, "");
+  }
+  function partWords(text){
+    return (text || "").normalize("NFC").split(/\s+/).map(function(w){
+      return w.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, "");
+    }).filter(Boolean);
+  }
+  function partShuffle(a){
+    for(var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random()*(i+1)), t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  // Два лишних слова — из Palavras этой же темы, которых нет в реплике
+  // (с точностью до значков: «esta» не годится в отвлекающие к «está»).
+  function partExtras(screen, lineWords){
+    var have = {}, seen = {}, pool = [];
+    lineWords.forEach(function(w){ have[partFlat(w)] = 1; });
+    screen.querySelectorAll(".wordset .w").forEach(function(w){
+      partWords(w.textContent).forEach(function(t){
+        var k = partFlat(t);
+        if(t.length < 3 || have[k] || seen[k]) return;
+        seen[k] = 1; pool.push(t);
+      });
+    });
+    return partShuffle(pool).slice(0, 2);
+  }
+  // Перевод реплики берётся из разметки: ru-translation режется по <br>,
+  // «<b>Имя:</b>» в начале отбрасывается. В EN — из data-en, если он есть.
+  function partTranslations(mini){
+    var el = mini.querySelector(".ru-translation");
+    if(!el) return [];
+    var html = (LANG === "en") ? el.dataset.en
+             : (el.dataset.ruHtml !== undefined ? el.dataset.ruHtml : el.innerHTML);
+    if(!html) return [];
+    var tmp = document.createElement("div");
+    return html.split(/<br\s*\/?>/i).map(function(s){
+      tmp.innerHTML = s.replace(/^\s*<b>[^<]*<\/b>\s*/, "");
+      return tmp.textContent.replace(/\s+/g, " ").trim();
+    });
+  }
+
+  function initPart(dlg){
+    if(PART.has(dlg)) return;
+    var mini = dlg.closest(".mini-text");
+    if(!mini) return;
+    var lines = [], roles = [];
+    dlg.querySelectorAll(".dline").forEach(function(p){
+      var sp = p.querySelector(".speaker");
+      var who = sp ? sp.textContent.replace(/:\s*$/, "").trim() : "";
+      var text = lineText(p);
+      if(!who || !text) return;
+      if(roles.indexOf(who) === -1) roles.push(who);
+      lines.push({who: who, text: text});
+    });
+    // Монолог (один говорящий) участвовать не в чем — кнопки нет.
+    // Два и больше говорящих: ученик выбирает, за кого играет.
+    if(roles.length < 2 || lines.length < 2) return;
+
+    var bar = partEl("div", "part-bar");
+    var start = partBtn("Участвовать", "start");
+    start.dataset.en = "Take part";
+    if(LANG === "en"){ start.dataset.ruHtml = "Участвовать"; start.textContent = "Take part"; }
+    bar.appendChild(start);
+    var stage = partEl("div", "part-stage");
+    stage.hidden = true;
+    dlg.insertAdjacentElement("afterend", bar);
+    bar.insertAdjacentElement("afterend", stage);
+    PART.set(dlg, {dlg: dlg, mini: mini, bar: bar, stage: stage, lines: lines, roles: roles,
+                   phase: "off", me: null, i: -1, hist: [], stats: null, sub: "write", words: null});
+  }
+
+  function partStats(){ return {typed:0, accent:0, bank:0, shown:0}; }
+
+  function partAdvance(st){
+    // Добавляет реплики собеседника до следующего хода ученика (или конца).
+    var last = null;
+    st.i++;
+    while(st.i < st.lines.length && st.lines[st.i].who !== st.me){
+      var ln = st.lines[st.i];
+      st.hist.push({k:"them", who: ln.who, text: ln.text, tr: st.tr[st.i] || ""});
+      last = ln.text;
+      st.i++;
+    }
+    if(st.i >= st.lines.length){
+      st.phase = "end";
+      partSave(st);
+    } else {
+      st.phase = "turn"; st.sub = "write"; st.words = null;
+    }
+    partRender(st);
+    if(last) speak(last);
+  }
+
+  function partSave(st){
+    var screen = st.dlg.closest(".topic-screen");
+    var topic = screen && screen.dataset.topic;
+    if(!topic) return;
+    var idx = Array.prototype.indexOf.call(screen.querySelectorAll(".dialogue"), st.dlg);
+    var p = loadPart();
+    if(!p[topic]) p[topic] = {};
+    var s = st.stats, prev = p[topic][idx];
+    p[topic][idx] = {ts: Date.now(), role: st.me, n: s.typed + s.accent + s.bank + s.shown,
+                     typed: s.typed, accent: s.accent, bank: s.bank, shown: s.shown,
+                     runs: (prev && prev.runs ? prev.runs : 0) + 1};
+    savePart(p);
+  }
+
+  function partStartRun(st, who){
+    st.me = who;
+    st.hist = [];
+    st.stats = partStats();
+    st.i = -1;
+    st.tr = partTranslations(st.mini);
+    partAdvance(st);
+  }
+
+  function partBubble(item){
+    var d = partEl("div", "part-line " + (item.k === "me" ? "part-me" : "part-them"));
+    d.appendChild(partEl("span", "speaker", item.who + ":"));
+    d.appendChild(document.createTextNode(" " + item.text));
+    if(item.k === "them" && ptVoice){
+      var sp = partEl("button", "speak", "🔊");
+      sp.type = "button"; sp.dataset.say = item.text; sp.title = "Прослушать";
+      d.appendChild(sp);
+    }
+    if(item.k === "me"){
+      var tag = {typed: L("✍ сам","✍ on my own"), accent: L("✍ сам · знаки","✍ on my own · marks"),
+                 bank: L("🧩 из слов","🧩 from words"), shown: L("👁 показано","👁 shown")}[item.mode];
+      d.appendChild(partEl("span", "part-tag", tag));
+    }
+    if(item.tr) d.appendChild(partEl("span", "part-tr", item.tr));
+    if(item.note) d.appendChild(partEl("span", "part-note", item.note));
+    return d;
+  }
+
+  function partRender(st){
+    var stage = st.stage;
+    stage.innerHTML = "";
+    var on = st.phase !== "off";
+    st.mini.classList.toggle("part-on", on);
+    st.bar.hidden = on;
+    stage.hidden = !on;
+    if(!on) return;
+
+    var head = partEl("div", "part-head");
+    head.appendChild(partEl("span", "", L("Участвовать","Take part") +
+      (st.me ? " · " + L("ты — ","you are ") + st.me : "")));
+    head.appendChild(partBtn(L("Выйти","Exit"), "exit", "quiet"));
+    stage.appendChild(head);
+
+    if(st.phase === "role"){
+      var card = partEl("div", "part-card");
+      card.appendChild(partEl("p", "part-cue", L("За кого играешь? Реплики второго собеседника будут скрыты — их нужно сказать самому.",
+                                                  "Who do you play? The other person's lines stay hidden — you have to say them yourself.")));
+      var acts = partEl("div", "part-acts");
+      st.roles.forEach(function(r){ acts.appendChild(partBtn(r, "role", "go", r)); });
+      card.appendChild(acts);
+      stage.appendChild(card);
+      return;
+    }
+
+    st.hist.forEach(function(h){ stage.appendChild(partBubble(h)); });
+
+    if(st.phase === "turn"){
+      var ln = st.lines[st.i], tr = st.tr[st.i] || "";
+      var c = partEl("div", "part-card");
+      var cue = partEl("p", "part-cue");
+      cue.appendChild(partEl("b", "", L("Твоя реплика","Your line") + (tr ? ": " : "")));
+      if(tr) cue.appendChild(document.createTextNode("«" + tr + "»"));
+      c.appendChild(cue);
+      if(st.sub === "write"){
+        var inp = partEl("input", "part-input");
+        inp.type = "text"; inp.setAttribute("autocapitalize","off"); inp.setAttribute("autocorrect","off");
+        inp.setAttribute("autocomplete","off"); inp.setAttribute("spellcheck","false");
+        inp.placeholder = L("Напиши сам","Write it yourself");
+        c.appendChild(inp);
+        c.appendChild(partEl("p", "part-msg"));
+        var a1 = partEl("div", "part-acts");
+        a1.appendChild(partBtn(L("Проверить","Check"), "check", "go"));
+        a1.appendChild(partBtn(L("Не помню","I don't remember"), "forgot", "quiet"));
+        c.appendChild(a1);
+      } else {
+        var box = partEl("div", "qbuild");
+        var lw = partWords(ln.text);
+        if(!st.words) st.words = lw.concat(partExtras(st.dlg.closest(".topic-screen"), lw));
+        box.dataset.answer = lw.join(" ");
+        box.dataset.words = st.words.join("|");
+        c.appendChild(box);
+        c.appendChild(partEl("p", "part-msg", L("В банке два лишних слова.","Two of the words in the bank are extra.")));
+        var a2 = partEl("div", "part-acts");
+        a2.appendChild(partBtn(L("Проверить","Check"), "check", "go"));
+        a2.appendChild(partBtn(L("Показать ответ","Show the answer"), "reveal", "quiet"));
+        c.appendChild(a2);
+        stage.appendChild(c);
+        initBuild(box);
+        partScroll(c);
+        return;
+      }
+      stage.appendChild(c);
+      var f = c.querySelector(".part-input");
+      if(f){ try{ f.focus({preventScroll:true}); }catch(e){} }
+      partScroll(c);
+      return;
+    }
+
+    if(st.phase === "result"){
+      var more = st.i + 1 < st.lines.length;
+      var ac = partEl("div", "part-acts");
+      ac.appendChild(partBtn(more ? L("Дальше →","Next →") : L("Итог","Result"), "next", "go"));
+      stage.appendChild(ac);
+      partScroll(ac);
+      return;
+    }
+
+    if(st.phase === "end"){
+      var s = st.stats, own = s.typed + s.accent;
+      var sum = partEl("div", "part-card");
+      sum.appendChild(partEl("p", "part-cue", L("Диалог сыгран. Твои реплики:","Dialogue played. Your lines:")));
+      var ul = partEl("ul", "part-sum");
+      var rows = [
+        [L("написал сам","wrote on my own"), own + (s.accent ? " " + L("(в " + s.accent + " — ошибка в знаках)","(" + s.accent + " with a mark wrong)") : "")],
+        [L("собрал из слов","built from words"), s.bank],
+        [L("показал ответ","showed the answer"), s.shown]
+      ];
+      rows.forEach(function(r){
+        var li = partEl("li");
+        li.appendChild(partEl("b", "", String(r[1])));
+        li.appendChild(document.createTextNode(" — " + r[0]));
+        ul.appendChild(li);
+      });
+      sum.appendChild(ul);
+      var a3 = partEl("div", "part-acts");
+      a3.appendChild(partBtn(L("Ещё раз","Again"), "again", "go"));
+      a3.appendChild(partBtn(L("Другая роль","Other role"), "start", "quiet"));
+      a3.appendChild(partBtn(L("Закрыть","Close"), "exit", "quiet"));
+      sum.appendChild(a3);
+      stage.appendChild(sum);
+      partScroll(sum);
+    }
+  }
+
+  function partScroll(node){
+    try{ node.scrollIntoView({block:"nearest", behavior:"smooth"}); }catch(e){}
+  }
+
+  function partMsg(st, text){
+    var m = st.stage.querySelector(".part-msg");
+    if(m) m.textContent = text;
+  }
+
+  // Закрывает ход: реплика переходит в историю, с переводом и звуком.
+  function partDone(st, mode, note){
+    var ln = st.lines[st.i];
+    st.stats[mode]++;
+    st.hist.push({k:"me", mode: mode, who: ln.who, text: ln.text, tr: st.tr[st.i] || "", note: note || ""});
+    st.phase = "result";
+    partRender(st);
+    speak(ln.text);
+  }
+
+  function partCheck(st){
+    if(st.phase !== "turn") return;
+    var ln = st.lines[st.i];
+    if(st.sub === "bank"){
+      var box = st.stage.querySelector(".qbuild");
+      if(!box) return;
+      if(!buildValue(box)){ partMsg(st, L("Нажимай на слова ниже.","Tap the words below.")); return; }
+      if(buildOk(box)){ partDone(st, "bank"); return; }
+      box.querySelector(".qbuild-line").classList.add("bad");
+      partMsg(st, L("Не то. Проверь порядок — и помни, что два слова лишние.",
+                    "Not quite. Check the order — and remember two words are extra."));
+      return;
+    }
+    var inp = st.stage.querySelector(".part-input");
+    if(!inp) return;
+    if(!partNorm(inp.value)){
+      partMsg(st, L("Напиши реплику или нажми «Не помню».","Write the line, or press “I don't remember”."));
+      return;
+    }
+    if(partNorm(inp.value) === partNorm(ln.text)){ partDone(st, "typed"); return; }
+    if(partFlat(inp.value) === partFlat(ln.text)){
+      var want = partNorm(ln.text).split(" "), got = partNorm(inp.value).split(" ");
+      var raw = partWords(ln.text);
+      if(raw.length === want.length) want = raw.map(function(w){ return w; });
+      var bad = want.filter(function(w, k){ return partNorm(w) !== got[k]; });
+      partDone(st, "accent", L("Слова верные, но знаки: ", "Right words, but check the marks: ") + bad.join(", "));
+      return;
+    }
+    inp.classList.add("bad");
+    var n = partWords(ln.text).length;
+    partMsg(st, L("Пока не то. В реплике слов: " + n + ". Попробуй ещё или нажми «Не помню».",
+                  "Not yet. The line has " + n + " words. Try again or press “I don't remember”."));
+  }
+
+  function handlePartAction(btn){
+    var mini = btn.closest(".mini-text");
+    var dlg = mini && mini.querySelector(".dialogue");
+    var st = dlg && PART.get(dlg);
+    if(!st) return;
+    var a = btn.dataset.part;
+    if(a === "start"){ st.phase = "role"; st.me = null; st.hist = []; partRender(st); return; }
+    if(a === "role"){ partStartRun(st, btn.dataset.val); return; }
+    if(a === "again"){ partStartRun(st, st.me); return; }
+    if(a === "exit"){ st.phase = "off"; st.me = null; st.hist = []; partRender(st); return; }
+    if(a === "check"){ partCheck(st); return; }
+    if(a === "forgot"){ st.sub = "bank"; partRender(st); return; }
+    if(a === "reveal"){
+      var box = st.stage.querySelector(".qbuild");
+      if(box) revealBuild(box);
+      partDone(st, "shown");
+      return;
+    }
+    if(a === "next"){ partAdvance(st); return; }
+  }
+
   function checkQuiz(pane){
     var inputs = pane.querySelectorAll("input.blank, select.mc");
     var builds = pane.querySelectorAll(".qbuild");
@@ -11679,6 +12076,7 @@
     if(!el.dataset.prepared){
       el.querySelectorAll(".storytext, .dialogue, .wordset .w").forEach(wrapTapWords);
       el.querySelectorAll(".qbuild").forEach(initBuild);
+      el.querySelectorAll(".dialogue").forEach(initPart);
       el.dataset.prepared = "1";
     }
     addSpeakButtons(el);
@@ -12803,6 +13201,9 @@
     var lang = e.target.closest("[data-lang]");
     if(lang){ setLang(lang.dataset.lang); return; }
 
+    var partBtnEl = e.target.closest("[data-part]");
+    if(partBtnEl){ handlePartAction(partBtnEl); return; }
+
     var vocabBtn = e.target.closest("[data-vocab]");
     if(vocabBtn){ handleVocabAction(vocabBtn.dataset.vocab); return; }
 
@@ -12873,6 +13274,13 @@
     }
   });
 
+  document.addEventListener("keydown", function(e){
+    if(e.key !== "Enter" || !e.target.classList || !e.target.classList.contains("part-input")) return;
+    e.preventDefault();
+    var b = e.target.closest(".part-card").querySelector('[data-part="check"]');
+    if(b) handlePartAction(b);
+  });
+
   document.addEventListener("change", function(e){
     var sel = e.target.closest('select[data-vpref="topic"]');
     if(!sel) return;
@@ -12906,6 +13314,7 @@
       localStorage.removeItem(VOCAB_KEY);
       localStorage.removeItem(SIT_KEY);
       localStorage.removeItem(LT_KEY);
+      localStorage.removeItem(PART_KEY);
     }catch(e){}
     document.querySelectorAll("input.blank, select.mc").forEach(function(i){
       i.value = ""; i.classList.remove("ok","bad");
