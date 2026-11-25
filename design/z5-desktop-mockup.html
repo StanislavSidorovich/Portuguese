@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Z5 · макет ноутбучного вида</title>
+<!--
+  МАКЕТ Z5 — широкий экран (≥1024px). Не код приложения.
+  Шрифты и переменные цвета — дословно из index.html. Новые переменные
+  помечены «Z5:» — их и нужно будет завести при вёрстке.
+  Содержание — настоящее: тема 0.7 Ser и сводная глава 0.5–0.8.
+  Нижняя плашка «Макет» — только для просмотра, в приложение не переносится.
+-->
+<style>
+  @font-face{font-family:'Golos Text';font-style:normal;font-weight:400 700;font-display:swap;src:url(../assets/fonts/golos-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;}
+  @font-face{font-family:'Golos Text';font-style:normal;font-weight:400 700;font-display:swap;src:url(../assets/fonts/golos-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+  @font-face{font-family:'Manrope';font-style:normal;font-weight:200 800;font-display:swap;src:url(../assets/fonts/manrope-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+
+  :root{
+    --bg:#F2F5F4; --card:#FFFFFF; --ink:#16211C; --ink-fixed:#16211C;
+    --muted:#5A6A63; --muted-fixed:#5A6A63;
+    --base:#1F7A5A;      --base-tint:#E3F3EC;      --base-deep:#14523F;
+    --presente:#2D6FBF;  --presente-tint:#E6EEF9;  --presente-deep:#1B4880;
+    --passado:#B5452F;   --passado-tint:#FBEAE6;   --passado-deep:#7A2C1D;
+    --expansao:#7A4FA3;  --expansao-tint:#F0E9F7;  --expansao-deep:#4E2F6B;
+    --ser:#B4762A; --ser-tint:#FAEFDF; --estar:#3B6FD6; --estar-tint:#E7EEFB;
+    --ser-ink:#8A5416; --ser-ink-fixed:#8A5416; --estar-ink:#2F5FC0; --estar-ink-fixed:#2F5FC0;
+    --ok:#2E9E5B; --ok-tint:#E4F5EA; --bad:#C4453A; --bad-tint:#FDECEC;
+    --radius:16px;
+    --font-pt:'Manrope','Golos Text',sans-serif;
+    --font-ru:'Golos Text',sans-serif;
+    --font-lat:'Manrope','Golos Text',sans-serif;
+    /* Z5: новые переменные ноутбучного вида */
+    --line:#DFE5E2;          /* рамки и разделители панели */
+    --side-bg:#E9EFEC;       /* фон левой панели — на тон темнее --bg */
+    --side-current:#D3EBDF;  /* строка текущей темы */
+    --side-w:272px; --side-rail:64px; --words-w:288px; --read-w:680px;
+  }
+  body.dark{
+    --bg:#101614; --card:#19211E; --ink:#ECF1EE; --muted:#97A8A0;
+    --ser-ink:#D9973F; --estar-ink:#5CA8E0;
+    --line:#2F3A36; --side-bg:#0B100E; --side-current:#1C3329;
+  }
+  *{box-sizing:border-box;}
+  html{font-size:100%;}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-ru); font-size:1rem; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  button{font:inherit; color:inherit;}
+  .pt{font-family:var(--font-pt); font-weight:600;}
+  .se{color:var(--ser-ink); font-weight:700;} .es{color:var(--estar-ink); font-weight:700;}
+  .tr{font-family:var(--font-ru); font-size:0.8rem; color:var(--muted); white-space:nowrap;}
+  .tr::before{content:"[";} .tr::after{content:"]";}
+  :focus-visible{outline:2.5px solid var(--base); outline-offset:2px; border-radius:6px;}
+
+  /* ================= КАРКАС ================= */
+  .app{display:grid; grid-template-columns:var(--side-w) minmax(0,1fr); min-height:100vh;}
+  body.side-min .app{grid-template-columns:var(--side-rail) minmax(0,1fr);}
+
+  /* ---------- ЛЕВАЯ ПАНЕЛЬ ---------- */
+  .side{position:sticky; top:0; height:100vh; overflow:auto; background:var(--side-bg);
+    border-right:1px solid var(--line); display:flex; flex-direction:column; scrollbar-width:thin;}
+  .side-head{display:flex; align-items:center; gap:8px; padding:16px 14px 10px 18px; position:sticky; top:0; background:var(--side-bg); z-index:2;}
+  .brand{flex:1; min-width:0;}
+  .brand b{display:block; font-family:var(--font-lat); font-weight:800; font-size:0.95rem; letter-spacing:-0.01em;}
+  .brand span{display:block; font-size:0.72rem; color:var(--muted);}
+  .icon-btn{width:34px; height:34px; border-radius:9px; border:1.5px solid var(--line); background:var(--card);
+    color:var(--muted); cursor:pointer; display:grid; place-items:center; font-size:0.95rem; flex:none;}
+  .icon-btn:hover{color:var(--ink);}
+  .side-home{display:flex; align-items:center; gap:10px; margin:2px 10px 6px; padding:8px 10px; border-radius:10px;
+    background:none; border:none; cursor:pointer; text-align:left; font-size:0.88rem; font-weight:600;}
+  .side-home:hover{background:var(--card);}
+  .side-home.on{background:var(--side-current);}
+  .side-sec{font-family:var(--font-lat); font-size:0.66rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--muted); padding:14px 18px 6px;}
+  .blk{margin:0 10px 4px;}
+  .blk-head{display:flex; align-items:center; gap:8px; width:100%; padding:7px 8px; border:none; background:none; border-radius:9px;
+    cursor:pointer; text-align:left;}
+  .blk-head:hover{background:var(--card);}
+  .blk-chip{width:22px; height:22px; border-radius:7px; color:#fff; font-family:var(--font-lat); font-weight:800; font-size:0.72rem;
+    display:grid; place-items:center; flex:none;}
+  .blk-name{flex:1; min-width:0; font-family:var(--font-lat); font-weight:800; font-size:0.8rem; letter-spacing:0.02em;}
+  .blk-name small{display:block; font-family:var(--font-ru); font-weight:400; font-size:0.72rem; color:var(--muted); letter-spacing:0;}
+  .blk-count{font-family:var(--font-lat); font-size:0.7rem; font-weight:800; color:var(--muted);}
+  .chev{color:var(--muted); font-size:0.8rem; transition:transform .15s;}
+  .blk.open .chev{transform:rotate(90deg);}
+  .blk-list{display:none; padding:2px 0 6px;}
+  .blk.open .blk-list{display:block;}
+  .srow{display:flex; align-items:center; gap:8px; width:100%; padding:6px 8px 6px 10px; margin:1px 0; border:none; background:none;
+    border-radius:8px; cursor:pointer; text-align:left; position:relative; min-height:34px;}
+  .srow:hover{background:var(--card);}
+  .srow .num{font-family:var(--font-lat); font-weight:800; font-size:0.72rem; color:var(--muted); width:30px; flex:none;}
+  .srow .ttl{flex:1; min-width:0; font-family:var(--font-pt); font-weight:600; font-size:0.86rem; line-height:1.3;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .srow.cur{background:var(--side-current);}
+  .srow.cur::before{content:""; position:absolute; left:0; top:6px; bottom:6px; width:3px; border-radius:2px; background:var(--base);}
+  .srow.cur .ttl{font-weight:800;}
+  .srow.soon{opacity:0.5; cursor:default;}
+  .srow.soon:hover{background:none;}
+  .srow.rev .num{color:var(--base-deep);}
+  body.dark .srow.rev .num{color:var(--base);}
+  .srow.rev .ttl{font-family:var(--font-ru); font-weight:600; font-size:0.8rem;}
+  .srow.rev{border:1.5px dashed var(--line); margin:3px 0;}
+  .row-stage{display:inline-flex; gap:3px; align-items:center; flex:none;}
+  .row-stage i{width:7px; height:7px; border-radius:50%; border:1.5px solid #BFC9C5;}
+  .row-stage i.on{background:var(--ok); border-color:var(--ok);}
+  body.dark .row-stage i{border-color:#4A5953;} body.dark .row-stage i.on{border-color:var(--ok);}
+  .flag{font-size:0.66rem; font-weight:800; color:var(--ink-fixed); background:var(--ok-tint); padding:1px 7px; border-radius:20px;}
+  .tool{display:flex; align-items:center; gap:10px; width:calc(100% - 20px); margin:1px 10px; padding:7px 10px; border:none; background:none;
+    border-radius:9px; cursor:pointer; text-align:left; font-size:0.86rem; font-weight:600;}
+  .tool:hover{background:var(--card);}
+  .tool .ic{width:22px; text-align:center; flex:none;}
+  .tool .lbl{flex:1;}
+  .tool .lbl small{font-weight:400; color:var(--muted);}
+  .due{font-family:var(--font-lat); font-size:0.66rem; font-weight:800; background:var(--bad); color:#fff; border-radius:20px; padding:1px 7px;}
+  .side-foot{margin-top:auto; display:flex; gap:6px; padding:12px 14px 16px; border-top:1px solid var(--line); flex-wrap:wrap;}
+  .pill{font-family:var(--font-lat); font-weight:800; font-size:0.72rem; padding:6px 11px; border-radius:20px;
+    border:1.5px solid var(--line); background:var(--card); color:var(--muted); cursor:pointer;}
+  .pill.on{background:var(--base); border-color:var(--base); color:#fff;}
+
+  /* свёрнутая панель — рейка */
+  body.side-min .side{overflow-x:hidden;}
+  body.side-min .brand, body.side-min .side-sec, body.side-min .blk-name, body.side-min .blk-count,
+  body.side-min .chev, body.side-min .blk-list, body.side-min .tool .lbl, body.side-min .tool .due,
+  body.side-min .side-home span:not(.ic), body.side-min .side-foot .pill:not(.theme){display:none;}
+  body.side-min .blk .blk-list{display:none;}
+  body.side-min .side-head{padding:14px 0 8px; justify-content:center;}
+  body.side-min .blk, body.side-min .side-home{margin:2px 8px;}
+  body.side-min .blk-head{justify-content:center; padding:6px 0;}
+  body.side-min .blk-chip{width:30px; height:30px; font-size:0.8rem;}
+  body.side-min .blk.cur-blk .blk-chip{box-shadow:0 0 0 2.5px var(--side-bg), 0 0 0 4.5px var(--base);}
+  body.side-min .tool{justify-content:center; width:auto; margin:1px 8px; padding:8px 0;}
+  body.side-min .side-home{justify-content:center; padding:8px 0;}
+  body.side-min .side-foot{justify-content:center; padding:10px 0;}
+  body.side-min .rail-cur{display:block;}
+  .rail-cur{display:none; margin:8px auto 4px; font-family:var(--font-lat); font-weight:800; font-size:0.72rem; background:var(--side-current);
+    border-radius:8px; padding:4px 0; width:44px; text-align:center;}
+  .rail-sep{display:none;}
+  body.side-min .rail-sep{display:block; height:1px; background:var(--line); margin:10px 14px;}
+
+  /* ---------- ПРАВАЯ ОБЛАСТЬ ---------- */
+  .main{min-width:0;}
+  .view{display:none;} .view.on{display:block;}
+  .topic-wrap{display:grid; grid-template-columns:minmax(0,var(--read-w)); justify-content:center; gap:32px; padding:0 32px 80px;}
+  @media (min-width:1440px){ .topic-wrap{gap:48px; padding:0 48px 80px;} }
+  @media (min-width:1280px){
+    .topic-wrap.has-words{grid-template-columns:minmax(0,var(--read-w)) var(--words-w);}
+  }
+  .col{min-width:0;}
+
+  .crumb{font-family:var(--font-lat); font-size:0.72rem; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); padding-top:28px;}
+  .crumb b{color:var(--base);}
+  .t-head{display:flex; align-items:center; gap:12px; margin:6px 0 2px;}
+  .t-head .marker{width:5px; height:32px; border-radius:3px; background:var(--base); flex:none;}
+  .t-head .marker.rev{background:repeating-linear-gradient(to bottom, var(--base) 0 4px, transparent 4px 7px);}
+  .t-head h1{font-family:var(--font-pt); font-size:2rem; line-height:1.2; margin:0; font-weight:800; letter-spacing:-0.01em;}
+  .t-head h1 .n{font-family:var(--font-lat); color:var(--muted); font-weight:800; font-size:0.6em; margin-right:8px; vertical-align:0.15em;}
+  .t-sub{color:var(--muted); font-size:0.98rem; margin:6px 0 14px; max-width:62ch;}
+
+  .stage-strip{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 6px;}
+  .stage-step{font-size:0.78rem; font-weight:700; padding:4px 11px; border-radius:20px; border:1.5px solid var(--line); color:var(--muted);}
+  .stage-step.on{background:var(--ok-tint); border-color:transparent; color:var(--ink-fixed);}
+  .stage-next{font-size:0.86rem; color:var(--muted); margin-left:6px;}
+  .stage-next a{color:var(--base); font-weight:700; text-decoration:none; cursor:pointer;}
+  body.dark .stage-next a{color:#5FBF97;}
+
+  /* вкладки — tablist, липкие */
+  .tabs{position:sticky; top:0; z-index:5; background:var(--bg); display:flex; gap:4px; border-bottom:1.5px solid var(--line);
+    margin:14px 0 24px; padding-top:8px;}
+  .tab{border:none; background:none; padding:10px 12px 11px; white-space:nowrap; cursor:pointer; border-bottom:3px solid transparent; margin-bottom:-1.5px;
+    display:flex; align-items:baseline; gap:7px; color:var(--muted); border-radius:8px 8px 0 0;}
+  .tab:hover{color:var(--ink); background:var(--card);}
+  .tab b{font-family:var(--font-pt); font-size:1rem; font-weight:800;}
+  .tab i{font-style:normal; font-size:0.78rem;}
+  .tab.on{color:var(--ink); border-bottom-color:var(--base);}
+  .tab .tdot{width:7px; height:7px; border-radius:50%; background:var(--ok); align-self:center;}
+  .tab-kbd{display:none !important;} /* стрелки ← → работают по ARIA tablist, надпись не нужна */
+  .tab-kbd{white-space:nowrap; margin-left:auto; align-self:center; font-size:0.74rem; color:var(--muted); padding-right:4px;}
+  kbd{font-family:var(--font-lat); font-weight:800; font-size:0.7rem; border:1.5px solid var(--line); border-bottom-width:2.5px;
+    border-radius:5px; padding:0 5px; background:var(--card); color:var(--ink);}
+
+  .pane{display:none;} .pane.on{display:block;}
+
+  /* текст правила под чтение */
+  .prose p, .prose li{font-size:1.06rem; line-height:1.7;}
+  .prose .rule-list{padding-left:20px;} .prose .rule-list li{margin-bottom:8px;}
+  table{width:100%; border-collapse:collapse; margin:4px 0 20px; font-size:0.98rem; background:var(--card); border-radius:12px; overflow:hidden;}
+  th{text-align:left; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--muted); font-weight:800; padding:10px 14px 8px;}
+  td{padding:9px 14px; border-top:1px solid var(--line); vertical-align:top;}
+  td.pt{font-size:1.1rem;}
+  .contrast{background:var(--base-tint); border-radius:12px; padding:14px 16px; margin:0 0 18px; color:var(--ink-fixed);}
+  .contrast .label{font-size:0.78rem; font-weight:800; margin-bottom:6px; color:var(--base-deep);}
+  .contrast p{margin:0 0 6px; font-size:0.98rem;}
+  .trap{background:#FDF0EE; border-left:4px solid var(--bad); border-radius:0 10px 10px 0; padding:13px 15px; margin:0 0 18px; font-size:0.98rem; color:var(--ink-fixed);}
+  .tip{background:#EAF6EE; border-left:4px solid var(--ok); border-radius:0 10px 10px 0; padding:13px 15px; margin:0 0 18px; font-size:0.98rem; color:var(--ink-fixed);}
+  .trap .se, .tip .se{color:var(--ser-ink-fixed);} .trap .es, .tip .es{color:var(--estar-ink-fixed);}
+
+  .text-label{font-size:0.74rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); margin:0 0 8px;}
+  .card{background:var(--card); border-radius:14px; padding:20px 24px; margin:0 0 22px;}
+  /* крупный португальский текст */
+  .storytext{font-family:var(--font-pt); font-size:1.22rem; line-height:1.85; margin:0 0 12px; font-weight:500;}
+  .tap-hint{display:flex; gap:8px; align-items:center; background:var(--base-tint); color:var(--base-deep); font-size:0.84rem; font-weight:600;
+    border-radius:10px; padding:9px 12px; margin:0 0 18px;}
+  .tap{position:relative; background:var(--base-tint); color:var(--base-deep); border-radius:4px; padding:0 2px;}
+  .tap-popup{position:absolute; left:0; top:calc(100% + 6px); z-index:3; background:var(--ink-fixed); color:#fff; padding:7px 11px; border-radius:9px;
+    font-family:var(--font-ru); font-size:0.86rem; font-weight:500; white-space:nowrap; box-shadow:0 6px 20px rgba(0,0,0,0.25); line-height:1.4;}
+  body.dark .tap-popup{background:#2B3833;}
+  .btn{font-family:var(--font-ru); font-size:0.9rem; font-weight:700; padding:10px 18px; border-radius:10px; border:none; cursor:pointer; min-height:42px;}
+  .btn-go{background:var(--base); color:#fff;}
+  .btn-line{background:transparent; border:1.5px solid var(--line); color:var(--muted);}
+  .btn-hint{background:transparent; border:1.5px solid var(--base); color:var(--ink);}
+  .btn-listen{background:var(--base); color:#fff; margin:0 0 14px;}
+  .why{font-size:0.92rem; color:var(--muted); border-top:1px solid var(--line); margin:14px 0 0; padding-top:12px;}
+
+  /* диалог: 🔊 рядом с каждой репликой */
+  .dline{display:grid; grid-template-columns:36px 92px 1fr; align-items:baseline; gap:6px; margin:0; padding:6px 0;
+    font-family:var(--font-pt); font-size:1.15rem; line-height:1.55;}
+  .say{width:32px; height:32px; border-radius:50%; border:1.5px solid var(--line); background:var(--bg); cursor:pointer;
+    font-size:0.85rem; display:grid; place-items:center; align-self:center;}
+  .say:hover{border-color:var(--base);}
+  .say.playing{background:var(--base); border-color:var(--base);}
+  .speaker{font-family:var(--font-ru); font-size:0.86rem; font-weight:700; color:#1B6B4E;}
+  body.dark .speaker{color:#5FBF97;}
+  .dlg-mode{display:flex; gap:0; border:1.5px solid var(--line); border-radius:10px; overflow:hidden; width:max-content; margin:0 0 16px;}
+  .dlg-mode button{border:none; background:var(--card); padding:8px 16px; font-size:0.86rem; font-weight:700; color:var(--muted); cursor:pointer;}
+  .dlg-mode button.on{background:var(--base); color:#fff;}
+  /* «Участвовать» (Z1) */
+  .part-head{display:flex; justify-content:space-between; font-size:0.72rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); margin:0 0 12px;}
+  .pline{border-radius:10px; padding:9px 12px 9px 8px; margin:0 0 8px; background:var(--bg); display:grid; grid-template-columns:36px 1fr; gap:6px; align-items:baseline;}
+  .pline .pt{font-size:1.15rem; font-weight:600;}
+  .pline .ptr{display:block; font-family:var(--font-ru); font-size:0.86rem; color:var(--muted); font-weight:400;}
+  .pline.me{background:var(--ok-tint); color:var(--ink-fixed); margin-left:44px; grid-template-columns:1fr;}
+  .pline.me .ptr{color:var(--muted-fixed);} .pline.me .speaker{color:#1B6B4E;}
+  .part-card{border:1.5px dashed var(--line); border-radius:12px; padding:14px; margin:6px 0 0 44px;}
+  .part-cue{font-size:0.98rem; margin:0 0 10px;}
+  .part-input{width:100%; font-family:var(--font-pt); font-size:1.15rem; font-weight:600; padding:11px 12px; border-radius:9px;
+    border:1.5px solid var(--base); background:var(--bg); color:var(--ink); outline:none;}
+  .acts{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:12px;}
+  .kbd-note{font-size:0.78rem; color:var(--muted); margin-left:auto;}
+
+  /* задания */
+  .qitem{background:var(--card); border-radius:12px; padding:13px 18px; margin-bottom:10px; font-family:var(--font-pt); font-size:1.1rem; line-height:2.1;}
+  .qitem .ru-hint{font-family:var(--font-ru); font-size:0.98rem;}
+  .qnum{font-family:var(--font-lat); font-weight:800; color:var(--muted); margin-right:8px; font-size:0.85rem;}
+  .blank, .mc{font-family:var(--font-pt); font-size:1.05rem; font-weight:600; padding:4px 9px; border-radius:8px; border:1.5px solid #DAE1DE; background:var(--bg); color:var(--ink);}
+  body.dark .blank, body.dark .mc{border-color:var(--line);}
+  .blank.focus{border-color:var(--base); box-shadow:0 0 0 3px var(--base-tint);}
+  body.dark .blank.focus{box-shadow:0 0 0 3px #1C3329;}
+  .qbuild-line{min-height:50px; border-radius:10px; border:1.5px dashed #D2DBD7; background:var(--bg); padding:8px; display:flex; gap:6px; flex-wrap:wrap; margin:4px 0 8px;}
+  body.dark .qbuild-line{border-color:var(--line);}
+  .qword{padding:5px 12px; border-radius:9px; border:1.5px solid #DAE1DE; background:var(--card); font-family:var(--font-pt); font-size:1rem; font-weight:600; line-height:1.6; cursor:pointer;}
+  body.dark .qword{border-color:var(--line);}
+  .qbuild-line .qword{background:var(--base); border-color:var(--base); color:#fff;}
+  .quiz-actions{display:flex; align-items:center; gap:9px; margin-top:16px; flex-wrap:wrap;}
+  .next-card{display:flex; align-items:center; gap:12px; width:100%; background:var(--card); border:none; border-radius:12px; padding:14px 16px; margin-top:22px; cursor:pointer; text-align:left;}
+  .next-card .nm{width:5px; align-self:stretch; border-radius:3px; background:var(--base);}
+  .next-card .nl{display:block; font-size:0.7rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted);}
+  .next-card .nt{display:block; font-weight:600;}
+  .next-card .na{margin-left:auto; color:#BFC9C5; font-size:1.2rem;}
+
+  /* ---------- PALAVRAS — липкая колонка справа ---------- */
+  .words{display:none;}
+  @media (min-width:1280px){
+    .has-words .words{display:block; position:sticky; top:20px; align-self:start; margin-top:28px; max-height:calc(100vh - 40px); overflow:auto; scrollbar-width:thin;}
+    .has-words .words-inline{display:none;}
+  }
+  .wbox{background:var(--card); border-radius:14px; padding:14px 16px 6px; margin:0 0 14px;}
+  .wbox h3{font-size:0.72rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); margin:0 0 6px; display:flex; justify-content:space-between;}
+  .wrow{display:grid; grid-template-columns:1fr auto; gap:0 6px; padding:6px 0; border-top:1px solid var(--line); align-items:center;}
+  .wrow:first-of-type{border-top:none;}
+  .wrow .w{font-family:var(--font-pt); font-weight:700; font-size:1rem;}
+  .wrow .t{grid-column:1; font-size:0.84rem; color:var(--muted); line-height:1.3;}
+  .wrow .say{grid-row:1 / span 2; grid-column:2; width:28px; height:28px; font-size:0.75rem;}
+  .words-hidden{background:var(--card); border-radius:14px; padding:16px; font-size:0.88rem; color:var(--muted);}
+  .words-hidden b{display:block; color:var(--ink); font-size:0.92rem; margin-bottom:4px;}
+  .words-hidden button{margin-top:10px; background:none; border:1.5px solid var(--line); border-radius:9px; padding:7px 12px; font-size:0.84rem; font-weight:600; cursor:pointer; color:var(--ink);}
+  .wordset{display:grid; grid-template-columns:1fr 1fr; gap:8px 20px;}
+  .wordset .w{font-family:var(--font-pt); font-weight:700; font-size:1.02rem;}
+  .wordset .t{display:block; color:var(--muted); font-size:0.86rem;}
+  .inline-note{font-size:0.78rem; color:var(--muted); margin:-12px 0 22px;}
+  .side-card{background:var(--card); border-radius:14px; padding:14px 16px; margin:0 0 14px; font-size:0.9rem;}
+  .side-card h3{font-size:0.72rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); margin:0 0 8px;}
+  .check{display:flex; gap:8px; align-items:baseline; padding:4px 0;}
+  .check i{font-style:normal; width:18px; flex:none; color:var(--muted);}
+  .check.ok i{color:var(--ok); font-weight:800;}
+  .cov{display:flex; align-items:center; gap:8px; padding:6px 0; border-top:1px solid var(--line);}
+  .cov:first-of-type{border-top:none;}
+  .cov .num{font-family:var(--font-lat); font-weight:800; font-size:0.72rem; color:var(--muted); width:26px;}
+  .cov .ttl{flex:1; font-family:var(--font-pt); font-weight:600;}
+  .cov a{font-size:0.78rem; color:var(--base); font-weight:700; cursor:pointer;}
+  body.dark .cov a{color:#5FBF97;}
+
+  /* ---------- ГЛАВНАЯ ---------- */
+  .home{max-width:980px; margin:0 auto; padding:36px 40px 80px;}
+  .home-eyebrow{font-family:var(--font-lat); font-size:0.72rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--base);}
+  .home h1{font-size:1.9rem; line-height:1.25; margin:6px 0 4px;}
+  .home-sub{color:var(--muted); margin:0 0 24px;}
+  .today{display:grid; grid-template-columns:1.25fr 1fr; gap:16px;}
+  .tcard{background:var(--card); border-radius:var(--radius); padding:20px 22px; display:flex; flex-direction:column;}
+  .tcard .lab{font-size:0.72rem; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted);}
+  .tcard h2{font-family:var(--font-pt); font-size:1.5rem; margin:6px 0 2px; line-height:1.25;}
+  .tcard h2 .n{font-family:var(--font-lat); color:var(--muted); font-size:0.7em; margin-right:6px;}
+  .tcard p{margin:6px 0 0; color:var(--muted); font-size:0.92rem;}
+  .tcard .step{margin:14px 0 0; padding:12px 14px; border-radius:12px; background:var(--bg); font-size:0.92rem;}
+  .tcard .step b{display:block;}
+  .tcard .go{margin-top:auto; padding-top:16px; display:flex; gap:10px; align-items:center;}
+  .tcard .mins{font-family:var(--font-lat); font-weight:800; font-size:0.8rem; color:var(--base);}
+  .tcard.rep{border:1.5px dashed var(--line); background:transparent;}
+  .z4tag{display:inline-block; font-size:0.66rem; font-weight:800; padding:2px 8px; border-radius:20px; background:var(--expansao-tint); color:var(--expansao-deep); margin-left:6px; vertical-align:0.15em;}
+  .rep-list{list-style:none; margin:12px 0 0; padding:0;}
+  .rep-list li{display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-top:1px solid var(--line); font-size:0.9rem;}
+  .rep-list li:first-child{border-top:none;}
+  .rep-list .pt{font-size:1rem;}
+  .rep-list small{color:var(--muted); white-space:nowrap;}
+  .finish{display:flex; align-items:center; gap:16px; background:var(--card); border-radius:var(--radius); padding:16px 20px; margin:16px 0 0;}
+  .finish .fi{font-size:1.4rem;}
+  .finish b{display:block;}
+  .finish span{font-size:0.88rem; color:var(--muted);}
+  .finish .fsteps{margin-left:auto; display:flex; gap:6px;}
+  .meter{background:var(--card); border-radius:var(--radius); padding:16px 20px; margin:16px 0 0;}
+  .meter-head{display:flex; justify-content:space-between; font-size:0.86rem; font-weight:700;}
+  .meter-head span:last-child{font-family:var(--font-lat); font-weight:800;}
+  .track{display:flex; gap:3px; height:10px; margin:10px 0 8px;}
+  .seg{border-radius:5px; overflow:hidden; background:#E0E7E4;}
+  body.dark .seg{background:#26302C;}
+  .seg span{display:block; height:100%;}
+  .legend{display:flex; gap:16px; font-size:0.76rem; color:var(--muted); flex-wrap:wrap;}
+  .legend b{font-family:var(--font-lat);}
+  .home-foot{margin-top:22px; font-size:0.88rem;}
+  .home-foot a{color:var(--base); font-weight:600; text-decoration:none;}
+  body.dark .home-foot a{color:#5FBF97;}
+
+  /* ---------- плашка макета (не дизайн) ---------- */
+  .mock{position:fixed; right:16px; bottom:16px; z-index:50; display:flex; gap:6px; align-items:center; background:#16211C; color:#fff;
+    border-radius:14px; padding:7px 8px 7px 12px; font-family:var(--font-lat); font-size:0.74rem; font-weight:800; box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+  .mock button{background:#2B3833; color:#fff; border:none; border-radius:9px; padding:6px 10px; font-weight:800; font-size:0.74rem; cursor:pointer;}
+  .mock button.on{background:#1F7A5A;}
+  .narrow-note{display:none; padding:40px; font-size:1rem;}
+  @media (max-width:1023px){ .app{display:none;} .narrow-note{display:block;} }
+
+  /* ---------- панель цветов (только макет) ---------- */
+  .pal{position:fixed; right:16px; bottom:70px; z-index:60; width:340px; max-height:calc(100vh - 100px); overflow:auto;
+    background:#16211C; color:#ECF1EE; border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,0.35); font-size:0.8rem; scrollbar-width:thin;}
+  .pal[hidden]{display:none;}
+  .pal-head{position:sticky; top:0; background:#16211C; padding:12px 14px 8px; display:flex; gap:6px; align-items:center; flex-wrap:wrap; z-index:1; border-bottom:1px solid #2B3833;}
+  .pal-head b{flex:1 0 100%; font-family:var(--font-lat); font-size:0.82rem;}
+  .pal-head small{flex:1 0 100%; color:#97A8A0; line-height:1.35;}
+  .pal button{background:#2B3833; color:#fff; border:none; border-radius:8px; padding:5px 9px; font-weight:700; font-size:0.74rem; cursor:pointer;}
+  .pal button.go{background:#1F7A5A;}
+  .pal-grp{padding:6px 14px 2px; font-family:var(--font-lat); font-weight:800; font-size:0.66rem; letter-spacing:0.08em; text-transform:uppercase; color:#97A8A0;}
+  .pal-row{padding:6px 14px; border-top:1px solid #222D29;}
+  .pal-row.open{background:#1C2723;}
+  .pal-top{display:flex; align-items:center; gap:8px; cursor:pointer;}
+  .pal-sw{width:22px; height:22px; border-radius:6px; border:1px solid rgba(255,255,255,0.25); flex:none;}
+  .pal-name{flex:1; min-width:0;}
+  .pal-name code{display:block; font-size:0.68rem; color:#97A8A0;}
+  .pal-hex{font-family:ui-monospace,Consolas,monospace; font-size:0.74rem;}
+  .pal-row.changed .pal-hex{color:#5FBF97; font-weight:700;}
+  .pal-sl{display:none; padding:8px 0 4px 30px;}
+  .pal-row.open .pal-sl{display:block;}
+  .pal-sl label{display:grid; grid-template-columns:16px 1fr 34px; gap:6px; align-items:center; margin:2px 0;}
+  .pal-sl input[type=range]{width:100%; accent-color:#5FBF97;}
+  .pal-sl span{font-family:ui-monospace,Consolas,monospace; font-size:0.7rem; text-align:right; color:#97A8A0;}
+  .pal-sl .pal-pick{display:flex; gap:6px; align-items:center; margin-top:4px;}
+  .pal-sl input[type=color]{width:34px; height:24px; border:none; background:none; padding:0;}
+  .pal-out{margin:10px 14px 14px; width:calc(100% - 28px); height:110px; background:#0B100E; color:#ECF1EE; border:1px solid #2B3833; border-radius:8px; font-family:ui-monospace,Consolas,monospace; font-size:0.7rem; padding:8px;}
+</style>
+</head>
+<body>
+
+<div class="narrow-note"><b>Это макет ноутбучного вида (≥1024px).</b> На телефоне и узком окне приложение остаётся таким, как сейчас. Раздвинь окно.</div>
+
+<div class="app">
+<!-- ================= ЛЕВАЯ ПАНЕЛЬ ================= -->
+<aside class="side" aria-label="Разделы курса">
+  <div class="side-head">
+    <div class="brand"><b>Português europeu</b><span>грамматика · офлайн</span></div>
+    <button class="icon-btn" id="sideToggle" title="Свернуть панель (Ctrl+\)" aria-label="Свернуть панель">⟨</button>
+  </div>
+  <button class="side-home" data-go="home"><span class="ic">⌂</span><span>Сегодня</span></button>
+  <div class="rail-cur" title="Текущая тема">0.7</div>
+
+  <div class="side-sec">Курс · 6 / 47 пройдено</div>
+
+  <div class="blk open cur-blk">
+    <button class="blk-head"><span class="blk-chip" style="background:var(--base)">0</span><span class="blk-name">BASE<small>Научиться читать и сказать, кто ты</small></span><span class="blk-count">6/16</span><span class="chev">›</span></button>
+    <div class="blk-list">
+      <button class="srow"><span class="num">0.1</span><span class="ttl">Alfabeto e leitura</span><span class="row-stage"><i class="on"></i><i class="on"></i><i class="on"></i></span></button>
+      <button class="srow"><span class="num">0.2</span><span class="ttl">Acento e redução</span><span class="row-stage"><i class="on"></i><i class="on"></i><i></i></span></button>
+      <button class="srow"><span class="num">0.3</span><span class="ttl">Nasais</span><span class="row-stage"><i class="on"></i><i class="on"></i><i></i></span></button>
+      <button class="srow"><span class="num">0.4</span><span class="ttl">nh, lh, ch, ç, x, rr</span><span class="row-stage"><i class="on"></i><i class="on"></i><i></i></span></button>
+      <button class="srow rev" data-go="rev"><span class="num">Rev.</span><span class="ttl">0.1–0.4</span><span class="flag">✓ закрыта</span></button>
+      <button class="srow"><span class="num">0.5</span><span class="ttl">Género e artigos</span><span class="row-stage"><i class="on"></i><i class="on"></i><i></i></span></button>
+      <button class="srow"><span class="num">0.6</span><span class="ttl">Plural</span><span class="row-stage"><i class="on"></i><i class="on"></i><i></i></span></button>
+      <button class="srow cur" data-go="ser" aria-current="page"><span class="num">0.7</span><span class="ttl">Ser</span><span class="row-stage"><i class="on"></i><i></i><i></i></span></button>
+      <button class="srow"><span class="num">0.8</span><span class="ttl">Estar</span><span class="row-stage"><i></i><i></i><i></i></span></button>
+      <button class="srow rev" data-go="rev"><span class="num">Rev.</span><span class="ttl">0.5–0.8</span></button>
+      <button class="srow"><span class="num">0.9</span><span class="ttl">Ser vs estar</span><span class="row-stage"><i></i><i></i><i></i></span></button>
+      <button class="srow"><span class="num">0.10</span><span class="ttl">Pronomes pessoais</span><span class="row-stage"><i></i><i></i><i></i></span></button>
+      <button class="srow"><span class="num">0.11</span><span class="ttl">Adjetivos</span><span class="row-stage"><i></i><i></i><i></i></span></button>
+      <button class="srow"><span class="num">0.12</span><span class="ttl">Ter e há</span><span class="row-stage"><i></i><i></i><i></i></span></button>
+      <button class="srow"><span class="num">0.13</span><span class="ttl">Negação e perguntas</span><span class="row-stage"><i></i><i></i><i></i></span></button>
+      <button class="srow"><span class="num">0.14</span><span class="ttl">Preposições e contrações</span><span class="row-stage"><i></i><i></i><i></i></span></button>
+      <button class="srow"><span class="num">0.15</span><span class="ttl">Este, esse, aquele</span><span class="row-stage"><i></i><i></i><i></i></span></button>
+      <button class="srow"><span class="num">0.16</span><span class="ttl">Números, horas, dinheiro</span><span class="row-stage"><i></i><i></i><i></i></span></button>
+    </div>
+  </div>
+  <div class="blk">
+    <button class="blk-head"><span class="blk-chip" style="background:var(--presente)">1</span><span class="blk-name">PRESENTE<small>Глагол в настоящем времени</small></span><span class="blk-count">0/10</span><span class="chev">›</span></button>
+    <div class="blk-list">
+      <button class="srow"><span class="num">1.1</span><span class="ttl">Verbos em -ar</span><span class="row-stage"><i></i><i></i><i></i></span></button>
+    </div>
+  </div>
+  <div class="blk">
+    <button class="blk-head"><span class="blk-chip" style="background:var(--passado)">2</span><span class="blk-name">PASSADO<small>Два прошедших вместо одного</small></span><span class="blk-count">0/7</span><span class="chev">›</span></button>
+    <div class="blk-list"><button class="srow"><span class="num">2.1</span><span class="ttl">Pretérito perfeito</span></button></div>
+  </div>
+  <div class="blk">
+    <button class="blk-head"><span class="blk-chip" style="background:var(--expansao)">3</span><span class="blk-name">EXPANSÃO<small>скоро · 14 тем</small></span><span class="blk-count">—</span><span class="chev">›</span></button>
+    <div class="blk-list"><button class="srow soon"><span class="num">3.1</span><span class="ttl">Futuro do presente</span></button></div>
+  </div>
+
+  <div class="rail-sep"></div>
+  <div class="side-sec">Инструменты</div>
+  <button class="tool" title="Dicionário"><span class="ic">🗂</span><span class="lbl">Dicionário <small>· словарь</small></span><span class="due">9</span></button>
+  <button class="tool" title="Frases"><span class="ic">💬</span><span class="lbl">Frases <small>· живые фразы</small></span></button>
+  <button class="tool" title="Diálogos"><span class="ic">🗣</span><span class="lbl">Diálogos <small>· 9 сцен</small></span></button>
+  <button class="tool" title="Situações"><span class="ic">🧺</span><span class="lbl">Situações <small>· по ситуациям</small></span></button>
+  <button class="tool" title="Leituras"><span class="ic">📖</span><span class="lbl">Leituras <small>· чтение</small></span></button>
+  <button class="tool" title="Conjugador"><span class="ic">🎛</span><span class="lbl">Conjugador <small>· спрягатель</small></span></button>
+  <button class="tool" title="Шпаргалка"><span class="ic">📋</span><span class="lbl">Шпаргалка <small>· чтение</small></span></button>
+
+  <div class="side-foot">
+    <button class="pill on">РУ</button><button class="pill">EN</button><button class="pill">A</button>
+    <button class="pill theme" id="themeBtn" title="Тема">🌙</button>
+  </div>
+</aside>
+
+<!-- ================= СПРАВА ================= -->
+<div class="main">
+
+<!-- ---------- ГЛАВНАЯ ---------- -->
+<section class="view" id="v-home">
+  <div class="home">
+    <div class="home-eyebrow">Сегодня · среда</div>
+    <h1>Olá! Продолжим с 0.7 <span class="pt">Ser</span></h1>
+    <p class="home-sub">Занятие на 30–40 минут: повторение → одна тема до ступени «Собираю» → сцена в Diálogos.</p>
+
+    <div class="today">
+      <div class="tcard">
+        <span class="lab">Продолжить</span>
+        <h2><span class="n">0.7</span>Ser</h2>
+        <div class="stage-strip" style="margin-top:6px"><span class="stage-step on">Узнаю</span><span class="stage-step">Собираю</span><span class="stage-step">Пишу</span></div>
+        <div class="step"><b>Следующий шаг — диалог «Na universidade»</b>Сыграй за Ану или Жуана: свои реплики пишешь сам, «Не помню» даёт банк слов.</div>
+        <div class="go"><button class="btn btn-go" data-go="ser" data-tab="dlg">Участвовать в диалоге →</button><span class="mins">~8 мин</span></div>
+      </div>
+      <div class="tcard rep">
+        <span class="lab">Повторить сегодня <span class="z4tag">место под Z4</span></span>
+        <h2 style="font-family:var(--font-ru); font-size:1.15rem">12 фраз из 0.1–0.6</h2>
+        <p>Вперемешку, в начале занятия. Две из них ты уже знаешь уверенно — разгон.</p>
+        <ul class="rep-list">
+          <li><span class="pt">As casas são grandes.</span><small>0.6 · собрать</small></li>
+          <li><span class="pt">Um café, por favor.</span><small>0.1 · написать</small></li>
+          <li><span class="pt">A mãe é professora.</span><small>0.5 · собрать</small></li>
+        </ul>
+        <div class="go"><button class="btn btn-line" style="color:var(--ink); border-color:var(--base)">Начать повторение</button><span class="mins">~6 мин</span></div>
+      </div>
+    </div>
+
+    <div class="finish">
+      <span class="fi">🏁</span>
+      <div><b>Ближайший финиш — Глава 2 · 0.5–0.8</b><span>Осталось довести 0.7 и 0.8 до «Собираю», потом сводная глава.</span></div>
+      <div class="fsteps"><span class="stage-step on">0.5</span><span class="stage-step on">0.6</span><span class="stage-step">0.7</span><span class="stage-step">0.8</span><span class="stage-step">Rev.</span></div>
+    </div>
+
+    <div class="meter">
+      <div class="meter-head"><span>Прогресс по блокам курса</span><span>13%</span></div>
+      <div class="track">
+        <div class="seg" style="flex:16"><span style="width:38%; background:var(--base)"></span></div>
+        <div class="seg" style="flex:10"><span style="width:0"></span></div>
+        <div class="seg" style="flex:7"><span style="width:0"></span></div>
+        <div class="seg" style="flex:14"><span style="width:0"></span></div>
+      </div>
+      <div class="legend"><span><b style="color:var(--base)">Base</b> 6/16</span><span><b style="color:var(--presente)">Presente</b> 0/10</span><span><b style="color:var(--passado)">Passado</b> 0/7</span><span><b style="color:var(--expansao)">Expansão</b> скоро</span></div>
+    </div>
+    <p class="home-foot">Словарь: <b>9 слов</b> ждут повторения в <a href="#">Dicionário →</a> · <a href="#">О приложении</a></p>
+  </div>
+</section>
+
+<!-- ---------- ТЕМА 0.7 SER ---------- -->
+<section class="view on" id="v-ser">
+  <div class="topic-wrap has-words">
+  <div class="col">
+    <div class="crumb"><b>Блок 0 · Base</b> · тема 7 из 16</div>
+    <div class="t-head"><span class="marker"></span><h1><span class="n">0.7</span>Ser</h1></div>
+    <p class="t-sub">Первый глагол курса и первая таблица форм. <span class="se">Ser</span> — это «быть» насовсем: кто ты, откуда, какой по природе.</p>
+    <div class="stage-strip">
+      <span class="stage-step on">Узнаю</span><span class="stage-step">Собираю</span><span class="stage-step">Пишу</span>
+      <span class="stage-next">Следующий шаг — <a data-tab="dlg">Diálogo →</a></span>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Разделы темы">
+      <button class="tab" role="tab" data-tab="rule"><b>Regra</b><i>правило</i></button>
+      <button class="tab" role="tab" data-tab="texts"><b>Textos</b><i>тексты</i></button>
+      <button class="tab" role="tab" data-tab="dlg"><b>Diálogo</b><i>собрать сам</i></button>
+      <button class="tab" role="tab" data-tab="quiz"><b>Exercícios</b><i>задания</i><span class="tdot" title="пройдено"></span></button>
+      <span class="tab-kbd"><kbd>←</kbd> <kbd>→</kbd> вкладки</span>
+    </div>
+
+    <!-- Regra -->
+    <div class="pane prose" data-pane="rule">
+      <p>В русском «быть» в настоящем времени исчезает: мы говорим «я студент», а не «я есть студент». В португальском связку <b>опустить нельзя никогда</b>. И глаголов «быть» здесь два: <span class="se">ser</span> и <span class="es">estar</span>.</p>
+      <p>С этой темы в курсе появляется цвет: <span class="se">ser</span> всегда охристый, <span class="es">estar</span> всегда синий.</p>
+      <table>
+        <tr><th>Лицо</th><th>Форма</th><th>Перевод</th></tr>
+        <tr><td class="pt">eu</td><td class="pt se">sou</td><td>я есть</td></tr>
+        <tr><td class="pt">tu</td><td class="pt se">és</td><td>ты есть</td></tr>
+        <tr><td class="pt">ele / ela / você</td><td class="pt se">é</td><td>он, она, вы есть</td></tr>
+        <tr><td class="pt">nós</td><td class="pt se">somos</td><td>мы есть</td></tr>
+        <tr><td class="pt">eles / elas / vocês</td><td class="pt se">são</td><td>они, вы есть</td></tr>
+      </table>
+      <ul class="rule-list">
+        <li><b>Строк пять, а не шесть.</b> Формы <span class="pt">vós</span> в живом языке нет — её место занимает <span class="pt">vocês</span>, и глагол у неё в третьем лице</li>
+        <li><b>Местоимение обычно опускают.</b> Окончание и так называет лицо: <span class="pt">Sou médico</span> — «я врач»</li>
+        <li><b>Отрицание — просто <span class="pt">não</span> перед глаголом:</b> <span class="pt">Não sou médico</span>. Подробнее в теме 0.13</li>
+      </ul>
+      <div class="trap"><b>Ловушка русской привычки.</b> «Я врач» — это <span class="pt"><span class="se">Sou</span> médico</span>. Фразы <span class="pt">Eu médico</span> в португальском не существует: без глагола предложения нет вообще.</div>
+      <div class="tip"><b>Как отвечать «да».</b> На вопрос <span class="pt">És estudante?</span> португалец обычно отвечает не <span class="pt">sim</span>, а повтором глагола: <span class="pt"><span class="se">Sou</span></span>.</div>
+      <button class="next-card" data-tab="texts"><span class="nm"></span><span><span class="nl">Дальше</span><span class="nt">Textos — прочитать, как ser звучит в тексте</span></span><span class="na">→</span></button>
+    </div>
+
+    <!-- Textos -->
+    <div class="pane" data-pane="texts">
+      <p class="tap-hint">👆 Нажми на любое португальское слово, чтобы увидеть перевод.</p>
+      <!-- на 1024–1279 наборы слов остаются здесь; с 1280 уходят в колонку справа -->
+      <div class="words-inline">
+        <div class="text-label">Palavras 13 · Profissões — профессии</div>
+        <div class="card"><div class="wordset">
+          <div><span class="w">o médico</span> <span class="tr">у медику</span><span class="t">— врач</span></div>
+          <div><span class="w">o engenheiro</span> <span class="tr">у энжиньейру</span><span class="t">— инженер</span></div>
+          <div><span class="w">o advogado</span> <span class="tr">у адвугаду</span><span class="t">— юрист, адвокат</span></div>
+          <div><span class="w">o estudante</span> <span class="tr">у штудант</span><span class="t">— студент</span></div>
+        </div></div>
+        <p class="inline-note">На экране шире 1280px наборы слов стоят колонкой справа и видны на всех вкладках.</p>
+      </div>
+      <div class="text-label">Texto · Quem é quem — кто есть кто</div>
+      <div class="card">
+        <button class="btn btn-listen">▶ Слушать целиком</button>
+        <p class="storytext">A Ana é russa. É de Moscovo, mas a casa é aqui, em Lisboa. É estudante na universidade. A mãe é professora e o pai é médico. O irmão é novo: é aluno na escola. O João é português, é de Lisboa. É <span class="tap">engenheiro<span class="tap-popup">o engenheiro — инженер</span></span>. Os livros na mesa são da Ana, e o computador é do João.</p>
+        <button class="btn btn-line">Показать перевод</button>
+        <p class="why"><b>Почему так:</b> в тексте нет ни одного местоимения — и это нормальная португальская речь. Форма <span class="pt"><span class="se">é</span></span> уже говорит, что речь о третьем лице.</p>
+      </div>
+      <button class="next-card" data-tab="dlg"><span class="nm"></span><span><span class="nl">Дальше</span><span class="nt">Diálogo — сыграть знакомство самому</span></span><span class="na">→</span></button>
+    </div>
+
+    <!-- Diálogo -->
+    <div class="pane" data-pane="dlg">
+      <div class="dlg-mode" role="group" aria-label="Режим диалога">
+        <button data-mode="read">Читать и слушать</button><button class="on" data-mode="part">Участвовать ✎</button>
+      </div>
+      <div class="text-label">Diálogo · Na universidade — знакомство</div>
+
+      <div class="card" data-modeview="read" hidden>
+        <p class="dline"><button class="say" aria-label="Озвучить">🔊</button><span class="speaker">Ana:</span><span>Olá! Eu sou a Ana. E tu?</span></p>
+        <p class="dline"><button class="say playing" aria-label="Озвучить">🔊</button><span class="speaker">João:</span><span>Sou o João. Sou de Lisboa. E tu, és de Lisboa?</span></p>
+        <p class="dline"><button class="say" aria-label="Озвучить">🔊</button><span class="speaker">Ana:</span><span>Não, sou russa. Sou de Moscovo.</span></p>
+        <p class="dline"><button class="say" aria-label="Озвучить">🔊</button><span class="speaker">João:</span><span>És estudante?</span></p>
+        <p class="dline"><button class="say" aria-label="Озвучить">🔊</button><span class="speaker">Ana:</span><span>Sou. Sou estudante na universidade. E tu?</span></p>
+        <p class="dline"><button class="say" aria-label="Озвучить">🔊</button><span class="speaker">João:</span><span>Sou engenheiro. O meu colega é russo!</span></p>
+        <p class="dline"><button class="say" aria-label="Озвучить">🔊</button><span class="speaker">Ana:</span><span>Ah, muito bem!</span></p>
+        <div class="acts"><button class="btn btn-listen" style="margin:0">▶ Весь диалог</button><button class="btn btn-line">Показать перевод</button></div>
+      </div>
+
+      <div class="card" data-modeview="part">
+        <div class="part-head"><span>Ты — Ana · реплика 3 из 4</span><span>Собираю → Пишу</span></div>
+        <div class="pline me"><span><span class="speaker">Ana:</span> <span class="pt">Olá! Eu sou a Ana. E tu?</span><span class="ptr">Привет! Я Ана. А ты? · сам ✓</span></span></div>
+        <div class="pline"><button class="say" aria-label="Озвучить">🔊</button><span><span class="speaker">João:</span> <span class="pt">Sou o João. Sou de Lisboa. E tu, és de Lisboa?</span><span class="ptr">Я Жуан. Я из Лиссабона. А ты, ты из Лиссабона?</span></span></div>
+        <div class="pline me"><span><span class="speaker">Ana:</span> <span class="pt">Não, sou russa. Sou de Moscovo.</span><span class="ptr">Нет, я русская. Я из Москвы. · сам · знаки</span></span></div>
+        <div class="pline"><button class="say playing" aria-label="Озвучить">🔊</button><span><span class="speaker">João:</span> <span class="pt">És estudante?</span><span class="ptr">Ты студентка?</span></span></div>
+        <div class="part-card">
+          <p class="part-cue">Твоя реплика: <b>«Да. Я студентка в университете. А ты?»</b></p>
+          <input class="part-input" value="Sou. Sou estudante na univers" aria-label="Напиши реплику сам" autocomplete="off" spellcheck="false">
+          <div class="acts"><button class="btn btn-go">Проверить</button><button class="btn btn-hint">Не помню → слова</button><span class="kbd-note"><kbd>Enter</kbd> проверить · <kbd>Esc</kbd> не помню</span></div>
+        </div>
+      </div>
+      <button class="next-card" data-tab="quiz"><span class="nm"></span><span><span class="nl">Дальше</span><span class="nt">Exercícios — 10 заданий</span></span><span class="na">→</span></button>
+    </div>
+
+    <!-- Exercícios -->
+    <div class="pane" data-pane="quiz">
+      <p style="color:var(--muted); margin:0 0 14px">Впиши форму глагола <span class="se">ser</span> или выбери верный вариант.</p>
+      <div class="qitem"><span class="qnum">1.</span><span class="pt">eu</span> <input class="blank" value="sou" style="width:6em"></div>
+      <div class="qitem"><span class="qnum">2.</span><span class="pt">tu</span> <input class="blank focus" value="é" style="width:6em"></div>
+      <div class="qitem"><span class="qnum">3.</span><span class="pt">nós</span> <input class="blank" style="width:6em"></div>
+      <div class="qitem"><span class="qnum">4.</span><span class="pt">eles</span> <select class="mc"><option>—</option><option>são</option><option>é</option><option>somos</option></select></div>
+      <div class="qitem"><span class="qnum">5.</span><span class="ru-hint">Как сказать «я врач»?</span> <select class="mc"><option>—</option><option>Sou médico</option><option>Eu médico</option><option>Sou um médico</option></select></div>
+      <div class="qitem"><span class="qnum">6.</span><span class="ru-hint">«Я из Лиссабона»:</span> <span class="pt">Sou</span> <input class="blank" style="width:4em"> <span class="pt">Lisboa.</span></div>
+      <div class="qitem"><span class="qnum">10.</span><span class="ru-hint">Собери фразу: «Я студентка в университете».</span>
+        <div class="qbuild-line"><span class="qword">Sou</span><span class="qword">estudante</span></div>
+        <div><span class="qword">universidade</span> <span class="qword">na</span></div>
+      </div>
+      <div class="quiz-actions">
+        <button class="btn btn-go">Verificar · Проверить</button>
+        <button class="btn btn-hint">Подсказка</button>
+        <button class="btn btn-line">Показать ответы</button>
+        <span class="kbd-note"><kbd>Tab</kbd> следующее поле · <kbd>Enter</kbd> проверить</span>
+      </div>
+      <button class="next-card"><span class="nm"></span><span><span class="nl">Seguinte · дальше</span><span class="nt">0.8 Estar — второй «быть»: где и в каком состоянии</span></span><span class="na">→</span></button>
+    </div>
+  </div>
+
+  <!-- PALAVRAS — колонка справа (≥1280) -->
+  <aside class="words" aria-label="Слова темы">
+    <div data-words="open">
+      <div class="wbox">
+        <h3><span>Palavras 13 · профессии</span><span>8</span></h3>
+        <div class="wrow"><span class="w">o médico</span><button class="say">🔊</button><span class="t">врач</span></div>
+        <div class="wrow"><span class="w">o engenheiro</span><button class="say">🔊</button><span class="t">инженер</span></div>
+        <div class="wrow"><span class="w">o advogado</span><button class="say">🔊</button><span class="t">юрист, адвокат</span></div>
+        <div class="wrow"><span class="w">o estudante</span><button class="say">🔊</button><span class="t">студент</span></div>
+        <div class="wrow"><span class="w">a enfermeira</span><button class="say">🔊</button><span class="t">медсестра</span></div>
+        <div class="wrow"><span class="w">o motorista</span><button class="say">🔊</button><span class="t">водитель</span></div>
+        <div class="wrow"><span class="w">o vizinho</span><button class="say">🔊</button><span class="t">сосед</span></div>
+        <div class="wrow"><span class="w">o colega</span><button class="say">🔊</button><span class="t">коллега</span></div>
+      </div>
+      <div class="wbox">
+        <h3><span>Palavras 14 · какой и откуда</span><span>8</span></h3>
+        <div class="wrow"><span class="w">grande</span><button class="say">🔊</button><span class="t">большой</span></div>
+        <div class="wrow"><span class="w">pequeno</span><button class="say">🔊</button><span class="t">маленький</span></div>
+        <div class="wrow"><span class="w">novo</span><button class="say">🔊</button><span class="t">новый; молодой</span></div>
+        <div class="wrow"><span class="w">velho</span><button class="say">🔊</button><span class="t">старый</span></div>
+        <div class="wrow"><span class="w">português</span><button class="say">🔊</button><span class="t">португальский; португалец</span></div>
+        <div class="wrow"><span class="w">russo</span><button class="say">🔊</button><span class="t">русский</span></div>
+        <div class="wrow"><span class="w">Lisboa</span><button class="say">🔊</button><span class="t">Лиссабон</span></div>
+        <div class="wrow"><span class="w">a Rússia</span><button class="say">🔊</button><span class="t">Россия</span></div>
+      </div>
+    </div>
+    <div data-words="hidden" hidden>
+      <div class="words-hidden"><b>Palavras · 16 слов скрыты</b>Пока идут задания и твои реплики, слова не подсматриваются — так вспоминаешь, а не узнаёшь. «Не помню» и «Подсказка» работают как обычно.<br><button data-reveal>Показать слова</button></div>
+    </div>
+  </aside>
+  </div>
+</section>
+
+<!-- ---------- REVISÃO 0.5–0.8 ---------- -->
+<section class="view" id="v-rev">
+  <div class="topic-wrap has-words">
+  <div class="col">
+    <div class="crumb"><b>Блок 0 · Base</b> · сводная глава 2 из 4</div>
+    <div class="t-head"><span class="marker rev"></span><h1><span class="n">Revisão</span>0.5–0.8</h1></div>
+    <p class="t-sub">Глава 2 — сводная. Новых слов нет: род, множественное, <span class="se">ser</span> и <span class="es">estar</span> вместе в одной истории — так, как они встречаются в живой речи.</p>
+    <div class="stage-strip"><span class="stage-step">Exercícios ≥ 80%</span><span class="stage-step">Diálogo без «Показать ответ»</span><span class="stage-next">→ «Глава 2 закрыта»</span></div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="rule"><b>Texto</b><i>текст</i></button>
+      <button class="tab" role="tab" data-tab="dlg"><b>Diálogo</b><i>собрать сам</i></button>
+      <button class="tab" role="tab" data-tab="quiz"><b>Exercícios</b><i>вперемешку</i></button>
+      <span class="tab-kbd"><kbd>←</kbd> <kbd>→</kbd> вкладки</span>
+    </div>
+
+    <div class="pane" data-pane="rule">
+      <div class="tip"><b>Как читать этот текст.</b> Сначала послушай целиком. Потом прочитай сам и на каждом <span class="pt">é</span> и <span class="pt">está</span> спроси себя: это что такое (<span class="se">ser</span>) или где и в каком состоянии сейчас (<span class="es">estar</span>)?</div>
+      <div class="text-label">Texto · A viagem — поездка</div>
+      <div class="card">
+        <button class="btn btn-listen">▶ Слушать целиком</button>
+        <p class="storytext">A Ana é russa, de Moscovo. É estudante na universidade, em Lisboa. O João é português e é engenheiro. Hoje não estão em casa: estão de viagem. O hotel está perto da praia.</p>
+        <p class="storytext">O hotel é pequeno e velho, mas o quarto é grande. As camas são novas, e a janela está aberta. Na mesa estão os mapas da cidade, dois jornais e o telefone do João. A porta da casa de banho está fechada.</p>
+        <p class="storytext">A Ana está na cama com um livro. Não está doente: está <span class="tap">cansada<span class="tap-popup">cansado, cansada — уставший (0.8)</span></span> da viagem. O João não está cansado. Está contente: a praia está perto e não está frio.</p>
+        <p class="storytext">O restaurante do hotel está fechado. Na praça, as lojas estão fechadas, mas os cafés estão abertos até tarde. O João está no café com um amigo. O amigo é português, de Lisboa, e é motorista.</p>
+        <p class="storytext">A Ana está bem. O quarto é bom, a cama é grande e a praia está aqui, perto. Boa noite!</p>
+        <button class="btn btn-line">Показать перевод</button>
+      </div>
+    </div>
+    <div class="pane" data-pane="dlg">
+      <div class="text-label">Diálogo · No hotel — в отеле</div>
+      <div class="card">
+        <div class="part-head"><span>Выбери роль</span><span>реплики собеседника звучат вслух</span></div>
+        <div class="acts" style="margin:0"><button class="btn btn-go">Играю за João</button><button class="btn btn-line" style="color:var(--ink)">Играю за Empregada</button></div>
+      </div>
+    </div>
+    <div class="pane" data-pane="quiz">
+      <p style="color:var(--muted); margin:0 0 14px">Задания вперемешку из тем 0.5–0.8. Собери фразу, впиши слово или выбери вариант.</p>
+      <div class="qitem"><span class="qnum">1.</span><span class="ru-hint">Собери фразу: «Ресторан рядом с пляжем».</span>
+        <div class="qbuild-line"></div><div><span class="qword">perto</span> <span class="qword">O</span> <span class="qword">praia</span> <span class="qword">está</span> <span class="qword">da</span> <span class="qword">restaurante</span></div></div>
+      <div class="qitem"><span class="qnum">2.</span><span class="ru-hint">Во множественном:</span> <span class="pt">papel →</span> <input class="blank" style="width:7em"></div>
+      <div class="qitem"><span class="qnum">3.</span><span class="ru-hint">«Книга на столе»:</span> <span class="pt">O livro</span> <select class="mc"><option>—</option><option>está</option><option>é</option></select> <span class="pt">na mesa.</span></div>
+      <div class="quiz-actions"><button class="btn btn-go">Verificar · Проверить</button><button class="btn btn-hint">К тексту</button><button class="btn btn-line">Показать ответы</button><span class="kbd-note"><kbd>Tab</kbd> следующее поле · <kbd>Enter</kbd> проверить</span></div>
+    </div>
+  </div>
+
+  <!-- у сводной справа — не слова, а что закрывает главу и куда отступить -->
+  <aside class="words" aria-label="Глава">
+    <div class="side-card">
+      <h3>Глава 2 закрыта, когда</h3>
+      <div class="check"><i>○</i><span>Exercícios — 10 из 12 и выше</span></div>
+      <div class="check"><i>○</i><span>Diálogo пройден без «Показать ответ» (банк слов можно)</span></div>
+    </div>
+    <div class="side-card">
+      <h3>Что собрано в главе</h3>
+      <div class="cov"><span class="num">0.5</span><span class="ttl">Género</span><span class="row-stage"><i class="on"></i><i class="on"></i><i></i></span><a>Regra</a></div>
+      <div class="cov"><span class="num">0.6</span><span class="ttl">Plural</span><span class="row-stage"><i class="on"></i><i class="on"></i><i></i></span><a>Regra</a></div>
+      <div class="cov"><span class="num">0.7</span><span class="ttl">Ser</span><span class="row-stage"><i class="on"></i><i></i><i></i></span><a>Regra</a></div>
+      <div class="cov"><span class="num">0.8</span><span class="ttl">Estar</span><span class="row-stage"><i></i><i></i><i></i></span><a>Regra</a></div>
+      <p style="font-size:0.8rem; color:var(--muted); margin:8px 0 0">Застрял — правило темы откроется рядом, глава не сбросится.</p>
+    </div>
+  </aside>
+  </div>
+</section>
+
+</div>
+</div>
+
+<div class="mock" aria-label="Переключатель макета">
+  <span style="opacity:.7; padding-right:4px">Макет</span>
+  <button data-go="home">Главная</button><button data-go="ser" class="on">Тема 0.7</button><button data-go="rev">Revisão</button>
+  <button id="mockTheme">🌙</button><button id="mockSide">⟨ панель</button><button id="mockPal" title="Цвета">🎨</button>
+</div>
+
+<script>
+/* Только для просмотра макета: переключение экранов, вкладок, темы и панели. */
+(function(){
+  var cur = "ser";
+  function show(v, tab){
+    cur = v;
+    document.querySelectorAll(".view").forEach(function(s){ s.classList.toggle("on", s.id === "v-"+v); });
+    document.querySelectorAll(".mock [data-go]").forEach(function(b){ b.classList.toggle("on", b.dataset.go === v); });
+    document.querySelector(".side-home").classList.toggle("on", v === "home");
+    if(v !== "home") setTab(tab || (v === "ser" ? "texts" : "rule"));
+    window.scrollTo(0,0);
+  }
+  function setTab(t){
+    var view = document.getElementById("v-"+cur);
+    view.querySelectorAll(".tab").forEach(function(b){ b.classList.toggle("on", b.dataset.tab === t); b.setAttribute("aria-selected", b.dataset.tab === t); });
+    view.querySelectorAll(".pane").forEach(function(p){ p.classList.toggle("on", p.dataset.pane === t); });
+    /* В заданиях и в «Участвовать» слова прячутся: вспоминать, а не узнавать */
+    var partOn = t === "dlg" && view.querySelector('.dlg-mode button[data-mode="part"].on');
+    var hide = t === "quiz" || !!partOn;
+    var o = view.querySelector('[data-words="open"]'), h = view.querySelector('[data-words="hidden"]');
+    if(o && h){ o.hidden = hide; h.hidden = !hide; }
+  }
+  document.addEventListener("click", function(e){
+    var g = e.target.closest("[data-go]"); if(g){ show(g.dataset.go, g.dataset.tab); return; }
+    var t = e.target.closest("[data-tab]"); if(t){ setTab(t.dataset.tab); return; }
+    var m = e.target.closest("[data-mode]");
+    if(m){ m.parentNode.querySelectorAll("button").forEach(function(b){ b.classList.toggle("on", b === m); });
+      document.querySelectorAll("[data-modeview]").forEach(function(c){ c.hidden = c.dataset.modeview !== m.dataset.mode; });
+      setTab("dlg"); return; }
+    if(e.target.closest("[data-reveal]")){ var v=document.getElementById("v-"+cur); v.querySelector('[data-words="open"]').hidden=false; v.querySelector('[data-words="hidden"]').hidden=true; return; }
+    var b = e.target.closest(".blk-head"); if(b){ b.parentNode.classList.toggle("open"); }
+  });
+  function theme(){ document.body.classList.toggle("dark"); }
+  function side(){ document.body.classList.toggle("side-min");
+    document.getElementById("sideToggle").textContent = document.body.classList.contains("side-min") ? "⟩" : "⟨"; }
+  document.getElementById("themeBtn").onclick = theme;
+  document.getElementById("mockTheme").onclick = theme;
+  document.getElementById("sideToggle").onclick = side;
+  document.getElementById("mockSide").onclick = side;
+  document.addEventListener("keydown", function(e){
+    if(e.ctrlKey && e.key === "\\"){ side(); }
+    if(e.target.closest && e.target.closest(".tab") && (e.key === "ArrowRight" || e.key === "ArrowLeft")){
+      var tabs = Array.from(document.querySelectorAll("#v-"+cur+" .tab")), i = tabs.indexOf(e.target.closest(".tab"));
+      var n = tabs[(i + (e.key === "ArrowRight" ? 1 : tabs.length-1)) % tabs.length]; n.focus(); setTab(n.dataset.tab);
+    }
+  });
+  var q = new URLSearchParams(location.search);
+  if(q.get("dark")) document.body.classList.add("dark");
+  if(q.get("min")) side();
+  show(q.get("v") || "ser", q.get("tab"));
+})();
+</script>
+
+<div class="pal" id="pal" hidden aria-label="Цвета макета">
+  <div class="pal-head">
+    <b>🎨 Цвета · <span id="palTheme">светлая</span> тема</b>
+    <small>Правится тема, которая сейчас включена (🌙 переключает). Нажми строку — откроются ползунки H · S · L и пипетка. Изменения сохраняются в этом браузере.</small>
+    <button class="go" id="palCopy">Скопировать изменения</button><button id="palReset">Сбросить всё</button>
+  </div>
+  <div id="palList"></div>
+  <textarea class="pal-out" id="palOut" readonly placeholder="Здесь появится CSS изменённых цветов — его и присылай."></textarea>
+</div>
+<script>
+/* Панель цветов: только для макета. Меняет CSS-переменные index.html отдельно по темам. */
+(function(){
+  var GROUPS = [
+    ["Фон и поверхности", [["--bg","фон страницы"],["--card","карточки"],["--side-bg","левая панель (Z5)"],["--side-current","текущая тема в панели (Z5)"],["--line","рамки и разделители (Z5)"]]],
+    ["Текст", [["--ink","основной текст"],["--muted","приглушённый текст"]]],
+    ["Акцент курса и блок 0", [["--base","Base · акцент, кнопки"],["--base-tint","Base · подложка"],["--base-deep","Base · тёмный"]]],
+    ["Блоки 1–3", [["--presente","Presente"],["--presente-tint","Presente · подложка"],["--passado","Passado"],["--passado-tint","Passado · подложка"],["--expansao","Expansão"],["--expansao-tint","Expansão · подложка"]]],
+    ["Ser / estar", [["--ser-ink","ser · текст"],["--estar-ink","estar · текст"],["--ser-tint","ser · подложка"],["--estar-tint","estar · подложка"]]],
+    ["Оценка и ступени", [["--ok","верно, точки ступеней"],["--ok-tint","верно · подложка"],["--bad","ошибка, бейдж долга"],["--bad-tint","ошибка · подложка"]]]
+  ];
+  var KEY = "z5PaletteV1";
+  var store; try{ store = JSON.parse(localStorage.getItem(KEY)) || {light:{}, dark:{}}; }catch(e){ store = {light:{}, dark:{}}; }
+  var styleEl = document.createElement("style"); document.head.appendChild(styleEl);
+  var open = null;
+  function theme(){ return document.body.classList.contains("dark") ? "dark" : "light"; }
+  function apply(){
+    var css = "", l = Object.keys(store.light), d = Object.keys(store.dark);
+    if(l.length) css += ":root{" + l.map(function(k){ return k+":"+store.light[k]; }).join(";") + "}\n";
+    if(d.length) css += "body.dark{" + d.map(function(k){ return k+":"+store.dark[k]; }).join(";") + "}\n";
+    styleEl.textContent = css;
+    try{ localStorage.setItem(KEY, JSON.stringify(store)); }catch(e){}
+  }
+  function cur(v){ return getComputedStyle(document.body).getPropertyValue(v).trim(); }
+  var cx = document.createElement("canvas").getContext("2d");
+  function toHex(c){ cx.fillStyle = "#000"; cx.fillStyle = c; return cx.fillStyle; }
+  function hexToHsl(h){ var r=parseInt(h.substr(1,2),16)/255, g=parseInt(h.substr(3,2),16)/255, b=parseInt(h.substr(5,2),16)/255;
+    var mx=Math.max(r,g,b), mn=Math.min(r,g,b), l=(mx+mn)/2, s=0, hh=0, d=mx-mn;
+    if(d){ s = l>0.5 ? d/(2-mx-mn) : d/(mx+mn);
+      hh = mx===r ? (g-b)/d + (g<b?6:0) : mx===g ? (b-r)/d + 2 : (r-g)/d + 4; hh*=60; }
+    return [Math.round(hh), Math.round(s*100), Math.round(l*100)]; }
+  function hslToHex(h,s,l){ s/=100; l/=100; var a=s*Math.min(l,1-l);
+    var f=function(n){ var k=(n+h/30)%12; var v = l - a*Math.max(-1, Math.min(k-3, Math.min(9-k, 1))); return ("0"+Math.round(v*255).toString(16)).slice(-2); };
+    return "#"+f(0)+f(8)+f(4); }
+  function render(){
+    document.getElementById("palTheme").textContent = theme() === "dark" ? "тёмная" : "светлая";
+    var html = "";
+    GROUPS.forEach(function(g){
+      html += '<div class="pal-grp">'+g[0]+'</div>';
+      g[1].forEach(function(it){
+        var v = it[0], hex = toHex(cur(v)), hsl = hexToHsl(hex), ch = store[theme()][v] ? " changed" : "";
+        html += '<div class="pal-row'+ch+(open===v?" open":"")+'" data-v="'+v+'">'+
+          '<div class="pal-top"><span class="pal-sw" style="background:'+hex+'"></span><span class="pal-name">'+it[1]+'<code>'+v+'</code></span><span class="pal-hex">'+hex.toUpperCase()+'</span></div>'+
+          '<div class="pal-sl">'+
+            '<label>H<input type="range" min="0" max="360" value="'+hsl[0]+'"><span>'+hsl[0]+'</span></label>'+
+            '<label>S<input type="range" min="0" max="100" value="'+hsl[1]+'"><span>'+hsl[1]+'</span></label>'+
+            '<label>L<input type="range" min="0" max="100" value="'+hsl[2]+'"><span>'+hsl[2]+'</span></label>'+
+            '<div class="pal-pick"><input type="color" value="'+hex+'"><button data-undo>вернуть как было</button></div>'+
+          '</div></div>';
+      });
+    });
+    document.getElementById("palList").innerHTML = html;
+  }
+  function setVar(v, hex, row){
+    store[theme()][v] = hex; apply();
+    row.classList.add("changed");
+    row.querySelector(".pal-sw").style.background = hex;
+    row.querySelector(".pal-hex").textContent = hex.toUpperCase();
+    row.querySelector("input[type=color]").value = hex;
+  }
+  var list = document.getElementById("palList");
+  list.addEventListener("click", function(e){
+    var row = e.target.closest(".pal-row"); if(!row) return;
+    if(e.target.closest("[data-undo]")){ delete store[theme()][row.dataset.v]; apply(); render(); return; }
+    if(e.target.closest(".pal-top")){ open = open === row.dataset.v ? null : row.dataset.v; render(); }
+  });
+  list.addEventListener("input", function(e){
+    var row = e.target.closest(".pal-row"); if(!row) return;
+    var r = row.querySelectorAll("input[type=range]");
+    if(e.target.type === "range"){
+      r.forEach(function(x){ x.nextElementSibling.textContent = x.value; });
+      setVar(row.dataset.v, hslToHex(+r[0].value, +r[1].value, +r[2].value), row);
+    } else if(e.target.type === "color"){
+      setVar(row.dataset.v, e.target.value, row);
+      var hsl = hexToHsl(e.target.value);
+      r.forEach(function(x,i){ x.value = hsl[i]; x.nextElementSibling.textContent = hsl[i]; });
+    }
+  });
+  function out(){
+    var t = "", l = Object.keys(store.light), d = Object.keys(store.dark);
+    if(l.length) t += "/* светлая тема — :root */\n" + l.map(function(k){ return "  "+k+":"+store.light[k].toUpperCase()+";"; }).join("\n") + "\n";
+    if(d.length) t += "/* тёмная тема — body.dark */\n" + d.map(function(k){ return "  "+k+":"+store.dark[k].toUpperCase()+";"; }).join("\n") + "\n";
+    return t;
+  }
+  document.getElementById("palCopy").onclick = function(){
+    var t = out(), ta = document.getElementById("palOut"), b = this;
+    ta.value = t || "Пока ничего не менялось."; ta.select();
+    var done = function(){ b.textContent = "Скопировано ✓"; setTimeout(function(){ b.textContent = "Скопировать изменения"; }, 1500); };
+    if(t && navigator.clipboard){ navigator.clipboard.writeText(t).then(done, function(){ document.execCommand("copy"); done(); }); }
+    else if(t){ document.execCommand("copy"); done(); }
+  };
+  document.getElementById("palReset").onclick = function(){ store = {light:{}, dark:{}}; apply(); render(); document.getElementById("palOut").value = ""; };
+  document.getElementById("mockPal").onclick = function(){ var p = document.getElementById("pal"); p.hidden = !p.hidden; this.classList.toggle("on", !p.hidden); if(!p.hidden) render(); };
+  new MutationObserver(function(){ if(!document.getElementById("pal").hidden) render(); }).observe(document.body, {attributes:true, attributeFilter:["class"]});
+  apply();
+})();
+</script>
+</body>
+</html>
