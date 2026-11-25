@@ -91,9 +91,16 @@
     --font-pt:'Manrope','Golos Text',sans-serif;
     --font-ru:'Golos Text',sans-serif;
     --font-lat:'Manrope','Golos Text',sans-serif;
+
+    /* Z5: ноутбучный вид (≥1024px). Телефон этих переменных не читает. */
+    --line:#DFE5E2;          /* рамки и разделители панели */
+    --side-bg:#E9EFEC;       /* фон левой панели — на тон темнее --bg */
+    --side-current:#D3EBDF;  /* строка текущей темы */
+    --side-w:272px; --side-rail:64px; --words-w:288px; --read-w:680px; --z5-gap:32px;
   }
 
   body.dark{
+    --line:#2F3A36; --side-bg:#0B100E; --side-current:#1C3329;
     --bg:#101614;
     --card:#19211E;
     --ink:#ECF1EE;
@@ -982,6 +989,235 @@
   .exit-toast.show{transform:translateX(-50%) translateY(0); opacity:1;}
 
   @media (min-width:560px){ .hero h1{font-size:1.85rem;} }
+
+  /* =====================================================================
+     Z5 · НОУТБУК (≥1024px)
+     Всё ниже живёт только в медиазапросах: на телефоне и планшете ни одно
+     правило не срабатывает. Левая панель строится кодом (renderSide) из тех
+     же данных, что и список на главной; здесь — только её вид.
+     ===================================================================== */
+  .side, .crumb, .today-wrap, .tdot{display:none;}
+  .laptop-only{display:none;}
+  @media (min-width:1024px){
+    body{padding-left:var(--side-w);}
+    body.side-min{padding-left:var(--side-rail);}
+    .settings-bar, .blockbar, .float-back, #home main{display:none !important;}
+    .laptop-only{display:inline-flex;}
+
+    /* ---------- левая панель ---------- */
+    .side{position:fixed; left:0; top:0; bottom:0; width:var(--side-w); z-index:20; display:flex; flex-direction:column;
+      overflow-y:auto; overflow-x:hidden; background:var(--side-bg); border-right:1px solid var(--line); scrollbar-width:thin;}
+    body.side-min .side{width:var(--side-rail);}
+    .side-head{display:flex; align-items:center; gap:8px; padding:16px 14px 10px 18px; position:sticky; top:0; background:var(--side-bg); z-index:2;}
+    .side-brand{flex:1; min-width:0;}
+    .side-brand b{display:block; font-family:var(--font-lat); font-weight:800; font-size:0.95rem; letter-spacing:-0.01em;}
+    .side-brand span{display:block; font-size:0.72rem; color:var(--muted);}
+    .side-ibtn{width:34px; height:34px; border-radius:9px; border:1.5px solid var(--line); background:var(--card);
+      color:var(--muted); cursor:pointer; display:grid; place-items:center; font-size:0.95rem; flex:none; padding:0;}
+    .side-ibtn:hover{color:var(--ink);}
+    .side-home{display:flex; align-items:center; gap:10px; margin:2px 10px 6px; padding:8px 10px; border-radius:10px;
+      background:none; border:none; cursor:pointer; text-align:left; font-family:var(--font-ru); font-size:0.88rem; font-weight:600; color:var(--ink);}
+    .side-home:hover{background:var(--card);}
+    .side-home.cur{background:var(--side-current);}
+    .side-sec{font-family:var(--font-lat); font-size:0.66rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase;
+      color:var(--muted); padding:14px 18px 6px;}
+    .sblk{margin:0 10px 4px;}
+    .sblk-head{display:flex; align-items:center; gap:8px; width:100%; padding:7px 8px; border:none; background:none; border-radius:9px;
+      cursor:pointer; text-align:left; color:var(--ink); font-family:var(--font-ru);}
+    .sblk-head:hover{background:var(--card);}
+    .sblk-chip{width:22px; height:22px; border-radius:7px; color:#fff; font-family:var(--font-lat); font-weight:800; font-size:0.72rem;
+      display:grid; place-items:center; flex:none;}
+    .sblk-name{flex:1; min-width:0; font-family:var(--font-lat); font-weight:800; font-size:0.8rem; letter-spacing:0.02em;}
+    .sblk-name small{display:block; font-family:var(--font-ru); font-weight:400; font-size:0.72rem; color:var(--muted); letter-spacing:0;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .sblk-count{font-family:var(--font-lat); font-size:0.7rem; font-weight:800; color:var(--muted);}
+    .schev{color:var(--muted); font-size:0.8rem; transition:transform .15s;}
+    .sblk.open .schev{transform:rotate(90deg);}
+    .sblk-list{display:none; padding:2px 0 6px;}
+    .sblk.open .sblk-list{display:block;}
+    .srow{display:flex; align-items:center; gap:8px; width:100%; padding:6px 8px 6px 10px; margin:1px 0; border:none; background:none;
+      border-radius:8px; cursor:pointer; text-align:left; position:relative; min-height:34px; color:var(--ink); font-family:var(--font-ru);}
+    .srow:hover{background:var(--card);}
+    .srow .snum{font-family:var(--font-lat); font-weight:800; font-size:0.72rem; color:var(--muted); width:30px; flex:none;}
+    .srow .sttl{flex:1; min-width:0; font-family:var(--font-pt); font-weight:600; font-size:0.86rem; line-height:1.3;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .srow.cur{background:var(--side-current);}
+    .srow.cur::before{content:""; position:absolute; left:0; top:6px; bottom:6px; width:3px; border-radius:2px; background:var(--base);}
+    .srow.cur .sttl{font-weight:800;}
+    .srow:disabled{opacity:0.5; cursor:default;}
+    .srow:disabled:hover{background:none;}
+    .srow.rev{border:1.5px dashed var(--line); margin:3px 0;}
+    .srow.rev .snum{color:var(--base-deep);}
+    body.dark .srow.rev .snum{color:var(--base);}
+    .srow.rev .sttl{font-family:var(--font-ru); font-weight:600; font-size:0.8rem;}
+    .sflag{font-size:0.66rem; font-weight:800; color:var(--ink-fixed); background:var(--ok-tint); padding:1px 7px; border-radius:20px; white-space:nowrap;}
+    .stool{display:flex; align-items:center; gap:10px; width:calc(100% - 20px); margin:1px 10px; padding:7px 10px; border:none; background:none;
+      border-radius:9px; cursor:pointer; text-align:left; font-family:var(--font-ru); font-size:0.86rem; font-weight:600; color:var(--ink);}
+    .stool:hover{background:var(--card);}
+    .stool.cur{background:var(--side-current);}
+    .stool .sic{width:22px; text-align:center; flex:none;}
+    .stool .slbl{flex:1; min-width:0;}
+    .stool .slbl small{font-weight:400; color:var(--muted);}
+    .sdue{font-family:var(--font-lat); font-size:0.66rem; font-weight:800; background:var(--bad); color:#fff; border-radius:20px; padding:1px 7px;}
+    .side-foot{margin-top:auto; display:flex; gap:6px; padding:12px 14px 16px; border-top:1px solid var(--line); flex-wrap:wrap;}
+    .spill{font-family:var(--font-lat); font-weight:800; font-size:0.72rem; padding:6px 11px; border-radius:20px;
+      border:1.5px solid var(--line); background:var(--card); color:var(--muted); cursor:pointer;}
+    .spill.on{background:var(--base); border-color:var(--base); color:#fff;}
+    .side-reset{background:none; border:none; color:var(--muted); font-family:var(--font-ru); font-size:0.72rem; text-decoration:underline; cursor:pointer; padding:6px 4px;}
+    /* рейка (панель свёрнута) */
+    .rail-cur{display:none; margin:8px auto 4px; font-family:var(--font-lat); font-weight:800; font-size:0.72rem; background:var(--side-current);
+      border-radius:8px; padding:4px 0; width:44px; text-align:center;}
+    .rail-sep{display:none;}
+    body.side-min .side-brand, body.side-min .side-sec, body.side-min .sblk-name, body.side-min .sblk-count,
+    body.side-min .schev, body.side-min .sblk-list, body.side-min .stool .slbl, body.side-min .stool .sdue,
+    body.side-min .side-home span:not(.sic), body.side-min .side-foot .spill:not(.theme), body.side-min .side-reset{display:none;}
+    body.side-min .side-head{padding:14px 0 8px; justify-content:center;}
+    body.side-min .sblk, body.side-min .side-home{margin:2px 8px;}
+    body.side-min .sblk-head{justify-content:center; padding:6px 0;}
+    body.side-min .sblk-chip{width:30px; height:30px; font-size:0.8rem;}
+    body.side-min .sblk.cur-blk .sblk-chip{box-shadow:0 0 0 2.5px var(--side-bg), 0 0 0 4.5px var(--base);}
+    body.side-min .stool{justify-content:center; width:auto; margin:1px 8px; padding:8px 0;}
+    body.side-min .side-home{justify-content:center; padding:8px 0;}
+    body.side-min .side-foot{justify-content:center; padding:10px 0;}
+    body.side-min .rail-cur{display:block;}
+    body.side-min .rail-sep{display:block; height:1px; background:var(--line); margin:10px 14px;}
+
+    /* ---------- экран темы ---------- */
+    .topic-screen{max-width:calc(var(--read-w) + 2*var(--z5-gap)); padding:0 var(--z5-gap) 80px;}
+    .topic-topbar{padding:26px 0 0; position:static; background:none;}
+    .topic-screen[data-topic] .back-btn, .rev-screen .back-btn{display:none;}
+    .crumb{display:block; font-family:var(--font-lat); font-size:0.72rem; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted);}
+    .crumb b{color:var(--base);}
+    .topic-header{margin:6px 0 2px; gap:12px;}
+    .topic-header .marker{height:32px;}
+    .topic-header h2{font-size:2rem; line-height:1.2; font-weight:800; letter-spacing:-0.01em;}
+    .topic-header h2 .topic-num{font-size:0.6em; margin-right:8px; vertical-align:0.15em;}
+    .topic-subtitle{font-size:0.98rem; max-width:62ch; margin:6px 0 14px;}
+    /* полоса ступеней */
+    .stage-card{background:none; padding:0; margin:0 0 6px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+    .stage-card .stage-hint{margin:0 0 0 6px; font-size:0.86rem;}
+    .stage-card .part-btn{margin:0; border:none; padding:0; color:var(--base); font-size:0.86rem; background:none;}
+    body.dark .stage-card .part-btn{color:#5FBF97;}
+    .stage-card .part-btn.go{background:none; color:var(--base);}
+    body.dark .stage-card .part-btn.go{color:#5FBF97;}
+    .stage-card.rev-card, .rev-card{display:block;}
+    /* вкладки */
+    .subnav{position:sticky; top:0; z-index:5; background:var(--bg); gap:4px; border-bottom:1.5px solid var(--line);
+      margin:14px 0 24px; padding-top:8px;}
+    html body .topic-screen .subnav .subnav-btn{flex:0 0 auto; flex-direction:row; align-items:baseline; gap:7px; padding:10px 12px 11px;
+      white-space:nowrap; border:none; border-bottom:3px solid transparent; margin-bottom:-1.5px; border-radius:8px 8px 0 0;
+      background:none; color:var(--muted);}
+    html body .topic-screen .subnav .subnav-btn:hover{color:var(--ink); background:var(--card);}
+    html body .topic-screen .subnav .subnav-btn b{font-size:1rem; font-weight:800;}
+    html body .topic-screen .subnav .subnav-btn i{font-size:0.78rem; opacity:1;}
+    html body .topic-screen .subnav .subnav-btn.active{background:none; color:var(--ink); border-bottom-color:var(--tint-color,var(--base));}
+    .tdot{display:block; width:7px; height:7px; border-radius:50%; background:var(--ok); align-self:center;}
+    /* чтение крупнее, чем на телефоне */
+    .pane-rule > p, .pane-rule li{font-size:1.06rem; line-height:1.7;}
+    .pane-rule table{font-size:0.98rem; background:var(--card); border-radius:12px; overflow:hidden;}
+    .pane-rule th{padding:10px 14px 8px;}
+    .pane-rule td{padding:9px 14px;}
+    .storytext{font-size:1.22rem; line-height:1.85;}
+    .mini-text{padding:20px 24px;}
+    .dline{font-size:1.15rem; line-height:1.55;}
+    .qitem{font-size:1.1rem; line-height:2.1; padding:13px 18px; margin-bottom:10px;}
+    .ru-translation, .why-note{font-size:1.06rem;}
+    .tip, .trap{font-size:0.98rem;}
+    .pane-next-btn{width:100%;}
+    /* диалог: 🔊 круглой кнопкой слева, говорящий — отдельной колонкой */
+    body.has-voice .topic-screen .dialogue .dline{position:relative; padding-left:44px;}
+    body.has-voice .topic-screen .dialogue .dline > .speak{position:absolute; left:0; top:50%; transform:translateY(-50%); width:32px; height:32px;
+      border-radius:50%; border:1.5px solid var(--line); background:var(--bg); opacity:1; padding:0; display:grid; place-items:center; font-size:0.85rem;}
+    body.has-voice .topic-screen .dialogue .dline > .speak:hover{border-color:var(--base);}
+    .dialogue .dline{padding-left:0; padding-top:6px; padding-bottom:6px; margin:0;}
+    .dialogue .dline .speaker{font-size:0.86rem;}
+    .kbd-note{display:inline-block; font-size:0.78rem; color:var(--muted); margin-left:auto;}
+    kbd{font-family:var(--font-lat); font-weight:800; font-size:0.7rem; border:1.5px solid var(--line); border-bottom-width:2.5px;
+      border-radius:5px; padding:0 5px; background:var(--card); color:var(--ink);}
+    .quiz-actions .kbd-note{margin-left:auto;}
+
+    /* вкладка Diálogo — те же блоки, что в Textos, но другая половина */
+    .topic-screen:not(.dlg-only) .pane-texts .reading-block.has-dlg{display:none;}
+    .topic-screen.dlg-only .pane-texts .reading-block:not(.has-dlg){display:none;}
+    .topic-screen:not(.dlg-only) .pane-texts .pane-next-btn:not(.laptop-only){display:none;}
+    .topic-screen.dlg-only .pane-texts .pane-next-btn.laptop-only{display:none;}
+    .pane-next-btn.laptop-only{display:block;}
+    .topic-screen:not(.has-dlgtab) .pane-next-btn.laptop-only{display:none;}
+
+    /* инструменты и экраны без вкладок: только колонка */
+    #screen-frases, #screen-dialogos, #screen-situacoes, #screen-leituras, #screen-vocab, #screen-about,
+    #screen-tool-conjugador, #screen-cheat-sounds{padding-top:12px;}
+
+    /* ---------- главная: «Сегодня» ---------- */
+    #home .hero{max-width:980px; padding:36px 40px 80px;}
+    #home.home-today .hero > :not(.today-wrap):not(.level-meter):not(.about-link):not(.install-note):not(.reset-row){display:none !important;}
+    #home.home-today .level-meter{margin-top:16px; padding:16px 20px;}
+    #home .about-link{margin-top:22px;}
+    .today-wrap{display:block;}
+    .today-eyebrow{font-family:var(--font-lat); font-size:0.72rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--base);}
+    .today-wrap h1{font-size:1.9rem; line-height:1.25; margin:6px 0 4px; font-weight:700;}
+    .today-sub{color:var(--muted); margin:0 0 24px;}
+    .today{display:grid; grid-template-columns:1.25fr 1fr; gap:16px;}
+    .tcard{background:var(--card); border-radius:var(--radius); padding:20px 22px; display:flex; flex-direction:column;}
+    .tcard .lab{font-size:0.72rem; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted);}
+    .tcard h2{font-family:var(--font-pt); font-size:1.5rem; margin:6px 0 2px; line-height:1.25;}
+    .tcard h2 .n{font-family:var(--font-lat); color:var(--muted); font-size:0.7em; margin-right:6px;}
+    .tcard h2.plain{font-family:var(--font-ru); font-size:1.15rem;}
+    .tcard p{margin:6px 0 0; color:var(--muted); font-size:0.92rem;}
+    .tcard .stage-steps{margin-top:6px;}
+    .tcard .step{margin:14px 0 0; padding:12px 14px; border-radius:12px; background:var(--bg); font-size:0.92rem;}
+    .tcard .step b{display:block;}
+    .tcard .go{margin-top:auto; padding-top:16px; display:flex; gap:10px; align-items:center;}
+    .tcard .mins{font-family:var(--font-lat); font-weight:800; font-size:0.8rem; color:var(--base);}
+    .tcard.rep{border:1.5px dashed var(--line); background:transparent;}
+    .tcard .btn{font-size:0.9rem;}
+    .btn-go{background:var(--base); color:#fff;}
+    .btn-line{background:transparent; border:1.5px solid var(--base); color:var(--ink);}
+    .finish{display:flex; align-items:center; gap:16px; background:var(--card); border-radius:var(--radius); padding:16px 20px; margin:16px 0 0;}
+    .finish .fi{font-size:1.4rem;}
+    .finish b{display:block;}
+    .finish span.ft{font-size:0.88rem; color:var(--muted);}
+    .finish .fsteps{margin-left:auto; display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;}
+  }
+
+  /* ---------- колонка слов справа (≥1280) ---------- */
+  .words-col{display:none;}
+  @media (min-width:1280px){
+    .topic-screen.has-words{max-width:calc(var(--read-w) + var(--words-w) + 3*var(--z5-gap)); padding-right:calc(var(--words-w) + 2*var(--z5-gap));}
+    .topic-screen.has-words > .words-col{display:block; float:right; position:sticky; top:20px; width:var(--words-w);
+      margin:28px calc(-1*(var(--words-w) + var(--z5-gap))) 0 0; max-height:calc(100vh - 40px); overflow:auto; scrollbar-width:thin; z-index:3;}
+    .topic-screen.has-words .pane-texts .reading-block.has-wordset .wordset{display:none;}
+    .topic-screen.has-words .pane-texts .reading-block.has-wordset .mini-text:not(:has(.why-note)){display:none;}
+    .topic-screen.has-words .pane-texts .reading-block.has-wordset:not(:has(.why-note)) .text-label{display:none;}
+    .topic-screen.has-words .pane-texts .reading-block.has-wordset .why-note{border-top:none; margin-top:0; padding-top:0;}
+    .wbox{background:var(--card); border-radius:14px; padding:14px 16px 6px; margin:0 0 14px;}
+    .wbox h3{font-size:0.72rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); margin:0 0 6px; display:flex; justify-content:space-between; gap:8px;}
+    .wrow{display:grid; grid-template-columns:1fr auto; gap:0 6px; padding:6px 0; border-top:1px solid var(--line); align-items:center;}
+    .wrow:first-of-type{border-top:none;}
+    .wrow .wd{font-family:var(--font-pt); font-weight:700; font-size:1rem;}
+    .wrow .wt{grid-column:1; font-size:0.84rem; color:var(--muted); line-height:1.3;}
+    .wrow .speak{grid-row:1 / span 2; grid-column:2; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--line);
+      background:var(--bg); opacity:1; padding:0; display:grid; place-items:center; font-size:0.75rem;}
+    .words-hidden{background:var(--card); border-radius:14px; padding:16px; font-size:0.88rem; color:var(--muted);}
+    .words-hidden b{display:block; color:var(--ink); font-size:0.92rem; margin-bottom:4px;}
+    .words-hidden button{margin-top:10px; background:none; border:1.5px solid var(--line); border-radius:9px; padding:7px 12px; font-size:0.84rem;
+      font-weight:600; cursor:pointer; color:var(--ink); font-family:var(--font-ru);}
+    .topic-screen.words-off .words-col .wbox{display:none;}
+    .topic-screen:not(.words-off) .words-col .words-hidden{display:none;}
+    .side-card{background:var(--card); border-radius:14px; padding:14px 16px; margin:0 0 14px; font-size:0.9rem;}
+    .side-card h3{font-size:0.72rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); margin:0 0 8px;}
+    .wc-check{display:flex; gap:8px; align-items:baseline; padding:4px 0;}
+    .wc-check i{font-style:normal; width:18px; flex:none; color:var(--muted);}
+    .wc-check.ok i{color:var(--ok); font-weight:800;}
+    .wc-cov{display:flex; align-items:center; gap:8px; padding:6px 0; border-top:1px solid var(--line);}
+    .wc-cov:first-of-type{border-top:none;}
+    .wc-cov .snum{font-family:var(--font-lat); font-weight:800; font-size:0.72rem; color:var(--muted); width:26px;}
+    .wc-cov .sttl{flex:1; font-family:var(--font-pt); font-weight:600;}
+    .wc-cov .wc-link{font-size:0.78rem; color:var(--base); font-weight:700; cursor:pointer; background:none; border:none; padding:0; font-family:var(--font-ru);}
+    body.dark .wc-cov .wc-link{color:#5FBF97;}
+    .wc-note{font-size:0.8rem; color:var(--muted); margin:8px 0 0;}
+  }
+  @media (min-width:1440px){ :root{--z5-gap:48px;} }
 </style>
 </head>
 <body>
@@ -8815,7 +9051,7 @@
                             : L("Показать перевод", "Show translation");
     });
     document.querySelectorAll(".pane-next-btn").forEach(function(b){
-      var label = b.dataset.to === "dlg" ? L("Дальше: диалог", "Next: the dialogue")
+      var label = (b.dataset.to === "dlg" || b.dataset.to === "ldlg") ? L("Дальше: диалог", "Next: the dialogue")
                 : b.closest(".pane-rule") ? L("Дальше: тексты для чтения", "Next: texts to read")
                                           : L("Дальше: задания", "Next: exercises");
       b.innerHTML = label + ' <span class="next-arrow">→</span>';
@@ -8824,6 +9060,9 @@
     if(typeof renderTotalTime === "function") renderTotalTime();
     if(typeof renderSampleGloss === "function") renderSampleGloss();
     if(typeof renderInstallNote === "function") renderInstallNote();
+    // Z5: подписи и колонка слов рисуются кодом и язык сами не меняют.
+    renderCrumbs();
+    document.querySelectorAll(".topic-screen[data-prepared]").forEach(buildWordsCol);
   }
 
   function setLang(v){
@@ -9128,7 +9367,7 @@
   function goDialog(id){
     if(activeTopicId() !== id){ if(!openTopic(id)) return; pushView({ view:"topic", id:id, pane:"rule" }); }
     var screen = document.getElementById("screen-" + id);
-    goPane(screen, "texts");
+    goPane(screen, isLaptop() ? "ldlg" : "texts");
     var need = topicStage(id) >= 2 ? 3 : 2, rec = loadPart()[id] || {}, target = null;
     screen.querySelectorAll(".dialogue").forEach(function(d, i){
       if(!target && partRecLvl(rec[i]) < need) target = d;
@@ -9262,6 +9501,12 @@
         if(!b.classList.contains("playing")) b.textContent = L("▶ Слушать целиком", "▶ Listen to it all");
       });
     });
+    // Z5: панель (✓ закрыта) и колонка главы живут от тех же записей.
+    if(typeof renderSide === "function"){
+      renderSide();
+      var ac = document.querySelector(".rev-screen.active");
+      if(ac) buildWordsCol(ac);
+    }
   }
   // «Слушать целиком»: весь текст главы очередью по предложению — длинную
   // реплику одним куском часть голосов в Chrome обрывает секунд через 15.
@@ -9381,6 +9626,7 @@
     renderReviewBlock(p);
     renderContinueBlock();
     renderStartBlock();
+    renderLaptopProgress(p);
   }
 
   function renderMeter(p){
@@ -10063,7 +10309,9 @@
   function refreshVoice(){
     ptVoice = pickVoice();
     voiceChecked = true;
+    document.body.classList.toggle("has-voice", !!ptVoice);
     if(ptVoice) document.querySelectorAll(".topic-screen[data-prepared]").forEach(addSpeakButtons);
+    document.querySelectorAll(".topic-screen[data-prepared]").forEach(buildWordsCol);
     // Голоса приходят позже первой отрисовки сцен: без перерисовки кнопка
     // «На слух» не появилась бы до смены экрана.
     if(typeof renderDgScenes === "function") renderDgScenes();
@@ -12140,6 +12388,7 @@
     st.mini.classList.toggle("part-on", on);
     st.bar.hidden = on;
     stage.hidden = !on;
+    syncWords(st.dlg.closest(".topic-screen"));
     if(!on) return;
 
     var head = partEl("div", "part-head");
@@ -12178,6 +12427,9 @@
         var a1 = partEl("div", "part-acts");
         a1.appendChild(partBtn(L("Проверить","Check"), "check", "go"));
         a1.appendChild(partBtn(L("Не помню","I don't remember"), "forgot", "quiet"));
+        var kn = partEl("span", "kbd-note laptop-only");
+        kn.innerHTML = L("<kbd>Enter</kbd> проверить · <kbd>Esc</kbd> не помню", "<kbd>Enter</kbd> check · <kbd>Esc</kbd> don't remember");
+        a1.appendChild(kn);
         c.appendChild(a1);
       } else {
         var box = partEl("div", "qbuild");
@@ -12626,6 +12878,8 @@
     updateFloatBack();
     renderContinueBlock();
     renderStartBlock();
+    renderSide();
+    renderToday();
   }
 
   function activeTopicId(){
@@ -12647,6 +12901,9 @@
     el.querySelectorAll(".pane").forEach(function(p){
       p.classList.toggle("active", hasSubnav ? p.classList.contains("pane-rule") : true);
     });
+    el.classList.remove("dlg-only");
+    delete el.dataset.wordsShown;
+    syncTabs(el);
 
     if(el.dataset.topic){ try{ localStorage.setItem(LAST_TOPIC_KEY, id); }catch(e){} }
     if(id === "vocab"){ session = null; renderVocabScreen(); }
@@ -12656,6 +12913,8 @@
     if(id === "situacoes"){ renderSituacoes(); }
     if(id === "leituras"){ renderLeituras(); }
     prepareScreen(el);
+    syncWords(el);
+    renderSide();
     window.scrollTo(0,0);
     updateFloatBack();
     return true;
@@ -12678,13 +12937,23 @@
       el.dataset.prepared = "1";
     }
     addSpeakButtons(el);
+    buildWordsCol(el);
   }
 
   function switchPane(screen, key){
+    // «ldlg» — вкладка Diálogo ноутбука: та же pane-texts, у которой видны
+    // только диалоги (класс dlg-only). На телефоне такой вкладки нет.
+    if(key === "ldlg" && !(isLaptop() && screen.querySelector('.subnav-btn[data-pane="ldlg"]'))) key = "texts";
+    var dl = key === "ldlg";
+    screen.classList.toggle("dlg-only", dl);
     screen.querySelectorAll(".subnav-btn").forEach(function(b){ b.classList.toggle("active", b.dataset.pane === key); });
     screen.querySelectorAll(".pane").forEach(function(p){ p.classList.remove("active"); });
-    var t = screen.querySelector(".pane-" + key);
+    var t = screen.querySelector(".pane-" + (dl ? "texts" : key));
     if(t) t.classList.add("active");
+    syncTabs(screen);
+    delete screen.dataset.wordsShown;
+    syncWords(screen);
+    if(dl) autoPart(screen);
     window.scrollTo(0,0);
   }
 
@@ -13796,6 +14065,13 @@
     var say = e.target.closest("[data-say]");
     if(say){ speak(say.dataset.say, say.dataset.rate); return; }
 
+    var wcShow = e.target.closest('[data-wc="show"]');
+    if(wcShow){
+      var wscr = wcShow.closest(".topic-screen");
+      wscr.dataset.wordsShown = "1"; syncWords(wscr);
+      return;
+    }
+
     var listen = e.target.closest("[data-listen]");
     if(listen){ revListen(listen); return; }
 
@@ -13933,6 +14209,435 @@
     renderProgress();
   });
 
+  /* ================= Z5: НОУТБУК (≥1024px) =================
+     Левая панель, «Сегодня» на главной, вкладка Diálogo и колонка слов.
+     Данных здесь своих нет: панель читает те же строки главной (#home
+     .topic-row / .tool-row), те же ступени (topicStage) и те же главы
+     (REVISOES), что и телефон, — отдельный список тем завести было бы вторым
+     источником правды. Всё, что рисуется кодом, на телефоне скрыто CSS
+     (display:none в базе, показ — только в @media ≥1024). */
+
+  var SIDE_KEY = "ptSideV1";
+  var mqLap = window.matchMedia("(min-width:1024px)");
+  function isLaptop(){ return mqLap.matches; }
+  var sideMin = false;
+  try{ sideMin = localStorage.getItem(SIDE_KEY) === "min"; }catch(e){}
+  var sideOpen = {};          // блок → раскрыт ли; пока не трогали — раскрыт блок текущей темы
+  var sideLastBlock = null;
+  var BLOCK_KEYS = ["base","presente","passado","expansao"];
+  var TOOL_ORDER = ["vocab","frases","dialogos","situacoes","leituras","tool-conjugador","cheat-sounds"];
+
+  function homeRowInfo(row){
+    var t = row.querySelector(".row-title"), clone = t.cloneNode(true);
+    var ru = clone.querySelector(".row-title-ru"); if(ru) ru.remove();
+    var numEl = clone.querySelector(".topic-num"), num = numEl ? numEl.textContent.trim() : "";
+    if(numEl) numEl.remove();
+    var icon = row.querySelector(".tool-icon");
+    return { id: row.dataset.open || "", num: num, title: clone.textContent.replace(/\s+/g," ").trim(),
+             disabled: !!row.disabled, icon: icon ? icon.textContent.trim() : "", rev: row.classList.contains("rev-row") };
+  }
+  function blockOfTopic(id){
+    for(var i = 0; i < BLOCK_KEYS.length; i++) if(BLOCKS[BLOCK_KEYS[i]].topics.indexOf(id) !== -1) return BLOCK_KEYS[i];
+    var rv = revById(id);
+    return rv ? blockOfTopic(rv.covers[0]) : null;
+  }
+  function stageDots(st){
+    return '<span class="row-stage" aria-hidden="true"><i' + (st >= 1 ? ' class="on"' : '') + '></i><i' + (st >= 2 ? ' class="on"' : '') + '></i><i' + (st >= 3 ? ' class="on"' : '') + '></i></span>';
+  }
+
+  function renderSide(){
+    var side = document.getElementById("side");
+    if(!side) return;
+    var keep = side.scrollTop;
+    var p = loadProgress(), pp = loadPart(), rr = loadRev();
+    var act = activeTopicId();
+    var curBlock = act ? blockOfTopic(act) : null;
+    if(curBlock && curBlock !== sideLastBlock){ sideOpen[curBlock] = true; }
+    sideLastBlock = curBlock;
+    var planned = 0, doneAll = 0;
+    BLOCK_KEYS.forEach(function(k){
+      planned += BLOCKS[k].planned;
+      doneAll += BLOCKS[k].topics.filter(function(t){ return isPassed(t, p, pp); }).length;
+    });
+
+    var h = '<div class="side-head"><div class="side-brand"><b>Português europeu</b><span>' + L("грамматика · офлайн", "grammar · offline") + '</span></div>' +
+      '<button type="button" class="side-ibtn" data-sideact="toggle" title="' + L("Свернуть панель (Ctrl+\\)", "Collapse the panel (Ctrl+\\)") + '" aria-label="' + L("Свернуть панель", "Collapse the panel") + '">' + (sideMin ? "⟩" : "⟨") + '</button></div>';
+    h += '<button type="button" class="side-home' + (act ? '' : ' cur') + '" data-sideact="home" title="' + L("Сегодня", "Today") + '"><span class="sic">⌂</span><span>' + L("Сегодня", "Today") + '</span></button>';
+    var curNum = "";
+    if(act){
+      var cr = document.querySelector('#home .topic-row[data-open="' + act + '"]');
+      if(cr) curNum = homeRowInfo(cr).num || (revById(act) ? "Rev." : "");
+      if(act && revById(act)) curNum = "Rev.";
+    }
+    h += '<div class="rail-cur" title="' + L("Текущая тема", "Current topic") + '">' + escapeHtml(curNum) + '</div>';
+    h += '<div class="side-sec">' + L("Курс · " + doneAll + " / " + planned + " пройдено", "Course · " + doneAll + " / " + planned + " done") + '</div>';
+
+    BLOCK_KEYS.forEach(function(k, bi){
+      var b = BLOCKS[k], grp = document.getElementById(k);
+      if(!grp) return;
+      var sub = grp.querySelector(".era-header h2");
+      var passed = b.topics.filter(function(t){ return isPassed(t, p, pp); }).length;
+      var soon = !b.topics.length;
+      var open = sideOpen[k] === true && !sideMin;
+      h += '<div class="sblk' + (open ? ' open' : '') + (k === curBlock ? ' cur-blk' : '') + '">' +
+        '<button type="button" class="sblk-head" data-sideblk="' + k + '" title="' + b.label + '"><span class="sblk-chip" style="background:var(' + b.color + ')">' + bi + '</span>' +
+        '<span class="sblk-name">' + b.label.toUpperCase() + '<small>' + (soon ? L("скоро · " + b.planned + " тем", "soon · " + b.planned + " topics") : escapeHtml(sub ? sub.textContent.trim() : "")) + '</small></span>' +
+        '<span class="sblk-count">' + (soon ? "—" : passed + "/" + b.planned) + '</span><span class="schev">›</span></button><div class="sblk-list">';
+      grp.querySelectorAll(".topic-list > .topic-row").forEach(function(row){
+        var r = homeRowInfo(row);
+        if(!r.id){
+          h += '<button type="button" class="srow" disabled><span class="snum">' + escapeHtml(r.num) + '</span><span class="sttl">' + escapeHtml(r.title) + '</span></button>';
+          return;
+        }
+        var cur = r.id === act;
+        if(r.rev){
+          var rv = revById(r.id);
+          h += '<button type="button" class="srow rev' + (cur ? ' cur' : '') + '" data-open="' + r.id + '"' + (r.disabled ? ' disabled' : '') + (cur ? ' aria-current="page"' : '') + '>' +
+            '<span class="snum">Rev.</span><span class="sttl">' + escapeHtml(rv ? rv.range : r.title) + '</span>' +
+            (rv && revClosed(r.id, rr) ? '<span class="sflag">✓ ' + L("закрыта", "closed") + '</span>' : '') + '</button>';
+        } else {
+          h += '<button type="button" class="srow' + (cur ? ' cur' : '') + '" data-open="' + r.id + '"' + (r.disabled ? ' disabled' : '') + (cur ? ' aria-current="page"' : '') + '>' +
+            '<span class="snum">' + escapeHtml(r.num) + '</span><span class="sttl">' + escapeHtml(r.title) + '</span>' + stageDots(topicStage(r.id, p, pp)) + '</button>';
+        }
+      });
+      h += '</div></div>';
+    });
+
+    h += '<div class="rail-sep"></div><div class="side-sec">' + L("Инструменты", "Tools") + '</div>';
+    TOOL_ORDER.forEach(function(id){
+      var row = document.querySelector('#home .tool-row[data-open="' + id + '"]');
+      if(!row) return;
+      var r = homeRowInfo(row), parts = r.title.split(" · ");
+      var due = "";
+      if(id === "vocab"){ var n = vocabDueCount(); if(n) due = '<span class="sdue">' + n + '</span>'; }
+      h += '<button type="button" class="stool' + (id === act ? ' cur' : '') + '" data-open="' + id + '" title="' + escapeHtml(parts[0]) + '"><span class="sic">' + r.icon + '</span>' +
+        '<span class="slbl">' + escapeHtml(parts[0]) + (parts[1] ? ' <small>· ' + escapeHtml(parts[1]) + '</small>' : '') + '</span>' + due + '</button>';
+    });
+
+    var dark = document.body.classList.contains("dark");
+    h += '<div class="side-foot"><button type="button" class="spill' + (LANG === "ru" ? ' on' : '') + '" data-lang="ru">РУ</button>' +
+      '<button type="button" class="spill' + (LANG === "en" ? ' on' : '') + '" data-lang="en">EN</button>' +
+      '<button type="button" class="spill" data-sideact="font" title="' + L("Размер шрифта", "Font size") + '">' + document.getElementById("fontToggle").textContent + '</button>' +
+      '<button type="button" class="spill theme" data-sideact="theme" title="' + L("Тема оформления", "Theme") + '">' + (dark ? "☀️" : "🌙") + '</button>' +
+      '<button type="button" class="side-reset" data-sideact="reset">' + L("Сбросить прогресс", "Reset progress") + '</button></div>';
+    side.innerHTML = h;
+    side.scrollTop = keep;
+    document.body.classList.toggle("side-min", sideMin);
+    var curEl = side.querySelector(".srow.cur, .stool.cur");
+    if(curEl && curEl.dataset.open !== side.dataset.lastCur){
+      side.dataset.lastCur = curEl.dataset.open;
+      try{ curEl.scrollIntoView({block:"nearest"}); }catch(e){}
+    }
+  }
+
+  function toggleSide(){
+    sideMin = !sideMin;
+    try{ localStorage.setItem(SIDE_KEY, sideMin ? "min" : "full"); }catch(e){}
+    renderSide();
+  }
+
+  /* ---------- «Сегодня» ---------- */
+  function topicNum(id){
+    var row = document.querySelector('#home .topic-row[data-open="' + id + '"] .topic-num');
+    return row ? row.textContent.trim() : "";
+  }
+  function todayTopic(p, pp, last){
+    var ok = function(t){ return TOPICS.indexOf(t) !== -1 && (LANG !== "en" || EN_READY_TOPICS.indexOf(t) !== -1); };
+    if(last && ok(last) && topicStage(last, p, pp) < 2) return last;
+    for(var i = 0; i < TOPICS.length; i++) if(ok(TOPICS[i]) && topicStage(TOPICS[i], p, pp) < 2) return TOPICS[i];
+    return (last && ok(last)) ? last : null;
+  }
+  function dialogName(id){
+    var d = document.querySelector("#screen-" + id + " .reading-block .dialogue");
+    var lab = d && d.closest(".reading-block").querySelector(".text-label");
+    var m = lab && lab.textContent.match(/Di[aá]logo\s*·\s*([^—]+?)\s*(—|$)/);
+    return m ? m[1] : "";
+  }
+  function renderToday(){
+    var wrap = document.getElementById("todayWrap"), home = document.getElementById("home");
+    if(!wrap || !home) return;
+    var p = loadProgress(), pp = loadPart(), last = null;
+    try{ last = localStorage.getItem(LAST_TOPIC_KEY); }catch(e){}
+    var fresh = !last && TOPICS.every(function(t){ return topicStage(t, p, pp) === 0; });
+    var t = fresh ? null : todayTopic(p, pp, last);
+    home.classList.toggle("home-today", !!t);
+    if(!t){ wrap.innerHTML = ""; return; }
+    var st = topicStage(t, p, pp), title = (topicTitleMap()[t] || t);
+    var day = new Date().toLocaleDateString(LANG === "en" ? "en-GB" : "ru-RU", {weekday:"long"});
+    var dn = dialogName(t), step, go, mins;
+    if(st === 0){
+      step = '<b>' + L("Следующий шаг — задания темы", "Next step — the topic's exercises") + '</b>' +
+             L("Прочитай правило и тексты, потом Exercícios: от 80% верных.", "Read the rule and the texts, then Exercícios: 80% correct or more.");
+      go = '<button type="button" class="btn btn-go" data-open="' + t + '">' + L("Открыть тему →", "Open the topic →") + '</button>';
+      mins = TOPIC_MINUTES[t] ? "~" + TOPIC_MINUTES[t] + L(" мин", " min") : "";
+    } else if(st === 1){
+      step = '<b>' + L("Следующий шаг — диалог", "Next step — the dialogue") + (dn ? " «" + escapeHtml(dn) + "»" : "") + '</b>' +
+             L("Сыграй за одного из собеседников: свои реплики пишешь сам, «Не помню» даёт банк слов.", "Play one of the two speakers: you write your own lines, “I don't remember” opens a word bank.");
+      go = '<button type="button" class="btn btn-go" data-dlg="' + t + '">' + L("Участвовать в диалоге →", "Take part in the dialogue →") + '</button>';
+      mins = "~8" + L(" мин", " min");
+    } else if(st === 2){
+      step = '<b>' + L("Следующий шаг — написать диалог самому", "Next step — write the dialogue yourself") + '</b>' +
+             L("Те же реплики, но без «Не помню»: из головы.", "The same lines, but without “I don't remember”: from memory.");
+      go = '<button type="button" class="btn btn-go" data-dlg="' + t + '">' + L("Написать самому →", "Write it myself →") + '</button>';
+      mins = "~8" + L(" мин", " min");
+    } else {
+      step = '<b>' + L("Тема пройдена на «Пишу»", "Topic done at “Write”") + '</b>' + L("Можно идти дальше.", "You can move on.");
+      go = '<button type="button" class="btn btn-go" data-open="' + t + '">' + L("Открыть тему →", "Open the topic →") + '</button>';
+      mins = "";
+    }
+    var pills = "";
+    for(var k = 1; k <= 3; k++) pills += '<span class="stage-step' + (st >= k ? ' on' : '') + '">' + (st >= k ? '✓ ' : '') + stageName(k) + '</span>';
+    var due = vocabDueCount();
+    var rep = '<div class="tcard rep"><span class="lab">' + L("Повторить сегодня", "Review today") + '</span>';
+    if(due){
+      rep += '<h2 class="plain">' + due + ' ' + (LANG === "en" ? (due === 1 ? "word is" : "words are") + ' due for review' : plural(due, "слово ждёт", "слова ждут", "слов ждут") + ' повторения') + '</h2>' +
+             '<p>' + L("Слова из Dicionário вперемешку по темам. Лучше сделать это в начале занятия.", "Words from Dicionário, mixed across topics. Best done at the start of a session.") + '</p>' +
+             '<div class="go"><button type="button" class="btn btn-line" data-open="vocab">' + L("Начать повторение", "Start the review") + '</button><span class="mins">~5' + L(" мин", " min") + '</span></div>';
+    } else {
+      rep += '<h2 class="plain">' + L("Повторять пока нечего", "Nothing to review yet") + '</h2>' +
+             '<p>' + L("Слова вернутся, когда подойдёт срок. Очередь фраз из пройденных тем появится здесь позже.", "Words come back when they are due. A queue of phrases from finished topics will appear here later.") + '</p>';
+    }
+    rep += '</div>';
+
+    var fin = "", rr = loadRev();
+    for(var i = 0; i < REVISOES.length; i++){
+      var rv = REVISOES[i];
+      if(revClosed(rv.id, rr)) continue;
+      var left = rv.covers.filter(function(c){ return !isPassed(c, p, pp); });
+      var steps = rv.covers.map(function(c){ return '<span class="stage-step' + (isPassed(c, p, pp) ? ' on' : '') + '">' + escapeHtml(topicNum(c)) + '</span>'; }).join("") +
+                  '<span class="stage-step">Rev.</span>';
+      fin = '<div class="finish"><span class="fi">🏁</span><div><b>' + L("Ближайший финиш — Глава " + rv.n + " · " + rv.range, "Next finish line — Chapter " + rv.n + " · " + rv.range) + '</b><span class="ft">' +
+        (left.length ? L("Осталось довести до «Собираю»: " + left.map(topicNum).join(", ") + " — потом сводная глава.", "Left to bring up to “Build”: " + left.map(topicNum).join(", ") + " — then the review chapter.")
+                     : L("Все темы главы позади — осталась сама глава.", "All its topics are behind you — only the chapter itself is left.")) + '</span></div>' +
+        '<div class="fsteps">' + steps + (left.length ? '' : '<button type="button" class="btn btn-go" data-open="' + rv.id + '">' + L("Открыть главу", "Open the chapter") + '</button>') + '</div></div>';
+      break;
+    }
+    wrap.innerHTML = '<div class="today-eyebrow">' + L("Сегодня", "Today") + ' · ' + escapeHtml(day) + '</div>' +
+      '<h1>Olá! ' + L("Продолжим с ", "Let's pick up at ") + '<span class="pt">' + escapeHtml(title) + '</span></h1>' +
+      '<p class="today-sub">' + L("Занятие на 30–40 минут: повторение → одна тема до ступени «Собираю» → сцена в Diálogos.", "A 30–40 minute session: review → one topic up to “Build” → a scene in Diálogos.") + '</p>' +
+      '<div class="today"><div class="tcard"><span class="lab">' + L("Продолжить", "Continue") + '</span><h2><span class="n">' + escapeHtml(topicNum(t)) + '</span>' +
+      escapeHtml(title.replace(/^\S+\s+/, "")) + '</h2><div class="stage-steps">' + pills + '</div><div class="step">' + step + '</div><div class="go">' + go +
+      (mins ? '<span class="mins">' + mins + '</span>' : '') + '</div></div>' + rep + '</div>' + fin;
+  }
+
+  /* ---------- вкладка Diálogo и вкладки как tablist ---------- */
+  function syncTabs(screen){
+    var sub = screen.querySelector(".subnav");
+    if(!sub) return;
+    sub.setAttribute("role", "tablist");
+    sub.querySelectorAll(".subnav-btn").forEach(function(b){
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-selected", b.classList.contains("active") ? "true" : "false");
+    });
+  }
+  // Диалог открывается сразу на выборе роли — первый раз за визит и пока тема
+  // не на «Пишу». Вышел сам — второй раз не навязываем.
+  function autoPart(screen){
+    if(screen.dataset.dlgAuto) return;
+    screen.dataset.dlgAuto = "1";
+    var id = screen.dataset.topic;
+    if(!id || topicStage(id) >= 3) return;
+    screen.querySelectorAll(".dialogue").forEach(function(d){
+      var st = PART.get(d);
+      if(st && st.phase === "off"){ st.phase = "role"; partRender(st); }
+    });
+  }
+
+  /* ---------- колонка справа (≥1280) ---------- */
+  function wcLabel(label){
+    var bits = label.split(" — ");
+    if(bits.length < 2) return label;
+    return bits[0].split(" · ")[0] + " · " + bits.slice(1).join(" — ");
+  }
+  function buildWordsCol(screen){
+    if(!screen || !screen.classList.contains("topic-screen")) return;
+    var col = screen.querySelector(":scope > .words-col");
+    var rv = screen.dataset.rev ? revById(screen.dataset.rev) : null;
+    var html = "", total = 0;
+    if(rv){
+      var parts = revParts(rv.id), p = loadProgress(), pp = loadPart();
+      var n = screen.querySelectorAll(".pane-quiz .qitem").length, need = Math.ceil(n * 0.8);
+      html = '<div class="side-card"><h3>' + L("Глава " + rv.n + " закрыта, когда", "Chapter " + rv.n + " closes when") + '</h3>' +
+        '<div class="wc-check' + (parts.quiz ? ' ok' : '') + '"><i>' + (parts.quiz ? '✓' : '○') + '</i><span>Exercícios — ' + L(need + " из " + n + " и выше", need + " of " + n + " or more") + '</span></div>' +
+        '<div class="wc-check' + (parts.dlg ? ' ok' : '') + '"><i>' + (parts.dlg ? '✓' : '○') + '</i><span>' + L("Diálogo пройден без «Показать ответ» (банк слов можно)", "Diálogo played without “Show the answer” (the word bank is fine)") + '</span></div></div>' +
+        '<div class="side-card"><h3>' + L("Что собрано в главе", "What the chapter covers") + '</h3>' +
+        rv.covers.map(function(c){
+          return '<div class="wc-cov"><span class="snum">' + escapeHtml(topicNum(c)) + '</span><span class="sttl">' + escapeHtml((topicTitleMap()[c] || c).replace(/^\S+\s+/, "")) + '</span>' +
+                 stageDots(topicStage(c, p, pp)) + '<button type="button" class="wc-link" data-open="' + c + '">Regra</button></div>';
+        }).join("") +
+        '<p class="wc-note">' + L("Застрял — правило темы откроется рядом, глава не сбросится.", "Stuck — the topic's rule opens, and the chapter keeps your progress.") + '</p></div>';
+    } else {
+      screen.querySelectorAll(".reading-block.has-wordset").forEach(function(b){
+        var ws = b.querySelector(".wordset"), lab = b.querySelector(".text-label");
+        if(!ws) return;
+        var rows = "", cnt = 0;
+        ws.querySelectorAll(":scope > div").forEach(function(row){
+          var w = row.querySelector(".w"), t = row.querySelector(".t");
+          if(!w) return;
+          var word = w.textContent.trim();
+          cnt++;
+          rows += '<div class="wrow"><span class="wd">' + escapeHtml(word) + '</span>' +
+            (ptVoice ? '<button type="button" class="speak" data-say="' + escapeHtml(word) + '" title="' + L("Прослушать", "Listen") + '">🔊</button>' : '') +
+            '<span class="wt">' + (t ? escapeHtml(t.textContent.replace(/^\s*[—-]\s*/, "").trim()) : "") + '</span></div>';
+        });
+        total += cnt;
+        html += '<div class="wbox"><h3><span>' + escapeHtml(wcLabel(lab ? lab.textContent.replace(/\s+/g, " ").trim() : "Palavras")) + '</span><span>' + cnt + '</span></h3>' + rows + '</div>';
+      });
+      if(html) html = '<div data-words="open">' + html + '</div>' +
+        '<div class="words-hidden"><b>Palavras · ' + total + ' ' + L(plural(total, "слово скрыто", "слова скрыты", "слов скрыто"), "words hidden") + '</b>' +
+        L("Пока идут задания и твои реплики, слова не подсматриваются — так вспоминаешь, а не узнаёшь. «Не помню» и «Подсказка» работают как обычно.",
+          "While you do exercises and write your own lines the words stay out of sight: that is recall, not recognition. “I don't remember” and “Hint” work as usual.") +
+        '<br><button type="button" data-wc="show">' + L("Показать слова", "Show the words") + '</button></div>';
+    }
+    if(!html){
+      if(col) col.remove();
+      screen.classList.remove("has-words");
+      return;
+    }
+    if(!col){
+      col = document.createElement("aside");
+      col.className = "words-col";
+      screen.insertBefore(col, screen.firstChild);
+    }
+    col.setAttribute("aria-label", rv ? L("Глава", "Chapter") : L("Слова темы", "Topic words"));
+    col.innerHTML = html;
+    screen.classList.add("has-words");
+    syncWords(screen);
+  }
+  // В заданиях и в «Участвовать» слова прячутся: видимый словарь рядом с
+  // заданием превращает вспоминание в узнавание.
+  function syncWords(screen){
+    if(!screen || screen.dataset.rev) return;
+    var hide = !!(screen.querySelector(".pane-quiz.active") ||
+                  (screen.classList.contains("dlg-only") && screen.querySelector(".mini-text.part-on")));
+    screen.classList.toggle("words-off", hide && screen.dataset.wordsShown !== "1");
+  }
+
+  function renderCrumbs(){
+    document.querySelectorAll(".topic-screen[data-topic], .rev-screen").forEach(function(s){
+      var bar = s.querySelector(":scope > .topic-topbar");
+      if(!bar) return;
+      var c = bar.querySelector(".crumb");
+      if(!c){ c = document.createElement("div"); c.className = "crumb"; bar.appendChild(c); }
+      var id = s.dataset.topic || s.dataset.rev, k = blockOfTopic(id), bi = BLOCK_KEYS.indexOf(k);
+      if(!k) return;
+      var b = BLOCKS[k], tail;
+      if(s.dataset.rev) tail = L("сводная глава " + revById(id).n, "review chapter " + revById(id).n);
+      else tail = L("тема " + (b.topics.indexOf(id) + 1) + " из " + b.planned, "topic " + (b.topics.indexOf(id) + 1) + " of " + b.planned);
+      c.innerHTML = '<b>' + L("Блок ", "Block ") + bi + ' · ' + b.label + '</b> · ' + tail;
+    });
+  }
+
+  function renderTabDots(p){
+    document.querySelectorAll(".topic-screen[data-topic], .rev-screen").forEach(function(s){
+      var btn = s.querySelector('.subnav-btn[data-pane="quiz"]');
+      if(!btn) return;
+      var ok = s.dataset.rev ? revParts(s.dataset.rev).quiz : isDone(p[s.dataset.topic]);
+      var dot = btn.querySelector(".tdot");
+      if(ok && !dot){ dot = document.createElement("span"); dot.className = "tdot"; dot.title = L("пройдено", "done"); btn.appendChild(dot); }
+      else if(!ok && dot){ dot.remove(); }
+    });
+  }
+
+  function renderLaptopProgress(p){
+    renderSide();
+    renderToday();
+    renderTabDots(p);
+    var a = document.querySelector(".topic-screen.active");
+    if(a) buildWordsCol(a);
+  }
+
+  function initLaptop(){
+    // Панель.
+    var side = document.createElement("aside");
+    side.className = "side"; side.id = "side";
+    side.setAttribute("aria-label", "Разделы курса");
+    document.body.insertBefore(side, document.body.firstChild);
+    side.addEventListener("click", function(e){
+      var act = e.target.closest("[data-sideact]");
+      if(act){
+        var a = act.dataset.sideact;
+        if(a === "toggle") toggleSide();
+        else if(a === "home") goHome();
+        else if(a === "font"){ document.getElementById("fontToggle").click(); renderSide(); }
+        else if(a === "theme"){ document.getElementById("themeToggle").click(); renderSide(); }
+        else if(a === "reset") document.getElementById("resetBtn").click();
+        return;
+      }
+      var hd = e.target.closest("[data-sideblk]");
+      if(hd){
+        var k = hd.dataset.sideblk;
+        if(sideMin){
+          sideMin = false;
+          try{ localStorage.setItem(SIDE_KEY, "full"); }catch(er){}
+          sideOpen[k] = true;
+        } else sideOpen[k] = !(sideOpen[k] === true);
+        renderSide();
+      }
+    });
+    document.body.classList.toggle("side-min", sideMin);
+
+    // «Сегодня» — первым в шапке главной.
+    var hero = document.querySelector("#home .hero");
+    var tw = document.createElement("section");
+    tw.className = "today-wrap"; tw.id = "todayWrap";
+    hero.insertBefore(tw, hero.firstChild);
+
+    document.querySelectorAll(".topic-screen[data-topic]").forEach(function(s){
+      s.querySelectorAll(".reading-block").forEach(function(b){
+        if(b.querySelector(".wordset")) b.classList.add("has-wordset");
+        if(b.closest(".pane-texts") && b.querySelector(".dialogue")) b.classList.add("has-dlg");
+      });
+      var texts = s.querySelector(".subnav-btn[data-pane=\"texts\"]");
+      if(texts && s.querySelector(".reading-block.has-dlg")){
+        var d = document.createElement("button");
+        d.type = "button"; d.className = "subnav-btn laptop-only"; d.dataset.pane = "ldlg";
+        d.innerHTML = '<b>Diálogo</b><i data-en="build it yourself">собрать сам</i>';
+        texts.insertAdjacentElement("afterend", d);
+        s.classList.add("has-dlgtab");
+        var pt = s.querySelector(".pane-texts"), nb = document.createElement("button");
+        nb.type = "button"; nb.className = "pane-next-btn laptop-only"; nb.dataset.to = "ldlg";
+        nb.addEventListener("click", function(){ goPane(s, "ldlg"); });
+        pt.appendChild(nb);
+      }
+      syncTabs(s);
+    });
+    document.querySelectorAll(".rev-screen").forEach(syncTabs);
+    // Подсказка клавиш у «Проверить».
+    document.querySelectorAll(".quiz-actions").forEach(function(q){
+      var n = document.createElement("span");
+      n.className = "kbd-note laptop-only";
+      n.dataset.en = "<kbd>Tab</kbd> next field · <kbd>Enter</kbd> check";
+      n.innerHTML = "<kbd>Tab</kbd> следующее поле · <kbd>Enter</kbd> проверить";
+      q.appendChild(n);
+    });
+
+    document.addEventListener("keydown", function(e){
+      if(!isLaptop()) return;
+      if(e.ctrlKey && e.key === "\\"){ e.preventDefault(); toggleSide(); return; }
+      var tab = e.target.closest && e.target.closest(".subnav-btn");
+      if(tab && (e.key === "ArrowRight" || e.key === "ArrowLeft")){
+        var tabs = Array.prototype.filter.call(tab.parentNode.querySelectorAll(".subnav-btn"), function(b){ return b.offsetParent !== null; });
+        var i = tabs.indexOf(tab), nx = tabs[(i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+        e.preventDefault(); nx.focus(); goPane(nx.closest(".topic-screen"), nx.dataset.pane);
+        return;
+      }
+      if(e.key === "Enter" && e.target.matches && e.target.matches("input.blank")){
+        var pane = e.target.closest(".pane-quiz");
+        if(pane){ e.preventDefault(); checkQuiz(pane); }
+        return;
+      }
+      if(e.key === "Escape" && e.target.classList && e.target.classList.contains("part-input")){
+        var f = e.target.closest(".part-card").querySelector('[data-part="forgot"]');
+        if(f){ e.preventDefault(); handlePartAction(f); }
+      }
+    });
+    mqLap.addEventListener("change", function(){
+      if(isLaptop()) return;
+      document.querySelectorAll(".topic-screen.dlg-only").forEach(function(s){ switchPane(s, "texts"); });
+    });
+  }
+
   /* ================= СТАРТ ================= */
 
   (function init(){
@@ -13951,6 +14656,7 @@
       addPaneNext(screen, ".pane-rule",  "dlg",   L("Дальше: диалог", "Next: the dialogue"));
       addPaneNext(screen, ".pane-dlg",   "quiz",  L("Дальше: задания", "Next: exercises"));
     });
+    initLaptop();
 
     applyLang();
     seedVocabFromWordsets();
