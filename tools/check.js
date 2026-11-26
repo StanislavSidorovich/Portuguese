@@ -8,7 +8,7 @@
  * тихие: забытый регистр не роняет страницу, а просто выключает тему; слово
  * без словарной статьи не переводится по тапу, но выглядит как обычное;
  * пропущенная форма в таблице спряжения даёт «undefined» на экране.
- * Глазами это не ловится, поэтому двенадцать проверок ниже.
+ * Глазами это не ловится, поэтому тринадцать проверок ниже.
  *
  * Отдельно стоит tools/prevocab.js — та же сверка словаря, но по черновику
  * темы, до вставки в index.html. Поймать там дешевле.
@@ -780,7 +780,7 @@ function checkRevisoes() {
     let nWords = 0;
     for (const z of zones.concat(answers)) for (const w of words(z)) if (!look(w)) unknown.add(w);
     if (unknown.size) fail(`${where}: слова вне тем до «${last}» — ${[...unknown].sort().join(', ')}`);
-    const text = [...scr.matchAll(/<p class="storytext">([\s\S]*?)<\/p>/g)].map((m) => m[1].replace(/<[^>]+>/g, ' ')).join(' ');
+    const text = [...scr.matchAll(/<p class="storytext"[^>]*>([\s\S]*?)<\/p>/g)].map((m) => m[1].replace(/<[^>]+>/g, ' ')).join(' ');
     nWords = words(text).length;
     if (nWords < rv.words[0] || nWords > rv.words[1]) fail(`${where}: в тексте ${nWords} слов, задано ${rv.words[0]}–${rv.words[1]}`);
     const nLines = (scr.match(/<p class="dline">/g) || []).length;
@@ -802,6 +802,28 @@ function checkRevisoes() {
   for (const s of report) console.log('       ' + s);
 }
 
+/* ============ 13. озвучка (Z6): data-audio / audio ↔ assets/audio ============ */
+
+function checkAudio() {
+  head('13. Озвучка: ссылки на файлы и файлы без ссылок');
+  const dir = path.join(path.resolve(__dirname, '..'), 'assets', 'audio');
+  const files = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => /\.mp3$/i.test(f)) : [];
+  const have = new Set(files.map((f) => f.replace(/\.mp3$/i, '')));
+  const used = new Map();
+  for (const m of html.matchAll(/(?:data-audio="|\baudio:\s*"|\banswerAudio:\s*")([\w-]+)"/g)) {
+    used.set(m[1], (used.get(m[1]) || 0) + 1);
+  }
+  let problems = 0;
+  for (const [id, n] of used) {
+    if (!have.has(id)) { bad('нет файла assets/audio/' + id + '.mp3'); problems++; }
+    if (n > 1) { bad('id «' + id + '» стоит у ' + n + ' реплик: один файл — одна реплика'); problems++; }
+  }
+  for (const id of have) {
+    if (!used.has(id)) { bad('файл assets/audio/' + id + '.mp3 нигде не используется'); problems++; }
+  }
+  if (!problems) ok(used.size + ' ссылок, ' + have.size + ' файлов — совпадают один к одному');
+}
+
 /* ============ ============ */
 
 console.log('Проверка index.html');
@@ -817,6 +839,7 @@ checkConjugadorEn();
 checkSituacoes();
 checkLeituras();
 checkRevisoes();
+checkAudio();
 
 console.log('');
 if (failed) {

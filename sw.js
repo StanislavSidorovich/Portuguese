@@ -12,7 +12,13 @@
 // меняется сам список STATIC_ASSETS (добавил/переименовал шрифт или иконку)
 // или содержимое одного из статических файлов (например manifest.json) —
 // именно это заставляет сбросить старые статические файлы на activate.
-const CACHE_NAME = 'portuguese-grammar-v1';
+const CACHE_NAME = 'portuguese-grammar-v2';
+
+//  - Озвучка (assets/audio/*.mp3, Z6) — в precache НЕ кладётся: файлов будет
+//    сотни. Кэшируется при первом прослушивании, в отдельный кэш: бамп
+//    CACHE_NAME его не стирает. Заменил файл под тем же именем — бампни
+//    AUDIO_CACHE (или дай новое имя).
+const AUDIO_CACHE = 'portuguese-audio-v1';
 
 const HTML_URLS = ['./', './index.html'];
 
@@ -44,7 +50,7 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
       .then((keys) => Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+        keys.filter((key) => key !== CACHE_NAME && key !== AUDIO_CACHE).map((key) => caches.delete(key))
       ))
       .then(() => self.clients.claim())
   );
@@ -56,9 +62,48 @@ function isHtmlRequest(request) {
   return path.endsWith('/') || path.endsWith('/index.html');
 }
 
+function isAudioRequest(request) {
+  const url = new URL(request.url);
+  return url.origin === self.location.origin && /\/assets\/audio\/[^/]+\.mp3$/.test(url.pathname);
+}
+
+// <audio> просит файл кусками (Range), а Cache API хранит только целые 200.
+// Поэтому: целый файл — в кэш, а на Range-запрос отдаём 206 из него самого.
+async function audioResponse(request) {
+  const cache = await caches.open(AUDIO_CACHE);
+  let full = await cache.match(request.url);
+  if (!full) {
+    full = await fetch(request.url);
+    if (!full.ok) return full;
+    await cache.put(request.url, full.clone());
+  }
+  const range = /^bytes=(\d*)-(\d*)$/.exec(request.headers.get('range') || '');
+  if (!range) return full;
+  const buf = await full.arrayBuffer();
+  const size = buf.byteLength;
+  let start = range[1] === '' ? Math.max(0, size - Number(range[2])) : Number(range[1]);
+  let end = range[1] === '' || range[2] === '' ? size - 1 : Math.min(Number(range[2]), size - 1);
+  if (start >= size || start > end) {
+    return new Response(null, { status: 416, headers: { 'Content-Range': 'bytes */' + size } });
+  }
+  return new Response(buf.slice(start, end + 1), {
+    status: 206,
+    headers: {
+      'Content-Type': 'audio/mpeg',
+      'Content-Range': 'bytes ' + start + '-' + end + '/' + size,
+      'Content-Length': String(end - start + 1)
+    }
+  });
+}
+
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const request = event.request;
+
+  if (isAudioRequest(request)) {
+    event.respondWith(audioResponse(request).catch(() => Response.error()));
+    return;
+  }
 
   if (isHtmlRequest(request)) {
     event.respondWith(

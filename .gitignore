@@ -9,3 +9,8 @@ tools/audiolesson/out/
 
 # снимки Playwright MCP
 .playwright-mcp/
+
+# ключи API (Gemini TTS и др.)
+.env
+**/.env
+/audio/

@@ -102,7 +102,7 @@ function makeResolve(vocab, strip) {
 // оборачивает (см. wrapTapWords), и лексика там свободная.
 function readableZones(src) {
   return [
-    ...src.matchAll(/<p class="storytext">([\s\S]*?)<\/p>/g),
+    ...src.matchAll(/<p class="storytext"[^>]*>([\s\S]*?)<\/p>/g),
     ...src.matchAll(/<p class="dline">([\s\S]*?)<\/p>/g),
   ].map((z) => z[1]
     .replace(/<span class="speaker">[\s\S]*?<\/span>/g, '')
