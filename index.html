@@ -581,7 +581,9 @@
     line-height:1; opacity:0.55; color:inherit;
   }
   .speak:hover{opacity:1;}
-  .speak.playing{opacity:1;}
+  .speak.playing{opacity:1; color:var(--base); animation:speakPulse 1s ease-in-out infinite;}
+  @keyframes speakPulse{50%{opacity:0.45;}}
+  @media (prefers-reduced-motion:reduce){ .speak.playing{animation:none;} }
   .audio-note{font-size:0.78rem; color:var(--muted); margin:0 0 12px;}
 
   /* ---------- ЗАДАНИЯ ---------- */
@@ -998,7 +1000,7 @@
      правило не срабатывает. Левая панель строится кодом (renderSide) из тех
      же данных, что и список на главной; здесь — только её вид.
      ===================================================================== */
-  .side, .crumb, .today-wrap, .tdot, .side-resize{display:none;}
+  .side, .crumb, .today-wrap, .tdot, .side-resize, .words-resize{display:none;}
   .laptop-only{display:none;}
   @media (min-width:1024px){
     body{padding-left:var(--side-w);}
@@ -1015,6 +1017,17 @@
     .side-resize::after{content:""; position:absolute; top:0; bottom:0; left:3px; width:2px; background:transparent; transition:background .15s;}
     .side-resize:hover::after, .side-resize:focus-visible::after, body.side-dragging .side-resize::after{background:var(--base);}
     body.side-min .side-resize{display:none;}
+    .words-resize{position:fixed; width:8px; z-index:21; cursor:col-resize; touch-action:none;}
+    .words-resize.show{display:block;}
+    .words-resize::after{content:""; position:absolute; top:0; bottom:0; left:3px; width:2px; background:transparent; transition:background .15s;}
+    .words-resize:hover::after, .words-resize:focus-visible::after, body.side-dragging .words-resize::after{background:var(--base);}
+    .color-pop{position:fixed; bottom:16px; z-index:40; width:240px; background:var(--card); color:var(--ink); border:1px solid var(--line);
+      border-radius:12px; padding:12px 14px; box-shadow:0 8px 28px rgba(0,0,0,0.2); font-family:var(--font-ru); font-size:0.82rem;}
+    .color-pop b{display:block; margin-bottom:2px;}
+    .color-pop small{display:block; color:var(--muted); margin-bottom:10px;}
+    .color-pop label{display:flex; align-items:center; justify-content:space-between; gap:10px; margin:8px 0;}
+    .color-pop input[type=color]{width:46px; height:28px; padding:0; border:1.5px solid var(--line); border-radius:6px; background:none; cursor:pointer;}
+    .color-pop button{margin-top:6px; background:none; border:none; color:var(--muted); text-decoration:underline; cursor:pointer; font:inherit; padding:2px 0;}
     body.side-dragging{cursor:col-resize; user-select:none;}
     .side-head{display:flex; align-items:center; gap:8px; padding:16px 14px 10px 18px; position:sticky; top:0; background:var(--side-bg); z-index:2;}
     .side-brand{flex:1; min-width:0;}
@@ -10350,11 +10363,22 @@
   // rate нужен только проходу «На слух» (кнопка «медленнее»): везде
   // остальное звучит на обычных 0.9.
   var AUDIO_DIR = "assets/audio/";
-  var curAudio = null, playTok = 0;
+  var curAudio = null, playTok = 0, nowBtn = null;
+
+  // Кнопка 🔊, которая сейчас играет, подсвечена (.playing); повторный клик
+  // по ней — стоп. Уход с экрана и вкладки тоже глушит звук (stopAll).
+  function clearNow(){
+    if(nowBtn){ nowBtn.classList.remove("playing"); nowBtn.title = nowBtn.dataset.title || nowBtn.title; nowBtn = null; }
+  }
+  function stopAll(){
+    if(revListenBtn) revListenReset();
+    stopSound();
+  }
 
   // Останавливает и файл, и синтез: любое новое воспроизведение начинает с этого.
   function stopSound(){
     playTok++;
+    clearNow();
     if(curAudio){
       var a = curAudio; curAudio = null;
       a.onended = a.onerror = null;
@@ -10390,26 +10414,34 @@
 
   // audio — id файла (необязательно). Файл идёт со своей скоростью, rate
   // кнопки «медленнее» применяется к нему через playbackRate.
-  function speak(text, rate, audio){
+  function speak(text, rate, audio, btn){
     if(revListenBtn) revListenReset();
     stopSound();
+    var tok = playTok;
+    if(btn){
+      nowBtn = btn; btn.classList.add("playing");
+      btn.dataset.title = btn.title || "";
+      btn.title = "Остановить";
+    }
+    function over(){ if(btn && nowBtn === btn && tok === playTok) clearNow(); }
     if(audio){
-      playFile(audio, rate, null, function(){ speakTts(text, rate); });
+      playFile(audio, rate, over, function(){ speakTts(text, rate, over); });
       return;
     }
-    speakTts(text, rate);
+    speakTts(text, rate, over);
   }
 
-  function speakTts(text, rate){
-    if(!ptVoice || !text) return;
+  function speakTts(text, rate, onEnd){
+    if(!ptVoice || !text){ if(onEnd) onEnd(); return; }
     try{
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(text);
       u.voice = ptVoice;
       u.lang = ptVoice.lang;
       u.rate = Number(rate) || 0.9;
+      if(onEnd) u.onend = u.onerror = onEnd;
       window.speechSynthesis.speak(u);
-    }catch(e){}
+    }catch(e){ if(onEnd) onEnd(); }
   }
 
   // Текст реплики без имени говорящего: «Ana:» произносить незачем.
@@ -12954,6 +12986,7 @@
   }
 
   function showHome(scrollToId){
+    stopAll();
     document.querySelectorAll(".topic-screen").forEach(function(s){ s.classList.remove("active"); });
     document.getElementById("home").classList.add("active");
     document.body.classList.remove("topic-open");
@@ -12979,6 +13012,7 @@
   function openTopic(id){
     var el = document.getElementById("screen-" + id);
     if(!el) return false;
+    stopAll();
     rememberHomeScroll();
     document.getElementById("home").classList.remove("active");
     document.querySelectorAll(".topic-screen").forEach(function(s){ s.classList.remove("active"); });
@@ -13030,6 +13064,7 @@
   }
 
   function switchPane(screen, key){
+    stopAll();
     // «ldlg» — вкладка Diálogo ноутбука: та же pane-texts, у которой видны
     // только диалоги (класс dlg-only). На телефоне такой вкладки нет.
     if(key === "ldlg" && !(isLaptop() && screen.querySelector('.subnav-btn[data-pane="ldlg"]'))) key = "texts";
@@ -14152,7 +14187,11 @@
     // Кнопки звука и тренажёра слов перерисовывают экран целиком, поэтому
     // ловим их раньше остальных — своих постоянных узлов у них нет.
     var say = e.target.closest("[data-say]");
-    if(say){ speak(say.dataset.say, say.dataset.rate, say.dataset.audio); return; }
+    if(say){
+      if(say.classList.contains("playing")){ stopAll(); return; }
+      speak(say.dataset.say, say.dataset.rate, say.dataset.audio, say);
+      return;
+    }
 
     var wcShow = e.target.closest('[data-wc="show"]');
     if(wcShow){
@@ -14407,6 +14446,7 @@
     h += '<div class="side-foot"><button type="button" class="spill' + (LANG === "ru" ? ' on' : '') + '" data-lang="ru">РУ</button>' +
       '<button type="button" class="spill' + (LANG === "en" ? ' on' : '') + '" data-lang="en">EN</button>' +
       '<button type="button" class="spill" data-sideact="font" title="' + L("Размер шрифта", "Font size") + '">' + document.getElementById("fontToggle").textContent + '</button>' +
+      '<button type="button" class="spill theme" data-sideact="colors" title="' + L("Цвета панели и фона", "Panel and background colours") + '">🎨</button>' +
       '<button type="button" class="spill theme" data-sideact="theme" title="' + L("Тема оформления", "Theme") + '">' + (dark ? "☀️" : "🌙") + '</button>' +
       '<button type="button" class="side-reset" data-sideact="reset">' + L("Сбросить прогресс", "Reset progress") + '</button></div>';
     side.innerHTML = h;
@@ -14636,6 +14676,123 @@
     if(a) buildWordsCol(a);
   }
 
+  /* Свои цвета: фон левой панели и фон страницы (--side-bg, --bg), отдельно
+     для светлой и тёмной темы — светлый фон в тёмной теме съел бы текст.
+     Ставятся на body инлайном: правило body.dark{--bg:…} иначе перебило бы. */
+  var COLORS_KEY = "ptColorsV1";
+  function loadColors(){
+    try{ return JSON.parse(localStorage.getItem(COLORS_KEY)) || {}; }catch(e){ return {}; }
+  }
+  function themeKey(){ return document.body.classList.contains("dark") ? "dark" : "light"; }
+  function applyColors(){
+    var c = isLaptop() ? (loadColors()[themeKey()] || {}) : {};
+    var st = document.body.style;
+    if(c.bg) st.setProperty("--bg", c.bg); else st.removeProperty("--bg");
+    if(c.side) st.setProperty("--side-bg", c.side); else st.removeProperty("--side-bg");
+  }
+  function effectiveColor(v, fallback){
+    var x = getComputedStyle(document.body).getPropertyValue(v).trim();
+    return /^#[0-9a-f]{6}$/i.test(x) ? x : fallback;
+  }
+  function toggleColorPop(){
+    var ex = document.getElementById("colorPop");
+    if(ex){ ex.remove(); return; }
+    var pop = document.createElement("div");
+    pop.id = "colorPop"; pop.className = "color-pop";
+    var dark = themeKey() === "dark";
+    pop.innerHTML = '<b>' + L("Цвета", "Colours") + '</b>' +
+      '<small>' + (dark ? L("для тёмной темы", "for the dark theme") : L("для светлой темы", "for the light theme")) +
+      ' · ' + L("у каждой темы свои", "each theme has its own") + '</small>' +
+      '<label>' + L("Левая панель", "Left panel") + '<input type="color" data-ck="side"></label>' +
+      '<label>' + L("Фон страницы", "Page background") + '<input type="color" data-ck="bg"></label>' +
+      '<button type="button" data-ck="reset">' + L("Сбросить", "Reset") + '</button>';
+    function fill(){
+      pop.querySelector('[data-ck="side"]').value = effectiveColor("--side-bg", dark ? "#0b100e" : "#e9efec");
+      pop.querySelector('[data-ck="bg"]').value = effectiveColor("--bg", dark ? "#101614" : "#f2f5f4");
+    }
+    fill();
+    pop.addEventListener("input", function(e){
+      var k = e.target.dataset.ck;
+      if(k !== "side" && k !== "bg") return;
+      var all = loadColors(), t = themeKey();
+      all[t] = all[t] || {};
+      all[t][k] = e.target.value;
+      try{ localStorage.setItem(COLORS_KEY, JSON.stringify(all)); }catch(er){}
+      applyColors();
+    });
+    pop.addEventListener("click", function(e){
+      if(e.target.dataset.ck !== "reset") return;
+      var all = loadColors(); delete all[themeKey()];
+      try{ localStorage.setItem(COLORS_KEY, JSON.stringify(all)); }catch(er){}
+      applyColors(); fill();
+    });
+    pop.style.left = (document.getElementById("side").offsetWidth + 10) + "px";
+    document.body.appendChild(pop);
+  }
+
+  /* Ширина колонки слов справа (≥1280): ручка на её левом краю, как у панели.
+     Колонка прилипает и ездит по экрану, поэтому ручка — одна, fixed, и
+     ставится по getBoundingClientRect колонки. Раскладка центрируется, а
+     значит левый край колонки при расширении уходит на половину прироста:
+     тянем с обратной связью, а не по формуле. */
+  function initWordsResize(){
+    var KEY = "ptWordsWV1", DEF = 288;
+    var h = document.createElement("div");
+    h.className = "words-resize"; h.tabIndex = 0;
+    h.setAttribute("role", "separator"); h.setAttribute("aria-orientation", "vertical");
+    h.setAttribute("aria-label", "Ширина колонки слов");
+    document.body.appendChild(h);
+    function colEl(){ return document.querySelector(".topic-screen.active.has-words > .words-col"); }
+    function curW(){ return parseInt(getComputedStyle(document.documentElement).getPropertyValue("--words-w"), 10) || DEF; }
+    function maxW(){
+      var sideW = document.getElementById("side").offsetWidth;
+      return Math.max(DEF, Math.min(520, window.innerWidth - sideW - 680 - 100));
+    }
+    function setW(w, save){
+      w = Math.max(220, Math.min(maxW(), Math.round(w)));
+      document.documentElement.style.setProperty("--words-w", w + "px");
+      if(save){ try{ localStorage.setItem(KEY, String(w)); }catch(e){} }
+      place();
+    }
+    function place(){
+      var col = colEl();
+      if(!col || !isLaptop() || window.innerWidth < 1280 || col.offsetParent === null){ h.classList.remove("show"); return; }
+      var r = col.getBoundingClientRect(), top = Math.max(r.top, 0);
+      h.style.left = (r.left - 6) + "px";
+      h.style.top = top + "px";
+      h.style.height = Math.max(0, Math.min(r.bottom, window.innerHeight) - top) + "px";
+      h.classList.add("show");
+    }
+    try{ var sv = parseInt(localStorage.getItem(KEY), 10); if(sv) document.documentElement.style.setProperty("--words-w", sv + "px"); }catch(e){}
+    var drag = false;
+    h.addEventListener("pointerdown", function(e){
+      e.preventDefault(); h.setPointerCapture(e.pointerId);
+      drag = true; document.body.classList.add("side-dragging");
+    });
+    h.addEventListener("pointermove", function(e){
+      if(!drag) return;
+      var col = colEl(); if(!col) return;
+      setW(curW() + 1.3 * (col.getBoundingClientRect().left - e.clientX), false);
+    });
+    function end(){
+      if(!drag) return;
+      drag = false; document.body.classList.remove("side-dragging");
+      setW(curW(), true);
+    }
+    h.addEventListener("pointerup", end);
+    h.addEventListener("pointercancel", end);
+    h.addEventListener("dblclick", function(){ setW(DEF, true); });
+    h.addEventListener("keydown", function(e){
+      if(e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      setW(curW() + (e.key === "ArrowLeft" ? 16 : -16), true);
+    });
+    window.addEventListener("scroll", place, {passive:true});
+    window.addEventListener("resize", place);
+    document.addEventListener("click", function(){ setTimeout(place, 0); setTimeout(place, 350); });
+    setInterval(place, 500);
+  }
+
   function initLaptop(){
     // Панель.
     var side = document.createElement("aside");
@@ -14650,6 +14807,7 @@
         else if(a === "home") goHome();
         else if(a === "font"){ document.getElementById("fontToggle").click(); renderSide(); }
         else if(a === "theme"){ document.getElementById("themeToggle").click(); renderSide(); }
+        else if(a === "colors") toggleColorPop();
         else if(a === "reset") document.getElementById("resetBtn").click();
         return;
       }
@@ -14711,6 +14869,19 @@
       e.preventDefault();
       var cur = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--side-w"), 10) || SIDE_W_DEF;
       setSideW(cur + (e.key === "ArrowRight" ? 16 : -16), true);
+    });
+
+    initWordsResize();
+    applyColors();
+    mqLap.addEventListener ? mqLap.addEventListener("change", applyColors) : mqLap.addListener(applyColors);
+    new MutationObserver(applyColors).observe(document.body, {attributes:true, attributeFilter:["class"]});
+    document.addEventListener("click", function(e){
+      var pop = document.getElementById("colorPop");
+      if(pop && !pop.contains(e.target) && !e.target.closest('[data-sideact="colors"]')) pop.remove();
+    });
+    document.addEventListener("keydown", function(e){
+      var pop = document.getElementById("colorPop");
+      if(pop && e.key === "Escape") pop.remove();
     });
 
     // «Сегодня» — первым в шапке главной.
