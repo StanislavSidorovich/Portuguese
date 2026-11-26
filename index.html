@@ -1030,7 +1030,10 @@
     .color-pop button{margin-top:6px; background:none; border:none; color:var(--muted); text-decoration:underline; cursor:pointer; font:inherit; padding:2px 0;}
     body.side-dragging{cursor:col-resize; user-select:none;}
     .side-head{display:flex; align-items:center; gap:8px; padding:16px 14px 10px 18px; position:sticky; top:0; background:var(--side-bg); z-index:2;}
-    .side-brand{flex:1; min-width:0;}
+    .side-brand{flex:1; min-width:0; background:none; border:none; padding:4px 6px; margin:-4px -6px; text-align:left; color:inherit; font:inherit; cursor:pointer; border-radius:8px;}
+    .side-brand:hover{background:var(--card);}
+    .side-brand:hover b{text-decoration:underline; text-underline-offset:3px;}
+    .brand-ic{font-style:normal; color:var(--base); margin-right:2px;}
     .side-brand b{display:block; font-family:var(--font-lat); font-weight:800; font-size:0.95rem; letter-spacing:-0.01em;}
     .side-brand span{display:block; font-size:0.72rem; color:var(--muted);}
     .side-ibtn{width:34px; height:34px; border-radius:9px; border:1.5px solid var(--line); background:var(--card);
@@ -14390,7 +14393,7 @@
       doneAll += BLOCKS[k].topics.filter(function(t){ return isPassed(t, p, pp); }).length;
     });
 
-    var h = '<div class="side-head"><div class="side-brand"><b>Português europeu</b><span>' + L("грамматика · офлайн", "grammar · offline") + '</span></div>' +
+    var h = '<div class="side-head"><button type="button" class="side-brand" data-sideact="home" title="' + L("На главный экран", "Back to the start screen") + '"><b><i class="brand-ic">⌂</i> Português europeu</b><span>' + L("грамматика · офлайн", "grammar · offline") + '</span></button>' +
       '<button type="button" class="side-ibtn" data-sideact="toggle" title="' + L("Свернуть панель (Ctrl+\\)", "Collapse the panel (Ctrl+\\)") + '" aria-label="' + L("Свернуть панель", "Collapse the panel") + '">' + (sideMin ? "⟩" : "⟨") + '</button></div>';
     h += '<button type="button" class="side-home' + (act ? '' : ' cur') + '" data-sideact="home" title="' + L("Сегодня", "Today") + '"><span class="sic">⌂</span><span>' + L("Сегодня", "Today") + '</span></button>';
     var curNum = "";
