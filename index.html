@@ -659,7 +659,15 @@
      Режим рисуется кодом поверх готовой разметки .dialogue. Реплики ученика
      и итог стоят на светлых плашках (--ok-tint), которые остаются светлыми и
      в тёмной теме, поэтому текст в них — только -fixed. */
-  .part-bar{margin-top:11px;}
+  /* Z1: «Участвовать» — вторичная кнопка под диалогом: диалог по умолчанию
+     читается, а играть роль предлагается тому, кто уже читает без перевода. */
+  .part-bar{margin-top:14px; display:flex; flex-direction:column; align-items:flex-start; gap:5px;}
+  .part-bar .part-btn{font-size:0.74rem; font-weight:600; padding:4px 11px; border-width:1px; color:var(--muted); border-color:var(--line,#CFD8D4);}
+  body.dark .part-bar .part-btn{border-color:#3A4741;}
+  .part-bar .part-cap{font-family:var(--font-ru); font-size:0.78rem; line-height:1.4; color:var(--muted); margin:0;}
+  .part-bar.nudge .part-btn{border-color:var(--tint-color,var(--base)); color:var(--ink); box-shadow:0 0 0 3px color-mix(in srgb, var(--tint-color,var(--base)) 28%, transparent);}
+  /* Пропуск в заданиях: видимый перевод вписываемого слова. */
+  .blank-hint{font-family:var(--font-ru); font-size:0.88rem; color:var(--muted); white-space:nowrap;}
   .part-btn{
     font-family:var(--font-ru); font-size:0.8rem; font-weight:700; padding:7px 13px;
     border-radius:8px; cursor:pointer; background:transparent;
@@ -1932,7 +1940,7 @@
     <div class="reading-block">
       <div class="text-label" data-en="Diálogo · Na pastelaria — at the café">Diálogo · Na pastelaria — в кафе</div>
       <div class="mini-text">
-        <div class="dialogue">
+        <div class="dialogue" data-no-part>
           <p class="dline"><span class="speaker">Ana:</span> Bom dia!</p>
           <p class="dline"><span class="speaker">Empregado:</span> Bom dia! Faz favor?</p>
           <p class="dline"><span class="speaker">Ana:</span> Um café, por favor.</p>
@@ -2126,7 +2134,7 @@
     <div class="reading-block">
       <div class="text-label" data-en="Diálogo · Antes da aula — before class">Diálogo · Antes da aula — перед парой</div>
       <div class="mini-text">
-        <div class="dialogue">
+        <div class="dialogue" data-no-part>
           <p class="dline"><span class="speaker">Ana:</span> Olá, bom dia!</p>
           <p class="dline"><span class="speaker">João:</span> Bom dia! Tudo bem?</p>
           <p class="dline"><span class="speaker">Ana:</span> Tudo bem, obrigada. E tu?</p>
@@ -2340,7 +2348,7 @@
     <div class="reading-block">
       <div class="text-label" data-en="Diálogo · Na rua — in the street">Diálogo · Na rua — на улице</div>
       <div class="mini-text">
-        <div class="dialogue">
+        <div class="dialogue" data-no-part>
           <p class="dline"><span class="speaker">Ana:</span> Desculpe! A estação é aqui?</p>
           <p class="dline"><span class="speaker">Homem:</span> Bom dia. Não, a estação é na praça do mercado.</p>
           <p class="dline"><span class="speaker">Ana:</span> Ah! E o autocarro?</p>
@@ -2548,7 +2556,7 @@
     <div class="reading-block">
       <div class="text-label" data-en="Diálogo · Em casa — at home">Diálogo · Em casa — дома</div>
       <div class="mini-text">
-        <div class="dialogue">
+        <div class="dialogue" data-no-part>
           <p class="dline"><span class="speaker">Ana:</span> Olá! A chave da casa?</p>
           <p class="dline"><span class="speaker">João:</span> A chave está na cozinha, na mesa.</p>
           <p class="dline"><span class="speaker">Ana:</span> E a roupa da filha?</p>
@@ -2664,11 +2672,11 @@
   </div>
 
   <div class="pane pane-dlg">
-    <p class="tap-hint" data-en="Choose a role: the other person&rsquo;s lines are spoken aloud, yours you write yourself.">Выбери роль: реплики собеседника звучат вслух, свои пишешь сам.</p>
+    <p class="tap-hint" data-en="Read the dialogue aloud, then check it against the translation. 🔊 next to each line.">Прочитай диалог вслух, потом сверь с переводом. 🔊 у каждой реплики.</p>
     <div class="reading-block">
       <div class="text-label" data-en="Diálogo · Ao almoço — at lunch">Diálogo · Ao almoço — за обедом</div>
       <div class="mini-text">
-        <div class="dialogue" data-part-auto>
+        <div class="dialogue" data-no-part>
           <p class="dline"><span class="speaker">Empregado:</span> Boa tarde! Faz favor?</p>
           <p class="dline"><span class="speaker">Ana:</span> Boa tarde. Sopa e peixe com arroz, por favor.</p>
           <p class="dline"><span class="speaker">Empregado:</span> Com pão?</p>
@@ -2685,7 +2693,7 @@
   </div>
 
   <div class="pane pane-quiz" data-rev="rev04">
-    <p class="quiz-instruction" data-en="Mixed exercises from topics 0.1&ndash;0.4. Build the sentence, type the word or pick an option.">Задания вперемешку из тем 0.1–0.4. Собери фразу, впиши слово или выбери вариант.</p>
+    <p class="quiz-instruction" data-en="Mixed exercises from topics 0.1&ndash;0.4. Build the sentence, type the word or pick an option. In a gap, type the Portuguese word in place of the translation in brackets.">Задания вперемешку из тем 0.1–0.4. Собери фразу, впиши слово или выбери вариант. В пропуске впиши португальское слово вместо перевода в скобках.</p>
     <div class="qitem">
       <span class="qnum">1.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;The key is in the kitchen.&rsquo;">Собери фразу: «Ключ на кухне».</span>
       <div class="qbuild" data-answer="A chave está na cozinha" data-words="cozinha|na|A|está|chave"></div>
@@ -2703,7 +2711,7 @@
       <span class="qnum">4.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;The class is in room two.&rsquo;">Собери фразу: «Занятие в аудитории два».</span>
       <div class="qbuild" data-answer="A aula é na sala dois" data-words="sala|é|A|dois|na|aula"></div>
     </div>
-    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint" data-en="From the text. &lsquo;Lunch is with a friend&rsquo;:">Из текста. «Обед — с другом»:</span> <span class="pt">O almoço é com um</span> <input class="blank" data-answer="amigo" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint" data-en="From the text. &lsquo;Lunch is with a friend&rsquo;:">Из текста. «Обед — с другом»:</span> <span class="pt">O almoço é com um</span> <input class="blank" data-answer="amigo" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="blank-hint" data-en="(friend)">(друг)</span></div>
     <div class="qitem">
       <span class="qnum">6.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;The station is on the square.&rsquo;">Собери фразу: «Вокзал на площади».</span>
       <div class="qbuild" data-answer="A estação é na praça" data-words="praça|é|A|na|estação"></div>
@@ -3601,11 +3609,11 @@
   </div>
 
   <div class="pane pane-dlg">
-    <p class="tap-hint" data-en="Choose a role: the other person&rsquo;s lines are spoken aloud, yours you write yourself.">Выбери роль: реплики собеседника звучат вслух, свои пишешь сам.</p>
+    <p class="tap-hint" data-en="Read the dialogue and check it against the translation; 🔊 is next to each line. Once it reads easily without the translation, there is a “Take part” button under it.">Прочитай диалог и сверь с переводом; 🔊 у каждой реплики. Когда он читается без перевода, под ним есть «Участвовать».</p>
     <div class="reading-block">
       <div class="text-label" data-en="Diálogo · No hotel — at the hotel">Diálogo · No hotel — в отеле</div>
       <div class="mini-text">
-        <div class="dialogue" data-part-auto>
+        <div class="dialogue">
           <p class="dline" data-audio="rev08-d-01"><span class="speaker">Empregada:</span> Boa tarde! Faz favor?</p>
           <p class="dline" data-audio="rev08-d-02"><span class="speaker">João:</span> Boa tarde. A chave do quarto dois, por favor.</p>
           <p class="dline" data-audio="rev08-d-03"><span class="speaker">Empregada:</span> Aqui está. O quarto está pronto.</p>
@@ -3625,12 +3633,12 @@
   </div>
 
   <div class="pane pane-quiz" data-rev="rev08">
-    <p class="quiz-instruction" data-en="Mixed exercises from topics 0.5&ndash;0.8. Build the sentence, type the word or pick an option.">Задания вперемешку из тем 0.5–0.8. Собери фразу, впиши слово или выбери вариант.</p>
+    <p class="quiz-instruction" data-en="Mixed exercises from topics 0.5&ndash;0.8. Build the sentence, type the word or pick an option. In a gap, type the Portuguese word in place of the translation in brackets.">Задания вперемешку из тем 0.5–0.8. Собери фразу, впиши слово или выбери вариант. В пропуске впиши португальское слово вместо перевода в скобках.</p>
     <div class="qitem">
       <span class="qnum">1.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;The restaurant is near the beach.&rsquo;">Собери фразу: «Ресторан рядом с пляжем».</span>
       <div class="qbuild" data-answer="O restaurante está perto da praia" data-words="perto|O|praia|está|da|restaurante"></div>
     </div>
-    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint" data-en="Plural:">Во множественном:</span> <span class="pt">papel →</span> <input class="blank" data-answer="papéis|papeis" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">2.</span> <span class="ru-hint" data-en="Plural:">Во множественном:</span> <span class="pt">papel →</span> <input class="blank" data-answer="papéis|papeis" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="blank-hint" data-en="(plural)">(мн. ч.)</span></div>
     <div class="qitem"><span class="qnum">3.</span> <span class="ru-hint" data-en="&lsquo;The book is on the table&rsquo;:">«Книга на столе»:</span> <span class="pt">O livro</span>
       <select class="mc" data-answer="está">
         <option value="">—</option>
@@ -3642,13 +3650,13 @@
       <span class="qnum">4.</span> <span class="ru-hint" data-en="From the text. Build: &lsquo;The hotel is small, but the room is big.&rsquo;">Из текста. Собери: «Отель маленький, но номер большой».</span>
       <div class="qbuild" data-answer="O hotel é pequeno mas o quarto é grande" data-words="hotel|é|pequeno|mas|O|o|quarto|é|grande"></div>
     </div>
-    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint" data-en="&lsquo;I&rsquo;m from Lisbon&rsquo;:">«Я из Лиссабона»:</span> <span class="pt">Sou</span> <input class="blank" data-answer="de" style="width:4em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">Lisboa.</span></div>
-    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint" data-en="From the text. &lsquo;Ana is tired&rsquo;:">Из текста. «Ана устала»:</span> <span class="pt">A Ana</span> <input class="blank" data-answer="está|esta" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">cansada.</span></div>
+    <div class="qitem"><span class="qnum">5.</span> <span class="ru-hint" data-en="&lsquo;I&rsquo;m from Lisbon&rsquo;:">«Я из Лиссабона»:</span> <span class="pt">Sou</span> <input class="blank" data-answer="de" style="width:4em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="blank-hint" data-en="(from)">(из)</span> <span class="pt">Lisboa.</span></div>
+    <div class="qitem"><span class="qnum">6.</span> <span class="ru-hint" data-en="From the text. &lsquo;Ana is tired&rsquo;:">Из текста. «Ана устала»:</span> <span class="pt">A Ana</span> <input class="blank" data-answer="está|esta" style="width:6em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="blank-hint" data-en="(estar — to be)">(estar — быть)</span> <span class="pt">cansada.</span></div>
     <div class="qitem">
       <span class="qnum">7.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;A map of the city, please.&rsquo;">Собери фразу: «Карту города, пожалуйста».</span>
       <div class="qbuild" data-answer="Um mapa da cidade por favor" data-words="cidade|favor|Um|da|por|mapa"></div>
     </div>
-    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint" data-en="Type the article:">Впиши артикль:</span> <input class="blank" data-answer="a" style="width:4em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="pt">estação</span></div>
+    <div class="qitem"><span class="qnum">8.</span> <span class="ru-hint" data-en="Type the article:">Впиши артикль:</span> <input class="blank" data-answer="a" style="width:4em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="blank-hint" data-en="(article)">(артикль)</span> <span class="pt">estação</span></div>
     <div class="qitem">
       <span class="qnum">9.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;The loaves are in the kitchen&rsquo; (plural).">Собери фразу: «Хлеб на кухне» (во множественном).</span>
       <div class="qbuild" data-answer="Os pães estão na cozinha" data-words="cozinha|Os|na|estão|pães"></div>
@@ -3661,7 +3669,7 @@
         <option value="são">são</option>
       </select> <span class="pt">engenheiro.</span>
     </div>
-    <div class="qitem"><span class="qnum">11.</span> <span class="ru-hint" data-en="From the text. &lsquo;The shops are closed&rsquo;:">Из текста. «Магазины закрыты»:</span> <span class="pt">As lojas estão</span> <input class="blank" data-answer="fechadas" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"></div>
+    <div class="qitem"><span class="qnum">11.</span> <span class="ru-hint" data-en="From the text. &lsquo;The shops are closed&rsquo;:">Из текста. «Магазины закрыты»:</span> <span class="pt">As lojas estão</span> <input class="blank" data-answer="fechadas" style="width:7em;" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"> <span class="blank-hint" data-en="(closed)">(закрытые)</span></div>
     <div class="qitem">
       <span class="qnum">12.</span> <span class="ru-hint" data-en="Build the sentence: &lsquo;I&rsquo;m a student at the university.&rsquo;">Собери фразу: «Я студентка в университете».</span>
       <div class="qbuild" data-answer="Sou estudante na universidade" data-words="universidade|Sou|na|estudante"></div>
@@ -9374,14 +9382,19 @@
     p = p || loadProgress();
     if(!isDone(p[t])) return 0;
     pp = pp || loadPart();
-    var n = document.querySelectorAll("#screen-" + t + " .dialogue").length;
+    var n = document.querySelectorAll("#screen-" + t + " .dialogue:not([data-no-part])").length;
     if(!n) return 2;
     var rec = pp[t] || {}, m = 3;
     for(var i = 0; i < n; i++) m = Math.min(m, partRecLvl(rec[i]));
     return m >= 3 ? 3 : (m >= 2 ? 2 : 1);
   }
+  // Темы 0.1–0.4 и глава 0.1–0.4: диалог только читается, «Участвовать» нет;
+  // тема засчитана по заданиям.
+  function topicHasPart(t){ return !!document.querySelector("#screen-" + t + " .dialogue:not([data-no-part])"); }
   function isPassed(t, p, pp){ return topicStage(t, p, pp) >= 2; }
-  function stageHint(n){
+  function stageHint(n, t){
+    if(n === 2 && t && !topicHasPart(t)) return L("Фонетика: диалог здесь только читают и слушают. «Участвовать» появится с темы 0.5.",
+                                                    "Phonetics: here you only read and listen to the dialogue. “Take part” starts at topic 0.5.");
     if(n === 0) return L("Первая ступень — задания на вкладке Exercícios: от 80% верных.",
                          "First step: the Exercícios tab — 80% correct or more.");
     if(n === 1) return L("Следующая ступень — Участвовать в диалоге.",
@@ -9399,8 +9412,15 @@
       if(!target && partRecLvl(rec[i]) < need) target = d;
     });
     target = target || screen.querySelector(".dialogue");
-    var mini = target && target.closest(".mini-text");
-    if(mini) setTimeout(function(){ mini.scrollIntoView({block:"start", behavior:"smooth"}); }, 60);
+    var ps = target && PART.get(target);
+    if(ps){
+      // Ведём к кнопке «Участвовать» под диалогом и подсвечиваем её на пару секунд.
+      setTimeout(function(){
+        ps.bar.scrollIntoView({block:"center", behavior:"smooth"});
+        ps.bar.classList.add("nudge");
+        setTimeout(function(){ ps.bar.classList.remove("nudge"); }, 2600);
+      }, 60);
+    }
   }
   // Карточка ступени под подзаголовком темы: где ученик и какой шаг следующий.
   function renderTopicStages(p, pp, rose){
@@ -9416,8 +9436,8 @@
       }
       var html = '<div class="stage-steps">';
       for(var k = 1; k <= 3; k++) html += '<span class="stage-step' + (st >= k ? ' on' : '') + '">' + (st >= k ? '✓ ' : '') + stageName(k) + '</span>';
-      html += '</div><p class="stage-hint">' + stageHint(st) + '</p>';
-      if(st === 1 || st === 2) html += '<button type="button" class="part-btn go" data-dlg="' + id + '">' + L("К диалогу →", "To the dialogue →") + '</button>';
+      html += '</div><p class="stage-hint">' + stageHint(st, id) + '</p>';
+      if((st === 1 || st === 2) && topicHasPart(id)) html += '<button type="button" class="part-btn go" data-dlg="' + id + '">' + L("К диалогу →", "To the dialogue →") + '</button>';
       card.innerHTML = html;
       card.classList.toggle("just-up", rose === id);
     });
@@ -9451,8 +9471,10 @@
   }
   function revParts(id, r){
     var x = (r || loadRev())[id] || {};
-    return { quiz: !!(x.quiz && x.quiz.done), dlg: !!(x.dlg && x.dlg.lvl >= 2) };
+    return { quiz: !!(x.quiz && x.quiz.done), dlg: !revHasPart(id) || !!(x.dlg && x.dlg.lvl >= 2) };
   }
+  // У главы 0.1–0.4 диалог только читается — закрывают её одни задания.
+  function revHasPart(id){ return !!document.querySelector("#screen-" + id + " .dialogue:not([data-no-part])"); }
   function revClosed(id, r){ var s = revParts(id, r); return s.quiz && s.dlg; }
   function revEnReady(rv){
     return rv.covers.every(function(t){ return EN_READY_TOPICS.indexOf(t) !== -1; });
@@ -9510,16 +9532,19 @@
         card.className = "rev-card";
       } else {
         card.className = "stage-card rev-card";
+        var hasP = revHasPart(rv.id);
         card.innerHTML = '<div class="stage-steps">' +
-          '<span class="stage-step' + (parts.dlg ? ' on' : '') + '">' + (parts.dlg ? '✓ ' : '') + L("Диалог", "Dialogue") + '</span>' +
+          (hasP ? '<span class="stage-step' + (parts.dlg ? ' on' : '') + '">' + (parts.dlg ? '✓ ' : '') + L("Диалог", "Dialogue") + '</span>' : '') +
           '<span class="stage-step' + (parts.quiz ? ' on' : '') + '">' + (parts.quiz ? '✓ ' : '') + L("Задания от 80%", "Exercises 80%+") + '</span>' +
-          '</div><p class="stage-hint">' + L("Глава закрывается, когда сыгран диалог (без «Показать ответ») и задания дают от 80%.",
-                                              "The chapter closes once the dialogue is played (without “Show the answer”) and the exercises reach 80%.") + '</p>';
+          '</div><p class="stage-hint">' + (hasP ? L("Глава закрывается, когда сыгран диалог (без «Показать ответ») и задания дают от 80%.",
+                                              "The chapter closes once the dialogue is played (without “Show the answer”) and the exercises reach 80%.")
+                                       : L("Глава закрывается, когда задания дают от 80%. Диалог здесь читают и слушают.",
+                                           "The chapter closes when the exercises reach 80%. You read and listen to the dialogue here.")) + '</p>';
       }
       var slot = scr.querySelector("[data-rev-slot]");
       if(slot){
         if(closed) slot.innerHTML = revFinishHtml(rv);
-        else if(parts.quiz) slot.innerHTML = '<p class="rev-left">' + L("Задания засчитаны. Чтобы закрыть главу, осталось сыграть диалог — вкладка Diálogo.",
+        else if(parts.quiz && revHasPart(rv.id)) slot.innerHTML = '<p class="rev-left">' + L("Задания засчитаны. Чтобы закрыть главу, осталось сыграть диалог — вкладка Diálogo.",
                                                                           "Exercises counted. To close the chapter, play the dialogue — the Diálogo tab.") + '</p>';
         else slot.innerHTML = "";
       }
@@ -9760,7 +9785,7 @@
                     '<span class="review-title">'+title+'</span></button>';
     // Тема на «Узнаю» или «Собираю» ждёт диалога — ссылка ведёт прямо в него.
     var lastStage = topicStage(last);
-    if(lastStage === 1 || lastStage === 2){
+    if((lastStage === 1 || lastStage === 2) && topicHasPart(last)){
       box.innerHTML += '<button type="button" class="review-item" data-dlg="'+last+'" style="border-color:#DAE1DE;margin:8px 0 0;">' +
                        '<span class="review-why">'+L("Следующая ступень", "Next step")+'</span>' +
                        '<span class="review-title">'+(lastStage === 1 ? L("Участвовать в диалоге", "Take part in the dialogue")
@@ -12397,7 +12422,7 @@
   }
 
   function initPart(dlg){
-    if(PART.has(dlg)) return;
+    if(PART.has(dlg) || dlg.hasAttribute("data-no-part")) return;
     var mini = dlg.closest(".mini-text");
     if(!mini) return;
     var lines = [], roles = [];
@@ -12418,9 +12443,15 @@
     start.dataset.en = "Take part";
     if(LANG === "en"){ start.dataset.ruHtml = "Участвовать"; start.textContent = "Take part"; }
     bar.appendChild(start);
+    var cap = partEl("p", "part-cap", "Когда диалог читается без перевода — попробуй сыграть роль сам.");
+    cap.dataset.en = "When you can read this dialogue without the translation, try playing a role yourself.";
+    if(LANG === "en"){ cap.dataset.ruHtml = cap.textContent; cap.textContent = cap.dataset.en; }
+    bar.appendChild(cap);
     var stage = partEl("div", "part-stage");
     stage.hidden = true;
-    dlg.insertAdjacentElement("afterend", bar);
+    // Под диалогом и его переводом: читаешь, сверяешься — и только потом играешь.
+    var tr = mini.querySelector(":scope > .ru-translation");
+    (tr || dlg).insertAdjacentElement("afterend", bar);
     bar.insertAdjacentElement("afterend", stage);
     PART.set(dlg, {dlg: dlg, mini: mini, bar: bar, stage: stage, lines: lines, roles: roles,
                    phase: "off", me: null, i: -1, hist: [], stats: null, sub: "write", words: null});
@@ -13056,12 +13087,8 @@
       el.querySelectorAll(".storytext, .dialogue, .wordset .w").forEach(wrapTapWords);
       el.querySelectorAll(".qbuild").forEach(initBuild);
       el.querySelectorAll(".dialogue").forEach(initPart);
-      // Диалог главы Revisão открывается сразу в режиме «Участвовать»:
-      // читать его глазами — та самая ступень «Узнаю», от которой глава уводит.
-      el.querySelectorAll(".dialogue[data-part-auto]").forEach(function(d){
-        var st = PART.get(d);
-        if(st){ st.phase = "role"; partRender(st); }
-      });
+      // Диалог всегда начинается с чтения (отзыв ученика 26.11): «Участвовать» —
+      // вторичная кнопка под диалогом, сам режим не открывается.
       el.dataset.prepared = "1";
     }
     addSpeakButtons(el);
@@ -14504,6 +14531,10 @@
              L("Прочитай правило и тексты, потом Exercícios: от 80% верных.", "Read the rule and the texts, then Exercícios: 80% correct or more.");
       go = '<button type="button" class="btn btn-go" data-open="' + t + '">' + L("Открыть тему →", "Open the topic →") + '</button>';
       mins = TOPIC_MINUTES[t] ? "~" + TOPIC_MINUTES[t] + L(" мин", " min") : "";
+    } else if(st >= 2 && !topicHasPart(t)){
+      step = '<b>' + L("Тема пройдена", "Topic done") + '</b>' + L("Диалог здесь только читают: «Участвовать» появится с темы 0.5.", "You only read this dialogue: “Take part” starts at topic 0.5.");
+      go = '<button type="button" class="btn btn-go" data-open="' + t + '">' + L("Открыть тему →", "Open the topic →") + '</button>';
+      mins = "";
     } else if(st === 1){
       step = '<b>' + L("Следующий шаг — диалог", "Next step — the dialogue") + (dn ? " «" + escapeHtml(dn) + "»" : "") + '</b>' +
              L("Сыграй за одного из собеседников: свои реплики пишешь сам, «Не помню» даёт банк слов.", "Play one of the two speakers: you write your own lines, “I don't remember” opens a word bank.");
@@ -14564,18 +14595,8 @@
       b.setAttribute("aria-selected", b.classList.contains("active") ? "true" : "false");
     });
   }
-  // Диалог открывается сразу на выборе роли — первый раз за визит и пока тема
-  // не на «Пишу». Вышел сам — второй раз не навязываем.
-  function autoPart(screen){
-    if(screen.dataset.dlgAuto) return;
-    screen.dataset.dlgAuto = "1";
-    var id = screen.dataset.topic;
-    if(!id || topicStage(id) >= 3) return;
-    screen.querySelectorAll(".dialogue").forEach(function(d){
-      var st = PART.get(d);
-      if(st && st.phase === "off"){ st.phase = "role"; partRender(st); }
-    });
-  }
+  // Было: диалог открывался сразу на выборе роли. Убрано — слишком рано для новичка.
+  function autoPart(){ /* с 26.11 режим сам не открывается: диалог сначала читают */ }
 
   /* ---------- колонка справа (≥1280) ---------- */
   function wcLabel(label){
@@ -14593,7 +14614,7 @@
       var n = screen.querySelectorAll(".pane-quiz .qitem").length, need = Math.ceil(n * 0.8);
       html = '<div class="side-card"><h3>' + L("Глава " + rv.n + " закрыта, когда", "Chapter " + rv.n + " closes when") + '</h3>' +
         '<div class="wc-check' + (parts.quiz ? ' ok' : '') + '"><i>' + (parts.quiz ? '✓' : '○') + '</i><span>Exercícios — ' + L(need + " из " + n + " и выше", need + " of " + n + " or more") + '</span></div>' +
-        '<div class="wc-check' + (parts.dlg ? ' ok' : '') + '"><i>' + (parts.dlg ? '✓' : '○') + '</i><span>' + L("Diálogo пройден без «Показать ответ» (банк слов можно)", "Diálogo played without “Show the answer” (the word bank is fine)") + '</span></div></div>' +
+        (revHasPart(rv.id) ? '<div class="wc-check' + (parts.dlg ? ' ok' : '') + '"><i>' + (parts.dlg ? '✓' : '○') + '</i><span>' + L("Diálogo пройден без «Показать ответ» (банк слов можно)", "Diálogo played without “Show the answer” (the word bank is fine)") + '</span></div>' : '') + '</div>' +
         '<div class="side-card"><h3>' + L("Что собрано в главе", "What the chapter covers") + '</h3>' +
         rv.covers.map(function(c){
           return '<div class="wc-cov"><span class="snum">' + escapeHtml(topicNum(c)) + '</span><span class="sttl">' + escapeHtml((topicTitleMap()[c] || c).replace(/^\S+\s+/, "")) + '</span>' +

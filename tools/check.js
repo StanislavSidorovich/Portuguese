@@ -763,7 +763,16 @@ function checkRevisoes() {
     for (const p of ['pane-rule', 'pane-dlg', `pane-quiz" data-rev="${rv.id}"`]) {
       if (!scr.includes(`class="pane ${p}`)) fail(`${where}: нет вкладки ${p.split('"')[0]}`);
     }
-    if (!/<div class="dialogue" data-part-auto>/.test(scr)) fail(`${where}: диалог не открывается в режиме «Участвовать» (data-part-auto)`);
+    // Диалог всегда начинается с чтения (отзыв 26.11): режим сам не открывается;
+    // в главе 0.1–0.4 кнопки «Участвовать» нет совсем (data-no-part).
+    if (/data-part-auto/.test(scr)) fail(`${where}: data-part-auto — диалог не должен открываться сам, он сначала читается`);
+    const noPart = /<div class="dialogue" data-no-part>/.test(scr);
+    if (noPart !== (rv.id === 'rev04')) fail(`${where}: data-no-part у диалога ${noPart ? 'стоит' : 'не стоит'} — кнопки «Участвовать» нет только у главы 0.1–0.4`);
+    // Пропуск виден как задание: либо «Впиши слово …» до поля, либо перевод вписываемого слова в скобках после него.
+    for (const item of scr.split('<div class=\"qitem\">').slice(1).filter((x) => x.includes('<input class=\"blank\"'))) {
+      const asks = /class=\"ru-hint\"[^>]*>[^<]*(?:Впиши|Type)/.test(item);
+      if (!asks && !/class=\"blank-hint\" data-en=\"\([^)]+\)\">\([^)]+\)<\/span>/.test(item)) fail(`${where}: у пропуска нет видимой подсказки (blank-hint или «Впиши слово…»): ${item.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 60)}`);
+    }
     const nBuild = (scr.match(/class="qbuild"/g) || []).length;
     const nBlank = (scr.match(/<input class="blank"/g) || []).length;
     const nMc    = (scr.match(/<select class="mc"/g) || []).length;
@@ -783,7 +792,7 @@ function checkRevisoes() {
     const text = [...scr.matchAll(/<p class="storytext"[^>]*>([\s\S]*?)<\/p>/g)].map((m) => m[1].replace(/<[^>]+>/g, ' ')).join(' ');
     nWords = words(text).length;
     if (nWords < rv.words[0] || nWords > rv.words[1]) fail(`${where}: в тексте ${nWords} слов, задано ${rv.words[0]}–${rv.words[1]}`);
-    const nLines = (scr.match(/<p class="dline">/g) || []).length;
+    const nLines = (scr.match(/<p class="dline"/g) || []).length;
 
     // Английская половина: перевод текста и диалога, подсказки заданий.
     const tr = [...scr.matchAll(/<p class="ru-translation"([^>]*)>/g)];

@@ -213,8 +213,11 @@ node tools/make-icons.js
    текста, следующая тема);
 2. экран `<div class="screen topic-screen rev-screen" id="screen-revNN"
    data-rev="revNN">` сразу после экрана последней охваченной темы —
-   вкладки `pane-rule` (Texto), `pane-dlg` (Diálogo с `data-part-auto`) и
-   `pane-quiz data-rev="revNN"`; образец — `rev08`;
+   вкладки `pane-rule` (Texto), `pane-dlg` (Diálogo: читается, «Участвовать» —
+   кнопка под ним; `data-no-part` только у главы 0.1–0.4) и
+   `pane-quiz data-rev="revNN"`; образец — `rev08`. У каждого пропуска
+   `blank` видна подсказка: «Впиши слово …» до поля или `(перевод)` после
+   него (`.blank-hint` с `data-en`) — проверка 12 это держит;
 3. строка `topic-row rev-row` на главной после последней охваченной темы,
    с `data-rev-check`;
 4. `.next-card` последней темы ведёт в главу, глава — в следующую тему.
