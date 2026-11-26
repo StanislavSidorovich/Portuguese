@@ -1274,6 +1274,7 @@
 <div class="settings-bar">
   <div class="lang-switch"><button type="button" data-lang="ru">РУ</button><button type="button" data-lang="en">EN</button></div>
   <button type="button" id="fontToggle" class="settings-btn">A</button>
+  <button type="button" id="speedToggle" class="settings-btn" title="Скорость звука">🔊 100%</button>
   <button type="button" id="themeToggle" class="settings-btn">🌙 Тёмная</button>
 </div>
 
@@ -9590,7 +9591,7 @@
       if(!ptVoice){ next(); return; }
       sents.forEach(function(x, k){
         var u = new SpeechSynthesisUtterance(x);
-        u.voice = ptVoice; u.lang = ptVoice.lang; u.rate = 0.9;
+        u.voice = ptVoice; u.lang = ptVoice.lang; u.rate = 0.9 * userSpeed;
         if(k === sents.length - 1) u.onend = function(){ if(tok === playTok) next(); };
         try{ window.speechSynthesis.speak(u); }catch(e){}
       });
@@ -10417,6 +10418,25 @@
     try{ window.speechSynthesis.cancel(); }catch(e){}
   }
 
+  // Скорость звука под себя: множитель поверх любой скорости (файлы, браузерный
+  // голос, «Медленнее»). 100% — как было: обычный темп не меняется, ученик
+  // сам сбавляет шагами по 5% до 80%. Хранится в ptSpeedV1.
+  var SPEED_KEY = "ptSpeedV1", SPEED_STEPS = [1, 0.95, 0.9, 0.85, 0.8];
+  var userSpeed = (function(){
+    try{ var v = parseFloat(localStorage.getItem(SPEED_KEY)); if(SPEED_STEPS.indexOf(v) !== -1) return v; }catch(e){}
+    return 1;
+  })();
+  function speedLabel(){ return "🔊 " + Math.round(userSpeed * 100) + "%"; }
+  function speedTitle(){ return L("Скорость звука: сколько от обычной", "Sound speed: share of normal"); }
+  function cycleSpeed(){
+    userSpeed = SPEED_STEPS[(SPEED_STEPS.indexOf(userSpeed) + 1) % SPEED_STEPS.length];
+    try{ localStorage.setItem(SPEED_KEY, String(userSpeed)); }catch(e){}
+    if(curAudio && curAudio._base) curAudio.playbackRate = curAudio._base * userSpeed;
+    var b = document.getElementById("speedToggle");
+    if(b){ b.textContent = speedLabel(); b.title = speedTitle(); }
+    if(typeof renderSide === "function") renderSide();
+  }
+
   // Играет assets/audio/<id>.mp3. onEnd — файл доигран; onFail — не загрузился
   // или браузер отказался играть (ученик ошибки не видит: звучит TTS).
   function playFile(id, rate, onEnd, onFail){
@@ -10430,7 +10450,8 @@
     }
     curAudio = a;
     a.preload = "auto";
-    a.playbackRate = Number(rate) || 1;
+    a._base = Number(rate) || 1;
+    a.playbackRate = a._base * userSpeed;
     a.onended = function(){ done(onEnd); };
     a.onerror = function(){ done(onFail); };
     try{
@@ -10468,7 +10489,7 @@
       var u = new SpeechSynthesisUtterance(text);
       u.voice = ptVoice;
       u.lang = ptVoice.lang;
-      u.rate = Number(rate) || 0.9;
+      u.rate = (Number(rate) || 0.9) * userSpeed;
       if(onEnd) u.onend = u.onerror = onEnd;
       window.speechSynthesis.speak(u);
     }catch(e){ if(onEnd) onEnd(); }
@@ -13084,7 +13105,9 @@
   // документу.
   function prepareScreen(el){
     if(!el.dataset.prepared){
-      el.querySelectorAll(".storytext, .dialogue, .wordset .w").forEach(wrapTapWords);
+      // Португальские примеры в правилах (таблицы, «о livro», ловушки) — тоже по тапу:
+      // слово встретилось в разборе, а где его учили, уже не найти.
+      el.querySelectorAll(".storytext, .dialogue, .wordset .w, .pane-rule .pt, .pane-rule .p-big").forEach(wrapTapWords);
       el.querySelectorAll(".qbuild").forEach(initBuild);
       el.querySelectorAll(".dialogue").forEach(initPart);
       // Диалог всегда начинается с чтения (отзыв ученика 26.11): «Участвовать» —
@@ -14346,6 +14369,8 @@
     try{ localStorage.setItem(FONT_KEY, next); }catch(e){}
   });
 
+  document.getElementById("speedToggle").addEventListener("click", cycleSpeed);
+
   document.getElementById("resetBtn").addEventListener("click", function(){
     if(!confirm(L("Сбросить весь прогресс? Отменить не получится.", "Reset all progress? This can't be undone."))) return;
     try{
@@ -14478,6 +14503,7 @@
     h += '<div class="side-foot"><button type="button" class="spill' + (LANG === "ru" ? ' on' : '') + '" data-lang="ru">РУ</button>' +
       '<button type="button" class="spill' + (LANG === "en" ? ' on' : '') + '" data-lang="en">EN</button>' +
       '<button type="button" class="spill" data-sideact="font" title="' + L("Размер шрифта", "Font size") + '">' + document.getElementById("fontToggle").textContent + '</button>' +
+      '<button type="button" class="spill" data-sideact="speed" title="' + speedTitle() + '">' + speedLabel() + '</button>' +
       '<button type="button" class="spill theme" data-sideact="colors" title="' + L("Цвета панели и фона", "Panel and background colours") + '">🎨</button>' +
       '<button type="button" class="spill theme" data-sideact="theme" title="' + L("Тема оформления", "Theme") + '">' + (dark ? "☀️" : "🌙") + '</button>' +
       '<button type="button" class="side-reset" data-sideact="reset">' + L("Сбросить прогресс", "Reset progress") + '</button></div>';
@@ -14830,6 +14856,7 @@
         if(a === "toggle") toggleSide();
         else if(a === "home") goHome();
         else if(a === "font"){ document.getElementById("fontToggle").click(); renderSide(); }
+        else if(a === "speed") cycleSpeed();
         else if(a === "theme"){ document.getElementById("themeToggle").click(); renderSide(); }
         else if(a === "colors") toggleColorPop();
         else if(a === "reset") document.getElementById("resetBtn").click();
@@ -14973,6 +15000,8 @@
 
   (function init(){
     updateThemeToggleText();
+    var spB = document.getElementById("speedToggle");
+    spB.textContent = speedLabel(); spB.title = speedTitle();
     var root = document.documentElement;
     document.getElementById("fontToggle").textContent =
       root.classList.contains("font-plus-plus") ? "A++" : (root.classList.contains("font-plus") ? "A+" : "A");
