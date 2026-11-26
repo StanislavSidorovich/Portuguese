@@ -14756,7 +14756,7 @@
     }
     function place(){
       var col = colEl();
-      if(!col || !isLaptop() || window.innerWidth < 1280 || col.offsetParent === null){ h.classList.remove("show"); return; }
+      if(!col || !isLaptop() || window.innerWidth < 1280 || !col.getClientRects().length){ h.classList.remove("show"); return; }
       var r = col.getBoundingClientRect(), top = Math.max(r.top, 0);
       h.style.left = (r.left - 6) + "px";
       h.style.top = top + "px";
