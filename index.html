@@ -996,7 +996,7 @@
      правило не срабатывает. Левая панель строится кодом (renderSide) из тех
      же данных, что и список на главной; здесь — только её вид.
      ===================================================================== */
-  .side, .crumb, .today-wrap, .tdot{display:none;}
+  .side, .crumb, .today-wrap, .tdot, .side-resize{display:none;}
   .laptop-only{display:none;}
   @media (min-width:1024px){
     body{padding-left:var(--side-w);}
@@ -1008,6 +1008,12 @@
     .side{position:fixed; left:0; top:0; bottom:0; width:var(--side-w); z-index:20; display:flex; flex-direction:column;
       overflow-y:auto; overflow-x:hidden; background:var(--side-bg); border-right:1px solid var(--line); scrollbar-width:thin;}
     body.side-min .side{width:var(--side-rail);}
+    /* Ручка ширины панели: тянуть мышью, ←/→ с клавиатуры, двойной клик — сброс. */
+    .side-resize{display:block; position:fixed; top:0; bottom:0; left:calc(var(--side-w) - 4px); width:8px; z-index:21; cursor:col-resize; touch-action:none;}
+    .side-resize::after{content:""; position:absolute; top:0; bottom:0; left:3px; width:2px; background:transparent; transition:background .15s;}
+    .side-resize:hover::after, .side-resize:focus-visible::after, body.side-dragging .side-resize::after{background:var(--base);}
+    body.side-min .side-resize{display:none;}
+    body.side-dragging{cursor:col-resize; user-select:none;}
     .side-head{display:flex; align-items:center; gap:8px; padding:16px 14px 10px 18px; position:sticky; top:0; background:var(--side-bg); z-index:2;}
     .side-brand{flex:1; min-width:0;}
     .side-brand b{display:block; font-family:var(--font-lat); font-weight:800; font-size:0.95rem; letter-spacing:-0.01em;}
@@ -14657,6 +14663,53 @@
       }
     });
     document.body.classList.toggle("side-min", sideMin);
+
+    // Ширина панели: от 200px до половины окна (не больше 520), запоминается.
+    var SIDE_W_KEY = "ptSideWV1", SIDE_W_DEF = 272;
+    function sideWMax(){ return Math.max(240, Math.min(520, Math.floor(window.innerWidth / 2))); }
+    function setSideW(w, save){
+      w = Math.max(200, Math.min(sideWMax(), Math.round(w)));
+      document.documentElement.style.setProperty("--side-w", w + "px");
+      handle.setAttribute("aria-valuenow", String(w));
+      if(save){ try{ localStorage.setItem(SIDE_W_KEY, String(w)); }catch(er){} }
+      return w;
+    }
+    var handle = document.createElement("div");
+    handle.className = "side-resize"; handle.tabIndex = 0;
+    handle.setAttribute("role", "separator"); handle.setAttribute("aria-orientation", "vertical");
+    handle.setAttribute("aria-label", "Ширина панели");
+    handle.setAttribute("aria-valuemin", "200");
+    document.body.insertBefore(handle, side.nextSibling);
+    var savedW = 0;
+    try{ savedW = parseInt(localStorage.getItem(SIDE_W_KEY), 10) || 0; }catch(er){}
+    setSideW(savedW || SIDE_W_DEF, false);
+    window.addEventListener("resize", function(){
+      var cur = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--side-w"), 10) || SIDE_W_DEF;
+      setSideW(cur, false);
+    });
+    handle.addEventListener("pointerdown", function(e){
+      e.preventDefault();
+      handle.setPointerCapture(e.pointerId);
+      document.body.classList.add("side-dragging");
+    });
+    handle.addEventListener("pointermove", function(e){
+      if(!document.body.classList.contains("side-dragging")) return;
+      setSideW(e.clientX, false);
+    });
+    function endDrag(e){
+      if(!document.body.classList.contains("side-dragging")) return;
+      document.body.classList.remove("side-dragging");
+      setSideW(e.clientX, true);
+    }
+    handle.addEventListener("pointerup", endDrag);
+    handle.addEventListener("pointercancel", endDrag);
+    handle.addEventListener("dblclick", function(){ setSideW(SIDE_W_DEF, true); });
+    handle.addEventListener("keydown", function(e){
+      if(e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      var cur = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--side-w"), 10) || SIDE_W_DEF;
+      setSideW(cur + (e.key === "ArrowRight" ? 16 : -16), true);
+    });
 
     // «Сегодня» — первым в шапке главной.
     var hero = document.querySelector("#home .hero");
