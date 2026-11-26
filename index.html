@@ -10208,6 +10208,17 @@
   }
 
   function lookupWord(raw){   return lookupIn(VOCAB, raw); }
+  // Примеры в правилах (звуки, окончания, формы) часто стоят вне словаря
+  // курса: добавлять их в VOCAB нельзя — тексты тем сверяются с ним по
+  // правилу 2. Поэтому у примеров свой глоссарий GLOSS_EXAMPLES, только для
+  // тапа в разборе правил. Порядок: слово словаря точно → глоссарий точно →
+  // словарь с формами. Нигде нет — слово не кликается.
+  function lookupExample(raw, en){
+    var w = raw.toLowerCase(), dict = en ? VOCAB_EN : VOCAB, g = GLOSS_EXAMPLES[w];
+    if(dict[w]) return dict[w];
+    if(g) return en ? g[1] : g[0];
+    return en ? lookupIn(VOCAB_EN, raw) : lookupIn(VOCAB, raw);
+  }
   // Может вернуть null: оверлей неполный, и это нормально — тогда по тапу
   // покажется русская статья.
   function lookupWordEn(raw){ return lookupIn(VOCAB_EN, raw); }
@@ -10261,9 +10272,75 @@
 
   // Латиница с португальскими диакритиками. Кириллица сюда не попадает,
   // поэтому русские переводы в тех же карточках не оборачиваются.
+  // Глоссарий примеров: слово → [русский, английский]. Только для тапа в правилах.
+  var GLOSS_EXAMPLES = {
+    "gelo": ["лёд", "ice"],
+    "portugal": ["Португалия", "Portugal"],
+    "brasil": ["Бразилия", "Brazil"],
+    "frança": ["Франция", "France"],
+    "banheiro": ["ванная (бразильский вариант)", "bathroom (Brazilian)"],
+    "sistema": ["система", "system"],
+    "campo": ["поле; деревня", "field; countryside"],
+    "comum": ["общий; обычный", "common"],
+    "coração": ["сердце", "heart"],
+    "corações": ["сердца", "hearts"],
+    "xarope": ["сироп", "syrup"],
+    "exercício": ["упражнение", "exercise"],
+    "exato": ["точный", "exact"],
+    "fixo": ["постоянный; закреплённый", "fixed"],
+    "sexo": ["пол; секс", "sex"],
+    "máximo": ["максимум; максимальный", "maximum"],
+    "funil": ["воронка", "funnel"],
+    "funis": ["воронки", "funnels"],
+    "ónibus": ["автобус (бразильский вариант)", "bus (Brazilian)"],
+    "vírus": ["вирус", "virus"],
+    "vós": ["вы (устаревшее, во мн. ч.)", "you (old plural)"],
+    "tou": ["разг. от estou: я нахожусь", "colloquial for estou: I am"],
+    "tás": ["разг. от estás: ты находишься", "colloquial for estás: you are"],
+    "morto": ["мёртвый; умерший", "dead"],
+    "más": ["плохие (ж. р., мн. ч.)", "bad (f. pl.)"],
+    "daquilo": ["из того, от того (de + aquilo)", "of that (de + aquilo)"],
+    "naquilo": ["в том (em + aquilo)", "in that (em + aquilo)"],
+    "àquilo": ["к тому (a + aquilo)", "to that (a + aquilo)"],
+    "faço": ["я делаю", "I do; I make"],
+    "ajudar": ["помогать", "to help"],
+    "venho": ["я прихожу", "I come"],
+    "dás": ["ты даёшь", "you give"],
+    "dão": ["они дают", "they give"],
+    "pomos": ["мы кладём", "we put"],
+    "põem": ["они кладут", "they put"],
+    "traço": ["черта; линия", "line; dash"],
+    "infinitivo": ["инфинитив", "infinitive"],
+    "lhe": ["ему, ей; вам", "to him, to her, to you"],
+    "farei": ["я сделаю", "I will do"],
+    "ler": ["читать", "to read"],
+    "quê": ["что (ударная форма)", "what (stressed form)"],
+    "pretérito": ["прошедшее время", "past tense"],
+    "perfeito": ["совершенный; простое прошедшее", "perfect; simple past"],
+    "imperfeito": ["несовершенный; имперфект", "imperfect"],
+    "tiveste": ["ты имел", "you had"],
+    "fizeste": ["ты сделал", "you did"],
+    "estiveste": ["ты был, находился", "you were"],
+    "disseste": ["ты сказал", "you said"],
+    "estivemos": ["мы были, находились", "we were"],
+    "dissemos": ["мы сказали", "we said"],
+    "disseram": ["они сказали", "they said"],
+    "soubeste": ["ты узнал", "you found out"],
+    "soubemos": ["мы узнали", "we found out"],
+    "souberam": ["они узнали", "they found out"],
+    "vim": ["я пришёл", "I came"],
+    "vieste": ["ты пришёл", "you came"],
+    "vieram": ["они пришли", "they came"],
+    "demos": ["мы дали", "we gave"],
+    "deram": ["они дали", "they gave"],
+    "particípio": ["причастие", "participle"],
+    "feito": ["сделанный; сделано", "done; made"],
+    "dito": ["сказанный; сказано", "said"],
+    "visto": ["увиденный; виза", "seen; visa"]
+  };
   var PT_WORD_RE = /[A-Za-zÀ-ÖØ-öø-ÿ]+/g;
 
-  function wrapTapWords(root){
+  function wrapTapWords(root, ex){
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
     var nodes = [], n;
     while((n = walker.nextNode())) nodes.push(n);
@@ -10275,7 +10352,7 @@
       var last = 0, m, hit = false;
       while((m = re.exec(text)) !== null){
         var word = m[0];
-        var tr = lookupWord(word);
+        var tr = ex ? lookupExample(word, false) : lookupWord(word);
         if(!tr) continue;
         hit = true;
         if(m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
@@ -10285,7 +10362,7 @@
         // Английский кладём сразу, а не ищем при показе: wrapTapWords()
         // заменяет текстовые узлы необратимо, и перестроить их на смене
         // языка уже нельзя.
-        var trEn = lookupWordEn(word);
+        var trEn = ex ? lookupExample(word, true) : lookupWordEn(word);
         if(trEn) span.dataset.trEn = trEn;
         span.textContent = word;
         frag.appendChild(span);
@@ -13155,7 +13232,8 @@
     if(!el.dataset.prepared){
       // Португальские примеры в правилах (таблицы, «о livro», ловушки) — тоже по тапу:
       // слово встретилось в разборе, а где его учили, уже не найти.
-      el.querySelectorAll(".storytext, .dialogue, .wordset .w, .pane-rule .pt, .pane-rule .p-big").forEach(wrapTapWords);
+      el.querySelectorAll(".storytext, .dialogue, .wordset .w").forEach(function(n){ wrapTapWords(n); });
+      el.querySelectorAll(".pane-rule .pt, .pane-rule .p-big, .pane-rule .sound-ex, .pane-rule .sound-when b, .pane-rule ul.examples li").forEach(function(n){ wrapTapWords(n, true); });
       el.querySelectorAll(".qbuild").forEach(initBuild);
       el.querySelectorAll(".dialogue").forEach(initPart);
       // Диалог всегда начинается с чтения (отзыв ученика 26.11): «Участвовать» —

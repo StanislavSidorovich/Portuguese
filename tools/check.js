@@ -8,7 +8,7 @@
  * тихие: забытый регистр не роняет страницу, а просто выключает тему; слово
  * без словарной статьи не переводится по тапу, но выглядит как обычное;
  * пропущенная форма в таблице спряжения даёт «undefined» на экране.
- * Глазами это не ловится, поэтому тринадцать проверок ниже.
+ * Глазами это не ловится, поэтому четырнадцать проверок ниже.
  *
  * Отдельно стоит tools/prevocab.js — та же сверка словаря, но по черновику
  * темы, до вставки в index.html. Поймать там дешевле.
@@ -833,6 +833,73 @@ function checkAudio() {
   if (!problems) ok(used.size + ' ссылок, ' + have.size + ' файлов — совпадают один к одному');
 }
 
+
+/* ============ 14. Примеры в правилах: тап-перевод и GLOSS_EXAMPLES ============ */
+
+// Примеры на вкладке Regra переводятся по тапу: сначала VOCAB (с формами), потом
+// GLOSS_EXAMPLES. Слово, которого нет нигде, не кликается — молча; эта проверка
+// не даёт такому слову остаться: целое слово в примере либо в словаре, либо в
+// глоссарии, а обрывки (основы, окончания) названы поимённо.
+const EXAMPLE_ZONES = ['pt', 'p-big', 'sound-ex'];
+const STEMS = new Set(('pas tel lar mer par tir cil gua tam bém mero fal part viv trabalh obrigad chamamo ' +
+  'ões ães ãos ndo ámos aste sse ava avas ávamos avam nhamos amos emos imos vino').split(' '));
+
+// Содержимое элементов с классом из zones, с учётом вложенных тегов того же имени.
+function zoneTexts(src, zones) {
+  const out = [];
+  const re = new RegExp('<(span|td|div|li)\\b[^>]*class="(?:[^"]* )?(?:' + zones.join('|') + ')(?: [^"]*)?"[^>]*>', 'g');
+  for (const m of src.matchAll(re)) {
+    const tag = m[1];
+    const t = new RegExp('<(/?)' + tag + '\\b[^>]*>', 'g');
+    t.lastIndex = m.index + m[0].length;
+    let depth = 1, tm;
+    while ((tm = t.exec(src))) {
+      depth += tm[1] ? -1 : 1;
+      if (!depth) { out.push(src.slice(m.index + m[0].length, tm.index)); break; }
+    }
+  }
+  return out;
+}
+
+function checkExamples() {
+  head('14. Примеры в правилах: перевод по тапу и глоссарий примеров');
+  const gs = html.indexOf('var GLOSS_EXAMPLES = {');
+  const ge = html.indexOf('\n  };', gs);
+  if (gs < 0 || ge < 0) { bad('не нашёл GLOSS_EXAMPLES в index.html'); return; }
+  const gloss = new Map();
+  for (const m of html.slice(gs, ge).matchAll(/"([^"]+)"\s*:\s*\["((?:[^"\\]|\\.)*)",\s*"((?:[^"\\]|\\.)*)"\]/g)) gloss.set(m[1], [m[2], m[3]]);
+
+  // Тексты всех вкладок Regra: тема и сводная глава.
+  const panes = [];
+  for (const m of html.matchAll(/<div class="pane pane-rule[^"]*">/g)) {
+    const end = html.indexOf('<div class="pane pane-', m.index + 20);
+    panes.push(html.slice(m.index, end < 0 ? m.index + 40000 : end));
+  }
+  const paneText = panes.join(' ').replace(/<[^>]+>/g, ' ').toLowerCase();
+  let problems = 0;
+
+  for (const [w, [ru, en]] of gloss) {
+    if (!ru || !en) { bad('GLOSS_EXAMPLES «' + w + '»: нет русского или английского'); problems++; }
+    if (ru && !/[А-Яа-яЁё]/.test(ru)) { bad('GLOSS_EXAMPLES «' + w + '»: русский перевод без кириллицы'); problems++; }
+    if (/[А-Яа-яЁё]/.test(en)) { bad('GLOSS_EXAMPLES «' + w + '»: в английском кириллица'); problems++; }
+    if (VOCAB.has(w)) { bad('GLOSS_EXAMPLES «' + w + '» уже есть в VOCAB — запись лишняя, словарь приоритетнее'); problems++; }
+    if (!new RegExp('(^|[^a-zà-öø-ÿ])' + w + '([^a-zà-öø-ÿ]|$)', 'i').test(paneText)) { bad('GLOSS_EXAMPLES «' + w + '» нигде не стоит в правилах'); problems++; }
+  }
+
+  const unresolved = new Map();
+  for (const pane of panes) {
+    for (const z of zoneTexts(pane, EXAMPLE_ZONES)) {
+      for (const m of z.replace(/<[^>]+>/g, ' ').matchAll(/[A-Za-zÀ-ÖØ-öø-ÿ]+/g)) {
+        const w = m[0].toLowerCase();
+        if (w.length < 3 || lookup(w) || gloss.has(w) || STEMS.has(w)) continue;
+        unresolved.set(w, (unresolved.get(w) || 0) + 1);
+      }
+    }
+  }
+  for (const [w, n] of unresolved) { bad('слово «' + w + '» в примерах правил (' + n + '×) не переводится: добавь в GLOSS_EXAMPLES или, если это обрывок, в STEMS'); problems++; }
+  if (!problems) ok(gloss.size + ' слов в глоссарии примеров, все используются; целых слов без перевода в примерах нет');
+}
+
 /* ============ ============ */
 
 console.log('Проверка index.html');
@@ -849,6 +916,7 @@ checkSituacoes();
 checkLeituras();
 checkRevisoes();
 checkAudio();
+checkExamples();
 
 console.log('');
 if (failed) {
