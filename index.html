@@ -773,6 +773,17 @@
   .btn-good{background:var(--ok-tint); color:var(--ok);}
   .vocab-empty{font-size:0.9rem; color:var(--muted);}
 
+  /* Z4: очередь повторения фраз. Карточка и поле — те же .part-*, что в «Участвовать». */
+  .fila-box{text-align:left;}
+  .fila-box .vocab-empty{margin:0 0 10px;}
+  .fila-box .part-card{margin:10px 0 0;}
+  .fila-ans{font-family:var(--font-pt); font-size:1.3rem; font-weight:700; line-height:1.35; margin:2px 0 4px;}
+  .fila-meta{font-family:var(--font-ru); font-size:0.84rem; color:var(--muted); margin:2px 0 0;}
+  .fila-tag{display:inline-block; font-family:var(--font-ru); font-size:0.78rem; font-weight:700; padding:2px 9px; border-radius:99px; background:var(--bg); color:var(--muted); margin:0 6px 4px 0;}
+  .fila-again{font-family:var(--font-ru); font-size:0.78rem; color:var(--muted); margin:0 0 4px;}
+  .fila-box .fila-input{width:100%;}
+  .phrase-block .review-item{margin:0; border-color:var(--base); display:flex; align-items:center; gap:10px;}
+
   .vocab-group{margin-bottom:18px;}
   .vocab-group-head{
     font-size:0.72rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase;
@@ -1202,6 +1213,9 @@
     .tcard .go{margin-top:auto; padding-top:16px; display:flex; gap:10px; align-items:center;}
     .tcard .mins{font-family:var(--font-lat); font-weight:800; font-size:0.8rem; color:var(--base);}
     .tcard.rep{border:1.5px dashed var(--line); background:transparent;}
+    .tcard p.alt{margin:12px 0 0; font-size:0.84rem;}
+    .tcard .alt .wc-link{font-size:inherit; color:var(--base); font-weight:700; cursor:pointer; background:none; border:none; padding:0; font-family:inherit; text-decoration:underline;}
+    body.dark .tcard .alt .wc-link{color:#5FBF97;}
     .tcard .btn{font-size:0.9rem;}
     .btn-go{background:var(--base); color:#fff;}
     .btn-line{background:transparent; border:1.5px solid var(--base); color:var(--ink);}
@@ -1295,6 +1309,8 @@
   <p class="hero-facts" id="heroFacts"></p>
 
   <div class="continue-block" id="continueBlock" style="display:none;"></div>
+  <!-- Z4: вход в очередь повторения фраз; на ноутбуке то же живёт в «Сегодня». -->
+  <div class="continue-block phrase-block" id="phraseBlock" style="display:none;"></div>
 
   <!-- U11. Ссылку из чата открывают с телефона, и первый экран должен
        показывать сам курс, а не рассказ о нём. Реплики — дословно из
@@ -1362,6 +1378,12 @@
       <div class="sub" data-en="Portuguese spelling is almost phonetic — just not by English rules, and unstressed vowels get swallowed in Portugal. Until reading is sorted out, words don&rsquo;t register by ear, so that&rsquo;s where we start.">Португальский пишется почти как читается — но не по английским правилам, и безударные гласные в Португалии съедаются. Пока не разобрано чтение, слово на слух не опознаётся, поэтому начинаем отсюда.</div>
     </div>
     <div class="topic-list">
+      <button type="button" class="tool-row" data-open="fila">
+        <span class="tool-icon">🔁</span>
+        <span class="row-title" data-en="Repetição · phrase review&lt;span class='row-title-ru'&gt;phrases from the topics you have done, mixed together &mdash; you write them yourself, about 5 minutes&lt;/span&gt;">Repetição · повторение фраз<span class="row-title-ru">фразы из пройденных тем вперемешку: пишешь сам, около 5 минут</span></span>
+        <span class="row-vocab-due" id="filaBadge"></span>
+        <span class="row-arrow" aria-hidden="true">›</span>
+      </button>
       <button type="button" class="tool-row" data-open="frases">
         <span class="tool-icon">💬</span>
         <span class="row-title" data-en="Frases · phrases you'll actually use&lt;span class='row-title-ru'&gt;what to say at a caf&eacute;, at checkout, and when you didn&rsquo;t understand&lt;/span&gt;">Frases · живые фразы<span class="row-title-ru">что говорить в кафе, на кассе и когда не понял собеседника</span></span>
@@ -8937,6 +8959,20 @@
   </div>
 </div>
 
+<div class="screen topic-screen" id="screen-fila" style="--tint-color:var(--base)">
+  <div class="topic-topbar"><button type="button" class="back-btn" data-back data-en="← All topics">← Все темы</button></div>
+  <div class="topic-header">
+    <span class="marker" style="background:var(--base)"></span>
+    <h2 data-en="Repetição · phrase review">Repetição · повторение фраз</h2>
+  </div>
+  <div class="topic-subtitle" data-en="Phrases from the topics you have done, mixed together. You see the meaning and write the Portuguese yourself — recalling it is what makes it stick.">Фразы из пройденных тем вперемешку. Ты видишь смысл и пишешь португальский сам: именно вспоминание, а не узнавание, закрепляет фразу.</div>
+  <div class="pane active">
+    <div class="vocab-stats" id="filaStats"></div>
+    <div class="vocab-trainer fila-box" id="filaBox"></div>
+    <div class="tip" data-en="&lt;b&gt;How this works.&lt;/b&gt; A phrase you write yourself moves up a box and comes back later: in a day, in three, in a week, in three weeks. A phrase built from the word bank stays in its box. A phrase you could not recall goes back to box one and returns today. Each session also includes a few phrases you already know well, so it is not all uphill. Nothing is lost for skipping a day."><b>Как это работает.</b> Фраза, которую ты написал сам, уходит в коробку выше и возвращается позже: через день, через три, через неделю, через три недели. Фраза, собранная из банка слов, остаётся в своей коробке. Фраза, которую не вспомнил, возвращается в первую коробку и придёт ещё сегодня. В каждую сессию входят и несколько хорошо знакомых — чтобы не всё было в гору. За пропущенный день ничего не отнимается.</div>
+  </div>
+</div>
+
 <button type="button" class="float-back" id="floatBack">← Все темы</button>
 <script>
 (function(){
@@ -9116,6 +9152,11 @@
     renderLtBadge();
     VOCAB_SETS = null;
     if(document.getElementById("screen-vocab").classList.contains("active")) renderVocabScreen();
+    // Карточка фразы хранит перевод на языке, на котором её открыли, — сессия
+    // начинается заново, коробки сохранены.
+    fila = null;
+    if(document.getElementById("screen-fila").classList.contains("active")) renderFila();
+    renderPhraseBlock();
     // Conjugador тоже рисуется кодом: подписи времён, чипы и весь разбор.
     // Перекрашивается всегда, а не только на открытом экране, — иначе в
     // выпадающем списке останутся подписи языка, на котором его открыли
@@ -9697,6 +9738,7 @@
     renderReviewBlock(p);
     renderContinueBlock();
     renderStartBlock();
+    renderPhraseBlock();
     renderLaptopProgress(p);
   }
 
@@ -10745,11 +10787,15 @@
     return { total:total, started:started, known:known, due:due, fresh: total - started };
   }
 
+  // Один шаг коробки Лейтнера — общий у слов (Dicionário) и фраз (Z4).
+  function leitnerStep(st, ok){
+    var b = ok ? Math.min((st.b || 0) + 1, MAX_BOX) : 1;
+    return { b: b, d: Date.now() + BOX_INTERVAL[b] };
+  }
+
   function gradeWord(word, ok){
     var state = loadVocab();
-    var st = state[word] || { b:0, d:0 };
-    st.b = ok ? Math.min(st.b + 1, MAX_BOX) : 1;
-    st.d = Date.now() + BOX_INTERVAL[st.b];
+    var st = leitnerStep(state[word] || { b:0, d:0 }, ok);
     state[word] = st;
     saveVocab(state);
   }
@@ -13057,6 +13103,7 @@
     updateFloatBack();
     renderContinueBlock();
     renderStartBlock();
+    renderPhraseBlock();
     renderSide();
     renderToday();
   }
@@ -13087,6 +13134,7 @@
 
     if(el.dataset.topic){ try{ localStorage.setItem(LAST_TOPIC_KEY, id); }catch(e){} }
     if(id === "vocab"){ session = null; renderVocabScreen(); }
+    if(id === "fila"){ fila = null; renderFila(); }
     if(id === "dialogos"){ dgRun = null; renderDialogos(); }
     // Открытый пакет не сбрасывается: из него уходят в Dicionário и в сцену
     // и возвращаются «назад» — на тот же шаг, а не на список пакетов.
@@ -14264,6 +14312,9 @@
     var partBtnEl = e.target.closest("[data-part]");
     if(partBtnEl){ handlePartAction(partBtnEl); return; }
 
+    var filaBtnEl = e.target.closest("[data-fila]");
+    if(filaBtnEl){ handleFilaAction(filaBtnEl.dataset.fila); return; }
+
     var vocabBtn = e.target.closest("[data-vocab]");
     if(vocabBtn){ handleVocabAction(vocabBtn.dataset.vocab); return; }
 
@@ -14340,6 +14391,7 @@
   document.addEventListener("keydown", function(e){
     if(e.key !== "Enter" || !e.target.classList || !e.target.classList.contains("part-input")) return;
     e.preventDefault();
+    if(e.target.classList.contains("fila-input")){ handleFilaAction("check"); return; }
     var b = e.target.closest(".part-card").querySelector('[data-part="check"]');
     if(b) handlePartAction(b);
   });
@@ -14381,7 +14433,9 @@
       localStorage.removeItem(LT_KEY);
       localStorage.removeItem(PART_KEY);
       localStorage.removeItem(REV_KEY);
+      localStorage.removeItem(PHR_KEY);
     }catch(e){}
+    fila = null;
     document.querySelectorAll("input.blank, select.mc").forEach(function(i){
       i.value = ""; i.classList.remove("ok","bad");
     });
@@ -14393,6 +14447,426 @@
     if(document.getElementById("screen-vocab").classList.contains("active")) renderVocabScreen();
     renderProgress();
   });
+
+  /* ================= Z4: ОЧЕРЕДЬ ПОВТОРЕНИЯ ФРАЗ =================
+     Нового португальского текста нет: источник — предложения .qbuild в
+     заданиях и реплики .dline диалогов тем (ступень «Узнаю» и выше) и
+     сводных глав, у которых что-то пройдено. Фраза живёт в коробках Лейтнера
+     (BOX_INTERVAL и шаг leitnerStep — те же, что у слов Dicionário), состояние
+     — ptPhrasesV1 {ключ-фраза: {b, d}}; ключ — нормализованный текст, поэтому
+     одна и та же фраза из темы и из главы — одна карточка.
+     Ход ученика — как в «Участвовать» (Z1): пишет сам, «Не помню» открывает банк
+     слов (initBuild / buildOk / revealBuild), «Показать ответ» — шаг вниз.
+     Оценка мягкая: сам — коробка вверх; из банка — та же; не смог — первая и
+     карточка вернётся в конце сессии (повтор не оценивается).
+     Сессия — 8–12 карточек вперемешку по темам; 2–3 из них «под гору» —
+     фразы из высоких коробок, срок которых ещё не пришёл: они почти точно
+     решатся и коробку не меняют (кроме ошибки). */
+  var PHR_KEY = "ptPhrasesV1";
+  var PHR_SIZE = 10, PHR_HILL = 3, PHR_HILL_BOX = 3, PHR_MIN_W = 2, PHR_MAX_W = 14;
+  var fila = null;   // идущая сессия
+
+  function loadPhr(){
+    try{ return JSON.parse(localStorage.getItem(PHR_KEY) || "{}") || {}; }catch(e){ return {}; }
+  }
+  function savePhr(s){
+    try{ localStorage.setItem(PHR_KEY, JSON.stringify(s)); }catch(e){}
+  }
+
+  // Экраны, откуда берутся фразы: темы со ступенью ≥ «Узнаю» и главы Revisão,
+  // где пройдены задания или диалог. В EN — только переведённые.
+  function phraseScreens(){
+    var p = loadProgress(), pp = loadPart(), rr = loadRev(), out = [];
+    TOPICS.forEach(function(t){
+      if(LANG === "en" && EN_READY_TOPICS.indexOf(t) === -1) return;
+      if(topicStage(t, p, pp) >= 1) out.push(t);
+    });
+    REVISOES.forEach(function(rv){
+      if(LANG === "en" && !revEnReady(rv)) return;
+      var x = rr[rv.id] || {};
+      if((x.quiz && x.quiz.done) || (x.dlg && x.dlg.lvl >= 1)) out.push(rv.id);
+    });
+    return out;
+  }
+
+  function phraseOk(text){
+    var n = partWords(text).length;
+    return n >= PHR_MIN_W && n <= PHR_MAX_W;
+  }
+  function screenPhrases(id){
+    var scr = document.getElementById("screen-" + id), out = [];
+    if(!scr) return out;
+    // 1) сборки из заданий: смысл — из подсказки «Собери фразу: «…»».
+    scr.querySelectorAll(".pane-quiz .qitem").forEach(function(qi){
+      var box = qi.querySelector(".qbuild"), h = qi.querySelector(".ru-hint");
+      if(!box || !h || !box.dataset.answer) return;
+      var m = h.textContent.replace(/\s+/g, " ").match(/[«‘“](.+)[»’”](.*)$/);
+      if(!m || !phraseOk(box.dataset.answer)) return;
+      out.push({ key: partNorm(box.dataset.answer), text: box.dataset.answer, tr: m[1].trim(),
+                 note: m[2].replace(/^[\s.]+|[\s.]+$/g, ""), screen: id, audio: "" });
+    });
+    // 2) реплики диалогов; перевод — по <br> в .ru-translation, как в «Участвовать».
+    scr.querySelectorAll(".dialogue").forEach(function(dlg){
+      var mini = dlg.closest(".mini-text");
+      if(!mini) return;
+      var trs = partTranslations(mini), k = 0;
+      dlg.querySelectorAll(".dline").forEach(function(p){
+        var sp = p.querySelector(".speaker"), text = lineText(p);
+        if(!sp || !text) return;
+        var tr = trs[k++];
+        if(!tr || !phraseOk(text)) return;
+        out.push({ key: partNorm(text), text: text, tr: tr, note: "", screen: id, audio: p.dataset.audio || "" });
+      });
+    });
+    return out;
+  }
+  function phrasePool(){
+    var seen = {}, out = [];
+    phraseScreens().forEach(function(id){
+      screenPhrases(id).forEach(function(c){
+        if(!c.key || seen[c.key]) return;
+        seen[c.key] = 1; out.push(c);
+      });
+    });
+    return out;
+  }
+
+  // due — срок пришёл; fresh — ни разу не видели; hill — высокая коробка, срок не пришёл.
+  function phraseGroups(){
+    var pool = phrasePool(), st = loadPhr(), now = Date.now();
+    var g = { pool: pool, due: [], fresh: [], hill: [], known: 0, next: 0, state: st };
+    pool.forEach(function(c){
+      var s = st[c.key];
+      if(!s){ g.fresh.push(c); return; }
+      if(s.b >= 4) g.known++;
+      if(s.d <= now) g.due.push(c);
+      else {
+        if(s.b >= PHR_HILL_BOX) g.hill.push(c);
+        if(!g.next || s.d < g.next) g.next = s.d;
+      }
+    });
+    g.due.sort(function(a, b){ return st[a.key].d - st[b.key].d; });
+    return g;
+  }
+  function phraseSize(g){
+    g = g || phraseGroups();
+    var work = g.due.length + g.fresh.length;
+    return work ? Math.min(PHR_SIZE, work + Math.min(PHR_HILL, g.hill.length)) : 0;
+  }
+
+  // По одной из каждой темы по кругу — интерливинг.
+  function phraseSpread(list, n){
+    var groups = {}, order = [], out = [];
+    list.forEach(function(c){
+      if(!groups[c.screen]){ groups[c.screen] = []; order.push(c.screen); }
+      groups[c.screen].push(c);
+    });
+    while(out.length < n && order.length){
+      for(var i = 0; i < order.length && out.length < n; i++){
+        var q = groups[order[i]];
+        out.push(q.shift());
+        if(!q.length){ order.splice(i, 1); i--; }
+      }
+    }
+    return out;
+  }
+  function buildPhraseSession(){
+    var g = phraseGroups();
+    if(!g.due.length && !g.fresh.length) return [];
+    var hill = partShuffle(g.hill.slice()).slice(0, PHR_HILL);
+    var slots = PHR_SIZE - hill.length;
+    var work = phraseSpread(g.due, slots);
+    work = work.concat(phraseSpread(partShuffle(g.fresh.slice()), slots - work.length));
+    var a = partShuffle(work.concat(hill));
+    // Две подряд из одной темы — разводим.
+    for(var i = 1; i < a.length; i++){
+      if(a[i].screen !== a[i - 1].screen) continue;
+      for(var j = i + 1; j < a.length; j++){
+        if(a[j].screen !== a[i - 1].screen){ var t = a[i]; a[i] = a[j]; a[j] = t; break; }
+      }
+    }
+    return a;
+  }
+
+  var PHR_WHEN = [["",""], ["через 10 минут","in 10 minutes"], ["завтра","tomorrow"], ["через 3 дня","in 3 days"], ["через неделю","in a week"], ["через 3 недели","in 3 weeks"]];
+  function phraseWhen(b){ var w = PHR_WHEN[b] || PHR_WHEN[1]; return L(w[0], w[1]); }
+
+  // mode: typed | accent | bank | shown. Возвращает {b0, b1}.
+  function gradePhrase(c, mode){
+    var st = loadPhr(), now = Date.now(), s = st[c.key], isNew = !s, b0 = s ? s.b : 0;
+    var due = isNew || s.d <= now;
+    var r = { b: b0 || 0, d: s ? s.d : now };
+    if(mode === "shown") r = leitnerStep({ b: 0 }, false);           // не смог — первая коробка
+    else if(mode === "bank"){                                          // собрал — коробка та же
+      r.b = Math.max(b0, 1);
+      if(due) r.d = now + BOX_INTERVAL[r.b];
+    } else if(due) r = leitnerStep({ b: b0 }, true);                   // сам — вверх
+    // фраза «под гору» с неназревшим сроком и верным ответом ничего не меняет
+    st[c.key] = r;
+    savePhr(st);
+    return { b0: b0, b1: r.b, moved: due || mode === "shown" };
+  }
+
+  /* ---- экран ---- */
+  function filaEl(tag, cls, text){ return partEl(tag, cls, text); }
+  function filaBtn(label, act, cls){
+    var b = partEl("button", "part-btn" + (cls ? " " + cls : ""), label);
+    b.type = "button"; b.dataset.fila = act;
+    return b;
+  }
+
+  function renderFila(){
+    renderFilaStats();
+    renderFilaBox();
+  }
+  function renderFilaStats(){
+    var box = document.getElementById("filaStats");
+    if(!box) return;
+    var g = phraseGroups();
+    box.innerHTML =
+      '<div class="vocab-stat"><b>' + g.pool.length + '</b><span>' + L("фраз в копилке", "phrases collected") + '</span></div>' +
+      '<div class="vocab-stat due"><b>' + (g.due.length + g.fresh.length) + '</b><span>' + L("ждут повторения", "due for review") + '</span></div>' +
+      '<div class="vocab-stat known"><b>' + g.known + '</b><span>' + L("закрепились", "learned") + '</span></div>';
+  }
+
+  function filaNextTopic(){
+    var p = loadProgress(), pp = loadPart(), last = null;
+    try{ last = localStorage.getItem(LAST_TOPIC_KEY); }catch(e){}
+    return todayTopic(p, pp, last) || TOPICS[0];
+  }
+
+  function renderFilaBox(){
+    var box = document.getElementById("filaBox");
+    if(!box) return;
+    box.innerHTML = "";
+    if(!fila){ renderFilaIdle(box); return; }
+    if(fila.phase === "end"){ renderFilaEnd(box); return; }
+
+    var cur = fila.queue[fila.i], c = cur.c, total = fila.queue.length;
+    box.appendChild(filaEl("div", "vocab-progress", (fila.i + 1) + " / " + total));
+    if(cur.again) box.appendChild(filaEl("p", "fila-again", L("Эта фраза вернулась — напиши её ещё раз, уже не считается.", "This phrase is back — write it once more; it no longer counts.")));
+    var card = filaEl("div", "part-card");
+    var cue = filaEl("p", "part-cue");
+    cue.appendChild(filaEl("b", "", L("Напиши по-португальски", "Write it in Portuguese") + ": "));
+    cue.appendChild(document.createTextNode(L("«", "“") + c.tr + L("»", "”") + (c.note ? " " + c.note : "")));
+    card.appendChild(cue);
+
+    if(fila.phase === "turn"){
+      if(fila.sub === "write"){
+        var inp = filaEl("input", "part-input fila-input");
+        inp.type = "text"; inp.setAttribute("autocapitalize", "off"); inp.setAttribute("autocorrect", "off");
+        inp.setAttribute("autocomplete", "off"); inp.setAttribute("spellcheck", "false");
+        inp.placeholder = L("Напиши сам", "Write it yourself");
+        card.appendChild(inp);
+        card.appendChild(filaEl("p", "part-msg"));
+        var a1 = filaEl("div", "part-acts");
+        a1.appendChild(filaBtn(L("Проверить", "Check"), "check", "go"));
+        a1.appendChild(filaBtn(L("Не помню", "I don't remember"), "forgot", "quiet"));
+        var kn = filaEl("span", "kbd-note laptop-only");
+        kn.innerHTML = L("<kbd>Enter</kbd> проверить · <kbd>Esc</kbd> не помню", "<kbd>Enter</kbd> check · <kbd>Esc</kbd> don't remember");
+        a1.appendChild(kn);
+        card.appendChild(a1);
+        box.appendChild(card);
+        try{ inp.focus({preventScroll: true}); }catch(e){}
+      } else {
+        var bb = filaEl("div", "qbuild"), lw = partWords(c.text);
+        if(!fila.words) fila.words = lw.concat(partExtras(document.getElementById("screen-" + c.screen), lw));
+        bb.dataset.answer = lw.join(" ");
+        bb.dataset.words = fila.words.join("|");
+        card.appendChild(bb);
+        card.appendChild(filaEl("p", "part-msg", L("В банке два лишних слова.", "Two of the words in the bank are extra.")));
+        var a2 = filaEl("div", "part-acts");
+        a2.appendChild(filaBtn(L("Проверить", "Check"), "check", "go"));
+        a2.appendChild(filaBtn(L("Показать ответ", "Show the answer"), "reveal", "quiet"));
+        card.appendChild(a2);
+        box.appendChild(card);
+        initBuild(bb);
+      }
+      return;
+    }
+
+    // result
+    var last = fila.last;
+    box.appendChild(card);
+    card.appendChild(filaEl("p", "fila-ans", c.text));
+    if(ptVoice || c.audio){
+      var sp = filaEl("button", "speak", "🔊");
+      sp.type = "button"; sp.dataset.say = c.text; if(c.audio) sp.dataset.audio = c.audio; sp.title = "Прослушать";
+      card.querySelector(".fila-ans").appendChild(document.createTextNode(" "));
+      card.querySelector(".fila-ans").appendChild(sp);
+    }
+    var tag = { typed: L("✍ сам", "✍ on my own"), accent: L("✍ сам · знаки", "✍ on my own · marks"),
+                bank: L("🧩 из слов", "🧩 from words"), shown: L("👁 показано", "👁 shown") }[last.mode];
+    card.appendChild(filaEl("span", "fila-tag", tag));
+    if(last.note) card.appendChild(filaEl("p", "fila-meta", last.note));
+    var scr = document.getElementById("screen-" + c.screen), when = "";
+    if(!cur.again && last.moved){
+      if(last.mode === "shown") when = L("Вернётся в конце сессии — и через 10 минут.", "It comes back at the end of this session, and in 10 minutes.");
+      else when = (last.b1 > last.b0 && last.mode !== "bank" ? L("Коробка выше — вернётся ", "One box up — back ") : L("Остаётся в своей коробке — вернётся ", "Stays in its box — back ")) + phraseWhen(last.b1) + ".";
+    } else if(!cur.again && !last.moved){
+      when = L("Знакомая фраза — остаётся в своей коробке.", "A familiar phrase — it stays in its box.");
+    } else if(cur.again && last.mode === "shown"){
+      when = L("Ничего, она ещё придёт.", "It's fine, it will come back.");
+    }
+    if(when) card.appendChild(filaEl("p", "fila-meta", when));
+    if(scr){
+      var topic = scr.dataset.rev ? L("Revisão · ", "Revisão · ") + revById(scr.dataset.rev).range : topicNum(c.screen) + " " + ((topicTitleMap()[c.screen] || "").replace(/^\S+\s+/, ""));
+      card.appendChild(filaEl("p", "fila-meta", L("Из темы ", "From topic ") + topic));
+    }
+    var ac = filaEl("div", "part-acts");
+    ac.appendChild(filaBtn(fila.i + 1 < fila.queue.length ? L("Дальше →", "Next →") : L("Итог", "Result"), "next", "go"));
+    card.appendChild(ac);
+  }
+
+  function renderFilaIdle(box){
+    var g = phraseGroups(), n = phraseSize(g), html;
+    if(!g.pool.length){
+      var t = filaNextTopic();
+      html = '<p class="vocab-empty">' + L("Повторять пока нечего: фразы появятся, когда ты пройдёшь первую тему — хотя бы задания в Exercícios (ступень «Узнаю»).",
+                                            "Nothing to review yet: phrases appear once you finish your first topic — at least the exercises in Exercícios (the “Recognise” step).") + '</p>' +
+             '<div class="vocab-actions"><button class="btn btn-check" type="button" data-open="' + t + '">' + L("К теме: ", "To the topic: ") + escapeHtml(topicTitleMap()[t] || t) + ' →</button></div>';
+    } else if(!n){
+      var t2 = filaNextTopic(), when = "";
+      if(g.next){
+        var ms = g.next - Date.now(), h = ms / 3600000;
+        when = " " + (h < 1 ? L("Следующие придут меньше чем через час.", "The next ones are due in under an hour.")
+              : (h < 24 ? L("Следующие придут сегодня.", "The next ones are due today.") : L("Следующие придут завтра или позже.", "The next ones are due tomorrow or later.")));
+      }
+      html = '<p class="vocab-empty">' + L("На сегодня все фразы повторены.", "All your phrases are reviewed for today.") + when + ' ' +
+             L("Новые появятся, когда ты пройдёшь следующую тему.", "New ones appear when you finish the next topic.") + '</p>' +
+             '<div class="vocab-actions"><button class="btn btn-check" type="button" data-open="' + t2 + '">' + L("Следующая тема: ", "Next topic: ") + escapeHtml(topicTitleMap()[t2] || t2) + ' →</button></div>';
+    } else {
+      html = '<p class="vocab-empty">' + L("Готово к повторению: <b>" + n + "</b> " + plural(n, "фраза", "фразы", "фраз") + " · ~5 мин.",
+                                           "Ready for review: <b>" + n + "</b> " + (n === 1 ? "phrase" : "phrases") + " · ~5 min.") + '</p>' +
+             '<p class="vocab-empty">' + L("Тебе покажут смысл, а фразу напишешь сам. Не вспоминается — «Не помню» откроет слова.", "You see the meaning and write the phrase yourself. Stuck? “I don't remember” opens the words.") + '</p>' +
+             '<div class="vocab-actions"><button class="btn btn-check" type="button" data-fila="start">' + L("Начать повторение", "Start review") + '</button></div>';
+    }
+    box.innerHTML = html;
+  }
+
+  function renderFilaEnd(box){
+    var s = fila.stats, own = s.typed + s.accent, more = phraseSize() > 0;
+    var card = filaEl("div", "part-card");
+    card.appendChild(filaEl("p", "part-cue", L("Сессия закончена. Фразы:", "Session finished. Phrases:")));
+    var ul = filaEl("ul", "part-sum");
+    var rows = [
+      [L("написал сам", "wrote on my own"), own + (s.accent ? " " + L("(в " + s.accent + " — ошибка в знаках)", "(" + s.accent + " with a mark wrong)") : "")],
+      [L("собрал из слов", "built from words"), s.bank],
+      [L("показал ответ", "showed the answer"), s.shown]
+    ];
+    rows.forEach(function(r){
+      var li = filaEl("li");
+      li.appendChild(filaEl("b", "", String(r[1])));
+      li.appendChild(document.createTextNode(" — " + r[0]));
+      ul.appendChild(li);
+    });
+    card.appendChild(ul);
+    card.appendChild(filaEl("p", s.up ? "part-rise" : "part-cue", s.up
+      ? L("↑ Поднялось в коробках: " + s.up + " " + plural(s.up, "фраза", "фразы", "фраз") + ". Они вернутся позже — тогда и проверим.", "↑ Moved up a box: " + s.up + ". They come back later — we'll check then.")
+      : L("Коробки пока не сдвинулись — это нормально, фразы придут ещё.", "No box moved this time — that's fine, the phrases will come back.")));
+    var ac = filaEl("div", "part-acts");
+    if(more) ac.appendChild(filaBtn(L("Ещё сессию", "Another session"), "start", "go"));
+    ac.appendChild(filaBtn(L("Закрыть", "Close"), "stop", more ? "quiet" : "go"));
+    card.appendChild(ac);
+    box.appendChild(card);
+  }
+
+  function filaMsg(text){
+    var m = document.querySelector("#filaBox .part-msg");
+    if(m) m.textContent = text;
+  }
+
+  function filaDone(mode, note){
+    var cur = fila.queue[fila.i], c = cur.c, g = { b0: 0, b1: 0, moved: false };
+    if(!cur.again){
+      g = gradePhrase(c, mode);
+      fila.stats[mode]++;
+      if(g.b1 > g.b0 && (mode === "typed" || mode === "accent")) fila.stats.up++;
+      if(mode === "shown") fila.queue.push({ c: c, again: true });
+    }
+    fila.last = { mode: mode, note: note || "", b0: g.b0, b1: g.b1, moved: g.moved };
+    fila.phase = "result";
+    renderFilaBox();
+    renderFilaStats();
+    speak(c.text, null, c.audio);
+  }
+
+  function filaCheck(){
+    if(!fila || fila.phase !== "turn") return;
+    var c = fila.queue[fila.i].c, box = document.getElementById("filaBox");
+    if(fila.sub === "bank"){
+      var bb = box.querySelector(".qbuild");
+      if(!bb) return;
+      if(!buildValue(bb)){ filaMsg(L("Нажимай на слова ниже.", "Tap the words below.")); return; }
+      if(buildOk(bb)){ filaDone("bank"); return; }
+      bb.querySelector(".qbuild-line").classList.add("bad");
+      filaMsg(L("Не то. Проверь порядок — и помни, что два слова лишние.", "Not quite. Check the order — and remember two words are extra."));
+      return;
+    }
+    var inp = box.querySelector(".part-input");
+    if(!inp) return;
+    if(!partNorm(inp.value)){ filaMsg(L("Напиши фразу или нажми «Не помню».", "Write the phrase, or press “I don't remember”.")); return; }
+    if(partNorm(inp.value) === partNorm(c.text)){ filaDone("typed"); return; }
+    if(partFlat(inp.value) === partFlat(c.text)){
+      var want = partNorm(c.text).split(" "), got = partNorm(inp.value).split(" "), raw = partWords(c.text);
+      if(raw.length === want.length) want = raw;
+      var bad = want.filter(function(w, k){ return partNorm(w) !== got[k]; });
+      filaDone("accent", L("Слова верные, но знаки: ", "Right words, but check the marks: ") + bad.join(", "));
+      return;
+    }
+    inp.classList.add("bad");
+    var n = partWords(c.text).length;
+    filaMsg(L("Пока не то. В фразе слов: " + n + ". Попробуй ещё или нажми «Не помню».", "Not yet. The phrase has " + n + " words. Try again or press “I don't remember”."));
+  }
+
+  function handleFilaAction(a){
+    if(a === "start"){
+      var q = buildPhraseSession();
+      fila = q.length ? { queue: q.map(function(c){ return { c: c, again: false }; }), i: 0, phase: "turn", sub: "write", words: null,
+                          stats: { typed: 0, accent: 0, bank: 0, shown: 0, up: 0 }, last: null } : null;
+      renderFila();
+      return;
+    }
+    if(a === "stop"){ fila = null; renderFila(); renderFilaEntries(); return; }
+    if(!fila) return;
+    if(a === "check"){ filaCheck(); return; }
+    if(a === "forgot"){ fila.sub = "bank"; renderFilaBox(); return; }
+    if(a === "reveal"){
+      var bb = document.querySelector("#filaBox .qbuild");
+      if(bb) revealBuild(bb);
+      filaDone("shown");
+      return;
+    }
+    if(a === "next"){
+      fila.i++;
+      fila.sub = "write"; fila.words = null; fila.last = null;
+      if(fila.i >= fila.queue.length){ fila.phase = "end"; renderFilaEntries(); }
+      else fila.phase = "turn";
+      renderFilaBox();
+      renderFilaStats();
+      return;
+    }
+  }
+
+  /* ---- входы: телефон — карточка на главной, ноутбук — «Сегодня» и панель ---- */
+  function renderPhraseBlock(){
+    var box = document.getElementById("phraseBlock"), badge = document.getElementById("filaBadge");
+    var n = phraseSize();
+    if(badge){ badge.textContent = n || ""; badge.style.display = n ? "inline-block" : "none"; }
+    if(!box) return;
+    if(!n){ box.style.display = "none"; return; }
+    box.innerHTML = '<button type="button" class="review-item start-item" data-open="fila"><span class="start-text">' +
+      '<span class="review-why">' + L("Повторение", "Review") + '</span>' +
+      '<span class="review-title">' + L("Повторить " + n + " " + plural(n, "фразу", "фразы", "фраз"), "Review " + n + " " + (n === 1 ? "phrase" : "phrases")) + '</span></span>' +
+      '<span class="start-minutes">~5 ' + L("мин", "min") + '</span></button>';
+    box.style.display = "block";
+  }
+  // После сессии: бейдж, карточка на главной, «Сегодня» и панель.
+  function renderFilaEntries(){
+    renderPhraseBlock();
+    renderSide();
+    renderToday();
+  }
 
   /* ================= Z5: НОУТБУК (≥1024px) =================
      Левая панель, «Сегодня» на главной, вкладка Diálogo и колонка слов.
@@ -14410,7 +14884,7 @@
   var sideOpen = {};          // блок → раскрыт ли; пока не трогали — раскрыт блок текущей темы
   var sideLastBlock = null;
   var BLOCK_KEYS = ["base","presente","passado","expansao"];
-  var TOOL_ORDER = ["vocab","frases","dialogos","situacoes","leituras","tool-conjugador","cheat-sounds"];
+  var TOOL_ORDER = ["fila","vocab","frases","dialogos","situacoes","leituras","tool-conjugador","cheat-sounds"];
 
   function homeRowInfo(row){
     var t = row.querySelector(".row-title"), clone = t.cloneNode(true);
@@ -14495,6 +14969,7 @@
       var r = homeRowInfo(row), parts = r.title.split(" · ");
       var due = "";
       if(id === "vocab"){ var n = vocabDueCount(); if(n) due = '<span class="sdue">' + n + '</span>'; }
+      if(id === "fila"){ var nf = phraseSize(); if(nf) due = '<span class="sdue">' + nf + '</span>'; }
       h += '<button type="button" class="stool' + (id === act ? ' cur' : '') + '" data-open="' + id + '" title="' + escapeHtml(parts[0]) + '"><span class="sic">' + r.icon + '</span>' +
         '<span class="slbl">' + escapeHtml(parts[0]) + (parts[1] ? ' <small>· ' + escapeHtml(parts[1]) + '</small>' : '') + '</span>' + due + '</button>';
     });
@@ -14578,15 +15053,20 @@
     }
     var pills = "";
     for(var k = 1; k <= 3; k++) pills += '<span class="stage-step' + (st >= k ? ' on' : '') + '">' + (st >= k ? '✓ ' : '') + stageName(k) + '</span>';
-    var due = vocabDueCount();
+    var due = vocabDueCount(), pn = phraseSize();
     var rep = '<div class="tcard rep"><span class="lab">' + L("Повторить сегодня", "Review today") + '</span>';
-    if(due){
+    if(pn){
+      rep += '<h2 class="plain">' + L("Повторить " + pn + " " + plural(pn, "фразу", "фразы", "фраз"), "Review " + pn + " " + (pn === 1 ? "phrase" : "phrases")) + '</h2>' +
+             '<p>' + L("Фразы из пройденных тем вперемешку: сначала пишешь сам, «Не помню» открывает слова. Лучше в начале занятия.", "Phrases from finished topics, mixed together: first you write it yourself, “I don't remember” opens the words. Best at the start of a session.") + '</p>' +
+             '<div class="go"><button type="button" class="btn btn-line" data-open="fila">' + L("Начать повторение", "Start the review") + '</button><span class="mins">~5' + L(" мин", " min") + '</span></div>' +
+             (due ? '<p class="alt">' + due + ' ' + (LANG === "en" ? (due === 1 ? "word is" : "words are") + ' also due in <button type="button" class="wc-link" data-open="vocab">Dicionário</button>' : plural(due, "слово", "слова", "слов") + ' ждут и в <button type="button" class="wc-link" data-open="vocab">Dicionário</button>') + '</p>' : '');
+    } else if(due){
       rep += '<h2 class="plain">' + due + ' ' + (LANG === "en" ? (due === 1 ? "word is" : "words are") + ' due for review' : plural(due, "слово ждёт", "слова ждут", "слов ждут") + ' повторения') + '</h2>' +
              '<p>' + L("Слова из Dicionário вперемешку по темам. Лучше сделать это в начале занятия.", "Words from Dicionário, mixed across topics. Best done at the start of a session.") + '</p>' +
              '<div class="go"><button type="button" class="btn btn-line" data-open="vocab">' + L("Начать повторение", "Start the review") + '</button><span class="mins">~5' + L(" мин", " min") + '</span></div>';
     } else {
       rep += '<h2 class="plain">' + L("Повторять пока нечего", "Nothing to review yet") + '</h2>' +
-             '<p>' + L("Слова вернутся, когда подойдёт срок. Очередь фраз из пройденных тем появится здесь позже.", "Words come back when they are due. A queue of phrases from finished topics will appear here later.") + '</p>';
+             '<p>' + L("Фразы и слова вернутся, когда подойдёт срок. Новые появятся с пройденной темой.", "Phrases and words come back when they are due. New ones appear as you finish topics.") + '</p>';
     }
     rep += '</div>';
 
@@ -14984,6 +15464,9 @@
         var pane = e.target.closest(".pane-quiz");
         if(pane){ e.preventDefault(); checkQuiz(pane); }
         return;
+      }
+      if(e.key === "Escape" && e.target.classList && e.target.classList.contains("fila-input")){
+        e.preventDefault(); handleFilaAction("forgot"); return;
       }
       if(e.key === "Escape" && e.target.classList && e.target.classList.contains("part-input")){
         var f = e.target.closest(".part-card").querySelector('[data-part="forgot"]');
