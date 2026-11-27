@@ -17,32 +17,61 @@ if (!apiKey) {
   process.exit(1);
 }
 
+// Роль в таблице промпта = роль с полом: суффикс -f / -m.
+// Пол голоса — из API (`GET /v1beta/voices?language_code=pt-PT`, поле gender), см. check_voices.mjs.
+// Правило: в одном диалоге у двух собеседников голоса РАЗНЫЕ (проверяется ниже), а пол
+// голоса = пол говорящего (по .speaker и по формам obrigado/obrigada, cansado/cansada).
 const VOICES = {
-  rececionista: {
-    voice: 'pt-pt-assistant-7',
-    style: 'Polite, businesslike coastal hotel receptionist, unhurried and clear at ~80-85% normal pace for language learners, European Portuguese (Lisbon).',
-    atempo: 0.88 // 12% slower as requested
-  },
-  joao: {
-    voice: 'pt-pt-advisor-6',
-    style: 'Friendly, natural everyday urban Portuguese man, unhurried ~80-85% normal pace, every word clear for beginners, European Portuguese (Lisbon).',
-    atempo: 0.88
-  },
-  narrador: {
-    voice: 'pt-pt-storyteller-1',
+  'narradora-f': {
+    gender: 'female', voice: 'pt-pt-storyteller-1',
     style: 'Warm, calm, articulate audiobook narrator for beginners, ~85% normal pace, clear pronunciation without artificial pauses between words, European Portuguese (Lisbon).'
   },
-  empregado: {
-    voice: 'pt-pt-advisor-5',
-    style: 'Friendly, welcoming Lisbon cafe waiter, unhurried yet natural ~80-85% normal pace, clearly intelligible for learners, European Portuguese (Lisbon).',
-    atempo: 0.88
+  'joao-m': {
+    gender: 'male', voice: 'pt-pt-advisor-6', atempo: 0.88,
+    style: 'Friendly, natural everyday urban Portuguese man (João, ~30), unhurried ~80-85% normal pace, every word clear for beginners, European Portuguese (Lisbon).'
   },
-  cliente: {
-    voice: 'pt-pt-assistant-2',
-    style: 'Calm, polite everyday cafe customer, unhurried ~80-85% normal pace, clear pronunciation, European Portuguese (Lisbon).',
-    atempo: 0.88
+  'ana-f': {
+    gender: 'female', voice: 'pt-pt-tutor-1', atempo: 0.88,
+    style: 'Young Portuguese-speaking woman (Ana, ~24, a student), warm and natural, unhurried ~80-85% normal pace, every word clear for beginners, European Portuguese (Lisbon).'
+  },
+  'maria-f': {
+    gender: 'female', voice: 'pt-pt-concierge-2', atempo: 0.88,
+    style: 'Bright, friendly mature Portuguese woman (Maria, a neighbour, ~55), unhurried ~80-85% normal pace, every word clear for beginners, European Portuguese (Lisbon).'
+  },
+  'empregada-f': { // рецепционистка отеля / продавщица в магазине / официантка
+    gender: 'female', voice: 'pt-pt-assistant-7', atempo: 0.88,
+    style: 'Polite, businesslike Portuguese woman working behind a counter (hotel receptionist, shop assistant), unhurried and clear at ~80-85% normal pace for language learners, European Portuguese (Lisbon).'
+  },
+  'senhora-f': { // незнакомая пожилая женщина на улице
+    gender: 'female', voice: 'pt-pt-csagent-2', atempo: 0.88,
+    style: 'Kind, approachable elderly Portuguese lady (~65) helping a stranger, unhurried ~80-85% normal pace, every word clear for beginners, European Portuguese (Lisbon).'
+  },
+  'empregado-m': { // официант / продавец
+    gender: 'male', voice: 'pt-pt-advisor-5', atempo: 0.88,
+    style: 'Friendly, welcoming Lisbon cafe waiter (~50), unhurried yet natural ~80-85% normal pace, clearly intelligible for learners, European Portuguese (Lisbon).'
+  },
+  'cliente-m': { // посетитель кафе, говорит о себе в мужском роде (obrigado)
+    gender: 'male', voice: 'pt-pt-assistant-2', atempo: 0.88,
+    style: 'Calm, polite everyday cafe customer (a man, ~32), unhurried ~80-85% normal pace, clear pronunciation, European Portuguese (Lisbon).'
+  },
+  'homem-m': { // незнакомый мужчина (прохожий, сосед)
+    gender: 'male', voice: 'pt-pt-tutor-7', atempo: 0.88,
+    style: 'Polite, calm Portuguese man (~44) speaking to a stranger, unhurried ~80-85% normal pace, every word clear for beginners, European Portuguese (Lisbon).'
   }
 };
+// Старые имена ролей из партий 1–2 (рецепционистка и официант — те же голоса).
+const ALIASES = { narrador: 'narradora-f', rececionista: 'empregada-f', joao: 'joao-m', empregado: 'empregado-m', cliente: 'cliente-m' };
+for (const [old, now] of Object.entries(ALIASES)) VOICES[old] = VOICES[now];
+
+// Два разных говорящих — два разных голоса: одинаковый voice у разных ролей запрещён.
+{
+  const seen = new Map();
+  for (const [role, cfg] of Object.entries(VOICES)) {
+    if (ALIASES[role]) continue;
+    if (seen.has(cfg.voice)) throw new Error(`Голос ${cfg.voice} у двух ролей: ${seen.get(cfg.voice)} и ${role}`);
+    seen.set(cfg.voice, role);
+  }
+}
 
 // Parse gemini-prompt.md tables
 function parsePromptMd(mdPath) {
@@ -59,7 +88,7 @@ function parsePromptMd(mdPath) {
     if (cols.length < 2) continue;
     if (cols[0] === 'id' || cols[0].startsWith('---')) continue;
 
-    if (cols.length === 2 && section.includes('narrador')) {
+    if (cols.length === 2 && /narrador|narradora/.test(section)) {
       items.push({ id: cols[0], role: 'narrador', text: cols[1] });
     } else if (cols.length === 3) {
       items.push({ id: cols[0], role: cols[1], text: cols[2] });
@@ -156,7 +185,7 @@ async function synthesizeToMp3(item) {
     if (fs.existsSync(tmpWav)) fs.unlinkSync(tmpWav);
   }
 
-  console.log(`Generated ${item.id}.mp3 (${item.role} -> ${cfg.voice}${cfg.atempo ? `, atempo=${cfg.atempo}` : ''})`);
+  console.log(`Generated ${item.id}.mp3 (${item.role} [${cfg.gender}] -> ${cfg.voice}${cfg.atempo ? `, atempo=${cfg.atempo}` : ''})`);
 }
 
 // Run with concurrency 3
